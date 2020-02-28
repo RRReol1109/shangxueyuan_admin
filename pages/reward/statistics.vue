@@ -1,0 +1,250 @@
+<template>
+  <div>
+    <div class="search-form">
+      <el-form :inline="true" :model="query">
+        <el-form-item label="年度:">
+          <el-date-picker
+            size="small"
+            v-model="query.year"
+            type="year"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="选择年份"
+          ></el-date-picker>
+        </el-form-item>
+        <!-- <el-form-item label="类型:">
+          <el-select v-model="query.type" size="small">
+            <el-option label="全部" value="1"></el-option>
+            <el-option label="研究生指导" value="2"></el-option>
+            <el-option label="课堂教学" value="3"></el-option>
+            <el-option label="实习" value="4"></el-option>
+            <el-option label="沙盘模拟" value="5"></el-option>
+            <el-option label="社会调查" value="6"></el-option>
+            <el-option label="论文指导" value="7"></el-option>
+          </el-select>
+        </el-form-item>-->
+        <!-- <el-form-item label="教师:">
+          <el-input id="nameBox" v-model="query.condition" placeholder="姓名或工号" size="small"></el-input>
+        </el-form-item>-->
+        <el-form-item label="教师:">
+          <el-autocomplete
+            id="nameBox"
+            v-model="query.userName"
+            placeholder="请输入教师"
+            :fetch-suggestions="queryTeacher"
+            size="small"
+          ></el-autocomplete>
+        </el-form-item>
+        <el-form-item label>
+          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
+      <el-table-column prop="userId" label="ID" align="center" width="50"></el-table-column>
+      <el-table-column prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column prop="userName" align="center" label="教师"></el-table-column>
+      <el-table-column prop="scores" align="center" label="总分"></el-table-column>
+      <el-table-column fixed="right" align="center" label="操作" width="150">
+        <template slot-scope="scope">
+          <el-button @click="showDialog(scope.row)" type="text" size="small">详情</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <nav style="text-align: center; margin-top: 10px;">
+      <!-- 分页居中放置-->
+      <el-pagination
+        background
+        :page-size="14"
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        @next-click="handleCurrentChange"
+        @prev-click="handleCurrentChange"
+        @size-change="handleCurrentChange"
+        :current-page.sync="page"
+        :total="this.total"
+      ></el-pagination>
+    </nav>
+
+    <el-dialog style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
+      <Highcharts id="图例" :option="option" />
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import moment from "moment";
+import Highcharts from "~/components/Highcharts.vue";
+import axios from "~/plugins/axios2";
+export default {
+  layout: "normal",
+  components: {
+    Highcharts
+  },
+  data() {
+    return {
+      total: 0,
+      page: 0,
+      loading: true,
+      dialogDetailVisible: false,
+      option: {
+        credits: {
+          enabled: false
+        },
+        chart: {
+          type: "bar"
+        },
+        title: {
+          text: "科研成果分类统计"
+        },
+        subtitle: {
+          text: ""
+        },
+        xAxis: {
+          categories: [],
+          crosshair: true
+        },
+        yAxis: {
+          tickPixelInterval: 1,
+          min: 0,
+          title: {
+            text: "计分",
+            align: "high"
+          },
+          labels: {
+            overflow: "justify"
+          }
+        },
+        tooltip: {
+          valueSuffix: " 课时"
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true,
+              allowOverlap: true // 允许数据标签重叠
+            }
+          }
+        },
+        series: []
+      },
+      query: {
+        limit: 10,
+        offset: 0,
+        type: "",
+        userId: "",
+        // userName: ""
+        year: moment().format("YYYY")
+      },
+      tableData: []
+    };
+  },
+
+  mounted() {
+    this.list();
+  },
+  filters: {
+    typeFilter: function(value) {
+      let data = {
+        "1": "全部",
+        "2": "研究生指导",
+        "3": "课堂教学",
+        "4": "实习",
+        "5": "沙盘模拟",
+        "6": "社会调查",
+        "7": "论文指导"
+      };
+      return data[value];
+    }
+  },
+  methods: {
+    async queryTeacher(queryString, cb) {
+      console.log(queryString);
+      let teacher = await axios.$get("/mgr/quicklist", {
+        name: queryString
+      });
+      var teachers = [];
+      for (let i = 0; i < teacher.length; i++) {
+        const element = teacher[i];
+        teachers.push({ value: element.name, id: element.id });
+      }
+      console.log(teachers);
+      var results = queryString
+        ? teachers.filter(this.createFilter(queryString))
+        : teachers;
+      cb(results);
+    },
+    createFilter(queryString) {
+      return teacher => {
+        return (
+          teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        );
+      };
+    },
+    handleCurrentChange(val) {
+      this.query.offset = this.query.limit * (this.page - 1);
+      this.list();
+    },
+    async list() {
+      this.loading = true;
+      // 查询接口
+      let user = localStorage.getItem("roles");
+      let userInfo = localStorage.getItem("userInfo");
+      if (!user.includes(888) && userInfo.roleid != 19) {
+        this.query.userId = localStorage.getItem("userId");
+        this.role = false;
+      }
+      let res = await axios.$post("award/list", this.query);
+      for (let i = 0; i < res.records.length; i++) {
+        res.records[i].scores = 0;
+        res.records[i].year = this.query.year;
+        for (let j in res.records[i].score) {
+          res.records[i].scores += res.records[i].score[j][this.query.year];
+        }
+        res.records[i].scores = res.records[i].scores.toFixed(2);
+      }
+
+      this.total = parseInt(res.pages);
+      this.tableData = res.records;
+      this.loading = false;
+    },
+    async showDialog(row) {
+      // 查询接口
+      this.option.xAxis.categories = [];
+      this.option.series = [];
+      let res = await axios.$get("award/statistics", { userId: row.userId });
+      let currentYear = moment().format("YYYY");
+      for (const key in res) {
+        this.option.xAxis.categories.push(key);
+      }
+      for (let i = 2019; i <= parseInt(currentYear); i++) {
+        let data = [];
+        for (let key in res) {
+          if (res[key][i]) {
+            data.push(parseFloat(res[key][i].toFixed(2)));
+          } else {
+            data.push(0);
+          }
+        }
+        this.option.series.push({
+          name: i,
+          data
+        });
+      }
+      this.dialogDetailVisible = true;
+    }
+  }
+};
+</script>
+
+<style>
+.search-form {
+  margin-bottom: 10px;
+}
+.el-input.is-disabled .el-input__inner {
+  color: #606266;
+}
+#nameBox {
+  width: 200px;
+}
+</style>
