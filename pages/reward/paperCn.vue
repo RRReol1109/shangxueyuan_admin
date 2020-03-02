@@ -194,7 +194,7 @@
         <!-- <el-form-item label="全体作者" prop="authors">
           <el-input v-model="ruleForm.authors" style="width:200px;"></el-input>
         </el-form-item>-->
-        <el-form-item label="作者信息" prop="authors">
+        <el-form-item label="作者信息" prop="authors" v-if="['show'].includes(operate)">
           <el-col :span="12">
             <label>姓名-单位-是否是国际学籍-是否是通讯作者</label>
             <el-input v-model="ruleForm.authors" rows="5" type="textarea"></el-input>
@@ -310,9 +310,7 @@ export default {
         cateNumber: [
           { required: true, message: "请输入ISSN", trigger: "blur" }
         ],
-        authors: [
-          { required: true, message: "请选择是否半价", trigger: "blur" }
-        ],
+        authors: [{ required: true, message: "请输入作者", trigger: "blur" }],
         half: [{ required: true, message: "请选择是否半价", trigger: "blur" }],
         level: [{ required: true, message: "请选择分级", trigger: "blur" }],
         year: [{ required: true, message: "请输入年份", trigger: "blur" }],

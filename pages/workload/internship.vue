@@ -97,7 +97,7 @@
       <el-table-column prop="hours" align="center" label="实习时长"></el-table-column>
       <el-table-column prop="days" align="center" label="实习周数"></el-table-column>
       <el-table-column prop="ratio" align="center" label="核定系数"></el-table-column>
-      <el-table-column prop="teachers" align="center" label="教师"></el-table-column>
+      <el-table-column prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column prop="classes" align="center" label="指导班级"></el-table-column>
       <el-table-column prop="company" align="center" label="实习单位"></el-table-column>
       <el-table-column prop="editorName" align="center" label="录入人"></el-table-column>
@@ -229,14 +229,14 @@
             <el-input clearable v-model="ruleForm.ratio" placeholder="核定系数" :disabled="read"></el-input>
           </el-col>
         </el-form-item>
-        <!-- <el-form-item
+        <el-form-item
           v-for="(teacherArr, index) in ruleForm.teacherArr"
           :label="'老师' + (index+1)"
           :key="teacherArr.key"
           :prop="'teacherArr.' + index + '.value'"
         >
           <el-col :span="12">
-            <el-select v-model="teacherArr.name" placeholder="请选择老师">
+            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
               <el-option
                 v-for="item in teacherList"
                 :key="item.id"
@@ -244,7 +244,7 @@
                 :value="item.id"
               ></el-option>
             </el-select>
-            <el-select v-model="teacherArr.name" placeholder="职称">
+            <el-select v-model="teacherArr.title" placeholder="职称">
               <el-option label="教授" value="教授"></el-option>
               <el-option label="副教授" value="副教授"></el-option>
             </el-select>
@@ -252,15 +252,15 @@
             <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
           </el-col>
         </el-form-item>
-        <el-form-item>
+        <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
-        </el-form-item>-->
-        <el-form-item label="老师信息:" :prop="'teachers'">
+        </el-form-item>
+        <!-- <el-form-item label="老师信息:" :prop="'teacherInfo'" v-if="['show'].includes(operate)">
           <el-col :span="12">
             <label>教师id-教师姓名-职称（教授/副教授）-是否是队长</label>
             <el-input v-model="ruleForm.teachers" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="指导班级" prop="classes">
           <el-col :span="12">
             <el-autocomplete
@@ -347,6 +347,7 @@ export default {
         teacherArr: [
           {
             name: "",
+            title: "",
             flag: false
           }
         ],
@@ -587,10 +588,39 @@ export default {
       switch (this.operate) {
         case "add":
           console.log(this.rules.count, "========count");
+          for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+            let element = this.ruleForm.teacherArr[i];
+            for (const key in element) {
+              if (element.hasOwnProperty(key)) {
+                let info = element[key];
+                if (key == "name") {
+                  this.ruleForm.teachers += info;
+                }
+                if (key == "title") {
+                  this.ruleForm.teachers += "|" + info;
+                }
+                if (key == "flag") {
+                  if (info) {
+                    this.ruleForm.teachers += "|1,";
+                  } else {
+                    this.ruleForm.teachers += "|0,";
+                  }
+                }
+              }
+            }
+            if (i == this.ruleForm.teacherArr.length - 1) {
+              this.ruleForm.teachers = this.ruleForm.teachers.substr(
+                0,
+                this.ruleForm.teachers.length - 1
+              );
+            }
+          }
+          console.log(this.ruleForm.teachers);
           for (const key in this.ruleForm) {
             if (this.ruleForm.hasOwnProperty(key)) {
               const element = this.ruleForm[key];
               if (!element && key != "id") {
+                this.ruleForm.teachers = "";
                 console.log(element, "==========element===" + key);
                 this.$message({
                   type: "info",
@@ -694,6 +724,7 @@ export default {
     addTeacher() {
       this.ruleForm.teacherArr.push({
         name: "",
+        title: "",
         flag: ""
       });
     },
@@ -714,6 +745,7 @@ export default {
           teacherArr: [
             {
               name: "",
+              title: "",
               flag: false
             }
           ],
@@ -726,6 +758,32 @@ export default {
         };
       } else {
         this.ruleForm = row;
+        this.ruleForm.teacherArr = [];
+        let teacherInfo = row.teachers.split(",");
+        for (let i = 0; i < teacherInfo.length; i++) {
+          const element = teacherInfo[i];
+          this.ruleForm.teacherArr.push({
+            name: "",
+            title: "",
+            flag: false
+          });
+          let teacher = element.split("|");
+          for (let j = 0; j < teacher.length; j++) {
+            const item = teacher[j];
+            console.log(item, "======item");
+            if (j == 0) {
+              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
+            } else if (j == 1) {
+              this.ruleForm.teacherArr[i].title = item;
+            } else {
+              if (item == 0) {
+                this.ruleForm.teacherArr[i].flag = false;
+              } else {
+                this.ruleForm.teacherArr[i].flag = true;
+              }
+            }
+          }
+        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },

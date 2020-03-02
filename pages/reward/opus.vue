@@ -73,7 +73,7 @@
       <el-table-column prop="publishHouse" align="center" label="出版社名称"></el-table-column>
       <el-table-column prop="signature" align="center" label="署名单位"></el-table-column>
       <el-table-column prop="wordCount" align="center" label="总字数（万）"></el-table-column>
-      <el-table-column prop="authors" align="center" label="作者"></el-table-column>
+      <el-table-column prop="userName" align="center" label="作者"></el-table-column>
       <el-table-column prop="isbn" align="center" label="ISBN编号"></el-table-column>
       <el-table-column prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -211,12 +211,43 @@
             ></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="作者:" :prop="'authors'">
+        <el-form-item
+          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          :label="'作者信息' + (index+1)"
+          :key="teacherArr.key"
+          :prop="'teacherArr.' + index + '.value'"
+        >
+          <el-col :span="12">
+            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <el-input
+              clearable
+              v-model="teacherArr.point"
+              oninput="value=value.replace(/[^\d.]/g,'')"
+              placeholder="请输入分数"
+              label="字数"
+            ></el-input>
+            <el-input
+              clearable
+              v-model="teacherArr.num"
+              oninput="value=value.replace(/[^\d.]/g,'')"
+              placeholder="请输入字数"
+            ></el-input>
+            <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
+          </el-col>
+        </el-form-item>
+        <!-- <el-form-item label="作者:" :prop="'authors'">
           <el-col :span="12">
             <label>教师id-教师姓名</label>
             <el-input v-model="ruleForm.authors" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="ruleForm.auditFlag" size="small" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
@@ -253,6 +284,7 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
+      teacherList: [],
       roleId: 0,
       examineDialog: false,
       dialogFormVisible: false,
@@ -272,7 +304,6 @@ export default {
       dwurl: "",
       header: {},
       fileList: [],
-      teacherList: [],
       operate: "",
       fileLists: [],
       ruleForm: {
@@ -281,7 +312,7 @@ export default {
         publishHouse: "",
         signature: "",
         wordCount: 0,
-        teacherArr: [],
+        teacherArr: [{ name: "", point: "", num: "" }],
         publishDate: moment().format("YYYY-MM-DD")
       },
       tableData: [],
@@ -457,6 +488,7 @@ export default {
     addTeacher() {
       this.ruleForm.teacherArr.push({
         name: "",
+        point: "",
         num: ""
       });
     },
@@ -487,10 +519,36 @@ export default {
         case "add":
           console.log(this.ruleForm);
           this.ruleForm.files = this.fileurl;
+          console.log(this.teacherList);
+          for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+            let element = this.ruleForm.teacherArr[i];
+            for (const key in element) {
+              if (element.hasOwnProperty(key)) {
+                let info = element[key];
+                console.log(info);
+                if (key == "name") {
+                  this.ruleForm.authors += info;
+                }
+                if (key == "point") {
+                  this.ruleForm.authors += "|" + info;
+                }
+                if (key == "num") {
+                  this.ruleForm.authors += "|" + info + ",";
+                }
+              }
+            }
+            if (i == this.ruleForm.teacherArr.length - 1) {
+              this.ruleForm.authors = this.ruleForm.authors.substr(
+                0,
+                this.ruleForm.authors.length - 1
+              );
+            }
+          }
           for (const key in this.ruleForm) {
             if (this.ruleForm.hasOwnProperty(key)) {
               const element = this.ruleForm[key];
               if (!element && key != "auditFlag" && key != "files") {
+                this.ruleForm.authors = "";
                 console.log(element, "==========element===" + key);
                 this.$message({
                   type: "info",
@@ -524,10 +582,41 @@ export default {
           authors: "",
           isbn: "",
           publishDate: moment().format("YYYY-MM-DD"),
+          teacherArr: [
+            {
+              name: "",
+              point: "",
+              num: ""
+            }
+          ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
       } else {
         this.ruleForm = row;
+        this.ruleForm.teacherArr = [];
+        let teacherInfo = row.authors.split(",");
+        for (let i = 0; i < teacherInfo.length; i++) {
+          const element = teacherInfo[i];
+          this.ruleForm.teacherArr.push({
+            name: "",
+            title: "",
+            flag: false
+          });
+          let teacher = element.split("|");
+          for (let j = 0; j < teacher.length; j++) {
+            const item = teacher[j];
+            console.log(item, "======item");
+            if (j == 0) {
+              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
+                ","
+              )[i];
+            } else if (j == 1) {
+              this.ruleForm.teacherArr[i].point = item;
+            } else {
+              this.ruleForm.teacherArr[i].num = item;
+            }
+          }
+        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
         this.dwurl = row.files;
       }
@@ -688,6 +777,12 @@ export default {
     this.header = {
       Authorization: localStorage.getItem("message")
     };
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     await this.list();
     this.roleId = localStorage.getItem("roleId");
   }
