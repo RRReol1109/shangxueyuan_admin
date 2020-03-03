@@ -260,7 +260,7 @@
             <label>教师id-教师姓名-职称（教授/副教授）-是否是队长</label>
             <el-input v-model="ruleForm.teachers" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item label="指导班级" prop="classes">
           <el-col :span="12">
             <el-autocomplete
@@ -647,6 +647,7 @@ export default {
       await this.list();
     },
     resetForm(formName) {
+      console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
     },
     updataCache() {
@@ -772,7 +773,9 @@ export default {
             const item = teacher[j];
             console.log(item, "======item");
             if (j == 0) {
-              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
+              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
+                ","
+              )[i];
             } else if (j == 1) {
               this.ruleForm.teacherArr[i].title = item;
             } else {

@@ -35,18 +35,18 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="id" align="center" label="来访时间"></el-table-column>
-      <el-table-column prop="visitor" align="center" label="访问类型"></el-table-column>
-      <el-table-column prop="accessType" align="center" label="专家姓名"></el-table-column>
-      <el-table-column prop="interviewTime" align="center" label="护照号"></el-table-column>
+      <el-table-column prop="interviewTime" align="center" label="来访时间"></el-table-column>
+      <el-table-column prop="accessType" align="center" label="访问类型"></el-table-column>
+      <el-table-column prop="visitor" align="center" label="专家姓名"></el-table-column>
+      <el-table-column prop="passport" align="center" label="护照号"></el-table-column>
       <el-table-column prop="jobTitle" align="center" label="职称"></el-table-column>
       <el-table-column prop="citizenshipCountry" align="center" label="国籍"></el-table-column>
       <el-table-column prop="unit" align="center" label="工作单位"></el-table-column>
       <el-table-column prop="expertCategory" align="center" label="专家类别"></el-table-column>
       <el-table-column prop="researchAreas" align="center" label="研究领域"></el-table-column>
-      <el-table-column prop="communicationContent" align="center" label="所属学科"></el-table-column>
+      <el-table-column prop="discipline" align="center" label="所属学科"></el-table-column>
       <el-table-column prop="communicationContent" align="center" label="交流内容"></el-table-column>
-      <el-table-column prop="communicationContent" align="center" label="邀请人"></el-table-column>
+      <el-table-column prop="inviter" align="center" label="邀请人"></el-table-column>
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
@@ -76,18 +76,24 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="访问人">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="专家姓名" prop="visitor">
           <el-col :span="6">
             <el-input size="small" v-model="form.visitor" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="访问类型">
+        <el-form-item label="访问类型" prop="accessType">
           <el-col :span="6">
             <el-input size="small" v-model="form.accessType" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="职称">
+        <el-form-item label="职称" prop="jobTitle">
           <el-col :span="6">
             <el-select v-model="form.jobTitle" size="small">
               <el-option label="教授" value="1"></el-option>
@@ -96,17 +102,22 @@
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="国籍">
+        <el-form-item label="护照号" prop="passport">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.passport" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="国籍" prop="citizenshipCountry">
           <el-col :span="6">
             <el-input size="small" v-model="form.citizenshipCountry" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="单位">
+        <el-form-item label="工作单位" prop="unit">
           <el-col :span="6">
             <el-input size="small" v-model="form.unit" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专家类别">
+        <el-form-item label="专家类别" prop="expertCategory">
           <el-col :span="6">
             <el-select v-model="form.expertCategory" size="small">
               <el-option label="国内" value="1"></el-option>
@@ -114,38 +125,38 @@
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="访问时间">
+        <el-form-item label="来访时间" prop="interviewTime">
           <el-col :span="5">
             <el-date-picker
               size="small"
               type="date"
               placeholder="选择日期"
-              v-model="form.startTime"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-col>
-          <el-col class="line" :span="0.5">-</el-col>
-          <el-col :span="5">
-            <el-date-picker
-              size="small"
-              type="date"
-              placeholder="选择时间"
               v-model="form.interviewTime"
               style="width: 100%;"
             ></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item label="研究领域">
+        <el-form-item label="研究领域" prop="researchAreas">
           <el-col :span="6">
             <el-input size="small" v-model="form.researchAreas" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="交流内容">
+        <el-form-item label="所属学科" prop="discipline">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.discipline" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="邀请人" prop="inviter">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.inviter" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="交流内容" prop="communicationContent">
           <el-col :span="6">
             <el-input size="small" v-model="form.communicationContent" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item size="small" label="备注">
+        <el-form-item size="small" label="备注" prop="remark">
           <el-col :span="6">
             <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
@@ -191,6 +202,38 @@ export default {
         communicationContent: "",
         remark: ""
       },
+      rules: {
+        interviewTime: [
+          { required: true, message: "请输入来访时间", trigger: "blur" }
+        ],
+        visitor: [
+          { required: true, message: "请输入专家姓名", trigger: "blur" }
+        ],
+        jobTitle: [{ required: true, message: "请输入职称", trigger: "blur" }],
+        accessType: [
+          { required: true, message: "请输入访问类型", trigger: "blur" }
+        ],
+        unit: [{ required: true, message: "请输入工作单位", trigger: "blur" }],
+        expertCategory: [
+          { required: true, message: "请输入专家类别", trigger: "blur" }
+        ],
+        researchAreas: [
+          { required: true, message: "请输入研究领域", trigger: "blur" }
+        ],
+        inviter: [{ required: true, message: "请输入邀请人", trigger: "blur" }],
+        discipline: [
+          { required: true, message: "请输入所属学科", trigger: "blur" }
+        ],
+        passporte: [
+          { required: true, message: "请输入护照号", trigger: "blur" }
+        ],
+        citizenshipCountry: [
+          { required: true, message: "请输入国籍", trigger: "blur" }
+        ],
+        communicationContent: [
+          { required: true, message: "请输入交流类容", trigger: "blur" }
+        ]
+      },
       tableData: []
     };
   },
@@ -235,6 +278,26 @@ export default {
       this.loading = false;
     },
     async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/academicExchange/add", this.form);
