@@ -3,13 +3,13 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="性别:">
-          <el-select v-model="query.gender" size="small">
+          <el-select v-model="query.gender" size="small" placeholder="请选择">
             <el-option label="全部" value></el-option>
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -56,55 +56,65 @@
       ></el-pagination>
     </nav>
 
-    <el-dialog style="min-height:500px" title="优秀毕业生" :visible.sync="dialogFormVisible" :disabled="!['edit', 'add'].includes(operate)">
-      <el-form :model="form" label-width="100px">
-
-        <el-form-item label="姓名">
+    <el-dialog
+      style="min-height:500px"
+      title="优秀毕业生"
+      :visible.sync="dialogFormVisible"
+      :disabled="!['edit', 'add'].includes(operate)"
+    >
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="年龄">
+        <el-form-item label="年龄" prop="age">
           <el-col :span="6">
             <el-input size="small" v-model="form.age"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="学士获得时间,学校，学科">
+        <el-form-item label="学士获得时间,学校，学科" prop="bachelor">
           <el-col :span="6">
             <el-input size="small" v-model="form.bachelor"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="硕士获得时间,学校，学科">
+        <el-form-item label="硕士获得时间,学校，学科" prop="master">
           <el-col :span="6">
             <el-input size="small" v-model="form.master"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="博士获得时间,学校，学科">
+        <el-form-item label="博士获得时间,学校，学科" prop="doctor">
           <el-col :span="6">
             <el-input size="small" v-model="form.doctor"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="简介">
+        <el-form-item label="简介" prop="desc">
           <el-col :span="6">
             <el-input size="small" v-model="form.desc"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="备注">
+        <el-form-item label="备注" prop="remark">
           <el-col :span="6">
             <el-input size="small" v-model="form.remark"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="性别:">
-          <el-select v-model="form.gender" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+        <el-form-item label="性别:" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="请选择">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -136,9 +146,14 @@ export default {
         desc: "",
         remark: ""
       },
-      tableData: [
-       
-      ]
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        age: [{ required: true, message: "请输入年龄", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }]
+        // master: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        // doctor: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      },
+      tableData: []
     };
   },
   methods: {
@@ -147,6 +162,7 @@ export default {
       this.list();
     },
     async list() {
+      this.tableData = [];
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
@@ -155,15 +171,32 @@ export default {
           }
         }
       }
-      let res = await axios.$post(
-        "/outstandingGraduate/list",
-        this.query
-      );
+      let res = await axios.$post("/outstandingGraduate/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/outstandingGraduate/add", this.form);

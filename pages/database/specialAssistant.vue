@@ -2,35 +2,17 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号"></el-input>
-        </el-form-item>
-        <el-form-item label="年级:">
-          <el-select v-model="query.year" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-            <el-option label="2017" value="2017"></el-option>
-            <el-option label="2016" value="2016"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号"></el-input>
-        </el-form-item>
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="专业:">
-          <el-input v-model="query.major" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="导师:">
-          <el-input v-model="query.tutor" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.major" placeholder="请输入专业" size="small"></el-input>
         </el-form-item>
         <el-form-item label="毕业专业:">
-          <el-input v-model="query.graduationMajor" placeholder="请输入毕业专业"></el-input>
+          <el-input v-model="query.graduationMajor" placeholder="请输入毕业专业" size="small"></el-input>
         </el-form-item>
         <el-form-item label="毕业学校:">
-          <el-input v-model="query.graduatedSchool" placeholder="请输入毕业学校"></el-input>
+          <el-input v-model="query.graduatedSchool" placeholder="请输入毕业学校" size="small"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -62,7 +44,7 @@
       <el-table-column prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
       <el-table-column prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
       <el-table-column prop="admissionMethod" align="center" label="录取方式"></el-table-column>
-      <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
+      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
@@ -91,98 +73,106 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="姓名">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="学号">
+        <!-- <el-form-item label="学号" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-select v-model="form.gender" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+        </el-form-item>-->
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="请选择">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="年级">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="第一学历毕业学校">
+        <el-form-item label="第一学历毕业学校" prop="education">
           <el-col :span="6">
             <el-input size="small" v-model="form.education" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专业名称">
+        <el-form-item label="专业名称" prop="major">
           <el-col :span="6">
             <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item label="手机号" prop="phone">
           <el-col :span="6">
             <el-input size="small" v-model="form.phone" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="email">
           <el-col :span="6">
             <el-input size="small" v-model="form.email" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="导师">
+        <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
-            <el-input size="small" v-model="form.tutor" autocomplete="off"></el-input>
+            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="奖学金名称">
+        <el-form-item label="奖学金名称" prop="scholarshipName">
           <el-col :span="6">
             <el-input size="small" v-model="form.scholarshipName" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="助学金名称">
+        <el-form-item label="助学金名称" prop="financialAidName">
           <el-col :span="6">
             <el-input size="small" v-model="form.financialAidName" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专业代码">
+        <el-form-item label="专业代码" prop="majorCode">
           <el-col :span="6">
             <el-input size="small" v-model="form.majorCode" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="年级">
+        <el-form-item label="年级" prop="grade">
           <el-col :span="6">
             <el-input size="small" v-model="form.grade" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业学校">
+        <el-form-item label="毕业学校" prop="graduatedSchool">
           <el-col :span="6">
             <el-input size="small" v-model="form.graduatedSchool" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业专业">
+        <el-form-item label="毕业专业" prop="graduationMajor">
           <el-col :span="6">
             <el-input size="small" v-model="form.graduationMajor" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="录取方式">
+        <el-form-item label="录取方式" prop="admissionMethod">
           <el-col :span="6">
             <el-input size="small" v-model="form.admissionMethod" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item size="small" label="备注">
+        <el-form-item size="small" label="备注" prop="remark">
           <el-col :span="6">
-            <el-input v-model="form.remarks" autocomplete="off"></el-input>
+            <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -205,10 +195,11 @@ export default {
         order: "remark",
         condition: ""
       },
+      teacherList: [],
       form: {
         id: "",
         name: "",
-        gender: "1",
+        gender: "",
         education: "",
         major: "",
         phone: "",
@@ -221,7 +212,37 @@ export default {
         graduatedSchool: "",
         graduationMajor: "",
         admissionMethod: "",
-        remarks: ""
+        remark: ""
+      },
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        education: [
+          { required: true, message: "请输入第一学历毕业学校", trigger: "blur" }
+        ],
+        phone: [{ required: true, message: "请输入电话", trigger: "blur" }],
+        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
+        tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
+        majorCode: [
+          { required: true, message: "请输入专业代码", trigger: "blur" }
+        ],
+        scholarshipName: [
+          { required: true, message: "请输入奖学金名称", trigger: "blur" }
+        ],
+        financialAidName: [
+          { required: true, message: "请输入助学金名称", trigger: "blur" }
+        ],
+        grade: [{ required: true, message: "请输入年份", trigger: "blur" }],
+        graduatedSchool: [
+          { required: true, message: "请输入毕业学校", trigger: "blur" }
+        ],
+        graduationMajor: [
+          { required: true, message: "请输入毕业专业", trigger: "blur" }
+        ],
+        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        admissionMethod: [
+          { required: true, message: "请输入录取方式", trigger: "blur" }
+        ]
       },
       tableData: []
     };
@@ -249,7 +270,27 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/master/add", this.form);
@@ -268,7 +309,7 @@ export default {
         this.form = {
           id: "",
           name: "",
-          gender: "1",
+          gender: "",
           education: "",
           major: "",
           phone: "",
@@ -281,11 +322,15 @@ export default {
           graduatedSchool: "",
           graduationMajor: "",
           admissionMethod: "",
-          remarks: ""
+          remark: ""
         };
       } else {
         this.form = row;
       }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
@@ -313,7 +358,13 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };

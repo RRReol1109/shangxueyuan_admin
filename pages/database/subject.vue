@@ -8,16 +8,16 @@
         <el-form-item label="性别:">
           <el-select v-model="query.gender" size="small">
             <el-option label="全部" value></el-option>
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="学科">
           <el-select v-model="query.major" size="small">
             <el-option label="全部" value></el-option>
-            <el-option label="管理" value="1"></el-option>
-            <el-option label="工商" value="2"></el-option>
-            <el-option label="应经" value="3"></el-option>
+            <el-option label="管理" value="管理"></el-option>
+            <el-option label="工商" value="工商"></el-option>
+            <el-option label="应经" value="应经"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -118,8 +118,7 @@ export default {
         gender: "1",
         major: "1"
       },
-      tableData: [
-      ]
+      tableData: []
     };
   },
   methods: {
@@ -145,7 +144,7 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
       switch (this.operate) {
         case "add":
           await axios.$post("/threeDisciplinaryStaff/add", this.form);

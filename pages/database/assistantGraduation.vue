@@ -227,7 +227,7 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
       switch (this.operate) {
         case "add":
           await axios.$post("/masterGraduate/add", this.form);

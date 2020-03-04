@@ -3,22 +3,23 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="上传用户名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input size="small" v-model="query.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="负责人:">
-          <el-input v-model="query.charge" placeholder="请输入姓名"></el-input>
+          <el-input size="small" v-model="query.charge" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="学科名:">
-          <el-input v-model="query.subject" placeholder="请输入姓名"></el-input>
+          <el-input size="small" v-model="query.subject" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="年份:">
-          <el-select v-model="query.year" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-            <el-option label="2017" value="2017"></el-option>
-            <el-option label="2016" value="2016"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.year"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            placeholder="来访时间"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -35,11 +36,12 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="id" align="center" label="id"></el-table-column>
-      <el-table-column prop="name" align="center" label="上传用户"></el-table-column>
-      <el-table-column prop="charge" align="center" label="负责人"></el-table-column>
+      <el-table-column prop="userName" align="center" label="上传用户"></el-table-column>
+      <!-- <el-table-column prop="charge" align="center" label="负责人"></el-table-column>
       <el-table-column prop="subject" align="center" label="学科名"></el-table-column>
-      <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column prop="table" align="center" label="文件名"></el-table-column>
+      <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>-->
+      <el-table-column prop="name" align="center" label="文件名"></el-table-column>
+      <el-table-column prop="file" align="center" label="文件路径"></el-table-column>
       <el-table-column prop="year" align="center" label="年份"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
@@ -70,32 +72,44 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="320px">
-        <el-form-item label="ID" label-width="320px">
+      <el-form
+        style="min-height:500px"
+        title="通讯录"
+        :visible.sync="dialogFormVisible"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <!-- <el-form-item label="ID" label-width="320px">
           <el-col :span="6">
             <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="年份" label-width="320px">
           <el-col :span="6">
-            <el-select v-model="form.year" size="small">
-              <el-option label="2019" value="2019"></el-option>
-              <el-option label="2018" value="2018"></el-option>
-              <el-option label="2017" value="2017"></el-option>
-              <el-option label="2016" value="2016"></el-option>
-            </el-select>
+            <el-date-picker
+              v-model="form.year"
+              align="right"
+              size="small"
+              type="date"
+              format="yyyy"
+              placeholder="来访时间"
+            ></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item label="备注" label-width="320px">
+        <el-form-item label="文件上传" label-width="320px">
           <el-upload
             class="upload-demo"
             :file-list="fileList"
             :headers="header"
-
             action="http://bsart.zz.kuangyeyuan.com/mgr/upload"
+            :on-success="success"
           >
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
+        </el-form-item>
+        <el-form-item size="small" label="备注" prop="remark">
+          <el-col :span="6">
+            <el-input v-model="form.remark" autocomplete="off"></el-input>
+          </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
@@ -126,22 +140,15 @@ export default {
       },
       fileList: [],
       form: {
-        id: "",
+        file: "",
         name: "",
-        table: "1",
-        year: "",
-        major: "",
-        category: "",
-        teacher: "",
-        score: "",
-        paper: "",
-        pleaDate: "",
-        remark: ""
+        year: ""
       },
       header: {},
-      tableData: [
-       
-      ]
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+      },
+      tableData: []
     };
   },
   methods: {
@@ -162,18 +169,19 @@ export default {
       if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/masterGraduate/list", this.query);
+      let res = await axios.$post("/subjectInfo/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
+      this.form.user = localStorage.getItem("userId");
       switch (this.operate) {
         case "add":
-          await axios.$post("/masterGraduate/add", this.form);
+          await axios.$post("/subjectInfo/add", this.form);
           break;
         case "edit":
-          await axios.$post("/masterGraduate/update", this.form);
+          await axios.$post("/subjectInfo/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -183,21 +191,17 @@ export default {
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
-        this.form = {
-          id: "",
-          name: "",
-          table: "1",
-          year: "",
-          major: "",
-          category: "",
-          teacher: "",
-          score: "",
-          paper: "",
-          pleaDate: "",
-          remark: ""
-        };
+        this.form = {};
       } else {
         this.form = row;
+      }
+    },
+    success(res, file, files) {
+      console.log(files[0].response);
+      for (let i = 0; i < files.length; i++) {
+        const element = files[i];
+        this.form.file = element.response;
+        this.form.name = element.name;
       }
     },
     async del(row) {
@@ -208,9 +212,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let masterGraduateId = row.id;
-          await axios.$post("/masterGraduate/delete", {
-            masterGraduateId: masterGraduateId
+          let subjectInfoId = row.id;
+          await axios.$post("/subjectInfo/delete", {
+            subjectInfoId: subjectInfoId
           });
           this.list();
           this.$message({

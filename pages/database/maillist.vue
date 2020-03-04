@@ -3,33 +3,28 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="年级:">
-          <el-select v-model="query.grade" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="班级:">
-          <el-select v-model="query.classes" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="1班" value="1"></el-option>
-            <el-option label="2班" value="2"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.interviewTime"
+            align="right"
+            size="small"
+            type="date"
+            placeholder="来访时间"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="专业:">
-          <el-input v-model="query.major" placeholder="请输入专业"></el-input>
+          <el-input v-model="query.major" placeholder="请输入专业" size="small"></el-input>
         </el-form-item>
         <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号"></el-input>
+          <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="性别:">
           <el-select v-model="query.gender" size="small">
             <el-option label="全部" value></el-option>
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -85,57 +80,60 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="姓名">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="学号">
+        <!-- <el-form-item label="学号">
           <el-col :span="6">
             <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-select v-model="form.gender" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+        </el-form-item>-->
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="请选择">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item label="手机号" prop="phone">
           <el-col :span="6">
             <el-input size="small" v-model="form.phone" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="年级">
+        <el-form-item label="年级" prop="grade">
           <el-col :span="6">
             <el-input size="small" v-model="form.grade" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="班级">
+        <el-form-item label="班级" prop="classes">
           <el-col :span="6">
-            <el-select v-model="form.classes" size="small">
-              <el-option label="1班" value="1"></el-option>
-              <el-option label="2班" value="2"></el-option>
-            </el-select>
+            <el-input size="small" v-model="form.classes" placeholder="请输入班级"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="导师">
+        <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
             <el-input size="small" v-model="form.tutor" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专业">
+        <el-form-item label="专业" prop="major">
           <el-col :span="6">
             <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="工作单位">
+        <el-form-item label="工作单位" prop="employer">
           <el-col :span="6">
             <el-input size="small" v-model="form.employer" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="家庭地址">
+        <el-form-item label="家庭地址" prop="address">
           <el-col :span="6">
             <el-input size="small" v-model="form.address" autocomplete="off"></el-input>
           </el-col>
@@ -143,8 +141,8 @@
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -170,18 +168,27 @@ export default {
       form: {
         id: "",
         name: "",
-        gender: "1",
+        gender: "",
         phone: "",
         grade: "2019",
         major: "",
         tutor: "",
-        classes: "1",
+        classes: "",
         employer: "",
         address: ""
       },
-      tableData: [
-       
-      ]
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        phone: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        grade: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        major: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        tutor: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        classes: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        employer: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        address: [{ required: true, message: "请输入姓名", trigger: "blur" }]
+      },
+      tableData: []
     };
   },
   methods: {
@@ -207,7 +214,31 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/addressBook/add", this.form);
@@ -226,7 +257,7 @@ export default {
         this.form = {
           id: "",
           name: "",
-          gender: "1",
+          gender: "",
           year: "",
           college: "",
           trainingLevel: "",

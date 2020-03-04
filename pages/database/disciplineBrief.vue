@@ -3,16 +3,16 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="上传用户名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="年份:">
-          <el-select v-model="query.year" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-            <el-option label="2017" value="2017"></el-option>
-            <el-option label="2016" value="2016"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.interviewTime"
+            align="right"
+            size="small"
+            type="date"
+            placeholder="年份"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -65,16 +65,17 @@
       <el-form :model="form" label-width="320px">
         <el-form-item label="年份" label-width="320px">
           <el-col :span="6">
-            <el-select v-model="form.year" size="small">
-              <el-option label="2019" value="2019"></el-option>
-              <el-option label="2018" value="2018"></el-option>
-              <el-option label="2017" value="2017"></el-option>
-              <el-option label="2016" value="2016"></el-option>
-            </el-select>
+            <el-date-picker
+              v-model="form.interviewTime"
+              align="right"
+              size="small"
+              type="date"
+              placeholder="年份"
+            ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="备注" label-width="320px" prop="remark">
-          <el-col span="6">
+          <el-col :span="6">
             <el-input v-model="form.remark" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>
@@ -135,6 +136,10 @@ export default {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
     async list() {
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
@@ -156,7 +161,7 @@ export default {
     downLoad(row) {
       window.open(row.file);
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
       switch (this.operate) {
         case "add":
           await axios.$post("/subjectInfo/add", this.form);

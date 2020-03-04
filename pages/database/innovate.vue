@@ -3,28 +3,29 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="年度:">
-          <el-select v-model="query.year" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-            <el-option label="2017" value="2017"></el-option>
-            <el-option label="2016" value="2016"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.year"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            placeholder="年度"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号"></el-input>
+          <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="学院:">
-          <el-input v-model="query.college" placeholder="请输入学院"></el-input>
+          <el-input v-model="query.college" placeholder="请输入学院" size="small"></el-input>
         </el-form-item>
         <el-form-item label="一级学科:">
-          <el-input v-model="query.firstLevelCategory" placeholder="请输入学科"></el-input>
+          <el-input v-model="query.firstLevelCategory" placeholder="请输入学科" size="small"></el-input>
         </el-form-item>
         <el-form-item label="项目名称:">
-          <el-input v-model="query.projectName" placeholder="请输入项目名称"></el-input>
+          <el-input v-model="query.projectName" placeholder="请输入项目名称" size="small"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -75,61 +76,68 @@
 
     <el-dialog
       style="min-height:500px"
-
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="姓名">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="学号">
+        <!-- <el-form-item label="学号" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-select v-model="form.gender" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+        </el-form-item>-->
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="性别">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="年度:">
-          <el-select v-model="form.year" size="small">
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-            <el-option label="2017" value="2017"></el-option>
-            <el-option label="2016" value="2016"></el-option>
-          </el-select>
+        <el-form-item label="年度:" prop="year">
+          <el-date-picker
+            v-model="form.year"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            placeholder="年度"
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item label="学院">
+        <el-form-item label="学院" prop="college">
           <el-col :span="6">
             <el-input size="small" v-model="form.college" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="一级学科">
+        <el-form-item label="一级学科" prop="firstLevelCategory">
           <el-col :span="6">
             <el-input size="small" v-model="form.firstLevelCategory" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="培养层次">
+        <el-form-item label="培养层次" prop="trainingLevel">
           <el-col :span="6">
             <el-input size="small" v-model="form.trainingLevel" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="项目名称">
+        <el-form-item label="项目名称" prop="projectName">
           <el-col :span="6">
             <el-input size="small" v-model="form.projectName" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="经费（万元）">
+        <el-form-item label="经费（万元）" prop="funding">
           <el-col :span="6">
-            <el-input size="small" v-model="form.stipend" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.funding" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业学校">
+        <!-- <el-form-item label="毕业学校">
           <el-col :span="6">
             <el-input size="small" v-model="form.graduationSchool" autocomplete="off"></el-input>
           </el-col>
@@ -138,8 +146,8 @@
           <el-col :span="6">
             <el-input size="small" v-model="form.funding" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item size="small" label="备注">
+        </el-form-item>-->
+        <el-form-item size="small" label="备注" prop="remark">
           <el-col :span="6">
             <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
@@ -147,8 +155,8 @@
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -174,7 +182,7 @@ export default {
       form: {
         id: "",
         name: "",
-        gender: "1",
+        gender: "",
         year: "",
         college: "",
         trainingLevel: "",
@@ -183,9 +191,23 @@ export default {
         funding: "",
         remark: ""
       },
-      tableData: [
-      
-      ]
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        year: [{ required: true, message: "请输入年度", trigger: "blur" }],
+        college: [{ required: true, message: "请输入学院", trigger: "blur" }],
+        trainingLevel: [
+          { required: true, message: "请输入培养层次", trigger: "blur" }
+        ],
+        firstLevelCategory: [
+          { required: true, message: "请输入一级学科", trigger: "blur" }
+        ],
+        projectName: [
+          { required: true, message: "请输入项目名称", trigger: "blur" }
+        ],
+        funding: [{ required: true, message: "请输入经费", trigger: "blur" }]
+      },
+      tableData: []
     };
   },
   methods: {
@@ -214,7 +236,27 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/teachingReform/add", this.form);
@@ -233,7 +275,7 @@ export default {
         this.form = {
           id: "",
           name: "",
-          gender: "1",
+          gender: "",
           year: "",
           college: "",
           trainingLevel: "",

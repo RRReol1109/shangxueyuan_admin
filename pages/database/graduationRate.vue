@@ -3,14 +3,17 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="届别:">
-          <el-select v-model="query.session" size="small">
-            <el-option label="全部"></el-option>
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.session"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            placeholder="年度"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="专业:">
-          <el-input v-model="query.major" placeholder="请输入专业"></el-input>
+          <el-input v-model="query.major" placeholder="请输入专业" size="small"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -63,36 +66,46 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="届别">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="届别" prop="session">
           <el-col :span="6">
-            <el-select v-model="form.session" size="small">
-              <el-option label="2019" value="2019"></el-option>
-              <el-option label="2018" value="2018"></el-option>
-            </el-select>
+            <el-date-picker
+              v-model="form.session"
+              align="right"
+              size="small"
+              type="date"
+              format="yyyy"
+              placeholder="年度"
+            ></el-date-picker>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业生人数">
+        <el-form-item label="毕业生人数" prop="totalCnt">
           <el-col :span="6">
             <el-input size="small" v-model="form.totalCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专业">
+        <el-form-item label="专业" prop="major">
           <el-col :span="6">
             <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业人数">
+        <el-form-item label="毕业人数" prop="graduateCnt">
           <el-col :span="6">
             <el-input size="small" v-model="form.graduateCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="结业人数">
+        <el-form-item label="结业人数" prop="finishedCnt">
           <el-col :span="6">
             <el-input size="small" v-model="form.finishedCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="有学位">
+        <el-form-item label="有学位" prop="degreeCnt">
           <el-col :span="6">
             <el-input size="small" v-model="form.degreeCnt" autocomplete="off"></el-input>
           </el-col>
@@ -100,8 +113,8 @@
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -133,9 +146,23 @@ export default {
         finishedCnt: "",
         degreeCnt: ""
       },
-      tableData: [
-       
-      ]
+      rules: {
+        session: [{ required: true, message: "请输入界别", trigger: "blur" }],
+        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        totalCnt: [
+          { required: true, message: "请输入毕业生人数", trigger: "blur" }
+        ],
+        graduateCnt: [
+          { required: true, message: "请输入毕业人数", trigger: "blur" }
+        ],
+        finishedCnt: [
+          { required: true, message: "请输入结业人数", trigger: "blur" }
+        ],
+        degreeCnt: [
+          { required: true, message: "请输入有学位", trigger: "blur" }
+        ]
+      },
+      tableData: []
     };
   },
   methods: {
@@ -164,7 +191,27 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       this.form.graduateRate =
         ((this.form.graduateCnt / this.form.totalCnt) * 100).toFixed(2) + "%";
       this.form.degreeRate =

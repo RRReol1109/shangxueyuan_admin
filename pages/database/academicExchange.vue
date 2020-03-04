@@ -2,24 +2,27 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="访问时间:">
+        <el-form-item label="来访时间:">
           <el-date-picker
-            v-model="query.startTime"
+            v-model="query.interviewTime"
             align="right"
             size="small"
             type="date"
-            placeholder="开始时间"
-          ></el-date-picker>-
-          <el-date-picker
-            v-model="query.endTime"
-            align="right"
-            size="small"
-            type="date"
-            placeholder="结束时间"
+            placeholder="来访时间"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="访问时间:">
-          <el-input size="small" v-model="query.keyword" placeholder="可输入关键字查询"></el-input>
+        <el-form-item label="专家姓名:">
+          <el-input v-model="query.visitor" size="small" placeholder="请输入专家姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="邀请人:">
+          <el-input v-model="query.inviter" size="small" placeholder="请输入邀请人"></el-input>
+        </el-form-item>
+        <el-form-item label="专家类别">
+          <el-select v-model="query.expertCategory" size="small" placeholder="请选择">
+            <el-option label="全部" value></el-option>
+            <el-option label="国内" value="国内"></el-option>
+            <el-option label="国外" value="国外"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -95,10 +98,10 @@
         </el-form-item>
         <el-form-item label="职称" prop="jobTitle">
           <el-col :span="6">
-            <el-select v-model="form.jobTitle" size="small">
-              <el-option label="教授" value="1"></el-option>
-              <el-option label="副教授" value="2"></el-option>
-              <el-option label="其他" value="3"></el-option>
+            <el-select v-model="form.jobTitle" size="small" placeholder="请输入">
+              <el-option label="教授" value="教授"></el-option>
+              <el-option label="副教授" value="副教授"></el-option>
+              <el-option label="其他" value="其他"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
@@ -119,9 +122,9 @@
         </el-form-item>
         <el-form-item label="专家类别" prop="expertCategory">
           <el-col :span="6">
-            <el-select v-model="form.expertCategory" size="small">
-              <el-option label="国内" value="1"></el-option>
-              <el-option label="国外" value="2"></el-option>
+            <el-select v-model="form.expertCategory" size="small" placeholder="请输入">
+              <el-option label="国内" value="国内"></el-option>
+              <el-option label="国外" value="国外"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
@@ -164,8 +167,8 @@
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -224,7 +227,7 @@ export default {
         discipline: [
           { required: true, message: "请输入所属学科", trigger: "blur" }
         ],
-        passporte: [
+        passport: [
           { required: true, message: "请输入护照号", trigger: "blur" }
         ],
         citizenshipCountry: [
@@ -244,6 +247,10 @@ export default {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async list() {
       for (const key in this.query) {

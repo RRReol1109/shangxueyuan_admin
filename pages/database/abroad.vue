@@ -19,16 +19,21 @@
         </el-form-item>
         <el-form-item label="性别:">
           <el-select v-model="query.gender" size="small" placeholder="请选择性别">
-            <el-option label="全部"></el-option>
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+            <el-option label="全部" value></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="入专时间:">
-          <el-date-picker v-model="query.entryTime" type="date" placeholder="选择日期时间"></el-date-picker>
+          <el-date-picker v-model="query.entryTime" type="date" size="small" placeholder="选择日期时间"></el-date-picker>
         </el-form-item>
         <el-form-item label="预计毕业时间:">
-          <el-date-picker v-model="query.graduationTime" type="date" placeholder="选择日期时间"></el-date-picker>
+          <el-date-picker
+            v-model="query.graduationTime"
+            size="small"
+            type="date"
+            placeholder="选择日期时间"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -89,89 +94,95 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="学号">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <!-- <el-form-item label="学号" prop="">
           <el-col :span="6">
             <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item label="姓名">
+        </el-form-item>-->
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="英文名">
+        <el-form-item label="英文名" prop="englishName">
           <el-col :span="6">
             <el-input size="small" v-model="form.englishName"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专业">
+        <el-form-item label="专业" prop="major">
           <el-col :span="6">
             <el-input size="small" v-model="form.major"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-select v-model="form.gender" size="small">
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="请选择">
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="生日">
+        <el-form-item label="生日" prop="birthday">
           <el-col :span="6">
             <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期时间"></el-date-picker>
           </el-col>
         </el-form-item>.
-        <el-form-item label="导师">
+        <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
             <el-input size="small" v-model="form.tutor" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item label="手机号" prop="phone">
           <el-col :span="6">
             <el-input size="small" v-model="form.phone" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="email">
           <el-col :span="6">
             <el-input size="small" v-model="form.email" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="QQ">
+        <el-form-item label="QQ" prop="qq">
           <el-col :span="6">
             <el-input size="small" v-model="form.qq" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="微信">
+        <el-form-item label="微信" prop="wechat">
           <el-col :span="6">
             <el-input size="small" v-model="form.wechat" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="国籍">
+        <el-form-item label="国籍" prop="country">
           <el-col :span="6">
             <el-input size="small" v-model="form.country" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="护照">
+        <el-form-item label="护照" prop="passport">
           <el-col :span="6">
             <el-input size="small" v-model="form.passport" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="登记编号">
+        <el-form-item label="登记编号" prop="registrationNumber">
           <el-col :span="6">
             <el-input size="small" v-model="form.registrationNumber" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="入专时间:">
+        <el-form-item label="入专时间:" prop="entryTime">
           <el-date-picker v-model="form.entryTime" type="date" placeholder="选择日期时间"></el-date-picker>
         </el-form-item>
-        <el-form-item label="预计毕业时间:">
+        <el-form-item label="预计毕业时间:" prop="graduationTime">
           <el-date-picker v-model="form.graduationTime" type="date" placeholder="选择日期时间"></el-date-picker>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -228,18 +239,25 @@ export default {
         englishName: [
           { required: true, message: "请输入英文名", trigger: "blur" }
         ],
-        hours: [
-          { required: true, message: "请输入学时", trigger: "blur" },
+        gender: [
+          { required: true, message: "请输入性别", trigger: "blur" },
           { validator: validateNumber, trigger: "blur" }
         ],
-        classes: [
-          { required: true, message: "请输入指导班级", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
+        entryTime: [
+          { required: true, message: "请输入入专时间", trigger: "blur" }
         ],
-        company: [
-          { required: true, message: "请输入实习单位", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
-        ]
+        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        birthday: [{ required: true, message: "请输入生日", trigger: "blur" }],
+        graduationTime: [
+          { required: true, message: "请输入入专时间", trigger: "blur" }
+        ],
+        registrationNumber: [
+          { required: true, message: "请输入登记编号", trigger: "blur" }
+        ],
+        country: [
+          { required: true, message: "请输入入国籍", trigger: "blur" }
+        ],
+        tutor: [{ required: true, message: "请输入导师", trigger: "blur" }]
       },
       tableData: []
     };
@@ -292,17 +310,26 @@ export default {
       this.loading = false;
     },
     async submitForm(formName) {
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // this.ruleForm.count = parseInt(this.ruleForm.count);
-          // this.ruleForm.hours = parseInt(this.ruleForm.hours);
-          console.log(this.ruleForm);
-          this.updataCache();
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           // await axios.$post("/internationalStudent/add", this.form);
@@ -322,13 +349,13 @@ export default {
           id: "",
           name: "",
           englishName: "",
-          gender: "1",
+          gender: "",
           phone: "",
           major: "",
           tutor: "",
           entryTime: "",
           graduationTime: "",
-          type: "1",
+          type: "",
           passport: "",
           registrationNumber: "",
           qq: "",
@@ -340,6 +367,10 @@ export default {
       } else {
         this.form = row;
       }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {

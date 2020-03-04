@@ -194,7 +194,7 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async submitForm(formactivityTheme) {
+    async submitForm(formName) {
       console.log('this.catesList', this.catesList);
       this.form.cates = '';
       if(this.catesList.length > 0) {
