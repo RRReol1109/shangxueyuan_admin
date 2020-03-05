@@ -2,7 +2,7 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="年级:">
+        <!-- <el-form-item label="年级:">
           <el-date-picker
             v-model="query.year"
             align="right"
@@ -11,7 +11,7 @@
             format="yyyy"
             placeholder="来访时间"
           ></el-date-picker>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="学号:">
           <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>
@@ -22,7 +22,14 @@
           <el-input v-model="query.major" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-input v-model="query.tutor" placeholder="请输入姓名" size="small"></el-input>
+          <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+            <el-option
+              v-for="item in teacherList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="毕业专业:">
           <el-input v-model="query.graduationMajor" placeholder="请输入毕业专业" size="small"></el-input>
@@ -189,6 +196,7 @@ export default {
         admissionType: "",
         remark: ""
       },
+      teacherList: [],
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
@@ -325,7 +333,13 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };

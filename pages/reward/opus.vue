@@ -242,6 +242,9 @@
             <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
           </el-col>
         </el-form-item>
+        <el-form-item v-if="!['show'].includes(operate)">
+          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
+        </el-form-item>
         <!-- <el-form-item label="作者:" :prop="'authors'">
           <el-col :span="12">
             <label>教师id-教师姓名</label>
@@ -405,7 +408,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录附件"
+          message: "该条记录无附件"
         });
       }
     },

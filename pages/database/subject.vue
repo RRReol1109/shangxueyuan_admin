@@ -3,17 +3,17 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="性别:">
-          <el-select v-model="query.gender" size="small">
+          <el-select v-model="query.gender" size="small" placeholder="请选择">
             <el-option label="全部" value></el-option>
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="学科">
-          <el-select v-model="query.major" size="small">
+          <el-select v-model="query.major" size="small" placeholder="请选择">
             <el-option label="全部" value></el-option>
             <el-option label="管理" value="管理"></el-option>
             <el-option label="工商" value="工商"></el-option>
@@ -67,30 +67,36 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="姓名">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="性别">
+        <el-form-item label="性别" prop="gender">
           <el-select v-model="form.gender" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="学科">
+        <el-form-item label="学科" prop="major">
           <el-select v-model="form.major" size="small">
-            <el-option label="管理" value="1"></el-option>
-            <el-option label="工商" value="2"></el-option>
-            <el-option label="应经" value="3"></el-option>
+            <el-option label="管理" value="管理"></el-option>
+            <el-option label="工商" value="工商"></el-option>
+            <el-option label="应经" value="应经"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -115,8 +121,13 @@ export default {
       },
       form: {
         name: "",
-        gender: "1",
-        major: "1"
+        gender: "",
+        major: ""
+      },
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        major: [{ required: true, message: "请输入学科", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }]
       },
       tableData: []
     };
@@ -144,7 +155,31 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
     async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/threeDisciplinaryStaff/add", this.form);
@@ -163,8 +198,8 @@ export default {
         this.form = {
           id: "",
           name: "",
-          gender: "1",
-          major: "1"
+          gender: "",
+          major: ""
         };
       } else {
         this.form = row;

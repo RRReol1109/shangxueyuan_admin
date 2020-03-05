@@ -165,11 +165,33 @@
             ></el-autocomplete>
           </el-col>
         </el-form-item>
-        <el-form-item label="作者及单位" prop="persons">
+        <!-- <el-form-item label="作者及单位" prop="persons">
           <el-col :span="12">
             <label>作者姓名-单位</label>
             <el-input v-model="ruleForm.persons" rows="5" type="textarea"></el-input>
           </el-col>
+        </el-form-item>-->
+        <el-form-item
+          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          :label="'作者信息' + (index+1)"
+          :key="teacherArr.key"
+          :prop="'teacherArr.' + index + '.value'"
+        >
+          <el-col :span="12">
+            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="persons">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <el-input clearable v-model="teacherArr.num" placeholder="请输入单位" label="字数"></el-input>
+            <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
+          </el-col>
+        </el-form-item>
+        <el-form-item v-if="!['show'].includes(operate)">
+          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>
         <el-form-item label="获得分数" prop="score">
           <el-col :span="12">
@@ -370,39 +392,55 @@ export default {
     },
     addTeacher() {
       this.ruleForm.teacherArr.push({
-        persons: "",
+        name: "",
         num: ""
       });
     },
     async submitForm(formName) {
+      for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+        let element = this.ruleForm.teacherArr[i];
+        for (const key in element) {
+          if (element.hasOwnProperty(key)) {
+            let info = element[key];
+            console.log(info);
+            if (key == "name") {
+              this.ruleForm.persons += info;
+            }
+            if (key == "num") {
+              this.ruleForm.persons += "|" + info + ",";
+            }
+          }
+        }
+        if (i == this.ruleForm.teacherArr.length - 1) {
+          this.ruleForm.persons = this.ruleForm.persons.substr(
+            0,
+            this.ruleForm.persons.length - 1
+          );
+        }
+      }
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.persons = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (
-                !element &&
-                key != "auditFlag" &&
-                key != "id" &&
-                key != "finalScore"
-              ) {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
-            }
-          }
           await axios.$post("/reportResult/add", this.ruleForm);
           break;
         case "edit":
@@ -426,7 +464,7 @@ export default {
           awardDate: moment().format("YYYY-MM-DD"),
           teacherArr: [
             {
-              persons: "",
+              name: "",
               num: ""
             }
           ],
@@ -434,6 +472,27 @@ export default {
         };
       } else {
         this.ruleForm = row;
+        this.ruleForm.teacherArr = [];
+        let teacherInfo = row.persons.split(",");
+        for (let i = 0; i < teacherInfo.length; i++) {
+          const element = teacherInfo[i];
+          this.ruleForm.teacherArr.push({
+            name: "",
+            num: ""
+          });
+          let teacher = element.split("|");
+          for (let j = 0; j < teacher.length; j++) {
+            const item = teacher[j];
+            console.log(item, "======item");
+            if (j == 0) {
+              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
+                ","
+              )[i];
+            } else if (j == 1) {
+              this.ruleForm.teacherArr[i].num = item;
+            }
+          }
+        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
@@ -552,6 +611,7 @@ export default {
         offset: 0,
         limit: 999999
       });
+      this.teacherList = this.teacherList.rows;
     },
     async examineData() {
       let examineList = [];

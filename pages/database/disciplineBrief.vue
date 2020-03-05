@@ -94,7 +94,7 @@
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small" :disabled="flag">确定</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" size="small" >确定</el-button>
         <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
       </div>
     </el-dialog>
@@ -130,7 +130,7 @@ export default {
       console.log(file);
       this.form.name = file.name;
       this.form.file = file.response;
-      this.flag = false;
+      // this.flag = false;
     },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
@@ -212,7 +212,13 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };

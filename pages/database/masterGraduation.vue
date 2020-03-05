@@ -109,7 +109,7 @@
           <el-col :span="6">
             <el-input size="small" v-model="form.teacher" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item label="专业" label-width="320px" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.category" autocomplete="off"></el-input>
@@ -298,6 +298,10 @@ export default {
       } else {
         this.form = row;
       }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {

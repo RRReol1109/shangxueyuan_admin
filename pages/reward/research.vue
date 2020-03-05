@@ -424,7 +424,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录附件"
+          message: "该条记录无附件"
         });
       }
     },

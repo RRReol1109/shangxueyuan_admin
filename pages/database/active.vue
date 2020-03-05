@@ -3,17 +3,13 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="活动主题:">
-          <el-input v-model="query.activityTheme" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.activityTheme" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="负责部门:">
-          <el-input v-model="query.department" placeholder="请输入姓名"></el-input>
+          <el-input v-model="query.department" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="学期">
-          <el-select v-model="query.semester" size="small">
-            <el-option label="全部" value></el-option>
-            <el-option label="第一学期" value="1"></el-option>
-            <el-option label="第二学期" value="2"></el-option>
-          </el-select>
+          <el-input size="small" v-model="query.semester" placeholder="请输入学期"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -63,40 +59,50 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="100px">
-        <el-form-item label="活动主题">
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="活动主题" prop="activityTheme">
           <el-col :span="6">
             <el-input size="small" v-model="form.activityTheme"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="活动时间">
+        <el-form-item label="活动时间" prop="activityTime">
           <el-col :span="6">
             <el-input size="small" v-model="form.activityTime"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="活动内容">
+        <el-form-item label="活动内容" prop="content">
           <el-col :span="6">
             <el-input size="small" v-model="form.content"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="负责部门">
+        <el-form-item label="负责部门" prop="department">
           <el-col :span="6">
-            <el-input size="small" v-model="form.department"></el-input>
+            <el-select v-model="form.department" placeholder="请选择部门" prop="fullname">
+              <el-option
+                v-for="item in depList"
+                :key="item.id"
+                :label="item.fullname"
+                :value="item.id"
+              ></el-option>
+            </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="学期">
+        <el-form-item label="学期" prop="semester">
           <el-col :span="6">
-            <el-select v-model="form.semester" size="small">
-              <el-option label="第一学期" value="1"></el-option>
-              <el-option label="第二学期" value="2"></el-option>
-            </el-select>
+            <el-input size="small" v-model="form.semester"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -120,16 +126,33 @@ export default {
         order: "desc",
         condition: ""
       },
+      depList: {},
       form: {
         activityTheme: "",
-        semester: "1",
+        semester: "",
         activityTime: "",
         department: "",
         content: ""
       },
-      tableData: [
-       
-      ]
+      rules: {
+        namactivityThemee: [
+          { required: true, message: "请输入姓名", trigger: "blur" }
+        ],
+        activityTheme: [
+          { required: true, message: "请输入活动主题", trigger: "blur" }
+        ],
+        department: [
+          { required: true, message: "请输入活动部门", trigger: "blur" }
+        ],
+        semester: [{ required: true, message: "请输入学期", trigger: "blur" }],
+        activityTime: [
+          { required: true, message: "请输入互动时间", trigger: "blur" }
+        ],
+        content: [
+          { required: true, message: "请输入活动内容", trigger: "blur" }
+        ]
+      },
+      tableData: []
     };
   },
   methods: {
@@ -139,6 +162,10 @@ export default {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async list() {
       for (const key in this.query) {
@@ -173,6 +200,26 @@ export default {
       this.loading = false;
     },
     async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           await axios.$post("/event/add", this.form);
@@ -231,7 +278,15 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
+    let deps = await axios.$post("/dept/list", {
+      limit: 9999999,
+      offset: 0,
+      order: "desc",
+      condition: ""
+    });
+    this.depList = deps;
+    console.log(deps);
     this.list();
   }
 };

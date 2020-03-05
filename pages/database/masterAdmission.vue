@@ -23,7 +23,14 @@
           </el-select>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-input v-model="query.tutor" placeholder="请输入姓名" size="small"></el-input>
+          <el-select v-model="query.tutor" placeholder="请选择老师" prop="name">
+            <el-option
+              v-for="item in teacherList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="毕业专业:">
           <el-input v-model="query.graduationMajor" placeholder="请输入毕业专业" size="small"></el-input>
@@ -270,9 +277,7 @@ export default {
         scholarshipName: [
           { required: true, message: "请输入奖学金名称", trigger: "blur" }
         ],
-        grade: [
-          { required: true, message: "请输入年级", trigger: "blur" }
-        ],
+        grade: [{ required: true, message: "请输入年级", trigger: "blur" }],
         graduationMajor: [
           { required: true, message: "请输入毕业专业", trigger: "blur" }
         ]

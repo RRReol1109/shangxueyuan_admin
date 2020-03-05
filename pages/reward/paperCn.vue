@@ -80,7 +80,7 @@
       <el-table-column prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column prop="score" align="center" label="计分"></el-table-column>
       <el-table-column prop="cateNumber" align="center" label="ISSN"></el-table-column>
-      <el-table-column prop="authors" align="center" label="全体作者"></el-table-column>
+      <el-table-column prop="userName" align="center" label="全体作者"></el-table-column>
       <el-table-column prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
@@ -194,11 +194,41 @@
         <!-- <el-form-item label="全体作者" prop="authors">
           <el-input v-model="ruleForm.authors" style="width:200px;"></el-input>
         </el-form-item>-->
-        <el-form-item label="作者信息" prop="authors" v-if="['show'].includes(operate)">
+        <!-- <el-form-item label="作者信息" prop="authors" v-if="['show'].includes(operate)">
           <el-col :span="12">
             <label>姓名-单位-是否是国际学籍-是否是通讯作者</label>
             <el-input v-model="ruleForm.authors" rows="5" type="textarea"></el-input>
           </el-col>
+        </el-form-item>-->
+        <el-form-item
+          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          :label="'作者信息' + (index+1)"
+          :key="teacherArr.key"
+          :prop="'teacherArr.' + index + '.value'"
+        >
+          <el-col :span="12">
+            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="persons">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <el-input
+              clearable
+              v-model="teacherArr.num"
+              placeholder="请输入单位"
+              label="字数"
+              type="textarea"
+            ></el-input>
+            <el-checkbox v-model="teacherArr.stu">是否国际学籍【不含港澳台】</el-checkbox>
+            <el-checkbox v-model="teacherArr.tx">是否是通讯作者</el-checkbox>
+            <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
+          </el-col>
+        </el-form-item>
+        <el-form-item v-if="!['show'].includes(operate)">
+          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>
         <el-form-item label="计分" prop="score">
           <el-col :span="12">
@@ -282,7 +312,8 @@ export default {
           {
             name: "",
             num: "",
-            dwList: [{ name: "" }]
+            stu: false,
+            tx: false
           }
         ]
       },
@@ -356,7 +387,9 @@ export default {
     addTeacher() {
       this.ruleForm.teacherArr.push({
         name: "",
-        num: ""
+        num: "",
+        stu: false,
+        tx: false
       });
     },
     fileUploadSuccess(res, file, files) {
@@ -375,6 +408,7 @@ export default {
         offset: 0,
         limit: 999999
       });
+      this.teacherList = this.teacherList.rows;
     },
     downLoadFile(rows) {
       if (rows.files) {
@@ -382,7 +416,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录附件"
+          message: "该条记录无附件"
         });
       }
     },
@@ -437,37 +471,77 @@ export default {
       }
     },
     async submitForm(formName) {
+      for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+        let element = this.ruleForm.teacherArr[i];
+        for (const key in element) {
+          if (element.hasOwnProperty(key)) {
+            let info = element[key];
+            console.log(info);
+            if (key == "name") {
+              this.ruleForm.authors += parseInt(info);
+            }
+            if (key == "num") {
+              this.ruleForm.authors += "|" + info;
+            }
+            if (key == "stu") {
+              this.ruleForm.authors += "|" + info;
+            }
+            if (key == "tx") {
+              this.ruleForm.authors += "|" + info + ",";
+            }
+          }
+        }
+        if (i == this.ruleForm.teacherArr.length - 1) {
+          this.ruleForm.authors = this.ruleForm.authors.substr(
+            0,
+            this.ruleForm.authors.length - 1
+          );
+        }
+      }
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
           this.ruleForm.authorCnt = this.ruleForm.teacherArr.length;
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (
-                !element &&
-                key != "auditFlag" &&
-                key != "id" &&
-                key != "finalScore" &&
-                key != "files"
-              ) {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
-            }
-          }
+          // for (const key in this.ruleForm) {
+          //   if (this.ruleForm.hasOwnProperty(key)) {
+          //     const element = this.ruleForm[key];
+          //     if (
+          //       !element &&
+          //       key != "auditFlag" &&
+          //       key != "id" &&
+          //       key != "finalScore" &&
+          //       key != "files"
+          //     ) {
+          //       console.log(element, "==========element===" + key);
+          //       this.$message({
+          //         type: "info",
+          //         message: "请填写正确数据"
+          //       });
+          //       return;
+          //     }
+          //   }
+          // }
           await axios.$post("/articleCn/add", this.ruleForm);
           this.fileurl = "";
           break;
@@ -489,10 +563,13 @@ export default {
           level: "",
           half: "",
           score: "",
+          authors: "",
           teacherArr: [
             {
               name: "",
-              num: ""
+              num: "",
+              stu: false,
+              tx: false
             }
           ],
           finalScore: "",
@@ -501,6 +578,41 @@ export default {
         };
       } else {
         this.ruleForm = row;
+        this.ruleForm.teacherArr = [];
+        let teacherInfo = row.authors.split(",");
+        for (let i = 0; i < teacherInfo.length; i++) {
+          const element = teacherInfo[i];
+          this.ruleForm.teacherArr.push({
+            name: "",
+            num: "",
+            stu: false,
+            tx: false
+          });
+          let teacher = element.split("|");
+          for (let j = 0; j < teacher.length; j++) {
+            const item = teacher[j];
+            console.log(item, "======item");
+            if (j == 0) {
+              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
+                ","
+              )[i];
+            } else if (j == 1) {
+              this.ruleForm.teacherArr[i].num = item;
+            } else if (j == 2) {
+              if (item == 0) {
+                this.ruleForm.teacherArr[i].stu = false;
+              } else {
+                this.ruleForm.teacherArr[i].stu = true;
+              }
+            } else {
+              if (item == 0) {
+                this.ruleForm.teacherArr[i].tx = false;
+              } else {
+                this.ruleForm.teacherArr[i].tx = true;
+              }
+            }
+          }
+        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },

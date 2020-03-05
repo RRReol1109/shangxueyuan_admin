@@ -9,6 +9,7 @@
             size="small"
             type="date"
             format="yyyy"
+            value-format="yyyy"
             placeholder="年度"
           ></el-date-picker>
         </el-form-item>
@@ -109,6 +110,7 @@
             size="small"
             type="date"
             format="yyyy"
+            value-format="yyyy"
             placeholder="年度"
           ></el-date-picker>
         </el-form-item>
@@ -217,6 +219,10 @@ export default {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async list() {
       for (const key in this.query) {

@@ -208,6 +208,10 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
     showDialog(row) {
       this.dialogFormVisible = true;
       this.formDisabled = false;

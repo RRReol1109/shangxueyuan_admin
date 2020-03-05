@@ -14,14 +14,14 @@
         <el-form-item label="专业:">
           <el-input v-model="query.major" placeholder="请输入专业" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="学号:">
+        <!-- <el-form-item label="学号:">
           <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
         <el-form-item label="性别:">
-          <el-select v-model="query.gender" size="small">
+          <el-select v-model="query.gender" size="small" placeholder="请选择">
             <el-option label="全部" value></el-option>
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
@@ -120,7 +120,14 @@
         </el-form-item>
         <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
-            <el-input size="small" v-model="form.tutor" autocomplete="off"></el-input>
+            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
           </el-col>
         </el-form-item>
         <el-form-item label="专业" prop="major">
@@ -177,6 +184,7 @@ export default {
         employer: "",
         address: ""
       },
+      teacherList: [],
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入姓名", trigger: "blur" }],
@@ -296,7 +304,13 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };

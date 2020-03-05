@@ -5,9 +5,9 @@
         <el-form-item label="上传用户名:">
           <el-input size="small" v-model="query.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="负责人:">
+        <!-- <el-form-item label="负责人:">
           <el-input size="small" v-model="query.charge" placeholder="请输入姓名"></el-input>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="学科名:">
           <el-input size="small" v-model="query.subject" placeholder="请输入姓名"></el-input>
         </el-form-item>
@@ -18,7 +18,8 @@
             size="small"
             type="date"
             format="yyyy"
-            placeholder="来访时间"
+            value-format="yyyy"
+            placeholder="年份"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
@@ -91,7 +92,8 @@
               size="small"
               type="date"
               format="yyyy"
-              placeholder="来访时间"
+              value-format="yyyy"
+              placeholder="年份"
             ></el-date-picker>
           </el-col>
         </el-form-item>
@@ -106,7 +108,7 @@
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
-        <el-form-item size="small" label="备注" prop="remark">
+        <el-form-item size="small" label="备注" prop="remark" label-width="320px">
           <el-col :span="6">
             <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
@@ -146,7 +148,7 @@ export default {
       },
       header: {},
       rules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
       },
       tableData: []
     };

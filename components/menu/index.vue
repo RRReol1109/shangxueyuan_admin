@@ -494,15 +494,15 @@ export default {
                 value: "/database/graduationRate"
               }
             },
-            {
-              entity: {
-                id: 43,
-                name: "disciplineConstruction",
-                alias: "就业指导",
-                state: "ENABLE",
-                value: "/database/disciplineConstruction"
-              }
-            },
+            // {
+            //   entity: {
+            //     id: 43,
+            //     name: "disciplineConstruction",
+            //     alias: "就业指导",
+            //     state: "ENABLE",
+            //     value: "/database/disciplineConstruction"
+            //   }
+            // },
             {
               entity: {
                 id: 44,

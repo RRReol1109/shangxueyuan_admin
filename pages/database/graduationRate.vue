@@ -9,6 +9,7 @@
             size="small"
             type="date"
             format="yyyy"
+            value-format="yyyy"
             placeholder="年度"
           ></el-date-picker>
         </el-form-item>
@@ -81,6 +82,7 @@
               size="small"
               type="date"
               format="yyyy"
+              value-format="yyyy"
               placeholder="年度"
             ></el-date-picker>
           </el-col>
@@ -242,6 +244,10 @@ export default {
       } else {
         this.form = row;
       }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {

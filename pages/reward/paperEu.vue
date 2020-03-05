@@ -73,7 +73,7 @@
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
-        <el-form-item label="附件" prop="file">
+        <!-- <el-form-item label="附件" prop="file">
           <el-upload
             class
             :headers="header"
@@ -83,7 +83,7 @@
           >
             <el-button size="small" class type="primary">附件上传</el-button>
           </el-upload>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -104,7 +104,7 @@
       <el-table-column prop="highlyCited" align="center" label="ESI经济/商学高被引"></el-table-column>
       <!-- <el-table-column prop="coauthorOrg" align="center" label="通讯作者单位"></el-table-column>
       <el-table-column prop="coauthorName" align="center" label="通讯作者姓名"></el-table-column>-->
-      <el-table-column prop="authors" align="center" label="作者及评分"></el-table-column>
+      <el-table-column prop="userName" align="center" label="全体作者"></el-table-column>
       <el-table-column prop="cateNumber" align="center" label="分类编号"></el-table-column>
       <el-table-column prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -260,11 +260,41 @@
             <el-input clearable v-model="ruleForm.coauthorName" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="作者信息" prop="authors">
+        <!-- <el-form-item label="作者信息" prop="authors">
           <el-col :span="12">
             <label>姓名-单位-是否是国际学籍-是否是通讯作者</label>
             <el-input v-model="ruleForm.authors" rows="5" type="textarea"></el-input>
           </el-col>
+        </el-form-item>-->
+        <el-form-item
+          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          :label="'作者信息' + (index+1)"
+          :key="teacherArr.key"
+          :prop="'teacherArr.' + index + '.value'"
+        >
+          <el-col :span="12">
+            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="persons">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <el-input
+              clearable
+              v-model="teacherArr.num"
+              placeholder="请输入单位"
+              label="字数"
+              type="textarea"
+            ></el-input>
+            <el-checkbox v-model="teacherArr.stu">是否国际学籍【不含港澳台】</el-checkbox>
+            <el-checkbox v-model="teacherArr.tx">是否是通讯作者</el-checkbox>
+            <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
+          </el-col>
+        </el-form-item>
+        <el-form-item v-if="!['show'].includes(operate)">
+          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>
         <el-form-item label="ISSN" prop="cateNumber">
           <el-col :span="12">
@@ -352,7 +382,9 @@ export default {
         teacherArr: [
           {
             name: "",
-            num: ""
+            num: "",
+            stu: false,
+            tx: false
           }
         ]
       },
@@ -431,7 +463,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录附件"
+          message: "该条记录无附件"
         });
       }
     },
@@ -526,7 +558,9 @@ export default {
     addTeacher() {
       this.ruleForm.teacherArr.push({
         name: "",
-        num: ""
+        num: "",
+        stu: false,
+        tx: false
       });
     },
     async exportData() {
@@ -544,36 +578,57 @@ export default {
       }
     },
     async submitForm(formName) {
+      for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+        let element = this.ruleForm.teacherArr[i];
+        for (const key in element) {
+          if (element.hasOwnProperty(key)) {
+            let info = element[key];
+            console.log(info);
+            if (key == "name") {
+              this.ruleForm.authors += parseInt(info);
+            }
+            if (key == "num") {
+              this.ruleForm.authors += "|" + info;
+            }
+            if (key == "stu") {
+              this.ruleForm.authors += "|" + info;
+            }
+            if (key == "tx") {
+              this.ruleForm.authors += "|" + info + ",";
+            }
+          }
+        }
+        if (i == this.ruleForm.teacherArr.length - 1) {
+          this.ruleForm.authors = this.ruleForm.authors.substr(
+            0,
+            this.ruleForm.authors.length - 1
+          );
+        }
+      }
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
-          this.ruleForm.authorCnt = this.ruleForm.teacherArr.length;
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (
-                !element &&
-                key != "auditFlag" &&
-                key != "id" &&
-                key != "finalScore"
-              ) {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
-            }
-          }
           await axios.$post("/articleEn/add", this.ruleForm);
           this.fileurl = "";
           break;
@@ -603,13 +658,50 @@ export default {
           teacherArr: [
             {
               name: "",
-              num: ""
+              num: "",
+              stu: false,
+              tx: false
             }
           ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
       } else {
         this.ruleForm = row;
+        this.ruleForm.teacherArr = [];
+        let teacherInfo = row.authors.split(",");
+        for (let i = 0; i < teacherInfo.length; i++) {
+          const element = teacherInfo[i];
+          this.ruleForm.teacherArr.push({
+            name: "",
+            num: "",
+            stu: false,
+            tx: false
+          });
+          let teacher = element.split("|");
+          for (let j = 0; j < teacher.length; j++) {
+            const item = teacher[j];
+            console.log(item, "======item");
+            if (j == 0) {
+              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
+                ","
+              )[i];
+            } else if (j == 1) {
+              this.ruleForm.teacherArr[i].num = item;
+            } else if (j == 2) {
+              if (item == 0) {
+                this.ruleForm.teacherArr[i].stu = false;
+              } else {
+                this.ruleForm.teacherArr[i].stu = true;
+              }
+            } else {
+              if (item == 0) {
+                this.ruleForm.teacherArr[i].tx = false;
+              } else {
+                this.ruleForm.teacherArr[i].tx = true;
+              }
+            }
+          }
+        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
@@ -728,6 +820,7 @@ export default {
         offset: 0,
         limit: 999999
       });
+      this.teacherList = this.teacherList.rows;
     },
     async examineData() {
       let examineList = [];

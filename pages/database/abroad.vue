@@ -2,9 +2,9 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="学号:">
+        <!-- <el-form-item label="学号:">
           <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
@@ -49,7 +49,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="id" align="center" label="学号"></el-table-column>
+      <!-- <el-table-column fixed prop="id" align="center" label="学号"></el-table-column> -->
       <el-table-column prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column prop="englishName" align="center" label="英文名"></el-table-column>
       <el-table-column prop="gender" align="center" label="性别"></el-table-column>
@@ -134,7 +134,14 @@
         </el-form-item>.
         <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
-            <el-input size="small" v-model="form.tutor" autocomplete="off"></el-input>
+            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
           </el-col>
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
@@ -215,6 +222,7 @@ export default {
         order: "desc",
         condition: ""
       },
+      teacherList: [],
       form: {
         id: "",
         name: "",
@@ -254,9 +262,7 @@ export default {
         registrationNumber: [
           { required: true, message: "请输入登记编号", trigger: "blur" }
         ],
-        country: [
-          { required: true, message: "请输入入国籍", trigger: "blur" }
-        ],
+        country: [{ required: true, message: "请输入入国籍", trigger: "blur" }],
         tutor: [{ required: true, message: "请输入导师", trigger: "blur" }]
       },
       tableData: []
@@ -398,7 +404,13 @@ export default {
         });
     }
   },
-  mounted() {
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };
