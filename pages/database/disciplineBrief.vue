@@ -7,10 +7,11 @@
         </el-form-item>
         <el-form-item label="年份:">
           <el-date-picker
-            v-model="query.interviewTime"
+            v-model="query.year"
             align="right"
             size="small"
             type="date"
+            value-format="yyyy"
             placeholder="年份"
           ></el-date-picker>
         </el-form-item>
@@ -59,7 +60,7 @@
         </template>
       </el-table-column>
       <!-- <el-table-column fixed prop="id" align="center" label="id"></el-table-column> -->
-      <el-table-column prop="user" align="center" label="上传用户"></el-table-column>
+      <el-table-column prop="editorName" align="center" label="上传用户"></el-table-column>
       <el-table-column prop="name" align="center" label="文件名"></el-table-column>
       <el-table-column prop="year" align="center" label="年份"></el-table-column>
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
@@ -125,11 +126,12 @@
         <el-form-item label="年份" label-width="320px">
           <el-col :span="6">
             <el-date-picker
-              v-model="form.interviewTime"
+              v-model="form.year"
               align="right"
               size="small"
               type="date"
               placeholder="年份"
+              value-format="yyyy"
             ></el-date-picker>
           </el-col>
         </el-form-item>
@@ -142,8 +144,9 @@
           <el-form-item label="文件上传" label-width="320px">
             <el-upload
               class="upload-demo"
+              :headers="header"
               :file-list="fileList"
-              action="http://bsart.zz.kuangyeyuan.com/mgr/upload"
+              action="http://bsart.zz.kuangyeyuan.com/mgr/upload?token='AuthenticationToken"
               :on-success="onSuccess"
             >
               <el-button size="small" type="primary">点击上传</el-button>
@@ -168,6 +171,7 @@ export default {
   components: {},
   data() {
     return {
+      header: {},
       flag: true,
       total: 0,
       page: 1,
@@ -224,7 +228,7 @@ export default {
       if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/subjectInfo/list", this.query);
+      let res = await axios.$post("/subjectConstruction/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
@@ -235,11 +239,11 @@ export default {
     async submitForm(formName) {
       switch (this.operate) {
         case "add":
-          await axios.$post("/subjectInfo/add", this.form);
+          await axios.$post("/subjectConstruction/add", this.form);
           this.fileList = [];
           break;
         case "edit":
-          await axios.$post("/subjectInfo/update", this.form);
+          await axios.$post("/subjectConstruction/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -252,6 +256,7 @@ export default {
         this.form = {
           id: ""
         };
+        this.form.user=localStorage.getItem("userId");
       } else {
         this.flag = false;
         this.form = row;
@@ -274,7 +279,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/subjectInfo/update", this.examineForm);
+        await axios.$post("/subjectConstruction/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -336,9 +341,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let subjectInfoId = element.id;
-            await axios.$post("/subjectInfo/delete", {
-              subjectInfoId: subjectInfoId
+            let subjectConstructionId = element.id;
+            await axios.$post("/subjectConstruction/delete", {
+              subjectConstructionId: subjectConstructionId
             });
           }
           this.tableData = [];
@@ -364,9 +369,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let subjectInfoId = row.id;
-          await axios.$post("/subjectInfo/delete", {
-            subjectInfoId: subjectInfoId
+          let subjectConstructionId = row.id;
+          await axios.$post("/subjectConstruction/delete", {
+            subjectConstructionId: subjectConstructionId
           });
           this.list();
           this.$message({
@@ -388,6 +393,9 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
     this.list();

@@ -67,7 +67,7 @@
         </template>
       </el-table-column>
       <!-- <el-table-column fixed prop="id" align="center" label="id"></el-table-column> -->
-      <el-table-column prop="userName" align="center" label="上传用户"></el-table-column>
+      <el-table-column prop="editorName" align="center" label="上传用户"></el-table-column>
       <!-- <el-table-column prop="charge" align="center" label="负责人"></el-table-column>
       <el-table-column prop="subject" align="center" label="学科名"></el-table-column>
       <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>-->
@@ -160,7 +160,7 @@
             class="upload-demo"
             :file-list="fileList"
             :headers="header"
-            action="http://bsart.zz.kuangyeyuan.com/mgr/upload"
+            action="http://bsart.zz.kuangyeyuan.com/mgr/upload?token='AuthenticationToken"
             :on-success="success"
           >
             <el-button size="small" type="primary">点击上传</el-button>
