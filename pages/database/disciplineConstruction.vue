@@ -33,10 +33,40 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-dropdown @command="handleCommand" style="float:right;">
+            <el-button size="small" type="primary">
+              功能列表
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
+              <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
+              <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
+              <!-- <el-dropdown-item>
+                <el-upload
+                  class
+                  :file-list="fileList"
+                  :headers="header"
+                  :on-success="uploadSuccess"
+                  action="http://bsart.zz.kuangyeyuan.com/simulation/upload?token='AuthenticationToken'"
+                >
+                  <el-button class type="text">批量上传</el-button>
+                </el-upload>
+              </el-dropdown-item>-->
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="id" align="center" label="id"></el-table-column>
+      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+        <template slot-scope="scope">
+          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column fixed prop="id" align="center" label="id"></el-table-column> -->
       <el-table-column prop="userName" align="center" label="上传用户"></el-table-column>
       <!-- <el-table-column prop="charge" align="center" label="负责人"></el-table-column>
       <el-table-column prop="subject" align="center" label="学科名"></el-table-column>
@@ -44,6 +74,11 @@
       <el-table-column prop="name" align="center" label="文件名"></el-table-column>
       <el-table-column prop="file" align="center" label="文件路径"></el-table-column>
       <el-table-column prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column prop="auditFlag" align="center" label="审核状态">
+        <template slot-scope="scope">
+          <span>{{scope.row.auditFlag | statusFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
@@ -66,7 +101,30 @@
         :total="total"
       ></el-pagination>
     </nav>
-
+    <el-dialog style="min-height:500px" title :visible.sync="examineDialog">
+      <el-form
+        :model="examineForm"
+        :rules="rules"
+        ref="examineForm"
+        label-width="100px"
+        class="demo-examineForm"
+      >
+        <el-form-item>
+          <el-form-item label="审核状态:">
+            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+              <el-option label="未审核" value="0"></el-option>
+              <el-option label="审核通过" value="1"></el-option>
+              <el-option label="审核未通过" value="2"></el-option>
+            </el-select>
+          </el-form-item>
+          <div class="dialog-footer">
+            <el-button @click="examineDialog = false" size="small">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
+            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
     <el-dialog
       style="min-height:500px"
       title="学硕毕业情况"
@@ -134,6 +192,9 @@ export default {
       page: 1,
       operate: "",
       dialogFormVisible: false,
+      roleId: 0,
+      examineDialog: false,
+      examineForm: {},
       query: {
         limit: 14,
         offset: 0,
@@ -152,6 +213,15 @@ export default {
       },
       tableData: []
     };
+  },
+  filters: {
+    statusFilter: function(value) {
+      return {
+        "0": "未审核",
+        "1": "审核已通过",
+        "2": "审核未通过"
+      }[value.toString()];
+    }
   },
   methods: {
     handleCurrentChange(val) {
@@ -178,6 +248,8 @@ export default {
     },
     async submitForm(formName) {
       this.form.user = localStorage.getItem("userId");
+      this.form.userName = JSON.parse(localStorage.getItem("userInfo")).name;
+
       switch (this.operate) {
         case "add":
           await axios.$post("/subjectInfo/add", this.form);
@@ -230,12 +302,111 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    async changeFlag(row) {
+      row.pick = !row.pick;
+    },
+
+    async examineData() {
+      let examineList = [];
+      for (let i = 0; i < this.tableData.length; i++) {
+        const element = this.tableData[i];
+        console.log(element);
+        if (element.pick) {
+          examineList.push(element);
+        }
+      }
+      for (let i = 0; i < examineList.length; i++) {
+        const element = examineList[i];
+        console.log(element.auditFlag);
+        this.examineForm.id = element.id;
+        await axios.$post("/subjectInfo/update", this.examineForm);
+      }
+      this.list();
+      this.examineDialog = false;
+      this.$message({
+        type: "success",
+        message: "审核成功!"
+      });
+    },
+
+    async handleCommand(command) {
+      console.log(command);
+      switch (command) {
+        case "examine":
+          let deleteList = [];
+          for (let i = 0; i < this.tableData.length; i++) {
+            const element = this.tableData[i];
+            console.log(element);
+            if (element.pick) {
+              deleteList.push(element);
+            }
+          }
+          if (deleteList.length <= 0) {
+            await this.$confirm("未选中数据", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(async () => {});
+            return;
+          }
+          this.examineDialog = true;
+          break;
+        case "delCount":
+          this.delCount();
+          break;
+      }
+    },
+    async delCount() {
+      let deleteList = [];
+      for (let i = 0; i < this.tableData.length; i++) {
+        const element = this.tableData[i];
+        console.log(element);
+        if (element.pick) {
+          deleteList.push(element);
+        }
+      }
+      if (deleteList.length <= 0) {
+        await this.$confirm("未选中数据", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          for (let i = 0; i < deleteList.length; i++) {
+            const element = deleteList[i];
+            let subjectInfoId = element.id;
+            await axios.$post("/subjectInfo/delete", {
+              subjectInfoId: subjectInfoId
+            });
+          }
+          this.tableData = [];
+          await this.list();
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
   },
   mounted() {
     this.header = {
       Authorization: localStorage.getItem("message")
     };
+    this.roleId = localStorage.getItem("roleId");
     this.list();
   }
 };

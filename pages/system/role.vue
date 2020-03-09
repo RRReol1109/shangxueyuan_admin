@@ -362,11 +362,11 @@ export default {
               label: "毕业率",
               date: ""
             },
-            // {
-            //   id: 43,
-            //   label: "就业指导",
-            //   date: ""
-            // },
+            {
+              id: 43,
+              label: "就业指导",
+              date: ""
+            },
             {
               id: 44,
               label: "三学科人员",
