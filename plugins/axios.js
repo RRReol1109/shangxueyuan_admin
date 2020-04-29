@@ -4,7 +4,7 @@ import qs from 'qs';
 export default function ({ store, redirect, app: { $axios } }) {
     $axios.setHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
     $axios.onRequest(config => {
-        config.baseURL = 'http://bsart.zz.kuangyeyuan.com/';
+        config.baseURL = 'http://bsoa.csu.edu.cn/bs/';
         console.log('config:::', store.state.token);
         // $axios.setHeader('authorization', store.state.token);
         if (config.method === 'post') {

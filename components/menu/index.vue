@@ -354,6 +354,44 @@ export default {
               entity: {
                 id: 30,
                 name: "studentAbroad",
+                alias: "本科生模块",
+                state: "ENABLE",
+                value: "/database/undergraduate"
+              },
+              childs: [
+                {
+                  entity: {
+                    id: 30,
+                    name: "studentAbroad",
+                    alias: "教学",
+                    state: "ENABLE",
+                    value: "/database/undergraduate"
+                  }
+                },
+                {
+                  entity: {
+                    id: 30,
+                    name: "studentAbroad",
+                    alias: "招生",
+                    state: "ENABLE",
+                    value: "/database/undergraduate"
+                  }
+                },
+                {
+                  entity: {
+                    id: 30,
+                    name: "studentAbroad",
+                    alias: "毕业",
+                    state: "ENABLE",
+                    value: "/database/undergraduate"
+                  }
+                }
+              ]
+            },
+            {
+              entity: {
+                id: 30,
+                name: "studentAbroad",
                 alias: "出国学生",
                 state: "ENABLE",
                 value: "/database/studentAbroad"

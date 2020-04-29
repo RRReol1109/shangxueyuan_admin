@@ -66,7 +66,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="type" label="类型"></el-table-column>
+      <el-table-column prop="type" label="类型" align="center"></el-table-column>
       <el-table-column prop="year" align="center" label="年度"></el-table-column>
       <el-table-column prop="publishDate" align="center" label="出版时间"></el-table-column>
       <el-table-column prop="name" align="center" label="著作教程名称"></el-table-column>

@@ -12,7 +12,7 @@ import qs from 'qs';
 // import router from 'router'
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = 'http://bsart.zz.kuangyeyuan.com/';
+axios.defaults.baseURL = 'http://bsoa.csu.edu.cn/bs/';
 
 
 //http request 拦截器
