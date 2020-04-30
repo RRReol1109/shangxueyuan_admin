@@ -68,7 +68,11 @@
       <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
     </nav>
 
-    <el-dialog style="min-height:500px"  :visible.sync="dialogFormVisible" :disabled="!['edit', 'add'].includes(operate)">
+    <el-dialog
+      style="min-height:500px"
+      :visible.sync="dialogFormVisible"
+      :disabled="!['edit', 'add'].includes(operate)"
+    >
       <el-form :model="form" label-width="100px">
         <el-form-item label="姓名">
           <el-col :span="6">
@@ -172,9 +176,8 @@ export default {
         admissionType: "",
         remarks: ""
       },
-      tableData: [
-       
-      ]
+      operate: [],
+      tableData: []
     };
   },
   methods: {

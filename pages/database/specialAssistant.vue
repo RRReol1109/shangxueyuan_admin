@@ -32,21 +32,21 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
-              <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
+              <el-dropdown-item command="temp">模板下载</el-dropdown-item>
+              <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
               <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
-              <!-- <el-dropdown-item>
+              <el-dropdown-item>
                 <el-upload
                   class
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsart.zz.kuangyeyuan.com/simulation/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/master/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
-              </el-dropdown-item>-->
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -455,6 +455,30 @@ export default {
         case "delCount":
           this.delCount();
           break;
+        case "temp":
+          location.href = "http://112.74.56.60/excel/excel-model/kyjl-zzjc.xls";
+          break;
+        case "download":
+          this.exportData();
+          break;
+      }
+    },
+    uploadSuccess() {
+      this.list();
+    },
+
+    async exportData() {
+      let data = await axios.$download("/master/export", {
+        params: this.query
+      });
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "excel.xls");
+        document.body.appendChild(link);
+        link.click();
       }
     },
     async delCount() {

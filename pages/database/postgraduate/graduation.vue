@@ -2,30 +2,17 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="年级:">
-          <el-date-picker
-            v-model="query.interviewTime"
-            align="right"
-            size="small"
-            type="date"
-            placeholder="年级"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="专业:">
-          <el-input v-model="query.major" placeholder="请输入专业" size="small"></el-input>
-        </el-form-item>
         <!-- <el-form-item label="学号:">
           <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>-->
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="性别:">
-          <el-select v-model="query.gender" size="small" placeholder="请选择">
-            <el-option label="全部" value></el-option>
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
-          </el-select>
+        <el-form-item label="导师:">
+          <el-input v-model="query.teacher" placeholder="请输入姓名" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="专业:">
+          <el-input v-model="query.category" placeholder="请输入专业" size="small"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -45,21 +32,21 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="temp">模板下载</el-dropdown-item>
-              <el-dropdown-item command="download">导出数据</el-dropdown-item>
+              <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
+              <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
               <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
-              <el-dropdown-item>
+              <!-- <el-dropdown-item>
                 <el-upload
                   class
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/addressBook/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/simulation/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
-              </el-dropdown-item>
+              </el-dropdown-item>-->
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -74,13 +61,18 @@
       <!-- <el-table-column fixed prop="id" align="center" label="学号"></el-table-column> -->
       <el-table-column prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="major" align="center" label="专业"></el-table-column>
-      <el-table-column prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column prop="classes" align="center" label="班级"></el-table-column>
-      <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column prop="employer" align="center" label="工作单位"></el-table-column>
-      <el-table-column prop="address" align="center" label="家庭住址"></el-table-column>
+      <el-table-column prop="birthday" align="center" label="出生日期"></el-table-column>
+      <el-table-column prop="major" align="center" label="授予硕士学位专业"></el-table-column>
+      <el-table-column prop="category" align="center" label="专业"></el-table-column>
+      <!-- <el-table-column prop="teacher" align="center" label="导师"></el-table-column> -->
+      <el-table-column prop="score" align="center" label="课程学习情况（总学分/学位课学分/平均绩点）"></el-table-column>
+      <el-table-column prop="paper" align="center" label="在读期间发表论文"></el-table-column>
+      <el-table-column prop="pleaDate" align="center" label="答辩日期"></el-table-column>
+      <!-- <el-table-column prop="teacher" align="center" label="毕业时间"></el-table-column>
+      <el-table-column prop="teacher" align="center" label="毕业去向"></el-table-column>
+      <el-table-column prop="teacher" align="center" label="电话"></el-table-column>
+      <el-table-column prop="teacher" align="center" label="邮箱"></el-table-column>-->
+      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
@@ -134,7 +126,7 @@
     </el-dialog>
     <el-dialog
       style="min-height:500px"
-      title="通讯录"
+      title="学硕毕业情况"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
@@ -145,62 +137,80 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="姓名" label-width="320px" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <!-- <el-form-item label="学号">
+        <!-- <el-form-item label="学号" label-width="320px">
           <el-col :span="6">
             <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="small" placeholder="请选择">
+        <el-form-item label="出生日期" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期时间"></el-date-picker>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="性别" label-width="320px" prop="name">
+          <el-select v-model="form.gender" size="small">
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.phone" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="年级" prop="grade">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.grade" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="班级" prop="classes">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.classes" placeholder="请输入班级"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="导师" prop="tutor">
-          <el-col :span="6">
-            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="专业" prop="major">
+        <el-form-item label="授予硕士学位专业" label-width="320px" prop="name">
           <el-col :span="6">
             <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="工作单位" prop="employer">
+        <!-- <el-form-item label="导师" label-width="320px" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.employer" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.teacher" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>-->
+        <el-form-item label="专业" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.category" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="家庭地址" prop="address">
+        <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" label-width="320px" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.address" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.score" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="在读期间发表论文" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="答辩日期" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-date-picker v-model="form.pleaDate" type="date" placeholder="选择日期时间"></el-date-picker>
+          </el-col>
+        </el-form-item>
+        <!-- <el-form-item label="毕业时间" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期时间"></el-date-picker>
+          </el-col>
+        </el-form-item>-->
+        <!-- <el-form-item label="毕业去向" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="电话" label-width="320px" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="邮箱" label-width="320px" prop="paper">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>-->
+        <el-form-item label="备注" label-width="320px" prop="remark">
+          <el-col :span="6">
+            <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
@@ -230,34 +240,39 @@ export default {
         order: "desc",
         condition: ""
       },
-
       form: {
         id: "",
         name: "",
         gender: "",
-        phone: "",
-        grade: "2019",
+        birthday: "",
         major: "",
-        tutor: "",
-        classes: "",
-        employer: "",
-        address: ""
+        category: "",
+        teacher: "",
+        score: "",
+        paper: "",
+        pleaDate: "",
+        remark: ""
+      },
+      rules: {
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        birthday: [{ required: true, message: "请输入生日", trigger: "blur" }],
+        major: [
+          { required: true, message: "请输入授予硕士学位专业", trigger: "blur" }
+        ],
+        category: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        teacher: [{ required: true, message: "请输入老师", trigger: "blur" }],
+        score: [
+          { required: true, message: "请输入课程学习近况", trigger: "blur" }
+        ],
+        paper: [{ required: true, message: "请输入论文", trigger: "blur" }],
+        pleaDate: [
+          { required: true, message: "请输入毕业时间", trigger: "blur" }
+        ]
       },
       roleId: 0,
       examineDialog: false,
       examineForm: {},
-      teacherList: [],
-      rules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        gender: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        phone: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        grade: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        major: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        tutor: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        classes: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        employer: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        address: [{ required: true, message: "请输入姓名", trigger: "blur" }]
-      },
       tableData: []
     };
   },
@@ -270,7 +285,6 @@ export default {
       }[value.toString()];
     }
   },
-
   methods: {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
@@ -279,6 +293,13 @@ export default {
     async list() {
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
+          if (key == "pleaDate" || key == "birthday") {
+            if (element) {
+              this.query[key] = moment(element).format("YYYY-MM-DD");
+            } else {
+              delete this.query[key];
+            }
+          }
           const element = this.query[key];
           if (element == "" && key != "condition" && key != "offset") {
             delete this.query[key];
@@ -289,14 +310,10 @@ export default {
       if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/addressBook/list", this.query);
+      let res = await axios.$post("/masterGraduate/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
-    },
-    resetForm(formName) {
-      console.log(this.$refs[formName]);
-      this.$refs[formName].resetFields();
     },
     async submitForm(formName) {
       let verification = false;
@@ -321,10 +338,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/addressBook/add", this.form);
+          await axios.$post("/masterGraduate/add", this.form);
           break;
         case "edit":
-          await axios.$post("/addressBook/update", this.form);
+          await axios.$post("/masterGraduate/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -338,17 +355,22 @@ export default {
           id: "",
           name: "",
           gender: "",
-          year: "",
-          college: "",
-          trainingLevel: "",
-          firstLevelCategory: "",
-          projectName: "",
-          funding: "",
+          birthday: "",
+          major: "",
+          category: "",
+          teacher: "",
+          score: "",
+          paper: "",
+          pleaDate: "",
           remark: ""
         };
       } else {
         this.form = row;
       }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
@@ -358,9 +380,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let addressBookId = row.id;
-          await axios.$post("/addressBook/delete", {
-            addressBookId: addressBookId
+          let masterGraduateId = row.id;
+          await axios.$post("/masterGraduate/delete", {
+            masterGraduateId: masterGraduateId
           });
           this.list();
           this.$message({
@@ -375,10 +397,6 @@ export default {
           });
         });
     },
-    async changeFlag(row) {
-      row.pick = !row.pick;
-    },
-
     async examineData() {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
@@ -392,7 +410,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/addressBook/update", this.examineForm);
+        await axios.$post("/masterGraduate/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -427,31 +445,6 @@ export default {
         case "delCount":
           this.delCount();
           break;
-        case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/kyjl-zzjc.xls";
-          break;
-        case "download":
-          this.exportData();
-          break;
-      }
-    },
-
-     uploadSuccess() {
-      this.list();
-    },
-
-async exportData() {
-      let data = await axios.$download("/addressBook/export", {
-        params: this.query
-      });
-      if (data) {
-        let url = window.URL.createObjectURL(new Blob([data]));
-        let link = document.createElement("a");
-        link.style.display = "none";
-        link.href = url;
-        link.setAttribute("download", "excel.xls");
-        document.body.appendChild(link);
-        link.click();
       }
     },
     async delCount() {
@@ -479,9 +472,9 @@ async exportData() {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let addressBookId = element.id;
-            await axios.$post("/addressBook/delete", {
-              addressBookId: addressBookId
+            let masterGraduateId = element.id;
+            await axios.$post("/masterGraduate/delete", {
+              masterGraduateId: masterGraduateId
             });
           }
           this.tableData = [];
@@ -499,14 +492,8 @@ async exportData() {
         });
     }
   },
-  async mounted() {
-    this.teacherList = await axios.$post("/mgr/list", {
-      order: "desc",
-      offset: 0,
-      limit: 999999
-    });
+  mounted() {
     this.roleId = localStorage.getItem("roleId");
-    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };

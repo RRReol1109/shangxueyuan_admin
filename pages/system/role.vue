@@ -298,6 +298,72 @@ export default {
           date: "",
           children: [
             {
+              id: 46,
+              label: "本科生模块",
+              date: "",
+              children: [
+                {
+                  id: 47,
+                  label: "教学",
+                  date: ""
+                },
+                {
+                  id: 48,
+                  label: "招生",
+                  date: ""
+                },
+                {
+                  id: 49,
+                  label: "毕业",
+                  date: ""
+                }
+              ]
+            },
+            {
+              id: 50,
+              label: "研究生模块",
+              date: "",
+              children: [
+                {
+                  id: 51,
+                  label: "教学",
+                  date: ""
+                },
+                {
+                  id: 52,
+                  label: "招生",
+                  date: ""
+                },
+                {
+                  id: 53,
+                  label: "毕业",
+                  date: ""
+                }
+              ]
+            },
+            {
+              id: 54,
+              label: "博士生模块",
+              date: "",
+              children: [
+                {
+                  id: 55,
+                  label: "教学",
+                  date: ""
+                },
+                {
+                  id: 56,
+                  label: "招生",
+                  date: ""
+                },
+                {
+                  id: 57,
+                  label: "毕业",
+                  date: ""
+                }
+              ]
+            },
+            {
               id: 30,
               label: "出国学生",
               date: ""
@@ -338,13 +404,23 @@ export default {
               date: ""
             },
             {
+              id: 39,
+              label: "学硕招生情况",
+              date: ""
+            },
+            {
               id: 38,
               label: "学硕毕业情况",
               date: ""
             },
             {
-              id: 39,
-              label: "学硕招生情况",
+              id: 58,
+              label: "专硕招生情况",
+              date: ""
+            },
+            {
+              id: 59,
+              label: "专硕毕业情况",
               date: ""
             },
             {

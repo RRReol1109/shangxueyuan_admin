@@ -2,30 +2,44 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="来访时间:">
+        <el-form-item label="年级:">
           <el-date-picker
-            v-model="query.interviewTime"
+            v-model="query.grade"
             align="right"
             size="small"
             type="date"
-            placeholder="来访时间"
+            placeholder="年份"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="专家姓名:">
-          <el-input v-model="query.visitor" size="small" placeholder="请输入专家姓名"></el-input>
+        <el-form-item label="学号:">
+          <el-input v-model="query.num" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="邀请人:">
-          <el-input v-model="query.inviter" size="small" placeholder="请输入邀请人"></el-input>
+        <el-form-item label="姓名:">
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="专家类别">
-          <el-select v-model="query.expertCategory" size="small" placeholder="请选择">
-            <el-option label="全部" value></el-option>
-            <el-option label="国内" value="国内"></el-option>
-            <el-option label="国外" value="国外"></el-option>
+        <el-form-item label="专业:">
+          <el-select v-model="query.major" size="small">
+            <el-option label="金融硕士" value="金融硕士"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="导师:">
+          <el-select v-model="query.tutor" placeholder="请选择老师" prop="name">
+            <el-option
+              v-for="item in teacherList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="毕业专业:">
+          <el-input v-model="query.graduationMajor" placeholder="请输入毕业专业" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="毕业学校:">
+          <el-input v-model="query.graduatedSchool" placeholder="请输入毕业学校" size="small"></el-input>
+        </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
@@ -52,7 +66,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/academicExchange/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/masterEnroll/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -68,19 +82,25 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="interviewTime" align="center" label="来访时间"></el-table-column>
-      <el-table-column prop="accessType" align="center" label="访问类型"></el-table-column>
-      <el-table-column prop="visitor" align="center" label="专家姓名"></el-table-column>
-      <el-table-column prop="passport" align="center" label="护照号"></el-table-column>
-      <el-table-column prop="jobTitle" align="center" label="职称"></el-table-column>
-      <el-table-column prop="citizenshipCountry" align="center" label="国籍"></el-table-column>
-      <el-table-column prop="unit" align="center" label="工作单位"></el-table-column>
-      <el-table-column prop="expertCategory" align="center" label="专家类别"></el-table-column>
-      <el-table-column prop="researchAreas" align="center" label="研究领域"></el-table-column>
-      <el-table-column prop="discipline" align="center" label="所属学科"></el-table-column>
-      <el-table-column prop="communicationContent" align="center" label="交流内容"></el-table-column>
-      <el-table-column prop="inviter" align="center" label="邀请人"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
+      <!-- <el-table-column fixed prop="num" align="center" label="学号"></el-table-column> -->
+      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column prop="major" align="center" label="录取专业"></el-table-column>
+      <!-- <el-table-column prop="scholarshipName" align="center" label="学校类别"></el-table-column>
+      <el-table-column prop="major" align="center" label="工作年限"></el-table-column>
+      <el-table-column prop="major" align="center" label="工作单位/行业"></el-table-column>
+      <el-table-column prop="major" align="center" label="职位"></el-table-column>
+      <el-table-column prop="major" align="center" label="年薪"></el-table-column>-->
+      <el-table-column prop="name" align="center" label="出生年月"></el-table-column>
+      <el-table-column prop="name" align="center" label="邮箱"></el-table-column>
+      <el-table-column prop="name" align="center" label="年级"></el-table-column>
+      <el-table-column prop="tutor" align="center" label="导师"></el-table-column>
+      <el-table-column prop="scholarshipName" align="center" label="奖学金名称"></el-table-column>
+      <el-table-column prop="financialAidName" align="center" label="助学金名称"></el-table-column>
+      <el-table-column prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
+      <el-table-column prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
+      <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
       <el-table-column prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
@@ -134,7 +154,6 @@
     </el-dialog>
     <el-dialog
       style="min-height:500px"
-      title="学术交流"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
@@ -145,82 +164,110 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="专家姓名" prop="visitor">
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.visitor" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="访问类型" prop="accessType">
+        <el-form-item label="学号" prop="num">
           <el-col :span="6">
-            <el-input size="small" v-model="form.accessType" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.num" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="职称" prop="jobTitle">
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="请选择">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="录取专业" prop="major">
           <el-col :span="6">
-            <el-select v-model="form.jobTitle" size="small" placeholder="请输入">
-              <el-option label="教授" value="教授"></el-option>
-              <el-option label="副教授" value="副教授"></el-option>
-              <el-option label="其他" value="其他"></el-option>
+            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <!-- <el-form-item label="学校类别" prop="name">
+          <el-select v-model="form.gender" size="small">
+            <el-option label="211工程高校" value="1"></el-option>
+            <el-option label="双一流建设高校" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="工作年限" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="工作单位/行业" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="职位" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="年薪" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>-->
+        <!-- <el-form-item label="出生年月" prop="name">
+          <el-col :span="6">
+            <el-date-picker v-model="form.date" type="date" placeholder="选择日期时间"></el-date-picker>
+          </el-col>
+        </el-form-item>-->
+        <!-- <el-form-item label="邮箱" prop="name">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+      
+        -->
+        <!-- <el-form-item label="手机号" prop="tell">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.tell" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>-->
+        <el-form-item label="年级" prop="grade">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.grade" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="导师" prop="tutor">
+          <el-col :span="6">
+            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+              <el-option
+                v-for="item in teacherList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="护照号" prop="passport">
+        <el-form-item label="奖学金名称" prop="scholarshipName">
           <el-col :span="6">
-            <el-input size="small" v-model="form.passport" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.scholarshipName" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="国籍" prop="citizenshipCountry">
+        <el-form-item label="助学金名称" prop="financialAidName">
           <el-col :span="6">
-            <el-input size="small" v-model="form.citizenshipCountry" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.financialAidName" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="工作单位" prop="unit">
+        <el-form-item label="毕业学校" prop="graduatedSchool">
           <el-col :span="6">
-            <el-input size="small" v-model="form.unit" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.graduatedSchool" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专家类别" prop="expertCategory">
+        <el-form-item label="毕业专业" prop="graduationMajor">
           <el-col :span="6">
-            <el-select v-model="form.expertCategory" size="small" placeholder="请输入">
-              <el-option label="国内" value="国内"></el-option>
-              <el-option label="国外" value="国外"></el-option>
-            </el-select>
+            <el-input size="small" v-model="form.graduationMajor" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="来访时间" prop="interviewTime">
-          <el-col :span="5">
-            <el-date-picker
-              size="small"
-              type="date"
-              placeholder="选择日期"
-              v-model="form.interviewTime"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="研究领域" prop="researchAreas">
+        <el-form-item size="small" label="备注">
           <el-col :span="6">
-            <el-input size="small" v-model="form.researchAreas" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="所属学科" prop="discipline">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.discipline" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="邀请人" prop="inviter">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.inviter" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="交流内容" prop="communicationContent">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.communicationContent" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item size="small" label="备注" prop="remark">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
+            <el-input v-model="form.remarks" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
@@ -235,14 +282,11 @@
 
 <script>
 import axios from "~/plugins/axios2";
-import moment from "moment";
 export default {
   layout: "normal",
   components: {},
   data() {
     return {
-      total: 0,
-      page: 1,
       operate: "",
       dialogFormVisible: false,
       query: {
@@ -254,55 +298,55 @@ export default {
       roleId: 0,
       examineDialog: false,
       examineForm: {},
+      teacherList: [],
+      flag: true,
+      total: 0,
+      page: 1,
       form: {
-        id: "",
-        visitor: "",
-        accessType: "",
-        interviewTime: "",
-        jobTitle: "",
-        citizenshipCountry: "",
-        unit: "",
-        expertCategory: "",
-        researchAreas: "",
-        communicationContent: "",
-        remark: ""
+        num: "",
+        name: "",
+        gender: "",
+        education: "",
+        major: "",
+        tell: "",
+        mail: "",
+        tutor: "",
+        majorCode: "",
+        scholarshipName: "",
+        financialAidName: "",
+        grade: "",
+        graduatedSchool: "",
+        graduationMajor: "",
+        admissionType: "",
+        remarks: ""
       },
-
       rules: {
-        interviewTime: [
+        num: [{ required: true, message: "请输入学号", trigger: "blur" }],
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        education: [
           { required: true, message: "请输入来访时间", trigger: "blur" }
         ],
-        visitor: [
-          { required: true, message: "请输入专家姓名", trigger: "blur" }
+        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        financialAidName: [
+          { required: true, message: "请输入助学金名称", trigger: "blur" }
         ],
-        jobTitle: [{ required: true, message: "请输入职称", trigger: "blur" }],
-        accessType: [
-          { required: true, message: "请输入访问类型", trigger: "blur" }
+        graduatedSchool: [
+          { required: true, message: "请输入毕业学校", trigger: "blur" }
         ],
-        unit: [{ required: true, message: "请输入工作单位", trigger: "blur" }],
-        expertCategory: [
-          { required: true, message: "请输入专家类别", trigger: "blur" }
+        tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
+        scholarshipName: [
+          { required: true, message: "请输入奖学金名称", trigger: "blur" }
         ],
-        researchAreas: [
-          { required: true, message: "请输入研究领域", trigger: "blur" }
-        ],
-        inviter: [{ required: true, message: "请输入邀请人", trigger: "blur" }],
-        discipline: [
-          { required: true, message: "请输入所属学科", trigger: "blur" }
-        ],
-        passport: [
-          { required: true, message: "请输入护照号", trigger: "blur" }
-        ],
-        citizenshipCountry: [
-          { required: true, message: "请输入国籍", trigger: "blur" }
-        ],
-        communicationContent: [
-          { required: true, message: "请输入交流类容", trigger: "blur" }
+        grade: [{ required: true, message: "请输入年级", trigger: "blur" }],
+        graduationMajor: [
+          { required: true, message: "请输入毕业专业", trigger: "blur" }
         ]
       },
       tableData: []
     };
   },
+
   filters: {
     statusFilter: function(value) {
       return {
@@ -325,7 +369,6 @@ export default {
       this.$refs[formName].resetFields();
     },
     async list() {
-      this.tableData = [];
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
@@ -338,24 +381,83 @@ export default {
       if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/academicExchange/list", this.query);
-      if (res) {
-        for (let i = 0; i < res.rows.length; i++) {
-          const element = res.rows[i];
-          for (const key in element) {
-            if (element.hasOwnProperty(key)) {
-              const item = element[key];
-              if (key == "interviewTime") {
-                element[key] = moment(item).format("YYYY-MM-DD");
-                console.log(element[key]);
-              }
-            }
-          }
-        }
-      }
+      let res = await axios.$post("/masterEnroll/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
+    },
+    downLoad(row) {
+      window.open(row.file);
+    },
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
+      switch (this.operate) {
+        case "add":
+          await axios.$post("/masterEnroll/add", this.form);
+          this.fileList = [];
+          break;
+        case "edit":
+          await axios.$post("/masterEnroll/update", this.form);
+          break;
+      }
+      this.dialogFormVisible = false;
+      await this.list();
+    },
+    showDialog(row) {
+      this.dialogFormVisible = true;
+      this.formDisabled = false;
+      if (this.operate === "add") {
+        this.form = {
+          id: ""
+        };
+      } else {
+        this.flag = false;
+        this.form = row;
+      }
+    },
+    async del(row) {
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          console.log(row);
+          let masterEnrollId = row.id;
+          await axios.$post("/masterEnroll/delete", {
+            masterEnrollId: masterEnrollId
+          });
+          this.list();
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     async changeFlag(row) {
       row.pick = !row.pick;
@@ -374,7 +476,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/academicExchange/update", this.examineForm);
+        await axios.$post("/masterEnroll/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -383,7 +485,9 @@ export default {
         message: "审核成功!"
       });
     },
-
+    uploadSuccess() {
+      this.list();
+    },
     async handleCommand(command) {
       console.log(command);
       switch (command) {
@@ -412,6 +516,7 @@ export default {
         case "temp":
           location.href = "http://112.74.56.60/excel/excel-model/kyjl-zzjc.xls";
           break;
+
         case "download":
           this.exportData();
           break;
@@ -423,7 +528,7 @@ export default {
     },
 
     async exportData() {
-      let data = await axios.$download("/academicExchange/export", {
+      let data = await axios.$download("/masterEnroll/export", {
         params: this.query
       });
       if (data) {
@@ -461,9 +566,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let academicExchangeId = element.id;
-            await axios.$post("/academicExchange/delete", {
-              academicExchangeId: academicExchangeId
+            let masterEnrollId = element.id;
+            await axios.$post("/masterEnroll/delete", {
+              masterEnrollId: masterEnrollId
             });
           }
           this.tableData = [];
@@ -479,88 +584,17 @@ export default {
             message: "已取消删除"
           });
         });
-    },
-    async submitForm(formName) {
-      let verification = false;
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          verification = true;
-          console.log("success");
-          return true;
-        } else {
-          verification = false;
-          console.log("error submit!!");
-          return false;
-        }
-      });
-      if (verification) {
-      } else {
-        this.$message({
-          type: "info",
-          message: "请填写正确数据"
-        });
-        return;
-      }
-      switch (this.operate) {
-        case "add":
-          await axios.$post("/academicExchange/add", this.form);
-          break;
-        case "edit":
-          await axios.$post("/academicExchange/update", this.form);
-          break;
-      }
-      this.dialogFormVisible = false;
-      await this.list();
-    },
-    showDialog(row) {
-      this.dialogFormVisible = true;
-      this.formDisabled = false;
-      if (this.operate === "add") {
-        this.form = {
-          id: "",
-          visitor: "",
-          accessType: "",
-          interviewTime: "",
-          jobTitle: "",
-          citizenshipCountry: "",
-          unit: "",
-          expertCategory: "",
-          researchAreas: "",
-          communicationContent: "",
-          remark: ""
-        };
-      } else {
-        this.form = row;
-      }
-    },
-    async del(row) {
-      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(async () => {
-          console.log(row);
-          let academicExchangeId = row.id;
-          await axios.$post("/academicExchange/delete", {
-            academicExchangeId: academicExchangeId
-          });
-          this.list();
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
     }
   },
-  mounted() {
+
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
     this.roleId = localStorage.getItem("roleId");
+    this.teacherList = this.teacherList.rows;
     this.list();
   }
 };

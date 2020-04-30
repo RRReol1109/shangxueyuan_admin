@@ -56,7 +56,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsart.zz.kuangyeyuan.com/mgr/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>

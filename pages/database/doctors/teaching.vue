@@ -2,27 +2,31 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="来访时间:">
+        <el-form-item label="年度:">
           <el-date-picker
-            v-model="query.interviewTime"
+            v-model="query.year"
             align="right"
             size="small"
             type="date"
-            placeholder="来访时间"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="年度"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="专家姓名:">
-          <el-input v-model="query.visitor" size="small" placeholder="请输入专家姓名"></el-input>
+        <el-form-item label="学号:">
+          <el-input v-model="query.id" placeholder="请输入学号" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="邀请人:">
-          <el-input v-model="query.inviter" size="small" placeholder="请输入邀请人"></el-input>
+        <el-form-item label="姓名:">
+          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
         </el-form-item>
-        <el-form-item label="专家类别">
-          <el-select v-model="query.expertCategory" size="small" placeholder="请选择">
-            <el-option label="全部" value></el-option>
-            <el-option label="国内" value="国内"></el-option>
-            <el-option label="国外" value="国外"></el-option>
-          </el-select>
+        <el-form-item label="学院:">
+          <el-input v-model="query.college" placeholder="请输入学院" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="一级学科:">
+          <el-input v-model="query.firstLevelCategory" placeholder="请输入学科" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="项目名称:">
+          <el-input v-model="query.projectName" placeholder="请输入项目名称" size="small"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -42,21 +46,21 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="temp">模板下载</el-dropdown-item>
-              <el-dropdown-item command="download">导出数据</el-dropdown-item>
+              <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
+              <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
               <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
-              <el-dropdown-item>
+              <!-- <el-dropdown-item>
                 <el-upload
                   class
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/academicExchange/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/simulation/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
-              </el-dropdown-item>
+              </el-dropdown-item>-->
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -68,18 +72,15 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="interviewTime" align="center" label="来访时间"></el-table-column>
-      <el-table-column prop="accessType" align="center" label="访问类型"></el-table-column>
-      <el-table-column prop="visitor" align="center" label="专家姓名"></el-table-column>
-      <el-table-column prop="passport" align="center" label="护照号"></el-table-column>
-      <el-table-column prop="jobTitle" align="center" label="职称"></el-table-column>
-      <el-table-column prop="citizenshipCountry" align="center" label="国籍"></el-table-column>
-      <el-table-column prop="unit" align="center" label="工作单位"></el-table-column>
-      <el-table-column prop="expertCategory" align="center" label="专家类别"></el-table-column>
-      <el-table-column prop="researchAreas" align="center" label="研究领域"></el-table-column>
-      <el-table-column prop="discipline" align="center" label="所属学科"></el-table-column>
-      <el-table-column prop="communicationContent" align="center" label="交流内容"></el-table-column>
-      <el-table-column prop="inviter" align="center" label="邀请人"></el-table-column>
+      <!-- <el-table-column fixed prop="id" align="center" label="ID"></el-table-column> -->
+      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column prop="college" align="center" label="学院"></el-table-column>
+      <el-table-column prop="firstLevelCategory" align="center" label="一级学科"></el-table-column>
+      <el-table-column prop="trainingLevel" align="center" label="培养层次"></el-table-column>
+      <el-table-column prop="projectName" align="center" label="项目名称"></el-table-column>
+      <el-table-column prop="funding" align="center" label="经费（万元）"></el-table-column>
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -132,9 +133,9 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
     <el-dialog
       style="min-height:500px"
-      title="学术交流"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
@@ -145,79 +146,68 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="专家姓名" prop="visitor">
+        <el-form-item label="姓名" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.visitor" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="访问类型" prop="accessType">
+        <!-- <el-form-item label="学号" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.accessType" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
+        </el-form-item>-->
+        <el-form-item label="性别" prop="gender">
+          <el-select v-model="form.gender" size="small" placeholder="性别">
+            <el-option label="男" value="男"></el-option>
+            <el-option label="女" value="女"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="职称" prop="jobTitle">
+        <el-form-item label="年度:" prop="year">
+          <el-date-picker
+            v-model="form.year"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="年度"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="学院" prop="college">
           <el-col :span="6">
-            <el-select v-model="form.jobTitle" size="small" placeholder="请输入">
-              <el-option label="教授" value="教授"></el-option>
-              <el-option label="副教授" value="副教授"></el-option>
-              <el-option label="其他" value="其他"></el-option>
-            </el-select>
+            <el-input size="small" v-model="form.college" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="护照号" prop="passport">
+        <el-form-item label="一级学科" prop="firstLevelCategory">
           <el-col :span="6">
-            <el-input size="small" v-model="form.passport" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.firstLevelCategory" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="国籍" prop="citizenshipCountry">
+        <el-form-item label="培养层次" prop="trainingLevel">
           <el-col :span="6">
-            <el-input size="small" v-model="form.citizenshipCountry" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.trainingLevel" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="工作单位" prop="unit">
+        <el-form-item label="项目名称" prop="projectName">
           <el-col :span="6">
-            <el-input size="small" v-model="form.unit" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.projectName" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="专家类别" prop="expertCategory">
+        <el-form-item label="经费（万元）" prop="funding">
           <el-col :span="6">
-            <el-select v-model="form.expertCategory" size="small" placeholder="请输入">
-              <el-option label="国内" value="国内"></el-option>
-              <el-option label="国外" value="国外"></el-option>
-            </el-select>
+            <el-input size="small" v-model="form.funding" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="来访时间" prop="interviewTime">
-          <el-col :span="5">
-            <el-date-picker
-              size="small"
-              type="date"
-              placeholder="选择日期"
-              v-model="form.interviewTime"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="研究领域" prop="researchAreas">
+        <!-- <el-form-item label="毕业学校">
           <el-col :span="6">
-            <el-input size="small" v-model="form.researchAreas" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.graduationSchool" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="所属学科" prop="discipline">
+        <el-form-item label="毕业专业">
           <el-col :span="6">
-            <el-input size="small" v-model="form.discipline" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.funding" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item label="邀请人" prop="inviter">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.inviter" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="交流内容" prop="communicationContent">
-          <el-col :span="6">
-            <el-input size="small" v-model="form.communicationContent" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item size="small" label="备注" prop="remark">
           <el-col :span="6">
             <el-input v-model="form.remark" autocomplete="off"></el-input>
@@ -235,7 +225,6 @@
 
 <script>
 import axios from "~/plugins/axios2";
-import moment from "moment";
 export default {
   layout: "normal",
   components: {},
@@ -251,54 +240,36 @@ export default {
         order: "desc",
         condition: ""
       },
+      form: {
+        id: "",
+        name: "",
+        gender: "",
+        year: "",
+        college: "",
+        trainingLevel: "",
+        firstLevelCategory: "",
+        projectName: "",
+        funding: "",
+        remark: ""
+      },
       roleId: 0,
       examineDialog: false,
       examineForm: {},
-      form: {
-        id: "",
-        visitor: "",
-        accessType: "",
-        interviewTime: "",
-        jobTitle: "",
-        citizenshipCountry: "",
-        unit: "",
-        expertCategory: "",
-        researchAreas: "",
-        communicationContent: "",
-        remark: ""
-      },
-
       rules: {
-        interviewTime: [
-          { required: true, message: "请输入来访时间", trigger: "blur" }
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        year: [{ required: true, message: "请输入年度", trigger: "blur" }],
+        college: [{ required: true, message: "请输入学院", trigger: "blur" }],
+        trainingLevel: [
+          { required: true, message: "请输入培养层次", trigger: "blur" }
         ],
-        visitor: [
-          { required: true, message: "请输入专家姓名", trigger: "blur" }
+        firstLevelCategory: [
+          { required: true, message: "请输入一级学科", trigger: "blur" }
         ],
-        jobTitle: [{ required: true, message: "请输入职称", trigger: "blur" }],
-        accessType: [
-          { required: true, message: "请输入访问类型", trigger: "blur" }
+        projectName: [
+          { required: true, message: "请输入项目名称", trigger: "blur" }
         ],
-        unit: [{ required: true, message: "请输入工作单位", trigger: "blur" }],
-        expertCategory: [
-          { required: true, message: "请输入专家类别", trigger: "blur" }
-        ],
-        researchAreas: [
-          { required: true, message: "请输入研究领域", trigger: "blur" }
-        ],
-        inviter: [{ required: true, message: "请输入邀请人", trigger: "blur" }],
-        discipline: [
-          { required: true, message: "请输入所属学科", trigger: "blur" }
-        ],
-        passport: [
-          { required: true, message: "请输入护照号", trigger: "blur" }
-        ],
-        citizenshipCountry: [
-          { required: true, message: "请输入国籍", trigger: "blur" }
-        ],
-        communicationContent: [
-          { required: true, message: "请输入交流类容", trigger: "blur" }
-        ]
+        funding: [{ required: true, message: "请输入经费", trigger: "blur" }]
       },
       tableData: []
     };
@@ -325,7 +296,6 @@ export default {
       this.$refs[formName].resetFields();
     },
     async list() {
-      this.tableData = [];
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
@@ -338,24 +308,87 @@ export default {
       if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/academicExchange/list", this.query);
-      if (res) {
-        for (let i = 0; i < res.rows.length; i++) {
-          const element = res.rows[i];
-          for (const key in element) {
-            if (element.hasOwnProperty(key)) {
-              const item = element[key];
-              if (key == "interviewTime") {
-                element[key] = moment(item).format("YYYY-MM-DD");
-                console.log(element[key]);
-              }
-            }
-          }
-        }
-      }
+      let res = await axios.$post("/teachingReform/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
+    },
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
+      switch (this.operate) {
+        case "add":
+          await axios.$post("/teachingReform/add", this.form);
+          break;
+        case "edit":
+          await axios.$post("/teachingReform/update", this.form);
+          break;
+      }
+      this.dialogFormVisible = false;
+      await this.list();
+    },
+    showDialog(row) {
+      this.dialogFormVisible = true;
+      this.formDisabled = false;
+      if (this.operate === "add") {
+        this.form = {
+          id: "",
+          name: "",
+          gender: "",
+          year: "",
+          college: "",
+          trainingLevel: "",
+          firstLevelCategory: "",
+          projectName: "",
+          funding: "",
+          remark: ""
+        };
+      } else {
+        this.form = row;
+      }
+    },
+    async del(row) {
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          console.log(row);
+          let teachingReformId = row.id;
+          await axios.$post("/teachingReform/delete", {
+            teachingReformId: teachingReformId
+          });
+          this.list();
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     },
     async changeFlag(row) {
       row.pick = !row.pick;
@@ -374,7 +407,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/academicExchange/update", this.examineForm);
+        await axios.$post("/teachingReform/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -409,31 +442,6 @@ export default {
         case "delCount":
           this.delCount();
           break;
-        case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/kyjl-zzjc.xls";
-          break;
-        case "download":
-          this.exportData();
-          break;
-      }
-    },
-
-    uploadSuccess() {
-      this.list();
-    },
-
-    async exportData() {
-      let data = await axios.$download("/academicExchange/export", {
-        params: this.query
-      });
-      if (data) {
-        let url = window.URL.createObjectURL(new Blob([data]));
-        let link = document.createElement("a");
-        link.style.display = "none";
-        link.href = url;
-        link.setAttribute("download", "excel.xls");
-        document.body.appendChild(link);
-        link.click();
       }
     },
     async delCount() {
@@ -461,91 +469,13 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let academicExchangeId = element.id;
-            await axios.$post("/academicExchange/delete", {
-              academicExchangeId: academicExchangeId
+            let teachingReformId = element.id;
+            await axios.$post("/teachingReform/delete", {
+              teachingReformId: teachingReformId
             });
           }
           this.tableData = [];
           await this.list();
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
-    async submitForm(formName) {
-      let verification = false;
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          verification = true;
-          console.log("success");
-          return true;
-        } else {
-          verification = false;
-          console.log("error submit!!");
-          return false;
-        }
-      });
-      if (verification) {
-      } else {
-        this.$message({
-          type: "info",
-          message: "请填写正确数据"
-        });
-        return;
-      }
-      switch (this.operate) {
-        case "add":
-          await axios.$post("/academicExchange/add", this.form);
-          break;
-        case "edit":
-          await axios.$post("/academicExchange/update", this.form);
-          break;
-      }
-      this.dialogFormVisible = false;
-      await this.list();
-    },
-    showDialog(row) {
-      this.dialogFormVisible = true;
-      this.formDisabled = false;
-      if (this.operate === "add") {
-        this.form = {
-          id: "",
-          visitor: "",
-          accessType: "",
-          interviewTime: "",
-          jobTitle: "",
-          citizenshipCountry: "",
-          unit: "",
-          expertCategory: "",
-          researchAreas: "",
-          communicationContent: "",
-          remark: ""
-        };
-      } else {
-        this.form = row;
-      }
-    },
-    async del(row) {
-      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(async () => {
-          console.log(row);
-          let academicExchangeId = row.id;
-          await axios.$post("/academicExchange/delete", {
-            academicExchangeId: academicExchangeId
-          });
-          this.list();
           this.$message({
             type: "success",
             message: "删除成功!"

@@ -53,7 +53,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsart.zz.kuangyeyuan.com/reportResult/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/reportResult/upload?token='AuthenticationToken'"
                 >
                   <el-button size="small" class type="text">批量上传数据</el-button>
                 </el-upload>

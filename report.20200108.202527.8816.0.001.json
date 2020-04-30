@@ -485,7 +485,7 @@
     "USERPROFILE": "C:\\Users\\安安",
     "VUE_ENV": "server",
     "windir": "C:\\Windows",
-    "_AXIOS_BASE_URL_": "http://localhost:3000http://bsart.zz.kuangyeyuan.com/"
+    "_AXIOS_BASE_URL_": "http://localhost:3000http://bsoa.csu.edu.cn/bs/"
   },
   "sharedObjects": [
     "C:\\Program Files\\nodejs\\node.exe",
