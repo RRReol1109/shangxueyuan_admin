@@ -512,7 +512,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/kyjl-zzjc.xls";
+          location.href = "http://112.74.56.60/excel/excel-model/sjk-xszs.xls";
           break;
         case "download":
           this.exportData();
@@ -533,7 +533,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "sjk-xszs.xls");
         document.body.appendChild(link);
         link.click();
       }

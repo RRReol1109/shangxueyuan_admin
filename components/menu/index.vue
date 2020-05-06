@@ -363,7 +363,7 @@ export default {
                   entity: {
                     id: 47,
                     name: "undergraduatesTeaching",
-                    alias: "教学",
+                    alias: "本科生教学",
                     state: "ENABLE",
                     value: "/database/undergraduates/teaching"
                   }
@@ -372,7 +372,7 @@ export default {
                   entity: {
                     id: 48,
                     name: "undergraduatesRecruit",
-                    alias: "招生",
+                    alias: "本科生招生",
                     state: "ENABLE",
                     value: "/database/undergraduates/recruit"
                   }
@@ -381,7 +381,7 @@ export default {
                   entity: {
                     id: 49,
                     name: "undergraduatesGraduation",
-                    alias: "毕业",
+                    alias: "本科生毕业",
                     state: "ENABLE",
                     value: "/database/undergraduates/graduation"
                   }
@@ -401,7 +401,7 @@ export default {
                   entity: {
                     id: 51,
                     name: "postgraduateTeaching",
-                    alias: "教学",
+                    alias: "研究生教学",
                     state: "ENABLE",
                     value: "/database/postgraduate/teaching"
                   }
@@ -410,7 +410,7 @@ export default {
                   entity: {
                     id: 52,
                     name: "postgraduateRecruit",
-                    alias: "招生",
+                    alias: "研究生招生",
                     state: "ENABLE",
                     value: "/database/postgraduate/recruit"
                   }
@@ -419,7 +419,7 @@ export default {
                   entity: {
                     id: 53,
                     name: "postgraduateGraduation",
-                    alias: "毕业",
+                    alias: "研究生毕业",
                     state: "ENABLE",
                     value: "/database/postgraduate/graduation"
                   }
@@ -439,7 +439,7 @@ export default {
                   entity: {
                     id: 55,
                     name: "doctorsTeaching",
-                    alias: "教学",
+                    alias: "博士生教学",
                     state: "ENABLE",
                     value: "/database/doctors/teaching"
                   }
@@ -448,7 +448,7 @@ export default {
                   entity: {
                     id: 56,
                     name: "doctorsRecruit",
-                    alias: "招生",
+                    alias: "博士生招生",
                     state: "ENABLE",
                     value: "/database/doctors/recruit"
                   }
@@ -457,7 +457,7 @@ export default {
                   entity: {
                     id: 57,
                     name: "doctorsGraduation",
-                    alias: "毕业",
+                    alias: "博士生毕业",
                     state: "ENABLE",
                     value: "/database/doctors/graduation"
                   }
