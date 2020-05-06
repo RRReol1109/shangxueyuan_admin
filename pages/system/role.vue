@@ -425,7 +425,7 @@ export default {
             },
             {
               id: 40,
-              label: "研究生教改项目",
+              label: "教师教改项目",
               date: ""
             },
             {

@@ -600,15 +600,15 @@ export default {
             //     value: "/database/assistantGraduation"
             //   }
             // },
-            // {
-            //   entity: {
-            //     id: 40,
-            //     name: "innovate",
-            //     alias: "研究生教改项目",
-            //     state: "ENABLE",
-            //     value: "/database/innovate"
-            //   }
-            // },
+            {
+              entity: {
+                id: 40,
+                name: "innovate",
+                alias: "教师教改项目",
+                state: "ENABLE",
+                value: "/database/innovate"
+              }
+            },
             {
               entity: {
                 id: 41,
