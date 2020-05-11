@@ -3,72 +3,117 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="年份:">
-          <el-select v-model="query.term" size="small">
-            <el-option label="2019" value="2019"></el-option>
-            <el-option label="2018" value="2018"></el-option>
-            <el-option label="2017" value="2017"></el-option>
-            <el-option label="2016" value="2016"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="query.year"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="年份"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="入学年月:">
           <el-date-picker
-            v-model="query.createtime"
+            v-model="query.startDate"
             type="date"
             format="yyyy-MM"
+            value-format="yyyy-MM"
             placeholder="选择日期时间"
+            size="small"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="毕业年月:">
           <el-date-picker
-            v-model="query.createtime"
+            v-model="query.startDate"
             type="date"
             format="yyyy-MM"
+            value-format="yyyy-MM"
             placeholder="选择日期时间"
+            size="small"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
+          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
             size="small"
             type="primary"
             icon="el-icon-plus"
-            @click="dialogFormVisible = true"
+            @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="term" align="center" label="年份"></el-table-column>
-      <el-table-column prop="num" align="center" label="序号"></el-table-column>
-      <el-table-column prop="entrance" align="center" label="入学年月"></el-table-column>
-      <el-table-column prop="graduation" align="center" label="毕业年月"></el-table-column>
-      <el-table-column prop="student" align="center" label="学员人数"></el-table-column>
-      <el-table-column prop="graduationStudent" align="center" label="毕业人数"></el-table-column>
-      <el-table-column prop="fullTime" align="center" label="全日制人数"></el-table-column>
-      <el-table-column prop="unfullTime" align="center" label="非全日制人数"></el-table-column>
-      <el-table-column prop="source" align="center" label="学员来源"></el-table-column>
-      <el-table-column prop="apply" align="center" label="申请人数"></el-table-column>
-      <el-table-column prop="admission" align="center" label="录取人数"></el-table-column>
-      <el-table-column prop="admissionRate" align="center" label="录取比例"></el-table-column>
-      <el-table-column prop="grant" align="center" label="授予学位人数"></el-table-column>
-      <el-table-column prop="eliminate" align="center" label="分流淘汰人员"></el-table-column>
-      <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
+      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+        <template slot-scope="scope">
+          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
+        </template>
+      </el-table-column>
+      <el-table-column fixed prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column prop="index" align="center" label="序号"></el-table-column>
+      <el-table-column prop="startDate" align="center" label="入学年月"></el-table-column>
+      <el-table-column prop="graduateDate" align="center" label="毕业年月"></el-table-column>
+      <el-table-column prop="studentCnt" align="center" label="学员人数"></el-table-column>
+      <el-table-column prop="graduateCnt" align="center" label="毕业人数"></el-table-column>
+      <el-table-column prop="fulltimeCnt" align="center" label="全日制人数"></el-table-column>
+      <el-table-column prop="parttimeCnt" align="center" label="非全日制人数"></el-table-column>
+      <el-table-column prop="origin" align="center" label="学员来源"></el-table-column>
+      <el-table-column prop="requestCnt" align="center" label="申请人数"></el-table-column>
+      <el-table-column prop="acceptedCnt" align="center" label="录取人数"></el-table-column>
+      <el-table-column prop="acceptedRate" align="center" label="录取比例"></el-table-column>
+      <el-table-column prop="degreeCnt" align="center" label="授予学位人数"></el-table-column>
+      <el-table-column prop="leaveCnt" align="center" label="分流淘汰人员"></el-table-column>
+      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <nav style="text-align: center; margin-top: 10px;">
       <!-- 分页居中放置-->
-      <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        background
+        :page-size="14"
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        @next-click="handleCurrentChange"
+        @prev-click="handleCurrentChange"
+        @size-change="handleCurrentChange"
+        :current-page.sync="page"
+        :total="total"
+      ></el-pagination>
     </nav>
 
-    <el-dialog style="min-height:500px"  :visible.sync="dialogFormVisible">
-      <el-form :model="form" label-width="100px">
+    <el-dialog
+      style="min-height:500px"
+      title="通讯录"
+      :visible.sync="dialogFormVisible"
+      :disabled="!['edit', 'add'].includes(operate)"
+    >
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="100px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-form-item label="年份:">
+          <el-date-picker
+            v-model="form.year"
+            align="right"
+            size="small"
+            type="date"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="年份"
+          ></el-date-picker>
+        </el-form-item>
         <el-form-item label="姓名">
           <el-col :span="6">
             <el-input size="small" v-model="form.name"></el-input>
@@ -76,154 +121,385 @@
         </el-form-item>
         <el-form-item label="学号">
           <el-col :span="6">
-            <el-input size="small" v-model="form.num" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.index" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-select v-model="form.gender" size="small">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
-          </el-select>
+        <el-form-item label="入学年月:">
+          <el-date-picker
+            v-model="form.startDate"
+            type="date"
+            format="yyyy-MM"
+            value-format="yyyy-MM"
+            placeholder="选择日期时间"
+            size="small"
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item label="录取专业">
+        <el-form-item label="毕业年月:">
+          <el-date-picker
+            v-model="form.graduateDate"
+            type="date"
+            format="yyyy-MM"
+            value-format="yyyy-MM"
+            placeholder="选择日期时间"
+            size="small"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="学员人数" prop="studentCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.studentCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="手机号">
+        <el-form-item label="毕业人数" prop="graduateCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.tell" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.graduateCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="导师">
+        <el-form-item label="全日制人数" prop="fulltimeCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.teacher" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.fulltimeCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="奖学金名称">
+        <el-form-item label="非全日制人数" prop="parttimeCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.scholarship" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.parttimeCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="助学金名称">
+        <el-form-item label="学员来源" prop="origin">
           <el-col :span="6">
-            <el-input size="small" v-model="form.stipend" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.origin" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业学校">
+        <el-form-item label="申请人数" prop="requestCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.graduationSchool" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.requestCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="毕业专业">
+        <el-form-item label="录取人数" prop="acceptedCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.graduation" autocomplete="off"></el-input>
+            <el-input size="small" v-model="form.acceptedCnt" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="授予学位人数" prop="degreeCnt">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.degreeCnt" autocomplete="off"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="分流淘汰人员" prop="leaveCnt">
+          <el-col :span="6">
+            <el-input size="small" v-model="form.leaveCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item size="small" label="备注">
           <el-col :span="6">
-            <el-input v-model="form.remarks" autocomplete="off"></el-input>
+            <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import axios from "~/plugins/axios2";
 export default {
   layout: "normal",
   components: {},
   data() {
     return {
+      total: 0,
+      page: 1,
+      operate: "",
       dialogFormVisible: false,
       query: {
-        num: "",
-        entrance: "",
-        term: "2019",
-        graduation: "",
-        student: "",
-        graduationStudent: "",
-        fullTime: "",
-        unfullTime: "",
-        source: "",
-        apply: "",
-        admission: "",
-        grant: "",
-        eliminate: ""
+        index: "",
+        startDate: "",
+        year: "2019",
+        graduateDate: "",
+        studentCnt: "",
+        graduateCnt: "",
+        fulltimeCnt: "",
+        parttimeCnt: "",
+        origin: "",
+        requestCnt: "",
+        acceptedCnt: "",
+        degreeCnt: "",
+        leaveCnt: ""
       },
+      query: {
+        limit: 14,
+        offset: 0,
+        order: "desc",
+        condition: ""
+      },
+      roleId: 0,
+      examineDialog: false,
+      examineForm: {},
+      teacherList: [],
       form: {
-        num: "",
-        entrance: "",
-        term: "2019",
-        graduation: "",
-        student: "",
-        graduationStudent: "",
-        fullTime: "",
-        unfullTime: "",
-        source: "",
-        apply: "",
-        admission: "",
-        grant: "",
-        eliminate: "",
-        admissionRate: ""
+        index: "",
+        startDate: "",
+        year: "2019",
+        graduateDate: "",
+        studentCnt: "",
+        graduateCnt: "",
+        fulltimeCnt: "",
+        parttimeCnt: "",
+        origin: "",
+        requestCnt: "",
+        acceptedCnt: "",
+        degreeCnt: "",
+        leaveCnt: "",
+        acceptedRate: "",
+        remark: ""
       },
-      tableData: [
-        {
-          num: "001",
-          entrance: "",
-          term: "2019",
-          graduation: "",
-          student: "",
-          graduationStudent: "",
-          fullTime: "",
-          unfullTime: "",
-          source: "",
-          apply: "",
-          admission: "",
-          grant: "",
-          eliminate: "",
-          admissionRate: ""
-        },
-        {
-          num: "0002",
-          name: "李青松",
-          gender: "男",
-          major: "软件工程",
-          tell: "11122225556",
-          teacher: "陈晓红",
-          scholarship: "推免生奖学金",
-          stipend: "免推助学金",
-          grade: "2019级",
-          graduationSchool: "湖南师范大学",
-          graduation: "金融学",
-          remarks: "123"
-        },
-        {
-          num: "0002",
-          name: "李青松",
-          gender: "男",
-          major: "软件工程",
-          tell: "11122225556",
-          teacher: "陈晓红",
-          scholarship: "推免生奖学金",
-          stipend: "不享受",
-          grade: "2019级",
-          graduationSchool: "湖南师范大学",
-          graduation: "金融学",
-          remarks: "123"
-        }
-      ]
+      tableData: [],
+      rules: {}
     };
   },
   methods: {
-    handleClick(row) {
-      console.log(row);
+    handleCurrentChange(val) {
+      this.query.offset = this.query.limit * (this.page - 1);
+      this.list();
+    },
+    async list() {
+      for (const key in this.query) {
+        if (this.query.hasOwnProperty(key)) {
+          const element = this.query[key];
+          if (element == "" && key != "condition" && key != "offset") {
+            delete this.query[key];
+          }
+        }
+      }
+      let user = localStorage.getItem("userInfo");
+      if (user.roleid == 7) {
+        this.query.editor = user.id;
+      }
+      let res = await axios.$post("/recruit/list", this.query);
+      this.tableData = res.rows;
+      this.total = parseInt(res.total);
+      this.loading = false;
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
+    async submitForm(formName) {
+      console.log("submitForm");
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
+      switch (this.operate) {
+        case "add":
+          console.log("add");
+          if (this.form.acceptedCnt)
+            this.form.acceptedRate = (
+              (this.form.acceptedCnt / this.form.requestCnt) *
+              100
+            ).toFixed(2);
+          console.log(this.form.acceptedRate);
+
+          await axios.$post("/recruit/add", this.form);
+          break;
+        case "edit":
+          await axios.$post("/recruit/update", this.form);
+          break;
+      }
+      this.dialogFormVisible = false;
+      await this.list();
+    },
+    showDialog(row) {
+      this.dialogFormVisible = true;
+      this.formDisabled = false;
+      if (this.operate === "add") {
+        this.form = {
+          id: "",
+          name: "",
+          gender: "",
+          year: "",
+          college: "",
+          trainingLevel: "",
+          firstLevelCategory: "",
+          projectName: "",
+          funding: "",
+          remark: ""
+        };
+      } else {
+        this.form = row;
+      }
+    },
+    async del(row) {
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          console.log(row);
+          let recruitId = row.id;
+          await axios.$post("/recruit/delete", {
+            recruitId: recruitId
+          });
+          this.list();
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    async changeFlag(row) {
+      row.pick = !row.pick;
+    },
+
+    async examineData() {
+      let examineList = [];
+      for (let i = 0; i < this.tableData.length; i++) {
+        const element = this.tableData[i];
+        console.log(element);
+        if (element.pick) {
+          examineList.push(element);
+        }
+      }
+      for (let i = 0; i < examineList.length; i++) {
+        const element = examineList[i];
+        console.log(element.auditFlag);
+        this.examineForm.id = element.id;
+        await axios.$post("/recruit/update", this.examineForm);
+      }
+      this.list();
+      this.examineDialog = false;
+      this.$message({
+        type: "success",
+        message: "审核成功!"
+      });
+    },
+
+    async handleCommand(command) {
+      console.log(command);
+      switch (command) {
+        case "examine":
+          let deleteList = [];
+          for (let i = 0; i < this.tableData.length; i++) {
+            const element = this.tableData[i];
+            console.log(element);
+            if (element.pick) {
+              deleteList.push(element);
+            }
+          }
+          if (deleteList.length <= 0) {
+            await this.$confirm("未选中数据", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }).then(async () => {});
+            return;
+          }
+          this.examineDialog = true;
+          break;
+        case "delCount":
+          this.delCount();
+          break;
+        case "temp":
+          location.href = "http://112.74.56.60/excel/excel-model/sjk-txl.xls";
+          break;
+        case "download":
+          this.exportData();
+          break;
+      }
+    },
+
+    uploadSuccess() {
+      this.list();
+    },
+
+    async exportData() {
+      let data = await axios.$download("/recruit/export", {
+        params: this.query
+      });
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "sjk-txl.xls");
+        document.body.appendChild(link);
+        link.click();
+      }
+    },
+    async delCount() {
+      let deleteList = [];
+      for (let i = 0; i < this.tableData.length; i++) {
+        const element = this.tableData[i];
+        console.log(element);
+        if (element.pick) {
+          deleteList.push(element);
+        }
+      }
+      if (deleteList.length <= 0) {
+        await this.$confirm("未选中数据", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
+      this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          for (let i = 0; i < deleteList.length; i++) {
+            const element = deleteList[i];
+            let recruitId = element.id;
+            await axios.$post("/recruit/delete", {
+              recruitId: recruitId
+            });
+          }
+          this.tableData = [];
+          await this.list();
+          this.$message({
+            type: "success",
+            message: "删除成功!"
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
     }
+  },
+  mounted() {
+    this.list();
   }
 };
 </script>

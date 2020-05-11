@@ -655,135 +655,135 @@ export default {
               }
             }
           ]
+        },
+        {
+          entity: {
+            id: 77,
+            name: "academicExchange",
+            alias: "MBA系统建设",
+            state: "",
+            value: "/database/academicExchange"
+          },
+          childs: [
+            {
+              entity: {
+                id: 64,
+                name: "InputStudent",
+                alias: "招生信息 ",
+                state: "ENABLE",
+                value: "/MBA/InputStudent"
+              }
+            },
+            {
+              entity: {
+                id: 65,
+                name: "studentInfo",
+                alias: "学生具体信息 ",
+                state: "ENABLE",
+                value: "/MBA/studentInfo"
+              }
+            },
+            {
+              entity: {
+                id: 66,
+                name: "staffInfo",
+                alias: "教师职工信息 ",
+                state: "ENABLE",
+                value: "/MBA/staffInfo"
+              }
+            },
+            {
+              entity: {
+                id: 67,
+                name: "teacherPaper",
+                alias: "教师期刊论文管理 ",
+                state: "ENABLE",
+                value: "/MBA/teacherPaper"
+              }
+            },
+            {
+              entity: {
+                id: 68,
+                name: "teacherSeminar",
+                alias: "教师学术议会管理 ",
+                state: "ENABLE",
+                value: "/MBA/teacherSeminar"
+              }
+            },
+            {
+              entity: {
+                id: 69,
+                name: "portraitScientificResearch",
+                alias: "教师纵向科研信息 ",
+                state: "ENABLE",
+                value: "/MBA/portraitScientificResearch"
+              }
+            },
+            {
+              entity: {
+                id: 70,
+                name: "transverseScientificResearch",
+                alias: "教师横向科研信息 ",
+                state: "ENABLE",
+                value: "/MBA/transverseScientificResearch"
+              }
+            },
+            {
+              entity: {
+                id: 71,
+                name: "researchFunds",
+                alias: "进校科研经费 ",
+                state: "ENABLE",
+                value: "/MBA/researchFunds"
+              }
+            },
+            {
+              entity: {
+                id: 72,
+                name: "academicWorks",
+                alias: "教师主编出版学术著作教材信息",
+                state: "ENABLE",
+                value: "/MBA/academicWorks"
+              }
+            },
+            {
+              entity: {
+                id: 73,
+                name: "prizeWinning",
+                alias: "教师负责人成果获奖信息",
+                state: "ENABLE",
+                value: "/MBA/prizeWinning"
+              }
+            },
+            {
+              entity: {
+                id: 74,
+                name: "partTimeJobTeacher",
+                alias: "兼职教师信息",
+                state: "ENABLE",
+                value: "/MBA/partTimeJobTeacher"
+              }
+            },
+            {
+              entity: {
+                id: 75,
+                name: "postgraduateClass",
+                alias: "研究生课堂教学",
+                state: "ENABLE",
+                value: "/MBA/postgraduateClass"
+              }
+            },
+            {
+              entity: {
+                id: 76,
+                name: "postgraduatePaper",
+                alias: "研究生论文指导",
+                state: "ENABLE",
+                value: "/MBA/postgraduatePaper"
+              }
+            }
+          ]
         }
-        // {
-        //   entity: {
-        //     id: 46,
-        //     name: "academicExchange",
-        //     alias: "MBA系统建设",
-        //     state: "",
-        //     value: "/database/academicExchange"
-        //   },
-        //   childs: [
-        //     {
-        //       entity: {
-        //         id: 47,
-        //         name: "InputStudent",
-        //         alias: "招生信息 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/InputStudent"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 48,
-        //         name: "studentInfo",
-        //         alias: "学生具体信息 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/studentInfo"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 49,
-        //         name: "staffInfo",
-        //         alias: "教师职工信息 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/staffInfo"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 50,
-        //         name: "teacherPaper",
-        //         alias: "教师期刊论文管理 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/teacherPaper"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 51,
-        //         name: "teacherSeminar",
-        //         alias: "教师学术议会管理 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/teacherSeminar"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 52,
-        //         name: "portraitScientificResearch",
-        //         alias: "教师纵向科研信息 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/portraitScientificResearch"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 53,
-        //         name: "transverseScientificResearch",
-        //         alias: "教师横向科研信息 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/transverseScientificResearch"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 54,
-        //         name: "researchFunds",
-        //         alias: "进校科研经费 ",
-        //         state: "ENABLE",
-        //         value: "/MBA/researchFunds"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 55,
-        //         name: "academicWorks",
-        //         alias: "教师主编出版学术著作教材信息",
-        //         state: "ENABLE",
-        //         value: "/MBA/academicWorks"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 56,
-        //         name: "prizeWinning",
-        //         alias: "教师负责人成果获奖信息",
-        //         state: "ENABLE",
-        //         value: "/MBA/prizeWinning"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 57,
-        //         name: "partTimeJobTeacher",
-        //         alias: "兼职教师信息",
-        //         state: "ENABLE",
-        //         value: "/MBA/partTimeJobTeacher"
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 58,
-        //         name: "postgraduateClass.",
-        //         alias: "研究生课堂教学",
-        //         state: "ENABLE",
-        //         value: "/MBA/postgraduateClass."
-        //       }
-        //     },
-        //     {
-        //       entity: {
-        //         id: 59,
-        //         name: "postgraduatePaper.",
-        //         alias: "研究生论文指导",
-        //         state: "ENABLE",
-        //         value: "/MBA/postgraduatePaper."
-        //       }
-        //     }
-        //   ]
-        // }
       ]
     };
   },

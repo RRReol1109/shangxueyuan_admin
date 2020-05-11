@@ -230,7 +230,7 @@ export default {
         order: "desc",
         condition: ""
       },
-
+      
       form: {
         id: "",
         name: "",
@@ -436,11 +436,11 @@ export default {
       }
     },
 
-     uploadSuccess() {
+    uploadSuccess() {
       this.list();
     },
 
-async exportData() {
+    async exportData() {
       let data = await axios.$download("/addressBook/export", {
         params: this.query
       });

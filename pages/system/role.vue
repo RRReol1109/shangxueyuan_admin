@@ -454,6 +454,78 @@ export default {
               date: ""
             }
           ]
+        },
+        {
+          id: 77,
+          label: "MBA模块",
+          date: "",
+          children: [
+            {
+              id: 64,
+              label: "招生信息",
+              date: ""
+            },
+            {
+              id: 65,
+              label: "学生具体信息",
+              date: ""
+            },
+            {
+              id: 66,
+              label: "教师职工信息",
+              date: ""
+            },
+            {
+              id: 67,
+              label: "教师期刊论文管理",
+              date: ""
+            },
+            {
+              id: 68,
+              label: "教师学术议会管理",
+              date: ""
+            },
+            {
+              id: 69,
+              label: "教师纵向科研信息",
+              date: ""
+            },
+            {
+              id: 70,
+              label: "教师横向科研信息",
+              date: ""
+            },
+            {
+              id: 71,
+              label: "进校科研经费",
+              date: ""
+            },
+            {
+              id: 72,
+              label: "教师主编出版学术著作教材信息",
+              date: ""
+            },
+            {
+              id: 73,
+              label: "教师负责人成果获奖信息",
+              date: ""
+            },
+            {
+              id: 74,
+              label: "兼职教师信息",
+              date: ""
+            },
+            {
+              id: 75,
+              label: "研究生课堂教学",
+              date: ""
+            },
+            {
+              id: 76,
+              label: "研究生论文指导",
+              date: ""
+            }
+          ]
         }
       ],
       defaultProps: {
