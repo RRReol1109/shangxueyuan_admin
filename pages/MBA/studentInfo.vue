@@ -178,7 +178,14 @@
       >
         <el-form-item label="年级" prop="grade">
           <el-col :span="6">
-            <el-input size="small" v-model="form.grade"></el-input>
+            <el-date-picker
+              v-model="form.grade"
+              type="date"
+              format="yyyy"
+              value-format="yyyy"
+              placeholder="选择日期时间"
+              size="small"
+            ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="班级名称" prop="classes">

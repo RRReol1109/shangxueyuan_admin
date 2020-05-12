@@ -741,7 +741,7 @@ export default {
               entity: {
                 id: 72,
                 name: "academicWorks",
-                alias: "教师主编出版学术著作教材信息",
+                alias: "出版学术著作教材信息",
                 state: "ENABLE",
                 value: "/MBA/academicWorks"
               }
