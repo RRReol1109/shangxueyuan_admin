@@ -72,13 +72,14 @@
       <el-table-column prop="isbn" align="center" label="ISBN号"></el-table-column>
       <el-table-column prop="wordCnt" align="center" label="总字数(万字)"></el-table-column>
       <el-table-column prop="ownCnt" align="center" label="本人撰写字数"></el-table-column>
-      <el-table-column prop="pdfUrl" align="center" label="上传封面和版权页PDF电子版"></el-table-column>
+      <!-- <el-table-column prop="pdfUrl" align="center" label="上传封面和版权页PDF电子版"></el-table-column> -->
       <el-table-column prop="point" align="center" label="业绩点"></el-table-column>
       <el-table-column prop="score" align="center" label="考核分"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
+          <el-button @click="downLoadFile(scope.row)" type="text" size="small">附件下载</el-button>
           <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
@@ -200,9 +201,17 @@
             <el-input size="small" v-model="form.ownCnt"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="上传封面和版权页PDF电子版" prop="pdfUrl">
+        <el-form-item label="PDF上传" prop="pdfUrl">
           <el-col :span="6">
-            <el-input size="small" v-model="form.pdfUrl"></el-input>
+            <el-upload
+              class
+              :headers="header"
+              :file-list="fileLists"
+              :on-success="fileUploadSuccess"
+              action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+            >
+              <el-button size="small" class type="primary">附件上传</el-button>
+            </el-upload>
           </el-col>
         </el-form-item>
         <el-form-item label="业绩点" prop="point">
@@ -217,9 +226,9 @@
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
-        <el-button @click="examineDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
+        <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
     </el-dialog>
   </div>
@@ -250,6 +259,8 @@ export default {
       examineForm: {},
       header: {},
       rules: {},
+      fileLists: [],
+      fileurl: "",
       form: {
         year: "",
         teacherId: "",
@@ -280,6 +291,22 @@ export default {
     },
     async changeFlag(row) {
       row.pick = !row.pick;
+    },
+    downLoadFile(rows) {
+      if (rows.pdfUrl) {
+        window.open(rows.pdfUrl);
+      } else {
+        this.$message({
+          type: "info",
+          message: "该条记录无附件"
+        });
+      }
+    },
+    fileUploadSuccess(res, file, files) {
+      for (let i = 0; i < files.length; i++) {
+        const element = files[i];
+        this.fileurl += element.response;
+      }
     },
     async list() {
       this.tableData = [];
@@ -369,10 +396,14 @@ export default {
       }
       switch (this.operate) {
         case "add":
+          this.form.pdfUrl = this.fileurl;
           await axios.$post("/teacherMaterial/add", this.form);
+          this.fileurl = "";
           break;
         case "edit":
+          this.form.pdfUrl = this.fileurl;
           await axios.$post("/teacherMaterial/update", this.form);
+          this.fileurl = "";
           break;
       }
       this.dialogFormVisible = false;
@@ -532,6 +563,9 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.teacherList = this.teacherList.rows;
     this.roleId = localStorage.getItem("roleId");
     this.list();

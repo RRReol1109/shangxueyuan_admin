@@ -91,6 +91,7 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="downLoadFile(scope.row)" type="text" size="small">附件下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -190,7 +191,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="研究生专业" prop="studentMajor">
-          <el-select v-model="form.studentMajor" size="small">
+          <el-select v-model="form.studentMajor" size="small" placeholder="请选择">
             <el-option label="管理科学与工程" value="管理科学与工程"></el-option>
             <el-option label="工商管理" value="工商管理"></el-option>
             <el-option label="企业管理" value="企业管理"></el-option>
@@ -255,7 +256,7 @@
         </el-form-item>
         <el-form-item label="检索源" prop="origin">
           <el-col :span="6">
-            <el-select v-model="form.origin" size="small">
+            <el-select v-model="form.origin" size="small" placeholder="请选择">
               <el-option label="SCI" value="SCI"></el-option>
               <el-option label="SSCI" value="SSCI"></el-option>
               <el-option label="EI" value="EI"></el-option>
@@ -269,13 +270,13 @@
         </el-form-item>
         <el-form-item label="是否ESI期刊" prop="esi">
           <el-col :span="6">
-            <el-select v-model="form.esi" size="small">
+            <el-select v-model="form.esi" size="small" placeholder="请选择">
               <el-option label="是" value="true"></el-option>
               <el-option label="否" value="false"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="院定级别" prop="level">
+        <el-form-item label="院定级别" prop="level" placeholder="请选择">
           <el-col :span="6">
             <el-select v-model="form.level" size="small">
               <el-option label="1" value="1"></el-option>
@@ -301,9 +302,17 @@
             <el-input size="small" v-model="form.timesCited"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="上传全文PDF电子版" prop="pdfUrl">
+        <el-form-item label="上传全文PDF" prop="pdfUrl">
           <el-col :span="6">
-            <el-input size="small" v-model="form.pdfUrl"></el-input>
+            <el-upload
+              class
+              :headers="header"
+              :file-list="fileLists"
+              :on-success="fileUploadSuccess"
+              action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+            >
+              <el-button size="small" class type="primary">附件上传</el-button>
+            </el-upload>
           </el-col>
         </el-form-item>
         <el-form-item label="业绩点" prop="point">
@@ -351,6 +360,8 @@ export default {
       examineForm: {},
       header: {},
       rules: {},
+      fileLists: [],
+      fileurl: "",
       form: {
         year: "",
         teacherId: "",
@@ -392,6 +403,22 @@ export default {
     },
     async changeFlag(row) {
       row.pick = !row.pick;
+    },
+    downLoadFile(rows) {
+      if (rows.pdfUrl) {
+        window.open(rows.pdfUrl);
+      } else {
+        this.$message({
+          type: "info",
+          message: "该条记录无附件"
+        });
+      }
+    },
+    fileUploadSuccess(res, file, files) {
+      for (let i = 0; i < files.length; i++) {
+        const element = files[i];
+        this.fileurl += element.response;
+      }
     },
     async list() {
       this.tableData = [];
@@ -656,6 +683,9 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.teacherList = this.teacherList.rows;
     this.roleId = localStorage.getItem("roleId");
     this.list();
