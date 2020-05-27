@@ -115,7 +115,7 @@
         :total="this.total"
       ></el-pagination>
     </nav>
-    <el-dialog style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -138,8 +138,8 @@
           </div>
         </el-form-item>
       </el-form>
-    </el-dialog>
-    <el-dialog style="min-height:500px" title :visible.sync="dialogFormVisible">
+    </el-drawer>
+    <el-drawer size="40%" style="min-height:500px" title :visible.sync="dialogFormVisible">
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -199,12 +199,12 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
+      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
         <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -669,4 +669,13 @@ export default {
 </script>
 
 <style>
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
+}
 </style>

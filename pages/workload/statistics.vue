@@ -66,9 +66,9 @@
       ></el-pagination>
     </nav>
 
-    <el-dialog style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
+    <el-drawer size="40%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
       <Highcharts id="图例" :option="option" />
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -258,5 +258,14 @@ export default {
 }
 #nameBox {
   width: 200px;
+}
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

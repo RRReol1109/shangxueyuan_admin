@@ -56,7 +56,7 @@
     </nav> -->
 
     <!-- 新建部门 -->
-    <el-dialog
+    <el-drawer
       style="min-height:500px"
       title="新增部门"
       :visible.sync="dialogFormVisible"
@@ -89,12 +89,12 @@
           </el-select>
         </el-form-item>-->
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
+      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="submitForm()" size="small">确定</el-button>
         <el-button size="small" @click="resetForm()">重置</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -216,5 +216,14 @@ export default {
 }
 #nameBox {
   width: 200px;
+}
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

@@ -27,7 +27,7 @@
     </el-table>
 
     <!-- 角色面板 -->
-    <el-dialog :visible.sync="dialogAddVisible" title="权限详情">
+    <el-drawer size="40%" :visible.sync="dialogAddVisible" title="权限详情">
       <el-form :model="form" label-width="100px">
         <el-form-item label="角色名称">
           <el-col :span="6">
@@ -44,10 +44,10 @@
         <el-button @click="dialogAddVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="add()" size="small">添 加</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
 
     <!-- 权限面板 -->
-    <el-dialog
+    <el-drawer
       class="roleDialog"
       style="min-height:500px"
       title="权限详情"
@@ -74,7 +74,7 @@
         <el-button @click="dialogDetailVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="saveRoles()" size="small">保 存</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -117,6 +117,11 @@ export default {
         {
           id: 888,
           label: "待办统计",
+          date: ""
+        },
+        {
+          id: 999,
+          label: "数据审核",
           date: ""
         },
         {
@@ -690,5 +695,14 @@ export default {
 .roleDialog .el-tree-node__content {
   line-height: 30px;
   height: 30px;
+}
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

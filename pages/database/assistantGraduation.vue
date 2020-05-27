@@ -71,7 +71,7 @@
       ></el-pagination>
     </nav>
 
-    <el-dialog
+    <el-drawer
       style="min-height:500px"
       title="学硕毕业情况"
       :visible.sync="dialogFormVisible"
@@ -155,12 +155,12 @@
           </el-col>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
+      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
         <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

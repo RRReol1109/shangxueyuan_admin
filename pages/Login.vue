@@ -1,5 +1,6 @@
 <template>
   <div class="background">
+    <img src="./img/logo.png" id="logo" />
     <el-form
       label-position="left"
       label-width="0px"
@@ -27,8 +28,15 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="login" :loading="loading">登 录</el-button>
+        <el-button
+          type="primary"
+          @click="login"
+          :loading="loading"
+          id="login"
+          style="width:150px;margin-left:200px;"
+        >登 录</el-button>
       </el-form-item>
+      <h3 class="message">版权所有 ©2020 中南大学商学院</h3>
     </el-form>
   </div>
 </template>
@@ -72,9 +80,15 @@ export default {
 </script>
 
 <style scoped>
+#logo {
+  position: absolute;
+  top: 2%;
+  left: 3%;
+}
 .background {
   background-color: #303e47;
-  background-image: url(//oem.faisys.com/image/demo2.png);
+  background-image: url("./img/bg5.jpg");
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;
   width: 100%;
@@ -102,6 +116,13 @@ export default {
   left: -200px; */
 }
 
+.message {
+  font-size: 15px;
+  color: #ffffff;
+  margin: 0px auto 40px auto;
+  text-align: center;
+  font-weight: bold;
+}
 .el-input {
   width: 400px;
   margin-left: 70px;

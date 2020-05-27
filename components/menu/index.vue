@@ -11,7 +11,7 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <NavMenu :navMenus="leftMenus" :class="[loading ? 'hidden': 'show']"></NavMenu>
+      <NavMenu :navMenus="leftMenus" :class="[loading ? 'hidden': 'show']" style="font-size:19px;"></NavMenu>
     </el-menu>
   </div>
 </template>

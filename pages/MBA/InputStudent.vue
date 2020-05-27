@@ -44,6 +44,31 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-dropdown @command="handleCommand" style="float:right;">
+            <el-button size="small" type="primary">
+              功能列表
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="temp">模板下载</el-dropdown-item>
+              <el-dropdown-item command="download">导出数据</el-dropdown-item>
+              <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
+              <el-dropdown-item>
+                <el-upload
+                  class
+                  :file-list="fileList"
+                  :headers="header"
+                  :on-success="uploadSuccess"
+                  action="http://bsoa.csu.edu.cn/bs/recruit/upload?token='AuthenticationToken'"
+                >
+                  <el-button class type="text">批量上传</el-button>
+                </el-upload>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
@@ -90,7 +115,7 @@
       ></el-pagination>
     </nav>
 
-    <el-dialog
+    <el-drawer
       style="min-height:500px"
       title="通讯录"
       :visible.sync="dialogFormVisible"
@@ -195,12 +220,12 @@
           </el-col>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
+      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
         <el-button size="small" @click="resetForm('form')">重置</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -239,6 +264,8 @@ export default {
       roleId: 0,
       examineDialog: false,
       examineForm: {},
+      header: {},
+      fileList: [],
       teacherList: [],
       form: {
         index: "",
@@ -507,5 +534,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

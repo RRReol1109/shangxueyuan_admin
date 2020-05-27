@@ -104,7 +104,7 @@
       ></el-pagination>
     </nav>
     <!-- 学时查看窗口 -->
-    <el-dialog style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form :model="examineForm" ref="examineForm" label-width="100px" class="demo-examineForm">
         <el-form-item>
           <el-form-item label="选择角色:">
@@ -119,8 +119,8 @@
           </div>
         </el-form-item>
       </el-form>
-    </el-dialog>
-    <el-dialog
+    </el-drawer>
+    <el-drawer
       style="min-height:500px"
       title
       :visible.sync="dialogFormVisible"
@@ -178,12 +178,12 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" slot="footer" class="dialog-footer">
+      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
         <el-button v-if="['add'].includes(operate)" size="small" @click="resetForm('ruleForm')">重置</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -264,7 +264,8 @@ export default {
           "0": "管理员",
           "1": "超级管理员",
           "19": "部门管理员",
-          "7": "教师"
+          "7": "教师",
+          "21":"科研学科办公室管理员"
         }[value.toString()];
       }
     },
@@ -659,5 +660,14 @@ export default {
 }
 #nameBox {
   width: 200px;
+}
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>

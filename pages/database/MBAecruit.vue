@@ -74,7 +74,7 @@
       <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
     </nav>
 
-    <el-dialog
+    <el-drawer
       style="min-height:500px"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
@@ -176,7 +176,7 @@
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 

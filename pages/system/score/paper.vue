@@ -37,7 +37,7 @@
     </nav>
 
     <!-- 学时查看窗口 -->
-    <el-dialog style="min-height:500px" title="分数规则（论文）" :visible.sync="dialogFormVisible">
+    <el-drawer size="40%" style="min-height:500px" title="分数规则（论文）" :visible.sync="dialogFormVisible">
       <el-form :disabled="formDisabled" :model="form" label-width="100px">
         <el-form-item label="年度">
           <el-select v-model="form.year" size="small">
@@ -84,7 +84,7 @@
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisible = false" size="small">确 定</el-button>
       </div>
-    </el-dialog>
+    </el-drawer>
   </div>
 </template>
 
@@ -233,5 +233,14 @@ export default {
 }
 .el-input.is-disabled .el-input__inner {
   color: #606266;
+}
+.el-drawer__body {
+    overflow: auto;
+    /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar{
+    display: none;
 }
 </style>
