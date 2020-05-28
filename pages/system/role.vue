@@ -70,7 +70,7 @@
         :render-content="renderContent"
         :props="defaultProps"
       ></el-tree>
-      <div v-if="!dialogEditDisabled" slot="footer" class="dialog-footer">
+      <div v-if="!dialogEditDisabled">
         <el-button @click="dialogDetailVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="saveRoles()" size="small">保 存</el-button>
       </div>
@@ -697,12 +697,12 @@ export default {
   height: 30px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

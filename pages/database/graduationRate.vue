@@ -37,7 +37,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -60,6 +60,7 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
+      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column fixed prop="year" align="center" label="届别"></el-table-column>
       <el-table-column prop="major" align="center" label="专业"></el-table-column>
       <el-table-column prop="totalCnt" align="center" label="毕业生人数"></el-table-column>

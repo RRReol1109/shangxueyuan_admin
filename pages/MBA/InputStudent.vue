@@ -54,7 +54,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -77,7 +77,8 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column fixed prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column prop="year" align="center" label="年份"></el-table-column>
       <el-table-column prop="index" align="center" label="序号"></el-table-column>
       <el-table-column prop="startDate" align="center" label="入学年月"></el-table-column>
       <el-table-column prop="graduateDate" align="center" label="毕业年月"></el-table-column>
@@ -536,12 +537,12 @@ export default {
   margin-bottom: 10px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

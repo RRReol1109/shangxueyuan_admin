@@ -36,7 +36,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -54,6 +54,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
+      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>

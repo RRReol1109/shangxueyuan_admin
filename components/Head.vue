@@ -74,8 +74,8 @@
   font-size: 16px;
 }
 
-.item{
-  font-size:16px;
+.item {
+  font-size: 16px;
 }
 </style>
 
@@ -109,7 +109,7 @@ export default {
     menuSelect(key, keyPath) {
       switch (key) {
         case "1":
-          this.ids = [22, 23, 24, 26, 27];
+          this.ids = [777, 22, 23, 24, 26, 27, 44];
           break;
         case "2":
           break;
