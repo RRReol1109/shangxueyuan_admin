@@ -8,18 +8,19 @@
         text-color="#fff"
         active-text-color="#FFA500"
         @select="menuSelect"
+        :default-active="activeIndex"
       >
-        <el-menu-item class="item" index="1">科研学科办公室</el-menu-item>
-        <el-menu-item class="item" index="2">对外交流与国际认证</el-menu-item>
-        <el-menu-item class="item" index="3">校友事务中心</el-menu-item>
-        <el-menu-item class="item" index="4">本科生工作办公室</el-menu-item>
-        <el-menu-item class="item" index="5">研究生工作办公室</el-menu-item>
-        <el-menu-item class="item" index="6">本科生教学管理中心</el-menu-item>
-        <el-menu-item class="item" index="7">专业学位教育管理中心</el-menu-item>
-        <el-menu-item class="item" index="8">研究生教学管理中心</el-menu-item>
-        <el-menu-item class="item" index="9">MBA中心</el-menu-item>
-        <el-menu-item class="item" index="10">EMBA中心</el-menu-item>
-        <el-menu-item class="item" index="11">EDP中心</el-menu-item>
+        <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
+        <el-menu-item class="item" index="32">对外交流与国际认证</el-menu-item>
+        <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
+        <el-menu-item class="item" index="33">本科生工作办公室</el-menu-item>
+        <el-menu-item class="item" index="34">研究生工作办公室</el-menu-item>
+        <el-menu-item class="item" index="35">本科生教学管理中心</el-menu-item>
+        <el-menu-item class="item" index="36">专业学位教育管理中心</el-menu-item>
+        <el-menu-item class="item" index="37">研究生教学管理中心</el-menu-item>
+        <el-menu-item class="item" index="38">MBA中心</el-menu-item>
+        <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
+        <el-menu-item class="item" index="40">EDP中心</el-menu-item>
         <el-menu-item class="item" index="12">教师个人</el-menu-item>
       </el-menu>
     </div>
@@ -75,7 +76,7 @@
 }
 
 .item {
-  font-size: 16px;
+  font-size: 18px;
 }
 </style>
 
@@ -86,12 +87,17 @@ export default {
     return {
       nickName: null,
       roleId: "",
+      userInfo: "",
+      activeIndex: "",
       ids: []
     };
   },
   mounted() {
     let roleId = window.localStorage.getItem("roleId");
+    this.userInfo = window.localStorage.getItem("userInfo");
+    // this.ids = window.localStorage.getItem("roles");
     this.roleId = roleId;
+    this.selectDep();
   },
   methods: {
     handleCommand(command) {
@@ -99,6 +105,8 @@ export default {
       if (command === "logout") {
         // 清空缓存数据
         localStorage.removeItem("nickName");
+        sessionStorage.removeItem("flag");
+        sessionStorage.removeItem("select");
         location.href = "Login";
       } else if (command === "main") {
         location.href = "/shangxueyuan_admin";
@@ -106,25 +114,83 @@ export default {
         location.href = "userCenter";
       }
     },
-    menuSelect(key, keyPath) {
-      switch (key) {
-        case "1":
-          this.ids = [777, 22, 23, 24, 26, 27, 44];
-          break;
-        case "2":
-          break;
-        case "3":
-          break;
-        case "4":
-          break;
-        case "5":
-          break;
-        case "6":
-          break;
-        case "7":
-          break;
+    selectDep() {
+      let deptid = JSON.parse(this.userInfo).deptid;
+      let flag = window.sessionStorage.getItem("flag");
+      if (!flag) {
+        // this.menuSelect(deptid.toString(), "");
+        this.activeIndex = deptid.toString();
+      } else {
+        let selectId = window.sessionStorage.getItem("select");
+        this.activeIndex = selectId.toString();
+        // this.menuSelect(selectId.toString(), "");
       }
-      this.saveRoles();
+    },
+    menuSelect(key, keyPath) {
+      console.log("hello world");
+      if (this.roleId != 1) {
+        switch (key) {
+          case "31":
+            this.ids = [777, 22, 23, 24, 26, 27, 44];
+            break;
+          case "32":
+            this.ids = [
+              777,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              29,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              39,
+              38,
+              58,
+              59,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45
+            ];
+            break;
+          case "3":
+            break;
+          case "4":
+            break;
+          case "5":
+            break;
+          case "6":
+            break;
+          case "7":
+            break;
+        }
+        window.sessionStorage.setItem("select", key);
+        this.saveRoles();
+      }
     },
     async saveRoles() {
       console.log("保存权限：", this.roleId, "----", this.ids);
@@ -135,6 +201,10 @@ export default {
         roleId: this.roleId,
         ids: this.ids.join()
       });
+      // let refresh = Request.getSession().getAttribute("refresh");
+      window.sessionStorage.setItem("flag", true);
+      location.reload();
+      // window.localStorage.setItem("roles", "["+this.ids+"]");
     }
   }
 };

@@ -170,7 +170,9 @@ export default {
       total: 0,
       page: 1,
       operate: "",
+      header: {},
       dialogFormVisible: false,
+      fileList: [],
       query: {
         limit: 14,
         offset: 0,
@@ -424,6 +426,9 @@ export default {
     }
   },
   mounted() {
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.roleId = localStorage.getItem("roleId");
     this.list();
   }
