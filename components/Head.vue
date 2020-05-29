@@ -1,5 +1,24 @@
 <template>
   <div>
+    <div class="grid-content bg-purple-light">
+      <div class="crumbs">
+        <div class="name ban-select">
+          <!-- <el-badge :is-dot="true">
+          </el-badge>-->
+          中南大学商学院信息管理系统
+        </div>
+      </div>
+      <div class="self ban-select">
+        <el-dropdown @command="handleCommand">
+          <span class="el-dropdown-link name">个人中心</span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="main">个人主页</el-dropdown-item>
+            <el-dropdown-item command="updata">修改密码</el-dropdown-item>
+            <el-dropdown-item command="logout">退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+    </div>
     <div style="width:100%;">
       <el-menu
         class="el-menu-demo"
@@ -23,25 +42,6 @@
         <el-menu-item class="item" index="40">EDP中心</el-menu-item>
         <el-menu-item class="item" index="12">教师个人</el-menu-item>
       </el-menu>
-    </div>
-    <div class="grid-content bg-purple-light">
-      <div class="crumbs">
-        <div class="name ban-select">
-          <!-- <el-badge :is-dot="true">
-          </el-badge>-->
-          中南大学商学院信息管理系统
-        </div>
-      </div>
-      <div class="self ban-select">
-        <el-dropdown @command="handleCommand">
-          <span class="el-dropdown-link name">个人中心</span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="main">个人主页</el-dropdown-item>
-            <el-dropdown-item command="updata">修改密码</el-dropdown-item>
-            <el-dropdown-item command="logout">退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
     </div>
   </div>
 </template>
@@ -131,59 +131,22 @@ export default {
       if (this.roleId != 1) {
         switch (key) {
           case "31":
-            this.ids = [777, 22, 23, 24, 26, 27, 44];
+            this.ids = [777, 22, 23, 24, 25, 60, 26, 27, 44];
             break;
           case "32":
-            this.ids = [
-              777,
-              13,
-              14,
-              15,
-              16,
-              17,
-              18,
-              19,
-              20,
-              29,
-              46,
-              47,
-              48,
-              49,
-              50,
-              51,
-              52,
-              53,
-              54,
-              55,
-              56,
-              57,
-              30,
-              31,
-              32,
-              33,
-              34,
-              35,
-              36,
-              37,
-              39,
-              38,
-              58,
-              59,
-              40,
-              41,
-              42,
-              43,
-              44,
-              45
-            ];
+            this.ids = [777, 30];
             break;
           case "25":
+            this.ids = [777, 49, 53, 57, 38, 59, 41];
             break;
           case "33":
+            this.ids = [777, 46, 47, 48, 49];
             break;
           case "34":
+            this.ids = [777, 50, 51, 52, 53];
             break;
           case "35":
+            this.ids = [777, 40];
             break;
           case "36":
             break;
@@ -210,6 +173,23 @@ export default {
             ];
             break;
           case "38":
+            this.ids = [
+              777,
+              77,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73,
+              74,
+              75,
+              76
+            ];
             break;
           case "39":
             break;

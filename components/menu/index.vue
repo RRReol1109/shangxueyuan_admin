@@ -536,15 +536,15 @@ export default {
                 value: "/database/undergraduate"
               }
             },
-            {
-              entity: {
-                id: 64,
-                name: "MBAecruit",
-                alias: "MBA/EMBA招生情况",
-                state: "ENABLE",
-                value: "/database/MBAecruit"
-              }
-            },
+            // {
+            //   entity: {
+            //     id: 64,
+            //     name: "MBAecruit",
+            //     alias: "MBA/EMBA招生情况",
+            //     state: "ENABLE",
+            //     value: "/database/MBAecruit"
+            //   }
+            // },
             {
               entity: {
                 id: 37,
