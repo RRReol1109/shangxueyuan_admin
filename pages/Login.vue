@@ -87,7 +87,7 @@ export default {
 }
 .background {
   background-color: #303e47;
-  background-image: url("./img/bg5.jpg");
+  background-image: url("./img/bg.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;

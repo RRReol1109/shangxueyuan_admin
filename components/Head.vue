@@ -177,15 +177,43 @@ export default {
               45
             ];
             break;
-          case "3":
+          case "25":
             break;
-          case "4":
+          case "33":
             break;
-          case "5":
+          case "34":
             break;
-          case "6":
+          case "35":
             break;
-          case "7":
+          case "36":
+            break;
+          case "37":
+            this.ids = [
+              777,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              37,
+              39,
+              38,
+              58,
+              59
+            ];
+            break;
+          case "38":
+            break;
+          case "39":
+            break;
+          case "40":
             break;
         }
         window.sessionStorage.setItem("select", key);
