@@ -230,7 +230,7 @@ export default {
         order: "desc",
         condition: ""
       },
-      
+
       form: {
         id: "",
         name: "",
@@ -244,6 +244,8 @@ export default {
         address: ""
       },
       roleId: 0,
+      fileList: [],
+      header: {},
       examineDialog: false,
       examineForm: {},
       teacherList: [],
@@ -506,6 +508,9 @@ export default {
       limit: 999999
     });
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.teacherList = this.teacherList.rows;
     this.list();
   }

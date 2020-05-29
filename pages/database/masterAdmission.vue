@@ -320,6 +320,8 @@ export default {
         admissionType: "",
         remarks: ""
       },
+      fileList: [],
+      header: {},
       rules: {
         num: [{ required: true, message: "请输入学号", trigger: "blur" }],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
@@ -590,6 +592,9 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
     this.list();

@@ -256,6 +256,8 @@ export default {
       roleId: 0,
       examineDialog: false,
       examineForm: {},
+      fileList: [],
+      header: {},
       teacherList: [],
       form: {
         id: "",
@@ -557,6 +559,9 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
     this.list();

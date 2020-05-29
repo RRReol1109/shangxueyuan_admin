@@ -203,6 +203,8 @@ export default {
         department: "",
         content: ""
       },
+      fileList: [],
+      header: {},
       rules: {
         namactivityThemee: [
           { required: true, message: "请输入姓名", trigger: "blur" }
@@ -488,6 +490,9 @@ export default {
       order: "desc",
       condition: ""
     });
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.roleId = localStorage.getItem("roleId");
     this.depList = deps;
     console.log(deps);

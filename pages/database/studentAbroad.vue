@@ -341,6 +341,8 @@ export default {
         order: "remark",
         condition: ""
       },
+      fileList: [],
+      header: {},
       form: {
         studentId: "",
         name: "",
@@ -646,6 +648,9 @@ export default {
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };

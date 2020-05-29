@@ -211,6 +211,8 @@ export default {
         finishedCnt: "",
         degreeCnt: ""
       },
+      fileList: [],
+      header: {},
       rules: {
         year: [{ required: true, message: "请输入界别", trigger: "blur" }],
         major: [{ required: true, message: "请输入专业", trigger: "blur" }],
@@ -472,6 +474,9 @@ export default {
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };

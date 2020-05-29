@@ -218,6 +218,8 @@ export default {
         order: "desc",
         condition: ""
       },
+      fileList: [],
+      header: {},
       roleId: 0,
       examineDialog: false,
       examineForm: {},
@@ -474,6 +476,9 @@ export default {
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };

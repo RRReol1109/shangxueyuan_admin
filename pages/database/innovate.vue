@@ -240,6 +240,8 @@ export default {
         order: "desc",
         condition: ""
       },
+      fileList: [],
+      header: {},
       form: {
         id: "",
         name: "",
@@ -516,6 +518,9 @@ export default {
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };

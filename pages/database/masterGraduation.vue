@@ -253,6 +253,8 @@ export default {
         pleaDate: "",
         remark: ""
       },
+      fileList: [],
+      header: {},
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
@@ -514,6 +516,9 @@ export default {
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };

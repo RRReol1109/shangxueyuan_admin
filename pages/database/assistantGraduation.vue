@@ -175,6 +175,8 @@ export default {
       page: 1,
       operate: "",
       dialogFormVisible: false,
+      fileList: [],
+      header: {},
       query: {
         limit: 14,
         offset: 0,
@@ -287,6 +289,9 @@ export default {
     }
   },
   mounted() {
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };
