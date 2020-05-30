@@ -41,7 +41,7 @@
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
-        <el-form-item label>
+        <el-form-item label v-if="deptid==37||roleId==1">
           <el-button
             size="small"
             type="primary"
@@ -49,7 +49,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item>
+        <el-form-item v-if="deptid==37||roleId==1">
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="small" type="primary">
               功能列表
@@ -106,7 +106,13 @@
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+        v-if="deptid==37||roleId==1"
+      >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
@@ -296,6 +302,7 @@ export default {
         condition: ""
       },
       roleId: 0,
+      deptid: "",
       examineDialog: false,
       examineForm: {},
       teacherList: [],
@@ -565,6 +572,7 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
     this.list();

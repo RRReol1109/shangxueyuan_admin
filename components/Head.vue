@@ -140,10 +140,10 @@ export default {
             this.ids = [777, 49, 53, 57, 38, 59, 41];
             break;
           case "33":
-            this.ids = [777, 46, 47, 48, 49];
+            // this.ids = [777, 46, 47, 48, 49];
             break;
           case "34":
-            this.ids = [777, 50, 51, 52, 53];
+            // this.ids = [777, 50, 51, 52, 53];
             break;
           case "35":
             this.ids = [777, 40];
@@ -151,26 +151,7 @@ export default {
           case "36":
             break;
           case "37":
-            this.ids = [
-              777,
-              46,
-              47,
-              48,
-              49,
-              50,
-              51,
-              52,
-              53,
-              54,
-              55,
-              56,
-              57,
-              37,
-              39,
-              38,
-              58,
-              59
-            ];
+            this.ids = [777, 51, 56, 37, 39, 38];
             break;
           case "38":
             this.ids = [
