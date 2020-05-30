@@ -39,7 +39,7 @@
         <el-form-item label>
           <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label>
+        <el-form-item label v-if="deptid==31||roleId==1">
           <el-button
             size="small"
             type="primary"
@@ -47,7 +47,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item>
+        <el-form-item v-if="deptid==31||roleId==1">
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button type="primary" size="small">
               功能列表
@@ -94,7 +94,13 @@
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+        v-if="deptid==31||roleId==1"
+      >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
@@ -263,6 +269,7 @@ export default {
       total: 0,
       page: 1,
       loading: false,
+      deptid: "",
       query: {
         limit: 14,
         offset: 0,
@@ -631,6 +638,7 @@ export default {
       offset: 0,
       limit: 999999
     });
+    this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.teacherList = this.teacherList.rows;
     this.list();
   }
@@ -646,12 +654,12 @@ el-from {
 }
 
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>
