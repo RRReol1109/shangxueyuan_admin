@@ -32,8 +32,7 @@
           type="primary"
           @click="login"
           :loading="loading"
-          id="login"
-          style="width:150px;margin-left:200px;"
+          id="login"       
         >登 录</el-button>
       </el-form-item>
       <h3 class="message">版权所有 ©2020 中南大学商学院</h3>
