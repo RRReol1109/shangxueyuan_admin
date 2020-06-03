@@ -80,7 +80,13 @@
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="200"  v-if="deptid==31||roleId==1">
+      <el-table-column
+        fixed="right"
+        align="center"
+        label="操作"
+        width="200"
+        v-if="deptid==31||roleId==1"
+      >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
@@ -548,19 +554,26 @@ export default {
               );
             }
           }
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (!element && key != "auditFlag" && key != "files") {
-                this.ruleForm.authors = "";
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
+          let verification = false;
+          this.$refs[formName].validate(valid => {
+            if (valid) {
+              verification = true;
+              console.log("success");
+              return true;
+            } else {
+              verification = false;
+              this.ruleForm.authors = "";
+              console.log("error submit!!");
+              return false;
             }
+          });
+          if (verification) {
+          } else {
+            this.$message({
+              type: "info",
+              message: "请填写正确数据"
+            });
+            return;
           }
           await axios.$post("/textbook/add", this.ruleForm);
           this.fileurl = "";
