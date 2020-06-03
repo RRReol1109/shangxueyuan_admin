@@ -3,13 +3,13 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="论文名称:">
-          <el-input v-model="query.title" placeholder="请输入作者单位" size="small"></el-input>
+          <el-input v-model="query.title" placeholder="请输入作者单位" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="DOI号:">
-          <el-input v-model="query.doi" placeholder="请输入姓名" size="small"></el-input>
+          <el-input v-model="query.doi" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="期刊分级:">
-          <el-select v-model="query.level" size="small" placeholder="请选择分级">
+          <el-select v-model="query.level" size="normal" placeholder="请选择分级">
             <el-option label="全部" value></el-option>
             <el-option label="中文A+" value="中文A+"></el-option>
             <el-option label="中文A" value="中文A"></el-option>
@@ -19,21 +19,21 @@
           </el-select>
         </el-form-item>
         <el-form-item label="期刊名称:">
-          <el-input v-model="query.journal" placeholder="请输入期刊名称" size="small"></el-input>
+          <el-input v-model="query.journal" placeholder="请输入期刊名称" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="半价/原价:">
-          <el-select v-model="query.half" size="small" placeholder="请选择类型">
+        <!-- <el-form-item label="半价/原价:">
+          <el-select v-model="query.half" size="normal" placeholder="请选择类型">
             <el-option label="全部" value></el-option>
             <el-option label="半价" value="半价"></el-option>
             <el-option label="原价" value="原价"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label v-if="deptid==31||roleId==1">
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -41,7 +41,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;" v-if="deptid==31||roleId==1">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -58,7 +58,7 @@
                   :on-success="uploadSuccess"
                   action="http://bsoa.csu.edu.cn/bs/articleCn/upload?token='AuthenticationToken'"
                 >
-                  <el-button size="small" class type="text">批量上传数据</el-button>
+                  <el-button size="normal" class type="text">批量上传</el-button>
                 </el-upload>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -67,21 +67,21 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" fixed align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" fixed align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="title" align="center" label="论文名称"></el-table-column>
-      <el-table-column prop="journal" align="center" label="期刊名称"></el-table-column>
-      <el-table-column prop="level" align="center" label="期刊分级"></el-table-column>
-      <el-table-column prop="half" align="center" label="原价/半价"></el-table-column>
-      <el-table-column prop="score" align="center" label="计分"></el-table-column>
-      <el-table-column prop="cateNumber" align="center" label="ISSN"></el-table-column>
-      <el-table-column prop="userName" align="center" label="全体作者"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="期刊分级"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="期刊ISSN号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -90,14 +90,14 @@
         fixed="right"
         align="center"
         label="操作"
-        width="200"
+        width="300"
         v-if="deptid==31||roleId==1"
       >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text" size="small">附件下载</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button @click="downLoadFile(scope.row)" type="text" size="normal">附件下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -125,61 +125,106 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
     </el-drawer>
 
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+    <el-drawer title="提示" size="60%" style="min-height:500px" :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :disabled="!['edit', 'add'].includes(operate)"
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="100px"
+        label-width="150px"
         class="demo-ruleForm"
       >
-        <el-form-item label="年度" prop="year">
-          <el-date-picker
-            size="small"
-            v-model="ruleForm.year"
-            type="year"
-            format="yyyy"
-            value-format="yyyy"
-            placeholder="选择年份"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="论文名称" prop="title">
+        <el-divider content-position="left">基本信息</el-divider>
+        <el-row>
           <el-col :span="12">
-            <el-input learable v-model="ruleForm.title" placeholder="请输入内容"></el-input>
+            <el-form-item label="发表日期:" prop="contractno">
+              <el-date-picker
+                size="normal"
+                style="width:98%"
+                v-model="ruleForm.year"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
+          <el-col :span="12">
+          </el-col>
+        </el-row>
+        <el-form-item label="论文名称:" prop="contracttype">
+          <el-input learable v-model="ruleForm.title" placeholder="" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="论文英文名称:" prop="contracttype">
+          <el-input learable v-model="ruleForm.title" placeholder="" style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="期刊名称" prop="journal">
-          <el-col :span="12">
-            <el-input v-model="ruleForm.journal" rows="5"></el-input>
-          </el-col>
+          <el-input  v-model="ruleForm.journal" placeholder="" style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="期刊分级" prop="level">
+        <el-row>
           <el-col :span="12">
-            <el-select v-model="ruleForm.level" placeholder="请选择级别">
+            <el-form-item label="学校/学院期刊分级" prop="level">
+              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
               <el-option label="中文A+" value="A+"></el-option>
               <el-option label="中文A" value="A"></el-option>
               <el-option label="中文A-" value="A-"></el-option>
               <el-option label="中文B" value="B"></el-option>
               <el-option label="中文C" value="C"></el-option>
             </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="期刊ISSN号" prop="cateNumber">
+              <el-input clearable v-model="ruleForm.cateNumber" placeholder="请输入内容" style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="核心收录" prop="">
+              <el-select placeholder="请选择" style="width:98%">
+                <el-option label="CSTPCD" value="CSTPCD"></el-option>
+                <el-option label="CSCD扩展" value="CSCD扩展"></el-option>
+                <el-option label="CSSCI核心" value="CSSCI核心"></el-option>
+                <el-option label="北大核心" value="北大核心"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="期刊所属学科" prop="">
+              <el-input learable placeholder="" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年代卷期" prop="">
+              <el-input  placeholder="" style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- <el-form-item label="论文研究领域" prop="level">
           <el-col :span="12">
             <el-select v-model="ruleForm.level" placeholder="论文研究领域">
@@ -189,14 +234,14 @@
             </el-select>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="原/半价" prop="half">
+        <!-- <el-form-item label="原/半价" prop="half">
           <el-col :span="12">
             <el-select v-model="ruleForm.half" placeholder="请选择类型">
               <el-option label="原价" value="0"></el-option>
               <el-option label="半价" value="1"></el-option>
             </el-select>
           </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="全体作者" prop="authors">
           <el-input v-model="ruleForm.authors" style="width:200px;"></el-input>
         </el-form-item>-->
@@ -206,7 +251,7 @@
             <el-input v-model="ruleForm.authors" rows="5" type="textarea"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item
+        <!-- <el-form-item
           v-for="(teacherArr, index) in ruleForm.teacherArr"
           :label="'作者信息' + (index+1)"
           :key="teacherArr.key"
@@ -235,13 +280,70 @@
         </el-form-item>
         <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
+        </el-form-item> -->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="第一作者" prop="">
+              <el-input clearable v-model="ruleForm.highlyCited" placeholder="" style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="第一作者单位" prop="">
+          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:98%"></el-input>
         </el-form-item>
-        <el-form-item label="计分" prop="score">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="第一通讯作者" prop="">
+              <el-input clearable v-model="ruleForm.highlyCited" placeholder="" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="第一通讯作者单位" prop="">
+          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="全体作者" prop="">
+          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
+        </el-form-item>
+        <!-- <el-form-item label="计分" prop="score">
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.score" placeholder="请输入内容"></el-input>
           </el-col>
-        </el-form-item>
-        <el-form-item label="附件" prop="files">
+        </el-form-item> -->
+        <div>
+          <el-divider content-position="left">附件</el-divider>
+          <el-table
+            :data="fileList"
+            border
+            style="width: 100%"
+            size="small"
+            v-loading="fileLoading"
+            header-row-class-name="h30"
+            header-cell-class-name="tc-g2 bc-g"
+          >
+            <el-table-column :show-overflow-tooltip="true" type="index" label="#" align="center" width="50"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="create_time" label="创建时间" align="center"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-upload
+            class="dragger"
+            :show-file-list="false"
+            :on-success="uploadSuccess"
+            drag
+            :data="fileData"
+            :action="action"
+            multiple>
+            <div class="el-upload__tip" slot="tip"></div>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          </el-upload>
+        </div>
+        <!-- <el-form-item label="附件" prop="files">
           <el-upload
             class
             :headers="header"
@@ -249,27 +351,17 @@
             :on-success="fileUploadSuccess"
             action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
           >
-            <el-button size="small" class type="primary">附件上传</el-button>
+            <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
-        </el-form-item>
-        <el-form-item label="ISSN" prop="cateNumber">
-          <el-col :span="12">
-            <el-input clearable v-model="ruleForm.cateNumber" placeholder="请输入内容"></el-input>
-          </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="small" placeholder="请选择状态">
+          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
-            <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="通过" value="1"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -324,7 +416,7 @@ export default {
           }
         ]
       },
-      loading: false,
+      loading: true,
       roleId: 0,
       pick: false,
       examineForm: {
@@ -346,7 +438,7 @@ export default {
         ],
 
         cateNumber: [
-          { required: true, message: "请输入ISSN", trigger: "blur" }
+          { required: true, message: "请输入期刊ISSN号", trigger: "blur" }
         ],
         authors: [{ required: true, message: "请输入作者", trigger: "blur" }],
         half: [{ required: true, message: "请选择是否半价", trigger: "blur" }],

@@ -277,7 +277,7 @@ export default {
             },
             {
               id: 61,
-              label: "横向课题统计",
+              label: "横向课题",
               date: ""
             },
             {

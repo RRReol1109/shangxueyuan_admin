@@ -307,7 +307,7 @@ export default {
               entity: {
                 id: 61,
                 name: "transverse",
-                alias: "横向课题统计",
+                alias: "横向课题",
                 state: "ENABLE",
                 value: "/reward/transverse"
               }
@@ -828,7 +828,7 @@ export default {
 
 <style>
 .el-menu-vertical {
-  min-height: 960px;
+  min-height: 1500px;
   /* margin-bottom: -2000px;
   padding-bottom: 2000px; */
 }

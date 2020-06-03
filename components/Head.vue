@@ -2,9 +2,7 @@
   <div>
     <div class="grid-content bg-purple-light">
       <div class="crumbs">
-        <div class="name ban-select">
-          <!-- <el-badge :is-dot="true">
-          </el-badge>-->
+        <div class="name title">
           中南大学商学院信息管理系统
         </div>
       </div>
@@ -29,8 +27,10 @@
         @select="menuSelect"
         :default-active="activeIndex"
       >
+        <el-menu-item class="item" index="1">全部</el-menu-item>
+        <el-menu-item class="item" index="2">行政办公室</el-menu-item>
         <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
-        <el-menu-item class="item" index="32">对外交流与国际认证</el-menu-item>
+        <el-menu-item class="item" index="32">对外交流与国际认证中心</el-menu-item>
         <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
         <el-menu-item class="item" index="33">本科生工作办公室</el-menu-item>
         <el-menu-item class="item" index="34">研究生工作办公室</el-menu-item>
@@ -73,6 +73,12 @@
 .name {
   line-height: 45px;
   font-size: 16px;
+}
+.title {
+  font-size: 24px;
+  position: absolute;
+  left: 50%;
+  text-align: center;
 }
 
 .item {

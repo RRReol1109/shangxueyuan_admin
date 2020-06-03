@@ -50,5 +50,15 @@ html body {
   padding-right: 10px;
   padding-top: 10px;
 }
+.el-form-item__label {
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 18px;
+    color: #606266;
+    line-height: 40px;
+    padding: 0 12px 0 0;
+    box-sizing: border-box;
+}
 </style>
 
