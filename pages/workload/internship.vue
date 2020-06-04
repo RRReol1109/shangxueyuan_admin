@@ -250,21 +250,23 @@
             ></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="实习周数" prop="days">
+        <el-row>
           <el-col :span="12">
-            <el-input
-              v-model="ruleForm.days"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-              clearable
-              :disabled="read"
-            ></el-input>
+            <el-form-item label="实习周数" prop="days">
+              <el-input
+                v-model="ruleForm.days"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+                clearable
+                :disabled="read"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="核定系数" prop="ratio">
           <el-col :span="12">
-            <el-input clearable v-model="ruleForm.ratio" placeholder="核定系数" :disabled="read"></el-input>
+            <el-form-item label="核定系数" prop="ratio">
+              <el-input clearable v-model="ruleForm.ratio" placeholder="核定系数" :disabled="read"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item
           v-for="(teacherArr, index) in ruleForm.teacherArr"
           :label="'老师' + (index+1)"
@@ -272,7 +274,7 @@
           :prop="'teacherArr.' + index + '.value'"
         >
           <el-col :span="12">
-            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
+            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name" style="width:99%">
               <el-option
                 v-for="item in teacherList"
                 :key="item.id"
@@ -280,7 +282,7 @@
                 :value="item.id"
               ></el-option>
             </el-select>
-            <el-select v-model="teacherArr.title" placeholder="职称">
+            <el-select v-model="teacherArr.title" placeholder="职称" style="width:99%">
               <el-option label="教授" value="教授"></el-option>
               <el-option label="副教授" value="副教授"></el-option>
             </el-select>
@@ -297,28 +299,37 @@
             <el-input v-model="ruleForm.teachers" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="指导班级" prop="classes">
+        <el-row>
           <el-col :span="12">
-            <el-autocomplete
-              v-model="ruleForm.classes"
-              :fetch-suggestions="queryClasses"
-              placeholder="请输入班级"
-              :disabled="read"
-            ></el-autocomplete>
+            <el-form-item label="指导班级" prop="classes">
+              <el-autocomplete
+                v-model="ruleForm.classes"
+                :fetch-suggestions="queryClasses"
+                placeholder="请输入班级"
+                :disabled="read"
+                style="width:99%"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="实习单位" prop="company">
           <el-col :span="12">
-            <el-autocomplete
-              v-model="ruleForm.company"
-              :fetch-suggestions="queryCompany"
-              placeholder="请输入实习单位"
-              :disabled="read"
-            ></el-autocomplete>
+            <el-form-item label="实习单位" prop="company">
+              <el-autocomplete
+                v-model="ruleForm.company"
+                :fetch-suggestions="queryCompany"
+                placeholder="请输入实习单位"
+                :disabled="read"
+                style="width:99%"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="ruleForm.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+            style="width:99%"
+          >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>

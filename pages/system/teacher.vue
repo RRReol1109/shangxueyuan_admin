@@ -162,6 +162,7 @@
           <el-button size="normal" @click="resetForm('form')">重置</el-button>
         </div>
       </div>
+      <el-divider content-position="left">账号信息</el-divider>
       <el-form :disabled="formDisabled" :model="form" label-width="130px">
         <el-row>
           <el-col :span="12">
@@ -206,6 +207,28 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="角色">
+              <el-select v-model="form.roleid" placeholder="请选择权限" style="width:99%">
+                <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="部门">
+              <el-select v-model="form.deptid" placeholder="请选择部门" style="width:99%">
+                <el-option
+                  v-for="item in departments"
+                  :key="item.id"
+                  :label="item.simplename"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-divider content-position="left">基本信息</el-divider>
         <el-row>
           <el-col :span="12">
             <el-form-item label="身份证号码">
@@ -387,27 +410,6 @@
           <el-col :span="12">
             <el-form-item label="邮箱">
               <el-input v-model="form.email" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="角色">
-              <el-select v-model="form.roleid" placeholder="请选择权限" style="width:99%">
-                <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="部门">
-              <el-select v-model="form.deptid" placeholder="请选择部门" style="width:99%">
-                <el-option
-                  v-for="item in departments"
-                  :key="item.id"
-                  :label="item.simplename"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
