@@ -93,18 +93,20 @@
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="doi" align="center" label="DOI号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="wos" align="center" label="WoS号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="subsidizeSource" align="center" label="资助来源"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="期刊分级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="期刊ISSN号"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="ESI经济/商学高被引"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="ESI经济"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorOrg" align="center" label="通讯作者单位"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="coauthorName" align="center" label="通讯作者姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="coauthorName" align="center" label="第一作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
