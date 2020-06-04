@@ -6,7 +6,7 @@
           <el-date-picker
             v-model="query.year"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             format="yyyy"
             value-format="yyyy"
@@ -14,14 +14,14 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教职工姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -29,7 +29,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -85,9 +85,9 @@
       <el-table-column prop="score" align="center" label="考核分"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -105,7 +105,7 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -115,16 +115,16 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -151,22 +151,22 @@
               format="yyyy"
               value-format="yyyy"
               placeholder="选择日期时间"
-              size="small"
+              size="normal"
             ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="教职工工号" prop="teacherId">
           <el-col :span="6">
-            <el-input size="small" v-model="form.teacherId"></el-input>
+            <el-input size="normal" v-model="form.teacherId"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="教职工姓名" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.name"></el-input>
+            <el-input size="normal" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="研究生类别" prop="studentType">
-          <el-select v-model="form.studentType" size="small" placeholder="请选择">
+          <el-select v-model="form.studentType" size="normal" placeholder="请选择">
             <el-option label="硕士" value="硕士"></el-option>
             <el-option label="博士" value="博士"></el-option>
             <el-option label="博士后" value="博士后"></el-option>
@@ -179,11 +179,11 @@
             format="yyyy"
             value-format="yyyy"
             placeholder="选择日期时间"
-            size="small"
+            size="normal"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="研究生专业" prop="studentMajor">
-          <el-select v-model="form.studentMajor" size="small">
+          <el-select v-model="form.studentMajor" size="normal">
             <el-option label="管理科学与工程" value="管理科学与工程"></el-option>
             <el-option label="工商管理" value="工商管理"></el-option>
             <el-option label="企业管理" value="企业管理"></el-option>
@@ -193,27 +193,27 @@
         </el-form-item>
         <el-form-item label="全部作者列表" prop="author">
           <el-col :span="6">
-            <el-input size="small" v-model="form.author"></el-input>
+            <el-input size="normal" v-model="form.author"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="论文题目" prop="title">
           <el-col :span="6">
-            <el-input size="small" v-model="form.title"></el-input>
+            <el-input size="normal" v-model="form.title"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学术会议名称" prop="conferenceName">
           <el-col :span="6">
-            <el-input size="small" v-model="form.conferenceName"></el-input>
+            <el-input size="normal" v-model="form.conferenceName"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学术会议举办地点" prop="conferenceAddress">
           <el-col :span="6">
-            <el-input size="small" v-model="form.conferenceAddress"></el-input>
+            <el-input size="normal" v-model="form.conferenceAddress"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学术会议组织者" prop="conferenceOrganizer">
           <el-col :span="6">
-            <el-input size="small" v-model="form.conferenceOrganizer"></el-input>
+            <el-input size="normal" v-model="form.conferenceOrganizer"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="会议年月" prop="conferenceDate">
@@ -224,60 +224,60 @@
               format="yyyy"
               value-format="yyyy"
               placeholder="选择日期时间"
-              size="small"
+              size="normal"
             ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="学术会议论文集名称" prop="papersName">
           <el-col :span="6">
-            <el-input size="small" v-model="form.papersName"></el-input>
+            <el-input size="normal" v-model="form.papersName"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="本人排名" prop="tutorIndex">
           <el-col :span="6">
-            <el-input size="small" v-model="form.tutorIndex"></el-input>
+            <el-input size="normal" v-model="form.tutorIndex"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="院定级别" prop="level">
           <el-col :span="6">
-            <el-input size="small" v-model="form.level"></el-input>
+            <el-input size="normal" v-model="form.level"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="作者总数" prop="authorCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.authorCnt"></el-input>
+            <el-input size="normal" v-model="form.authorCnt"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="论文他引次数" prop="timesCited">
           <el-col :span="6">
-            <el-input size="small" v-model="form.timesCited"></el-input>
+            <el-input size="normal" v-model="form.timesCited"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="参会角色" prop="role">
           <el-col :span="6">
-            <el-input size="small" v-model="form.role"></el-input>
+            <el-input size="normal" v-model="form.role"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="上传全文PDF电子版" prop="pdfUrl">
           <el-col :span="6">
-            <el-input size="small" v-model="form.pdfUrl"></el-input>
+            <el-input size="normal" v-model="form.pdfUrl"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="业绩点" prop="point">
           <el-col :span="6">
-            <el-input size="small" v-model="form.point"></el-input>
+            <el-input size="normal" v-model="form.point"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="考核分" prop="score">
           <el-col :span="6">
-            <el-input size="small" v-model="form.score"></el-input>
+            <el-input size="normal" v-model="form.score"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="examineDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
       </div>
     </el-drawer>
   </div>

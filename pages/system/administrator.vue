@@ -3,10 +3,10 @@
     <div class="search-form">
       <el-form :inline="true" :model="form">
         <el-form-item label="账号:">
-          <el-input id="nameBox" v-model="query.name" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.name" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="角色:">
-          <el-select v-model="query.describe" size="small">
+          <el-select v-model="query.describe" size="normal">
             <el-option
               v-for="item in describes"
               :key="item.value"
@@ -16,10 +16,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
         <el-form-item label="">
-          <el-button size="small" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -30,9 +30,9 @@
       <el-table-column prop="describe" align="center" label="角色"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="show(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="show(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="edit(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -42,27 +42,27 @@
     </nav>
 
     <!-- 学时查看窗口 -->
-    <el-drawer size="40%" style="min-height:500px" title="新增管理员" :visible.sync="dialogFormVisible">
+    <el-drawer size="60%" style="min-height:500px" title="新增管理员" :visible.sync="dialogFormVisible">
       <el-form :disabled="formDisabled" :model="form" label-width="100px">
         <el-form-item label="管理员账号">
           <el-col :span="6">
-            <el-input v-model="form.name" size="small"></el-input>
+            <el-input v-model="form.name" size="normal"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="用户名">
           <el-col :span="6">
-            <el-input v-model="form.name" size="small"></el-input>
+            <el-input v-model="form.name" size="normal"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="分配角色">
-          <el-select v-model="form.describe" size="small">
+          <el-select v-model="form.describe" size="normal">
             <el-option label="部门管理员" value="1"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <div v-if="!formDisabled" slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false" size="small">确 定</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false" size="normal">确 定</el-button>
       </div>
     </el-drawer>
   </div>

@@ -6,7 +6,7 @@
           <el-date-picker
             v-model="query.year"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             format="yyyy"
             value-format="yyyy"
@@ -20,7 +20,7 @@
             format="yyyy-MM"
             value-format="yyyy-MM"
             placeholder="选择日期时间"
-            size="small"
+            size="normal"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="毕业年月:">
@@ -30,15 +30,15 @@
             format="yyyy-MM"
             value-format="yyyy-MM"
             placeholder="选择日期时间"
-            size="small"
+            size="normal"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -46,7 +46,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -95,9 +95,9 @@
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -133,7 +133,7 @@
           <el-date-picker
             v-model="form.year"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             format="yyyy"
             value-format="yyyy"
@@ -142,12 +142,12 @@
         </el-form-item>
         <el-form-item label="姓名">
           <el-col :span="6">
-            <el-input size="small" v-model="form.name"></el-input>
+            <el-input size="normal" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学号">
           <el-col :span="6">
-            <el-input size="small" v-model="form.index" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.index" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="入学年月:">
@@ -157,7 +157,7 @@
             format="yyyy-MM"
             value-format="yyyy-MM"
             placeholder="选择日期时间"
-            size="small"
+            size="normal"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="毕业年月:">
@@ -167,64 +167,64 @@
             format="yyyy-MM"
             value-format="yyyy-MM"
             placeholder="选择日期时间"
-            size="small"
+            size="normal"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="学员人数" prop="studentCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.studentCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.studentCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="毕业人数" prop="graduateCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.graduateCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.graduateCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="全日制人数" prop="fulltimeCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.fulltimeCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.fulltimeCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="非全日制人数" prop="parttimeCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.parttimeCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.parttimeCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学员来源" prop="origin">
           <el-col :span="6">
-            <el-input size="small" v-model="form.origin" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.origin" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="申请人数" prop="requestCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.requestCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.requestCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="录取人数" prop="acceptedCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.acceptedCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.acceptedCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="授予学位人数" prop="degreeCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.degreeCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.degreeCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="分流淘汰人员" prop="leaveCnt">
           <el-col :span="6">
-            <el-input size="small" v-model="form.leaveCnt" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.leaveCnt" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item size="small" label="备注">
+        <el-form-item size="normal" label="备注">
           <el-col :span="6">
             <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('form')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('form')">重置</el-button>
       </div>
     </el-drawer>
   </div>

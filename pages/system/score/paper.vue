@@ -3,7 +3,7 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="年度:">
-          <el-select v-model="query.year" size="small">
+          <el-select v-model="query.year" size="normal">
             <el-option label="2019年" value="2019"></el-option>
             <el-option label="2018年" value="2018"></el-option>
             <el-option label="2017年" value="2017"></el-option>
@@ -11,10 +11,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-plus" @click="add">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -25,9 +25,9 @@
       <el-table-column prop="desc" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="show(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="edit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="show(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="edit(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -37,10 +37,10 @@
     </nav>
 
     <!-- 学时查看窗口 -->
-    <el-drawer size="40%" style="min-height:500px" title="分数规则（论文）" :visible.sync="dialogFormVisible">
+    <el-drawer size="60%" style="min-height:500px" title="分数规则（论文）" :visible.sync="dialogFormVisible">
       <el-form :disabled="formDisabled" :model="form" label-width="100px">
         <el-form-item label="年度">
-          <el-select v-model="form.year" size="small">
+          <el-select v-model="form.year" size="normal">
             <el-option label="2019年" value="2019"></el-option>
             <el-option label="2018年" value="2018"></el-option>
             <el-option label="2017年" value="2017"></el-option>
@@ -48,7 +48,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="类别">
-          <el-select v-model="form.type" size="small">
+          <el-select v-model="form.type" size="normal">
             <el-option label="中文论文" value="1"></el-option>
             <el-option label="英文论文" value="2"></el-option>
             <el-option label="博硕论文" value="3"></el-option>
@@ -60,29 +60,29 @@
           :key="rule.key"
         >
           <el-col :span="3">
-            <el-input size="small" v-model="rule.level" placeholder="等级"></el-input>
+            <el-input size="normal" v-model="rule.level" placeholder="等级"></el-input>
           </el-col>
           <el-col :span="0.5">：</el-col>
           <el-col :span="3">
-            <el-input size="small" v-model="rule.score" placeholder="分数"></el-input>
+            <el-input size="normal" v-model="rule.score" placeholder="分数"></el-input>
           </el-col>
           <el-col :span="1">&#12288;</el-col>
           <el-button
             v-if="form.rules.length > 1 && !formDisabled"
-            size="small"
+            size="normal"
             type="primary"
             @click.prevent="removeRule(rule)"
           >删除</el-button>
         </el-form-item>
         <el-form-item label>
           <el-col :span="12" v-if="!formDisabled">
-            <el-button size="small" type="primary" @click="addRule">新增</el-button>
+            <el-button size="normal" type="primary" @click="addRule">新增</el-button>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="!formDisabled" slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false" size="small">确 定</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false" size="normal">确 定</el-button>
       </div>
     </el-drawer>
   </div>

@@ -429,7 +429,7 @@
             :data="fileList"
             border
             style="width: 100%"
-            size="small"
+            size="normal"
             v-loading="fileLoading"
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"

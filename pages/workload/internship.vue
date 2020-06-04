@@ -4,7 +4,7 @@
       <el-form :inline="true" :model="query">
         <el-form-item label="年度:">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="query.year"
             type="year"
             format="yyyy"
@@ -13,7 +13,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师:">
-          <el-select size="small" v-model="query.teachers" placeholder="请选择老师" clearable>
+          <el-select size="normal" v-model="query.teachers" placeholder="请选择老师" clearable>
             <el-option label="全部" value></el-option>
             <el-option
               v-for="item in teacherList"
@@ -24,13 +24,25 @@
           </el-select>
         </el-form-item>
         <el-form-item label="实习单位:">
-          <el-input clearable id="nameBox" v-model="query.company" placeholder="请输入单位" size="small"></el-input>
+          <el-input
+            clearable
+            id="nameBox"
+            v-model="query.company"
+            placeholder="请输入单位"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="指导班级:">
-          <el-input clearable id="nameBox" v-model="query.classes" placeholder="请输入班级" size="small"></el-input>
+          <el-input
+            clearable
+            id="nameBox"
+            v-model="query.classes"
+            placeholder="请输入班级"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="实习地点" prop="type">
-          <el-select v-model="query.type" size="small" placeholder="请选择地点">
+          <el-select v-model="query.type" size="normal" placeholder="请选择地点">
             <el-option label="全部" value></el-option>
             <el-option label="校内" value="校内"></el-option>
             <el-option label="市内" value="市内"></el-option>
@@ -38,7 +50,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态:">
-          <el-select v-model="query.auditFlag" size="small" placeholder="请选择状态">
+          <el-select v-model="query.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
@@ -46,12 +58,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label-width="320px"></el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -59,7 +71,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown v-if="showFunctionList" @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -94,7 +106,7 @@
       <el-table-column prop="year" align="center" label="年度"></el-table-column>
       <el-table-column prop="address" align="center" label="地址"></el-table-column>
       <el-table-column prop="type" align="center" label="实习地点"></el-table-column>
-      <el-table-column prop="hours" align="center" label="实习时长"></el-table-column>
+      <!-- <el-table-column prop="hours" align="center" label="实习时长"></el-table-column> -->
       <el-table-column prop="days" align="center" label="实习周数"></el-table-column>
       <el-table-column prop="ratio" align="center" label="核定系数"></el-table-column>
       <el-table-column prop="userName" align="center" label="教师"></el-table-column>
@@ -109,9 +121,9 @@
       <el-table-column prop="desc" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -129,7 +141,7 @@
         :total="this.total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -139,21 +151,34 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:" v-if="role">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
     </el-drawer>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="dialogFormVisible" :disabled="read">
+    <el-drawer
+      size="60%"
+      style="min-height:500px"
+      title
+      :visible.sync="dialogFormVisible"
+      :disabled="read"
+    >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -162,49 +187,60 @@
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年度" prop="year">
+        <el-row>
           <el-col :span="12">
-            <el-date-picker
-              size="small"
-              v-model="ruleForm.year"
-              type="year"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择年份"
-            ></el-date-picker>
+            <el-form-item label="年度" prop="year">
+              <el-date-picker
+                size="normal"
+                v-model="ruleForm.year"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="地址" prop="address">
           <el-col :span="12">
-            <el-autocomplete
-              clearable
-              v-model="ruleForm.address"
-              :fetch-suggestions="queryAddress"
-              placeholder="请输入内容"
-              :disabled="read"
-            ></el-autocomplete>
+            <el-form-item label="地址" prop="address">
+              <el-autocomplete
+                clearable
+                v-model="ruleForm.address"
+                :fetch-suggestions="queryAddress"
+                placeholder="请输入内容"
+                :disabled="read"
+                style="width:99%"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="实习地点" prop="type">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-select v-model="ruleForm.type" placeholder="请选择地点" :disabled="read">
-              <el-option label="校内" value="校内"></el-option>
-              <el-option label="市内" value="市内"></el-option>
-              <el-option label="市外" value="市外"></el-option>
-            </el-select>
+            <el-form-item label="实习地点" prop="type">
+              <el-select
+                v-model="ruleForm.type"
+                placeholder="请选择地点"
+                :disabled="read"
+                style="width:99%"
+              >
+                <el-option label="校内" value="校内"></el-option>
+                <el-option label="市内" value="市内"></el-option>
+                <el-option label="市外" value="市外"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="实习人数" prop="count">
           <el-col :span="12">
-            <el-input
-              v-model="ruleForm.count"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-              clearable
-              :disabled="read"
-            ></el-input>
+            <el-form-item label="实习人数" prop="count">
+              <el-input
+                v-model="ruleForm.count"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+                clearable
+                :disabled="read"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="实习时长" prop="hours">
+        </el-row>
+        <!-- <el-form-item label="实习时长" prop="hours">
           <el-col :span="12">
             <el-input
               v-model="ruleForm.hours"
@@ -213,7 +249,7 @@
               :disabled="read"
             ></el-input>
           </el-col>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="实习周数" prop="days">
           <el-col :span="12">
             <el-input
@@ -282,18 +318,13 @@
           </el-col>
         </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="small" placeholder="请选择状态">
+          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -902,12 +933,12 @@ export default {
   border: none;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

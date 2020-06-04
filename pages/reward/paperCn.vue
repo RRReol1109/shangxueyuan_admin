@@ -117,7 +117,7 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -317,7 +317,7 @@
             :data="fileList"
             border
             style="width: 100%"
-            size="small"
+            size="normal"
             v-loading="fileLoading"
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"

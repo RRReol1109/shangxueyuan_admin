@@ -3,30 +3,30 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="类型:">
-          <el-select v-model="query.type" size="small" placeholder="请选择类型">
+          <el-select v-model="query.type" size="normal" placeholder="请选择类型">
             <el-option label="全部" value></el-option>
             <el-option label="著作" value="著作"></el-option>
             <el-option label="教材" value="教材"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="著作/教材名称:">
-          <el-input id="nameBox" v-model="query.name" placeholder="请输入著作/教材名称" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.name" placeholder="请输入著作/教材名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="出版社名称:">
-          <el-input id="nameBox" v-model="query.publishHouse" placeholder="请输入出版社名称" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.publishHouse" placeholder="请输入出版社名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="署名单位:">
-          <el-input id="nameBox" v-model="query.signature" placeholder="请输入出版社名称" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.signature" placeholder="请输入出版社名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="出版时间:">
-          <el-date-picker v-model="query.publishDate" type="date" placeholder="选择日期时间" size="small"></el-date-picker>
+          <el-date-picker v-model="query.publishDate" type="date" placeholder="选择日期时间" size="normal"></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label v-if="deptid==31||roleId==1">
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -34,7 +34,7 @@
         </el-form-item>
         <el-form-item v-if="deptid==31||roleId==1">
           <el-dropdown @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -51,7 +51,7 @@
                   :on-success="fileUploadSuccess"
                   action="http://bsoa.csu.edu.cn/bs/textbook/upload?token='AuthenticationToken'"
                 >
-                  <el-button size="small" class type="text">批量上传数据</el-button>
+                  <el-button size="normal" class type="text">批量上传数据</el-button>
                 </el-upload>
               </el-dropdown-item>
             </el-dropdown-menu>
@@ -88,10 +88,10 @@
         v-if="deptid==31||roleId==1"
       >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text" size="small">附件下载</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button @click="downLoadFile(scope.row)" type="text" size="normal">附件下载</el-button>
           <!-- <a class='download' :href='(scope.row.files)' download=""  title="下载">下载</a> -->
         </template>
       </el-table-column>
@@ -110,7 +110,7 @@
         :total="this.total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -120,21 +120,21 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small" disabled>取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal" disabled>取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
     </el-drawer>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
       <el-form
         :disabled="!['edit', 'add'].includes(operate)"
         :model="ruleForm"
@@ -145,7 +145,7 @@
       >
         <el-form-item label="年度:">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="ruleForm.year"
             type="year"
             format="yyyy"
@@ -179,7 +179,7 @@
             :on-success="uploadSuccess"
             action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
           >
-            <el-button size="small" class type="primary">附件上传</el-button>
+            <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
         </el-form-item>
         <el-form-item label="ISBN编号" prop="isbn">
@@ -258,7 +258,7 @@
           </el-col>
         </el-form-item>-->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="small" placeholder="请选择状态">
+          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>

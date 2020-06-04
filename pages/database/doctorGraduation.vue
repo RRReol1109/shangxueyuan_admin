@@ -9,7 +9,7 @@
           <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="授予硕士学位专业:">
-          <el-select v-model="query.major" size="small">
+          <el-select v-model="query.major" size="normal">
             <el-input v-model="query.teacher" placeholder="请输入专业"></el-input>
           </el-select>
         </el-form-item>
@@ -20,11 +20,11 @@
           <el-input v-model="query.category" placeholder="请输入专业"></el-input>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -51,9 +51,9 @@
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,12 +81,12 @@
       <el-form :model="form" label-width="320px">
         <el-form-item label="姓名" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.name"></el-input>
+            <el-input size="normal" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学号" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.id" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="出生日期" label-width="320px">
@@ -95,34 +95,34 @@
           </el-col>
         </el-form-item>
         <el-form-item label="性别" label-width="320px">
-          <el-select v-model="form.gender" size="small">
+          <el-select v-model="form.gender" size="normal">
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="授予硕士学位专业" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="导师" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.teacher" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.teacher" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="专业" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.category" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.category" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" label-width>
           <el-col :span="6">
-            <el-input size="small" v-model="form.score" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.score" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="在读期间发表论文" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="答辩日期" label-width="320px">
@@ -137,17 +137,17 @@
         </el-form-item>
         <el-form-item label="毕业去向" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="电话" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="邮箱" label-width="320px">
           <el-col :span="6">
-            <el-input size="small" v-model="form.paper" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="备注" label-width="320px">
@@ -157,9 +157,9 @@
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
       </div>
     </el-drawer>
   </div>

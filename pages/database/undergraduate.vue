@@ -3,7 +3,7 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="年级:">
-          <el-select v-model="query.term" size="small">
+          <el-select v-model="query.term" size="normal">
             <el-option label="2019" value="2019"></el-option>
             <el-option label="2018" value="2018"></el-option>
             <el-option label="2017" value="2017"></el-option>
@@ -17,7 +17,7 @@
           <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="专业:">
-          <el-select v-model="query.major" size="small">
+          <el-select v-model="query.major" size="normal">
             <el-option label="金融硕士" value="1"></el-option>
           </el-select>
         </el-form-item>
@@ -31,11 +31,11 @@
           <el-input v-model="query.graduationSchool" placeholder="请输入毕业学校"></el-input>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="dialogFormVisible = true"
@@ -58,8 +58,8 @@
       <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button type="text" size="normal">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -76,61 +76,61 @@
       <el-form :model="form" label-width="100px">
         <el-form-item label="姓名">
           <el-col :span="6">
-            <el-input size="small" v-model="form.name"></el-input>
+            <el-input size="normal" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="学号">
           <el-col :span="6">
-            <el-input size="small" v-model="form.num" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.num" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="form.gender" size="small">
+          <el-select v-model="form.gender" size="normal">
             <el-option label="男" value="1"></el-option>
             <el-option label="女" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="录取专业">
           <el-col :span="6">
-            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="年级">
           <el-col :span="6">
-            <el-input size="small" v-model="form.major" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="手机号">
           <el-col :span="6">
-            <el-input size="small" v-model="form.tell" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.tell" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="导师">
           <el-col :span="6">
-            <el-input size="small" v-model="form.teacher" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.teacher" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="奖学金名称">
           <el-col :span="6">
-            <el-input size="small" v-model="form.scholarship" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.scholarship" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="助学金名称">
           <el-col :span="6">
-            <el-input size="small" v-model="form.stipend" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.stipend" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="毕业学校">
           <el-col :span="6">
-            <el-input size="small" v-model="form.graduationSchool" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.graduationSchool" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="毕业专业">
           <el-col :span="6">
-            <el-input size="small" v-model="form.graduation" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.graduation" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item size="small" label="备注">
+        <el-form-item size="normal" label="备注">
           <el-col :span="6">
             <el-input v-model="form.remarks" autocomplete="off"></el-input>
           </el-col>

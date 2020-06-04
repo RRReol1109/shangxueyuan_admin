@@ -3,24 +3,24 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="上传用户名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="年份:">
           <el-date-picker
             v-model="query.year"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             value-format="yyyy"
             placeholder="年份"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -28,7 +28,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -72,9 +72,9 @@
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="downLoad(scope.row)" type="text" size="small">下载</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="downLoad(scope.row)" type="text" size="normal">下载</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,7 +92,7 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -102,16 +102,16 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -129,7 +129,7 @@
             <el-date-picker
               v-model="form.year"
               align="right"
-              size="small"
+              size="normal"
               type="date"
               placeholder="年份"
               value-format="yyyy"
@@ -150,15 +150,15 @@
               action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken"
               :on-success="onSuccess"
             >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <el-button size="normal" type="primary">点击上传</el-button>
             </el-upload>
           </el-form-item>
         </div>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
       </div>
     </el-drawer>
   </div>

@@ -3,13 +3,13 @@
     <div class="search-form">
       <el-form :inline="true" :model="form">
         <el-form-item label="角色名:">
-          <el-input size="small" v-model="query.roleName" placeholder="请输入关键字"></el-input>
+          <el-input size="normal" v-model="query.roleName" placeholder="请输入关键字"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list()">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list()">查询</el-button>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-plus" @click="initAddForm()">新增</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-plus" @click="initAddForm()">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -20,14 +20,14 @@
       <el-table-column prop="tips" align="center" label="别名"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button type="text" @click="edit(scope.row)" size="small">编辑权限</el-button>
-          <el-button type="text" @click="del(scope.row)" size="small">删除</el-button>
+          <el-button type="text" @click="edit(scope.row)" size="normal">编辑权限</el-button>
+          <el-button type="text" @click="del(scope.row)" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 角色面板 -->
-    <el-drawer size="40%" :visible.sync="dialogAddVisible" title="权限详情">
+    <el-drawer size="60%" :visible.sync="dialogAddVisible" title="权限详情">
       <el-form :model="form" label-width="100px">
         <el-form-item label="角色名称">
           <el-col :span="6">
@@ -41,8 +41,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogAddVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="add()" size="small">添 加</el-button>
+        <el-button @click="dialogAddVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="add()" size="normal">添 加</el-button>
       </div>
     </el-drawer>
 
@@ -58,7 +58,7 @@
         <span v-text="roleName"></span>
       </div>
       <span style="color: #409EFF;">详情：</span>
-      <!-- <el-button size="small" type="primary" @click="showRoleEndTime=!showRoleEndTime">设置到期时间</el-button> -->
+      <!-- <el-button size="normal" type="primary" @click="showRoleEndTime=!showRoleEndTime">设置到期时间</el-button> -->
       <el-tree
         :data="data2"
         show-checkbox
@@ -71,8 +71,8 @@
         :props="defaultProps"
       ></el-tree>
       <div v-if="!dialogEditDisabled">
-        <el-button @click="dialogDetailVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="saveRoles()" size="small">保 存</el-button>
+        <el-button @click="dialogDetailVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="saveRoles()" size="normal">保 存</el-button>
       </div>
     </el-drawer>
   </div>
@@ -656,7 +656,7 @@ export default {
           <el-date-picker
             v-show={this.showRoleEndTime}
             v-model={data.date}
-            size="small"
+            size="normal"
             type="date"
             placeholder="截止日期(默认无限)"
           ></el-date-picker>
@@ -687,7 +687,7 @@ export default {
 .search-form {
   margin-bottom: 0px;
 }
-.roleDialog .el-input--small .el-input__inner {
+.roleDialog .el-input--normal .el-input__inner {
   line-height: 26px;
   height: 26px;
   width: 200px;

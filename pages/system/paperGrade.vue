@@ -4,7 +4,7 @@
       <el-form :inline="true" :model="query">
         <el-form-item label="年度:">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="query.year"
             type="year"
             format="yyyy"
@@ -13,18 +13,18 @@
           ></el-date-picker>
         </el-form-item>
         <!-- <el-form-item label="类别:">
-          <el-select v-model="query.type" size="small">
+          <el-select v-model="query.type" size="normal">
             <el-option label="全部" value></el-option>
             <el-option label="中文论文" value="中文论文"></el-option>
             <el-option label="英文" value="英文论文"></el-option>
           </el-select>
         </el-form-item> -->
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -43,9 +43,9 @@
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,7 +73,7 @@
       <el-form :disabled="!['edit', 'add'].includes(operate)" ref="form" :model="form" label-width="100px">
         <el-form-item label="年度:" prop="year">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="form.year"
             type="year"
             format="yyyy"
@@ -82,14 +82,14 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="类别" prop="type">
-          <el-select v-model="form.type" size="small" placeholder="选择类别">
+          <el-select v-model="form.type" size="normal" placeholder="选择类别">
             <el-option label="中文论文" value="中文论文"></el-option>
             <el-option label="英文论文" value="英文论文"></el-option>
             <!-- <el-option label="博硕论文" value="博硕论文"></el-option> -->
           </el-select>
         </el-form-item>
         <el-form-item label="级别" prop="level">
-          <el-select v-model="form.level" size="small" placeholder="选择级别">
+          <el-select v-model="form.level" size="normal" placeholder="选择级别">
             <el-option label="A+" value="A+"></el-option>
             <el-option label="A" value="A"></el-option>
             <el-option label="A-" value="A-"></el-option>
@@ -99,7 +99,7 @@
         </el-form-item>
         <el-form-item label="分数" prop="score">
           <el-col :span="9">
-            <el-input clearable size="small" v-model="form.score" autocomplete="off"></el-input>
+            <el-input clearable size="normal" v-model="form.score" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item
@@ -108,31 +108,31 @@
           :key="cates.key"
         >
           <el-col :span="5">
-            <el-input size="small" v-model="cates.ssn" placeholder="SSN号"></el-input>
+            <el-input size="normal" v-model="cates.ssn" placeholder="SSN号"></el-input>
           </el-col>
           <el-col :span="1">
             :
           </el-col>
           <el-col :span="8">
-            <el-input size="small" v-model="cates.name" placeholder="期刊名"></el-input>
+            <el-input size="normal" v-model="cates.name" placeholder="期刊名"></el-input>
           </el-col>
           &#12288;
           &#12288;
-          <el-button v-if="['edit', 'add'].includes(operate)" size="small" @click.prevent="removeCates(cates)">删除</el-button>
+          <el-button v-if="['edit', 'add'].includes(operate)" size="normal" @click.prevent="removeCates(cates)">删除</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button v-if="['edit', 'add'].includes(operate)" size="small" @click="addCates" type="primary">新增类目</el-button>
+          <el-button v-if="['edit', 'add'].includes(operate)" size="normal" @click="addCates" type="primary">新增类目</el-button>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-col :span="9">
-            <el-input size="small" v-model="form.remark" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="small">确 定</el-button>
-        <el-button size="small" @click="resetForm()">重 置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="normal">确 定</el-button>
+        <el-button size="normal" @click="resetForm()">重 置</el-button>
       </div>
     </el-drawer>
   </div>

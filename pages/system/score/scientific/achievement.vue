@@ -4,7 +4,7 @@
       <el-form :inline="true" :model="query">
         <el-form-item label="年度:">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="query.year"
             type="year"
             format="yyyy"
@@ -13,11 +13,11 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -38,9 +38,9 @@
       <el-table-column prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,11 +59,11 @@
       ></el-pagination>
     </nav>
 
-    <el-drawer size="40%" style="min-height:500px" title="分数规则（科研成果）" :visible.sync="dialogFormVisible">
+    <el-drawer size="60%" style="min-height:500px" title="分数规则（科研成果）" :visible.sync="dialogFormVisible">
       <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="100px">
         <el-form-item label="年度:">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="form.year"
             type="year"
             format="yyyy"
@@ -72,7 +72,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="项目类型">
-          <el-select  v-model="form.level" size="small" placeholder="选择类型">
+          <el-select  v-model="form.level" size="normal" placeholder="选择类型">
             <el-option label="国家级“三大奖”" value="国家级“三大奖”"></el-option>
             <el-option label="教育部人文社科奖" value="教育部人文社科奖"></el-option>
             <el-option label="省部级" value="省部级"></el-option>
@@ -90,123 +90,123 @@
         <div v-if="form.level === '国家级“三大奖”' || form.level === '教育部人文社科奖' || form.level === '省部级'">
           <el-form-item label="一等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelOne" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelOne" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="二等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelTwo" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelTwo" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="三等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelThree" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelThree" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-else>
           <el-form-item label="基础分数">
             <el-col :span="9">
-              <el-input size="small" v-model="form.baseScore" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.baseScore" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '省部级'">
           <el-form-item label="光召科技奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.guangzhaoScore" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.guangzhaoScore" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="杰出贡献奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.gongxianScore" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.gongxianScore" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <!-- <div v-if="form.level === '1' || form.level === '2'">
           <el-form-item label="一等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelOne" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelOne" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="二等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelTwo" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelTwo" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="三等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelThree" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelThree" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '3'">
           <el-form-item label="一等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelOne" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelOne" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="二等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelTwo" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelTwo" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="三等奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.levelThree" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.levelThree" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="科技贡献奖">
             <el-col :span="9">
-              <el-input size="small" v-model="form.techContribution" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.techContribution" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '4'">
           <el-form-item label="优秀项目">
             <el-col :span="9">
-              <el-input size="small" v-model="form.excellent" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.excellent" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '5'">
           <el-form-item label="成果要报">
             <el-col :span="9">
-              <el-input size="small" v-model="form.resultNews" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.resultNews" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="高校智库专刊">
             <el-col :span="9">
-              <el-input size="small" v-model="form.universityDataBase" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.universityDataBase" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="专家建议">
             <el-col :span="9">
-              <el-input size="small" v-model="form.expertAdvice" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.expertAdvice" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="报纸">
             <el-col :span="9">
-              <el-input size="small" v-model="form.newspaper" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.newspaper" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '6'">
           <el-form-item label="国家级领导人">
             <el-col :span="9">
-              <el-input size="small" v-model="form.nationalLeader" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.nationalLeader" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="省部主要领导">
             <el-col :span="9">
-              <el-input size="small" v-model="form.provincialLeader" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.provincialLeader" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '7'">
           <el-form-item label="专利">
             <el-col :span="9">
-              <el-input size="small" v-model="form.patent" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.patent" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div> -->
@@ -217,9 +217,9 @@
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
       </div>
     </el-drawer>
   </div>

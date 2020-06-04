@@ -6,30 +6,30 @@
           <el-date-picker
             v-model="query.interviewTime"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             placeholder="来访时间"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="专家姓名:">
-          <el-input v-model="query.visitor" size="small" placeholder="请输入专家姓名"></el-input>
+          <el-input v-model="query.visitor" size="normal" placeholder="请输入专家姓名"></el-input>
         </el-form-item>
         <el-form-item label="邀请人:">
-          <el-input v-model="query.inviter" size="small" placeholder="请输入邀请人"></el-input>
+          <el-input v-model="query.inviter" size="normal" placeholder="请输入邀请人"></el-input>
         </el-form-item>
         <el-form-item label="专家类别">
-          <el-select v-model="query.expertCategory" size="small" placeholder="请选择">
+          <el-select v-model="query.expertCategory" size="normal" placeholder="请选择">
             <el-option label="全部" value></el-option>
             <el-option label="国内" value="国内"></el-option>
             <el-option label="国外" value="国外"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -37,7 +37,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -89,9 +89,9 @@
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -109,7 +109,7 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -119,16 +119,16 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -148,17 +148,17 @@
       >
         <el-form-item label="专家姓名" prop="visitor">
           <el-col :span="6">
-            <el-input size="small" v-model="form.visitor" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.visitor" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="访问类型" prop="accessType">
           <el-col :span="6">
-            <el-input size="small" v-model="form.accessType" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.accessType" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="职称" prop="jobTitle">
           <el-col :span="6">
-            <el-select v-model="form.jobTitle" size="small" placeholder="请输入">
+            <el-select v-model="form.jobTitle" size="normal" placeholder="请输入">
               <el-option label="教授" value="教授"></el-option>
               <el-option label="副教授" value="副教授"></el-option>
               <el-option label="其他" value="其他"></el-option>
@@ -167,22 +167,22 @@
         </el-form-item>
         <el-form-item label="护照号" prop="passport">
           <el-col :span="6">
-            <el-input size="small" v-model="form.passport" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.passport" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="国籍" prop="citizenshipCountry">
           <el-col :span="6">
-            <el-input size="small" v-model="form.citizenshipCountry" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.citizenshipCountry" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="工作单位" prop="unit">
           <el-col :span="6">
-            <el-input size="small" v-model="form.unit" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.unit" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="专家类别" prop="expertCategory">
           <el-col :span="6">
-            <el-select v-model="form.expertCategory" size="small" placeholder="请输入">
+            <el-select v-model="form.expertCategory" size="normal" placeholder="请输入">
               <el-option label="国内" value="国内"></el-option>
               <el-option label="国外" value="国外"></el-option>
             </el-select>
@@ -191,7 +191,7 @@
         <el-form-item label="来访时间" prop="interviewTime">
           <el-col :span="5">
             <el-date-picker
-              size="small"
+              size="normal"
               type="date"
               placeholder="选择日期"
               v-model="form.interviewTime"
@@ -201,34 +201,34 @@
         </el-form-item>
         <el-form-item label="研究领域" prop="researchAreas">
           <el-col :span="6">
-            <el-input size="small" v-model="form.researchAreas" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.researchAreas" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="所属学科" prop="discipline">
           <el-col :span="6">
-            <el-input size="small" v-model="form.discipline" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.discipline" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="邀请人" prop="inviter">
           <el-col :span="6">
-            <el-input size="small" v-model="form.inviter" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.inviter" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="交流内容" prop="communicationContent">
           <el-col :span="6">
-            <el-input size="small" v-model="form.communicationContent" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.communicationContent" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item size="small" label="备注" prop="remark">
+        <el-form-item size="normal" label="备注" prop="remark">
           <el-col :span="6">
             <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('form')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('form')">重置</el-button>
       </div>
     </el-drawer>
   </div>

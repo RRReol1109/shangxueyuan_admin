@@ -6,7 +6,7 @@
           <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="年份:">
-          <el-select v-model="query.year" size="small">
+          <el-select v-model="query.year" size="normal">
             <el-option label="全部" value></el-option>
             <el-option label="2019" value="2019"></el-option>
             <el-option label="2018" value="2018"></el-option>
@@ -15,11 +15,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -34,9 +34,9 @@
       <el-table-column prop="year" align="center" label="年份"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -64,7 +64,7 @@
       <el-form :model="form" label-width="320px">
         <el-form-item label="年份" label-width="320px">
           <el-col :span="6">
-            <el-select v-model="form.year" size="small">
+            <el-select v-model="form.year" size="normal">
               <el-option label="2019" value="2019"></el-option>
               <el-option label="2018" value="2018"></el-option>
               <el-option label="2017" value="2017"></el-option>
@@ -74,14 +74,14 @@
         </el-form-item>
         <el-form-item label="备注" label-width="320px">
           <el-upload class="upload-demo" action :on-change="handleChange" :file-list="fileList">
-            <el-button size="small" type="primary">点击上传</el-button>
+            <el-button size="normal" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('ruleForm')">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
       </div>
     </el-drawer>
   </div>

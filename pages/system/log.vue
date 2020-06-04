@@ -3,22 +3,22 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="日志类型:">
-          <el-select v-model="query.logtype" size="small" placeholder="请选择类型">
+          <el-select v-model="query.logtype" size="normal" placeholder="请选择类型">
             <el-option label="登录日志" value="1"></el-option>
             <el-option label="业务日志" value="2"></el-option>
           </el-select>
         </el-form-item>
         <!-- <el-form-item label="日志名称:">
-          <el-input id="nameBox" v-model="query.logname" placeholder="请输入日志名称" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.logname" placeholder="请输入日志名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="用户名称:">
-          <el-input id="nameBox" v-model="query.userName" placeholder="请输入用户名称" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.userName" placeholder="请输入用户名称" size="normal"></el-input>
         </el-form-item>-->
         <!-- <el-form-item label="时间:">
           <el-date-picker v-model="query.createtime" type="date" placeholder="选择日期时间"></el-date-picker>
         </el-form-item>-->
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
       </el-form>
     </div>

@@ -4,7 +4,7 @@
       <el-form :inline="true" :model="query">
         <el-form-item label="年度:">
           <el-date-picker
-            size="small"
+            size="normal"
             v-model="query.year"
             type="year"
             format="yyyy"
@@ -13,7 +13,7 @@
           ></el-date-picker>
         </el-form-item>
         <!-- <el-form-item label="类型:">
-          <el-select v-model="query.type" size="small">
+          <el-select v-model="query.type" size="normal">
             <el-option label="全部" value="1"></el-option>
             <el-option label="研究生指导" value="2"></el-option>
             <el-option label="课堂教学" value="3"></el-option>
@@ -24,7 +24,7 @@
           </el-select>
         </el-form-item>-->
         <!-- <el-form-item label="教师:">
-          <el-input id="nameBox" v-model="query.condition" placeholder="姓名或工号" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.condition" placeholder="姓名或工号" size="normal"></el-input>
         </el-form-item>-->
         <el-form-item label="教师:">
           <el-autocomplete
@@ -32,11 +32,11 @@
             v-model="query.userName"
             placeholder="请输入教师"
             :fetch-suggestions="queryTeacher"
-            size="small"
+            size="normal"
           ></el-autocomplete>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -47,7 +47,7 @@
       <el-table-column prop="scores" align="center" label="总分"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="showDialog(scope.row)" type="text" size="small">详情</el-button>
+          <el-button @click="showDialog(scope.row)" type="text" size="normal">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,7 +66,7 @@
       ></el-pagination>
     </nav>
 
-    <el-drawer size="40%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
+    <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
       <Highcharts id="图例" :option="option" />
     </el-drawer>
   </div>

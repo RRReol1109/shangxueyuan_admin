@@ -6,20 +6,20 @@
           <el-date-picker
             v-model="query.startTime"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             placeholder="开始时间">
           </el-date-picker>-
           <el-date-picker
             v-model="query.endTime"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             placeholder="结束时间">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="query.status" size="small">
+          <el-select v-model="query.status" size="normal">
             <el-option label="全部状态" value="1"></el-option>
             <el-option label="审核通过" value="2"></el-option>
             <el-option label="待审核" value="3"></el-option>
@@ -27,7 +27,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <el-select v-model="query.type" size="small">
+          <el-select v-model="query.type" size="normal">
             <el-option label="全部类别" value="1"></el-option>
             <el-option label="获奖要报" value="2"></el-option>
             <el-option label="著作&教材" value="3"></el-option>
@@ -42,12 +42,12 @@
             id="teacherName"
             style="width:200px; "
             placeholder="请输入姓名或工号"
-            size="small"
+            size="normal"
             v-model="query.name"
           ></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-button size="small" type="primary" icon="el-icon-search">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -61,8 +61,8 @@
       <el-table-column prop="status" align="center" label="状态"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">审核</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button type="text" size="normal">审核</el-button>
         </template>
       </el-table-column>
     </el-table>

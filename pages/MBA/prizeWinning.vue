@@ -6,7 +6,7 @@
           <el-date-picker
             v-model="query.year"
             align="right"
-            size="small"
+            size="normal"
             type="date"
             format="yyyy"
             value-format="yyyy"
@@ -14,14 +14,14 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="small"></el-input>
+          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -29,7 +29,7 @@
         </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
-            <el-button size="small" type="primary">
+            <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
             </el-button>
@@ -77,9 +77,9 @@
       <el-table-column prop="score" align="center" label="考核分"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,7 +97,7 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
@@ -107,16 +107,16 @@
       >
         <el-form-item>
           <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="small" placeholder="请选择状态">
+            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="small">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-            <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -143,33 +143,33 @@
               format="yyyy"
               value-format="yyyy"
               placeholder="选择日期时间"
-              size="small"
+              size="normal"
             ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="教师工号" prop="teacherId">
           <el-col :span="6">
-            <el-input size="small" v-model="form.teacherId"></el-input>
+            <el-input size="normal" v-model="form.teacherId"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="教师姓名" prop="name">
           <el-col :span="6">
-            <el-input size="small" v-model="form.name"></el-input>
+            <el-input size="normal" v-model="form.name"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="职称" prop="title">
           <el-col :span="6">
-            <el-input size="small" v-model="form.title"></el-input>
+            <el-input size="normal" v-model="form.title"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="获奖项目名称" prop="awardName">
           <el-col :span="6">
-            <el-input size="small" v-model="form.awardName"></el-input>
+            <el-input size="normal" v-model="form.awardName"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="奖项类别" prop="awardType">
           <el-col :span="6">
-            <el-select v-model="form.awardType" size="small" placeholder="请选择">
+            <el-select v-model="form.awardType" size="normal" placeholder="请选择">
               <el-option label="国家科技进步奖" value="国家科技进步奖"></el-option>
               <el-option label="成果要报" value="成果要报"></el-option>
               <el-option label="教育部科学技术奖" value="教育部科学技术奖"></el-option>
@@ -194,12 +194,12 @@
         </el-form-item>
         <el-form-item label="颁奖机构" prop="awardOrganize">
           <el-col :span="6">
-            <el-input size="small" v-model="form.awardOrganize"></el-input>
+            <el-input size="normal" v-model="form.awardOrganize"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="获奖证书编号" prop="awardId">
           <el-col :span="6">
-            <el-input size="small" v-model="form.awardId"></el-input>
+            <el-input size="normal" v-model="form.awardId"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="获奖年月" prop="awardDate">
@@ -210,35 +210,35 @@
               format="yyyy-MM"
               value-format="yyyy-MM"
               placeholder="选择日期时间"
-              size="small"
+              size="normal"
             ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label="上传获奖证书PDF电子版" prop="pdfUrl">
           <el-col :span="6">
-            <el-input size="small" v-model="form.pdfUrl"></el-input>
+            <el-input size="normal" v-model="form.pdfUrl"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="系数" prop="ratio">
           <el-col :span="6">
-            <el-input size="small" v-model="form.ratio"></el-input>
+            <el-input size="normal" v-model="form.ratio"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="业绩点" prop="point">
           <el-col :span="6">
-            <el-input size="small" v-model="form.point"></el-input>
+            <el-input size="normal" v-model="form.point"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="考核分" prop="score">
           <el-col :span="6">
-            <el-input size="small" v-model="form.score"></el-input>
+            <el-input size="normal" v-model="form.score"></el-input>
           </el-col>
         </el-form-item>
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="examineDialog = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm('examineForm')">重置</el-button>
+        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
       </div>
     </el-drawer>
   </div>

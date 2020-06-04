@@ -3,10 +3,10 @@
     <div class="search-form">
       <el-form :inline="true" :model="form">
         <el-form-item label="部门:">
-          <el-input id="nameBox" v-model="query.condition" placeholder="请输入关键字" size="small"></el-input>
+          <el-input id="nameBox" v-model="query.condition" placeholder="请输入关键字" size="normal"></el-input>
         </el-form-item>
         <!-- <el-form-item label="状态:">
-          <el-select v-model="query.status" size="small">
+          <el-select v-model="query.status" size="normal">
             <el-option
               v-for="item in statuses"
               :key="item.value"
@@ -16,11 +16,11 @@
           </el-select>
         </el-form-item>-->
         <el-form-item label>
-          <el-button size="small" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
         <el-form-item label>
           <el-button
-            size="small"
+            size="normal"
             type="primary"
             icon="el-icon-plus"
             @click="operate = 'add';showDialog();"
@@ -35,9 +35,9 @@
       <el-table-column prop="tips" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';operate='show';showDialog(scope.row)" type="text" size="small">查看</el-button>
-          <el-button @click="operate='edit';operate='edit';showDialog(scope.row)" type="text" size="small">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="small">删除</el-button>
+          <el-button @click="operate='show';operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='edit';operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -90,9 +90,9 @@
         </el-form-item>-->
       </el-form>
       <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="submitForm()" size="small">确定</el-button>
-        <el-button size="small" @click="resetForm()">重置</el-button>
+        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="submitForm()" size="normal">确定</el-button>
+        <el-button size="normal" @click="resetForm()">重置</el-button>
       </div>
     </el-drawer>
   </div>
