@@ -72,8 +72,13 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
+      <!-- 
+        工号	姓名	所在系	性别	出生年月	身份证号码	年龄	民族	政治面貌	参加工作年月	进校年月	状态	岗位	
+        现职称	获得现职称年月	现职级	导师资格	现职务	最高学历	最高学位	毕业学校	毕业专业	毕业年月	导师	
+        学科类别	研究方向	人才类别	海外研修经历	国家级奖项	省级奖项	移动电话	电子邮箱	备注
+      -->
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <!-- <el-table-column prop="id" align="center" label="工号"></el-table-column> -->
+      <el-table-column prop="id" align="center" label="工号"></el-table-column>
       <el-table-column prop="account" align="center" label="用户名"></el-table-column>
       <el-table-column prop="name" align="center" label="教师名"></el-table-column>
       <el-table-column prop="phone" align="center" label="手机号"></el-table-column>
@@ -104,7 +109,7 @@
       ></el-pagination>
     </nav>
     <!-- 学时查看窗口 -->
-    <el-drawer size="40%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form :model="examineForm" ref="examineForm" label-width="100px" class="demo-examineForm">
         <el-form-item>
           <el-form-item label="选择角色:">
@@ -123,6 +128,7 @@
     <el-drawer
       style="min-height:500px"
       title
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
