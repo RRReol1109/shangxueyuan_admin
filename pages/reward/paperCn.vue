@@ -73,14 +73,16 @@
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文英文名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="期刊分级"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="期刊ISSN号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
@@ -214,7 +216,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="期刊所属学科" prop="">
-              <el-input learable placeholder="" style="width:99%"></el-input>
+              <el-input learable placeholder="" style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -289,7 +291,7 @@
           </el-col>
         </el-row>
         <el-form-item label="第一作者单位" prop="">
-          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:98%"></el-input>
+          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
@@ -454,8 +456,8 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "审核已通过",
-        "2": "审核未通过"
+        "1": "通过",
+        "2": "未通过"
       }[value.toString()];
     }
   },
