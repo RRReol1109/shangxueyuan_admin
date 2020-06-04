@@ -29,6 +29,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    {src:'~/plugins/storeCache',ssr: false},
     '~/plugins/element-ui',
     '~/plugins/lodash',
     '~/plugins/axios'
