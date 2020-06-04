@@ -819,9 +819,18 @@ export default {
       this.loading = false;
     }
   },
-
   mounted() {
     this.initTree();
+  },
+  computed: {
+    roles () {
+      return this.$store.state.roles;
+    }
+  },
+  watch: {
+    roles (newVal, oldVal) {
+      this.initTree();
+    }
   }
 };
 </script>

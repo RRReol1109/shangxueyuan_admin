@@ -39,7 +39,6 @@
         <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
         <el-menu-item class="item" index="40">EDP中心</el-menu-item>
         <el-menu-item class="item" index="12">教师个人</el-menu-item>
-        <!-- <el-menu-item class="item" index="13" >全部</el-menu-item> -->
       </el-menu>
     </div>
   </div>
@@ -132,7 +131,6 @@ export default {
       }
     },
     menuSelect(key, keyPath) {
-      console.log("hello world");
       // if (this.roleId != 1) {
       switch (key) {
         case "31":
@@ -277,9 +275,10 @@ export default {
         roleId: this.roleId,
         ids: this.ids.join()
       });
+      this.$store.commit('setRole', this.ids);
       // let refresh = Request.getSession().getAttribute("refresh");
       window.sessionStorage.setItem("flag", true);
-      location.reload();
+      // location.reload();
       // window.localStorage.setItem("roles", "["+this.ids+"]");
     }
   }

@@ -56,10 +56,6 @@
         <span v-text="form.name"></span>
       </div>
       <div>
-        <span>id:</span>
-        <span v-text="form.id"></span>
-      </div>
-      <div>
         <span>账号:</span>
         <span v-text="form.account"></span>
       </div>

@@ -45,7 +45,7 @@ export default {
   },
   mounted() {
     this.currentIndex = this.$route.path;
-  }
+  },
 };
 </script>
 

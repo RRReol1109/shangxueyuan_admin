@@ -26,8 +26,12 @@ export default {
   },
   mounted() {
     this.getMessage();
+    window.addEventListener('unload', this.saveState);
   },
   methods: {
+    saveState() {
+      sessionStorage.setItem('vuex_state', JSON.stringify(this.$store.state))
+    },
     getMessage() {
       if (localStorage.getItem("message")) {
         this.$store.commit("setToken", localStorage.getItem("message"));

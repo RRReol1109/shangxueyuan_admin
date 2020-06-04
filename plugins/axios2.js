@@ -18,6 +18,7 @@ axios.defaults.baseURL = 'http://bsoa.csu.edu.cn/bs/';
 //http request 拦截器
 axios.interceptors.request.use(
     config => {
+        console.log('localStorage.getItem("message")::', localStorage.getItem("message"));
         config.headers = {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
             'authorization': localStorage.getItem("message")
@@ -30,7 +31,6 @@ axios.interceptors.request.use(
                 message: error.response.data.message
             });
         }
-        return Promise.reject(error);
     }
 );
 
@@ -38,7 +38,6 @@ axios.interceptors.request.use(
 //http response 拦截器
 axios.interceptors.response.use(
     response => {
-        console.log("response.status", response);
         if (response.data.code == 401) {
             // router.push({
             //     path: "/login",
@@ -49,11 +48,15 @@ axios.interceptors.response.use(
         return response;
     },
     error => {
-        console.log('error.response---->', error.response);
-        Message.error({
-            message: '请求失败！'
-        });
-        return Promise.reject(error)
+        if (error.response.status == 401) {
+            Message.error({
+                message: error.response.data.message
+            }); 
+        } else {
+            Message.error({
+                message: error.response.statusText
+            });
+        }
     }
 )
 
@@ -61,28 +64,30 @@ axios.interceptors.response.use(
 
 export default {
     $get: function (url, params = {}) {
-        console.log('进入get方法', url, params);
         return new Promise((resolve, reject) => {
             axios.get(url, {
                 params: params
             })
-                .then(response => {
+            .then(response => {
+                if(response) {
                     resolve(response.data);
-                })
-                .catch(err => {
-                    reject(err)
-                })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
         })
     },
     $post: function (url, data = {}) {
-        console.log('进入post方法', url, data);
         return new Promise((resolve, reject) => {
             axios.post(url, qs.stringify(data))
-                .then(response => {
+            .then(response => {
+                if(response) {
                     resolve(response.data);
-                }, err => {
-                    reject(err)
-                })
+                }
+            }, err => {
+                reject(err)
+            })
         })
     },
     $download: function (url, params = {}) {
@@ -91,12 +96,14 @@ export default {
                 params: params,
                 responseType: 'blob'
             })
-                .then(response => {
+            .then(response => {
+                if(response) {
                     resolve(response.data);
-                })
-                .catch(err => {
-                    reject(err)
-                })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
         })
     }
 }

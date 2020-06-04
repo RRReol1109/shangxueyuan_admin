@@ -1,45 +1,42 @@
 <template>
   <div class="background">
-    <img src="./img/logoImg.png" id="logo" />
-    <img src="./img/logoTitle.png" id="logoImg" />
-    <!-- <div style="width:100%;">
-      <h3 class="title">中南大学商学院信息管理系统</h3>
-    </div>-->
-    <el-form
-      label-position="left"
-      label-width="0px"
-      :model="formLabelAlign"
-      class="card-box loginForm"
-    >
-      <el-form-item style="text-align: center;">
-        <h3 style="text-align: center;color:#fff;font-size:48px;margin-bottom:2%;">中南大学商学院信息管理系统</h3>
-      </el-form-item>
-      <el-form-item style="text-align: center;">
-        <el-input
-          v-model="formLabelAlign.username"
-          clearable
-          prefix-icon="el-icon-mobile-phone"
-          placeholder="账号"
-        ></el-input>
-      </el-form-item>
-      <el-form-item style="text-align: center;">
-        <el-input
-          id="passInput"
-          v-model="formLabelAlign.password"
-          type="password"
-          clearable
-          prefix-icon="el-icon-view"
-          size="large"
-          placeholder="密码"
-        ></el-input>
-      </el-form-item>
-      <el-form-item style="text-align: center;">
-        <el-button type="primary" @click="login" :loading="loading" id="login">登 录</el-button>
-      </el-form-item>
-      <h3 class="rule cnrule">天道酬勤，经世致用</h3>
-      <h3 class="rule">Fortune favors the diligent, Knowledge serves the society.</h3>
-    </el-form>
-    <h3 class="message">版权所有 ©2020 中南大学商学院|由长沙才盛优创信息技术有限公司制作</h3>
+    <div class="mask">
+      <img src="./img/logoImg.png" id="logo" style=""/>
+      <img src="./img/logoTitle.png" id="logoImg" />
+      <div class="content">
+        <h3 style="text-align: center;color:#fff;font-size:48px;">中南大学商学院信息管理系统</h3>
+        <el-form
+          :model="formLabelAlign"
+          class="card-box loginForm"
+        >
+          <el-form-item style="text-align: center;">
+            <el-input
+              v-model="formLabelAlign.username"
+              clearable
+              prefix-icon="el-icon-user"
+              placeholder="账号"
+            ></el-input>
+          </el-form-item>
+          <el-form-item style="text-align: center;">
+            <el-input
+              id="passInput"
+              v-model="formLabelAlign.password"
+              type="password"
+              clearable
+              prefix-icon="el-icon-view"
+              size="large"
+              placeholder="密码"
+            ></el-input>
+          </el-form-item>
+          <el-form-item style="text-align: center;">
+            <el-button type="primary" @click="login" :loading="loading" id="login">登 录</el-button>
+          </el-form-item>
+          <h3 class="rule cnrule">天道酬勤，经世致用</h3>
+          <h3 class="rule">Fortune favors the diligent, Knowledge serves the society.</h3>
+        </el-form>
+        <h3 class="message">版权所有 ©2020 中南大学商学院|由长沙才盛优创信息技术有限公司制作</h3>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,7 +51,7 @@ export default {
   },
   methods: {
     async login() {
-      let res = await this.$axios.$post("/ajaxlogin", this.formLabelAlign);
+      let res = await axios.$post("/ajaxlogin", this.formLabelAlign);
       if (res.code == 401) {
         this.$message({
           type: "error",
@@ -73,11 +70,8 @@ export default {
       });
       stoage.setItem("roles", JSON.stringify(roles.data));
       location.href = "/shangxueyuan_admin";
-      console.log(res.roleid);
-      console.log(roles, "==========roles");
-      console.log(res);
     }
-  }
+  },
 };
 </script>
 
@@ -92,22 +86,26 @@ export default {
   margin-left: 2%;
 }
 .background {
-  background-color: #303e47;
   background-image: url("./img/bg1.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;
   width: 100%;
-  height: 100%;
   height: 100vh;
 }
-.loginForm {
+.mask {
   position: absolute;
-  left: 0;
-  right: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+.content {
+  margin-top: 30px;
+}
+.loginForm {
   width: 700px;
-  padding: 35px 35px 15px 35px;
-  margin: 80px auto;
+  margin: 20px auto;
 }
 .title {
   font-size: 48px;
@@ -122,7 +120,7 @@ export default {
   margin-top: 4%;
 }
 .rule {
-  font-size: 18px;
+  font-size: 20px;
   color: #ffffff;
   text-align: center;
   font-weight: bold;
@@ -138,11 +136,9 @@ export default {
 }
 .el-input {
   width: 400px;
-  margin-left: 70px;
 }
 .el-button {
   width: 400px;
-  margin-left: 70px;
 }
 .el-input__inner {
   border: 1px;

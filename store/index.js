@@ -2,14 +2,18 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-let store = new Vuex.Store({
+const store = new Vuex.Store({
 
     state: {
-      token: ''
+      token: '',
+      roles: [],
     },
     mutations: {
       setToken (state, token) {
-          state.token = token;
+        state.token = token;
+      },
+      setRole (state, roles) {
+        state.roles = roles;
       }
     }
   });
