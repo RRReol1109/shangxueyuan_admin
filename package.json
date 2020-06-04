@@ -9,7 +9,7 @@
     "port": "3333"
   },
   "scripts": {
-    "dev": "nuxt --port 3000",
+    "dev": "nuxt --port 8008",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

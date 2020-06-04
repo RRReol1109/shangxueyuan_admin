@@ -26,7 +26,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==31||roleId==1">
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -75,7 +75,7 @@
           </el-upload>
         </el-dropdown-item>
       </el-dropdown-menu>
-    </el-dropdown> -->
+    </el-dropdown>-->
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
       <el-table-column prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
@@ -141,12 +141,12 @@
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
       <div slot="title" class="header-title">
-         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
           <el-button @click="dialogFormVisible = false">取消</el-button>
           <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
           <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
         </div>
-      </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -167,45 +167,52 @@
             ></el-date-picker>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="会议中文名" prop="">
-          <el-input learable v-model="ruleForm.chinesename" placeholder="" style="width:99%"></el-input>
+        <el-form-item label="会议中文名" prop>
+          <el-input learable v-model="ruleForm.chinesename" placeholder style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="会议英文名" prop="">
-          <el-input learable v-model="ruleForm.englishname" placeholder="" style="width:99%"></el-input>
+        <el-form-item label="会议英文名" prop>
+          <el-input learable v-model="ruleForm.englishname" placeholder style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="会议英文缩写" prop="">
-          <el-input learable  v-model="ruleForm.englishnameabbr" placeholder="" style="width:99%"></el-input>
+        <el-form-item label="会议英文缩写" prop>
+          <el-input learable v-model="ruleForm.englishnameabbr" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
             <el-form-item label="参会人姓名" prop="doi">
-              <el-input learable v-model="ruleForm.teacher" placeholder="" style="width:98%"></el-input>
+              <el-input learable v-model="ruleForm.teacher" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="参会人所在系" prop="doi">
-              <el-input learable v-model="ruleForm.belongdepartment" placeholder="" style="width:98%"></el-input>
+              <el-input learable v-model="ruleForm.belongdepartment" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="参会人职称" prop="doi">
-              <el-input learable v-model="ruleForm.positiontitle" placeholder="" style="width:98%"></el-input>
+              <el-input learable v-model="ruleForm.positiontitle" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="会议时间" prop="doi">
-              <el-date-picker v-model="ruleForm.date" type="datetime" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间" style="width: 98%"></el-date-picker>
+              <el-date-picker
+                v-model="ruleForm.date"
+                type="datetime"
+                format="yyyy-MM-dd HH:mm:ss"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="选择日期时间"
+                style="width: 98%"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-form-item label="会议地点" prop="teacher">
-          <el-input clearable v-model="ruleForm.address"  placeholder="请输入内容" style="width:99%"></el-input>
+          <el-input clearable v-model="ruleForm.address" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="是否发表演讲" prop="">
+            <el-form-item label="是否发表演讲" prop>
               <el-select placeholder="请选择" v-model="ruleForm.ispublishspeech" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
@@ -213,7 +220,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否发表论文" prop="">
+            <el-form-item label="是否发表论文" prop>
               <el-select placeholder="请选择" v-model="ruleForm.ispublishpaper" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
@@ -228,8 +235,14 @@
           <el-form-item label="会议论文名称" prop="studentId">
             <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容" style="width:99%"></el-input>
           </el-form-item>
-          <el-form-item label="全体作者" prop="">
-            <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
+          <el-form-item label="全体作者" prop>
+            <el-input
+              type="textarea"
+              clearable
+              v-model="ruleForm.cateNumber"
+              placeholder
+              style="width:99%"
+            ></el-input>
           </el-form-item>
         </div>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
@@ -244,7 +257,7 @@
         <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
         <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
         <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div> -->
+      </div>-->
     </el-drawer>
   </div>
 </template>
@@ -502,7 +515,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/kyjl-ktjx.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/kyjl-ktjx.xls";
           break;
       }
     },
@@ -593,13 +606,13 @@ export default {
 
 <style>
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 .el-autocomplete {
   width: 100%;

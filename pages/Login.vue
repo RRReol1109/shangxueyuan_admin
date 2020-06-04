@@ -1,14 +1,20 @@
 <template>
   <div class="background">
-    <img src="./img/logo.png" id="logo" />
+    <img src="./img/logoImg.png" id="logo" />
+    <img src="./img/logoTitle.png" id="logoImg" />
+    <!-- <div style="width:100%;">
+      <h3 class="title">中南大学商学院信息管理系统</h3>
+    </div>-->
     <el-form
       label-position="left"
       label-width="0px"
       :model="formLabelAlign"
       class="card-box loginForm"
     >
-      <h3 class="title">中南大学商学院信息管理系统登录</h3>
-      <el-form-item>
+      <el-form-item style="text-align: center;">
+        <h3 style="text-align: center;color:#fff;font-size:48px;margin-bottom:2%;">中南大学商学院信息管理系统</h3>
+      </el-form-item>
+      <el-form-item style="text-align: center;">
         <el-input
           v-model="formLabelAlign.username"
           clearable
@@ -16,7 +22,7 @@
           placeholder="账号"
         ></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="text-align: center;">
         <el-input
           id="passInput"
           v-model="formLabelAlign.password"
@@ -27,16 +33,13 @@
           placeholder="密码"
         ></el-input>
       </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="login"
-          :loading="loading"
-          id="login"       
-        >登 录</el-button>
+      <el-form-item style="text-align: center;">
+        <el-button type="primary" @click="login" :loading="loading" id="login">登 录</el-button>
       </el-form-item>
-      <h3 class="message">版权所有 ©2020 中南大学商学院</h3>
+      <h3 class="rule cnrule">天道酬勤，经世致用</h3>
+      <h3 class="rule">Fortune favors the diligent, Knowledge serves the society.</h3>
     </el-form>
+    <h3 class="message">版权所有 ©2020 中南大学商学院|由长沙才盛优创信息技术有限公司制作</h3>
   </div>
 </template>
 
@@ -80,13 +83,17 @@ export default {
 
 <style scoped>
 #logo {
-  position: absolute;
-  top: 2%;
-  left: 3%;
+  margin-top: 2%;
+  margin-left: 2%;
+}
+
+#logoImg {
+  margin-top: 2%;
+  margin-left: 2%;
 }
 .background {
   background-color: #303e47;
-  background-image: url("./img/bg.jpg");
+  background-image: url("./img/bg1.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;
@@ -98,27 +105,34 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  width: 600px;
+  width: 700px;
   padding: 35px 35px 15px 35px;
-  margin: 120px auto;
+  margin: 80px auto;
 }
 .title {
-  font-size: 26px;
-  font-weight: 600;
-  /* width: 600px; */
+  font-size: 48px;
   color: #ffffff;
-  margin: 0px auto 40px auto;
   text-align: center;
-  font-weight: bold;
   /* position: absolute;
   top:100px;
   left: -200px; */
 }
 
-.message {
-  font-size: 15px;
+.cnrule {
+  margin-top: 4%;
+}
+.rule {
+  font-size: 18px;
   color: #ffffff;
-  margin: 0px auto 40px auto;
+  text-align: center;
+  font-weight: bold;
+}
+.message {
+  font-size: 18px;
+  color: #ffffff;
+  width: 100%;
+  position: absolute;
+  top: 95%;
   text-align: center;
   font-weight: bold;
 }

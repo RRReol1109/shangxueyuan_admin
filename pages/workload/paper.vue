@@ -530,7 +530,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/gzl-lwzd.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/gzl-lwzd.xls";
           break;
       }
     },

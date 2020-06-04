@@ -316,7 +316,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/sjk-xkjdk.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-xkjdk.xls";
           break;
 
         case "download":

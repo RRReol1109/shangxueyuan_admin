@@ -60,7 +60,7 @@
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
-              </el-dropdown-item> -->
+              </el-dropdown-item>-->
             </el-dropdown-menu>
           </el-dropdown>
         </el-form-item>
@@ -126,6 +126,13 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
+        </div>
+      </div>
       <el-form :disabled="formDisabled" :model="form" label-width="100px">
         <!-- <el-form-item label="工号">
           <el-col :span="8">
@@ -178,11 +185,11 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
+      <!-- <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="small">取 消</el-button>
         <el-button type="primary" @click="submitForm('ruleForm')" size="small">确定</el-button>
         <el-button v-if="['add'].includes(operate)" size="small" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
+      </div>-->
     </el-drawer>
   </div>
 </template>
@@ -265,7 +272,7 @@ export default {
           "1": "超级管理员",
           "19": "部门管理员",
           "7": "教师",
-          "21":"科研学科办公室管理员"
+          "21": "科研学科办公室管理员"
         }[value.toString()];
       }
     },
@@ -352,7 +359,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://112.74.56.60/excel/excel-model/gzl-ktjx.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/gzl-ktjx.xls";
           break;
         case "freeze":
           userList = [];
@@ -512,9 +519,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let userId  = element.id;
+            let userId = element.id;
             await axios.$post("/mgr/delete", {
-              userId : userId 
+              userId: userId
             });
           }
           this.tableData = [];
@@ -662,12 +669,12 @@ export default {
   width: 200px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

@@ -4,7 +4,7 @@
       <el-col :span="8">
         <el-card>
           <div slot="header">
-            <span class="title">工作量待办</span>
+            <span>工作量待办</span>
           </div>
           <div style="color:#409EFF">
             <span>未审核：</span>

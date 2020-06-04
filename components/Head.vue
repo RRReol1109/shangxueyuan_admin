@@ -2,9 +2,7 @@
   <div>
     <div class="grid-content bg-purple-light">
       <div class="crumbs">
-        <div class="name title">
-          中南大学商学院信息管理系统
-        </div>
+        <div class="name title">中南大学商学院信息管理系统</div>
       </div>
       <div class="self ban-select">
         <el-dropdown @command="handleCommand">
@@ -27,7 +25,7 @@
         @select="menuSelect"
         :default-active="activeIndex"
       >
-        <el-menu-item class="item" index="1">全部</el-menu-item>
+        <el-menu-item class="item" index="1" v-if="roleId==1">全部</el-menu-item>
         <el-menu-item class="item" index="2">行政办公室</el-menu-item>
         <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
         <el-menu-item class="item" index="32">对外交流与国际认证中心</el-menu-item>
@@ -41,6 +39,7 @@
         <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
         <el-menu-item class="item" index="40">EDP中心</el-menu-item>
         <el-menu-item class="item" index="12">教师个人</el-menu-item>
+        <!-- <el-menu-item class="item" index="13" >全部</el-menu-item> -->
       </el-menu>
     </div>
   </div>
@@ -134,64 +133,146 @@ export default {
     },
     menuSelect(key, keyPath) {
       console.log("hello world");
-      if (this.roleId != 1) {
-        switch (key) {
-          case "31":
-            this.ids = [777, 22, 23, 24, 25, 60, 26, 27, 44];
-            break;
-          case "32":
-            this.ids = [777, 30];
-            break;
-          case "25":
-            this.ids = [777, 49, 53, 57, 38, 59, 41];
-            break;
-          case "33":
-            // this.ids = [777, 46, 47, 48, 49];
-            break;
-          case "34":
-            // this.ids = [777, 50, 51, 52, 53];
-            break;
-          case "35":
-            this.ids = [777, 40];
-            break;
-          case "36":
-            break;
-          case "37":
-            this.ids = [777, 51, 56, 37, 39, 38];
-            break;
-          case "38":
-            this.ids = [
-              777,
-              77,
-              64,
-              65,
-              66,
-              67,
-              68,
-              69,
-              70,
-              71,
-              72,
-              73,
-              74,
-              75,
-              76
-            ];
-            break;
-          case "39":
-            break;
-          case "40":
-            break;
-        }
-        window.sessionStorage.setItem("select", key);
-        this.saveRoles();
+      // if (this.roleId != 1) {
+      switch (key) {
+        case "31":
+          this.ids = [777, 22, 23, 24, 25, 60, 26, 27, 44];
+          break;
+        case "32":
+          this.ids = [777, 30];
+          break;
+        case "25":
+          this.ids = [777, 49, 53, 57, 38, 59, 41];
+          break;
+        case "33":
+          // this.ids = [777, 46, 47, 48, 49];
+          break;
+        case "34":
+          // this.ids = [777, 50, 51, 52, 53];
+          break;
+        case "35":
+          this.ids = [777, 40];
+          break;
+        case "36":
+          break;
+        case "37":
+          this.ids = [777, 51, 56, 37, 39, 38];
+          break;
+        case "38":
+          this.ids = [
+            777,
+            77,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76
+          ];
+          break;
+        case "39":
+          break;
+        case "40":
+          break;
+        case "1":
+          this.ids = [
+            777,
+            888,
+            999,
+            1,
+            2,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            6,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            60,
+            26,
+            27,
+            61,
+            62,
+            28,
+            29,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            39,
+            38,
+            58,
+            59,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            77,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76
+          ];
+          break;
       }
+      window.sessionStorage.setItem("select", key);
+      this.saveRoles();
+      // }
     },
     async saveRoles() {
       console.log("保存权限：", this.roleId, "----", this.ids);
-      if (this.roleId == 1) {
-        this.ids = this.ids.concat([1, 2, 4, 5, 7, 8, 9, 10, 6, 11, 12]);
-      }
+      // if (this.roleId == 1) {
+      //   this.ids = this.ids.concat([1, 2, 4, 5, 7, 8, 9, 10, 6, 11, 12]);
+      // }
       await axios.$post("/role/setAuthority", {
         roleId: this.roleId,
         ids: this.ids.join()
