@@ -314,13 +314,26 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="是否国际合作论文" prop="">
+              <el-select placeholder="请选择" v-model="ruleForm.isnationalitycooperation" style="width:98%">
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item v-if="ruleForm.isnationalitycooperation == '是'" label="合作人信息" prop="studentId">
+          <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容" style="width:99%"></el-input>
+        </el-form-item>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="第一作者" prop="">
               <el-input clearable v-model="ruleForm.highlyCited" placeholder="" style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-form-item label="第一作者单位" prop="">
-          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:98%"></el-input>
+          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">

@@ -214,7 +214,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="期刊所属学科" prop="">
-              <el-input learable placeholder="" style="width:99%"></el-input>
+              <el-input learable placeholder="" style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -289,7 +289,7 @@
           </el-col>
         </el-row>
         <el-form-item label="第一作者单位" prop="">
-          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:98%"></el-input>
+          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
