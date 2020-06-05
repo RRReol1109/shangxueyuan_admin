@@ -75,7 +75,13 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -86,7 +92,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="项目类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="projectFunds" align="center" label="直接经费"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="projectFunds"
+        align="center"
+        label="直接经费"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="项目主持人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="开始时间"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="endDate" align="center" label="结束时间"></el-table-column>
@@ -150,6 +161,13 @@
     </el-drawer>
 
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -158,17 +176,17 @@
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
+        <el-divider content-position="left">基本信息</el-divider>
         <el-form-item label="年度:" prop="year">
-          <el-col :span="12">
-            <el-date-picker
-              size="normal"
-              v-model="ruleForm.year"
-              type="year"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择年份"
-            ></el-date-picker>
-          </el-col>
+          <el-date-picker
+            size="normal"
+            v-model="ruleForm.year"
+            type="year"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="选择年份"
+            style="width:99%"
+          ></el-date-picker>
         </el-form-item>
         <!-- <el-form-item label="姓名" prop="name">
           <el-col :span="12">
@@ -176,68 +194,76 @@
           </el-col>
         </el-form-item>-->
         <el-form-item label="项目类型" prop="type">
-          <el-col :span="12">
-            <el-select v-model="ruleForm.type" placeholder="请选择类型" @change="typeChage">
-              <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
-              <el-option label="国家社科基金" value="国家社科基金"></el-option>
-              <el-option label="教育部人文社科基金" value="教育部人文社科基金"></el-option>
-              <el-option label="湖南省自然科学基金" value="湖南省自然科学基金"></el-option>
-              <el-option label="湖南省社科基金" value="湖南省社科基金"></el-option>
-              <el-option label="省教育厅教改项目（普通高校教学改革研究项目）" value="省教育厅教改项目（普通高校教学改革研究项目）"></el-option>
-              <el-option label="省教育厅教改项目（学位与研究生教育教学改革研究课题）" value="省教育厅教改项目（学位与研究生教育教学改革研究课题）"></el-option>
-              <el-option label="其他" value="其他"></el-option>
-            </el-select>
-          </el-col>
+          <el-select
+            v-model="ruleForm.type"
+            placeholder="请选择类型"
+            @change="typeChage"
+            style="width:99%"
+          >
+            <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
+            <el-option label="国家社科基金" value="国家社科基金"></el-option>
+            <el-option label="教育部人文社科基金" value="教育部人文社科基金"></el-option>
+            <el-option label="湖南省自然科学基金" value="湖南省自然科学基金"></el-option>
+            <el-option label="湖南省社科基金" value="湖南省社科基金"></el-option>
+            <el-option label="省教育厅教改项目（普通高校教学改革研究项目）" value="省教育厅教改项目（普通高校教学改革研究项目）"></el-option>
+            <el-option label="省教育厅教改项目（学位与研究生教育教学改革研究课题）" value="省教育厅教改项目（学位与研究生教育教学改革研究课题）"></el-option>
+            <el-option label="其他" value="其他"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="其他" v-if="elFlag">
-          <el-col :span="6">
-            <el-input v-model="ruleForm.typeF" clearable></el-input>
-          </el-col>
+          <el-input v-model="ruleForm.typeF" clearable style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="项目级别" prop="level">
+        <el-row>
           <el-col :span="12">
-            <el-select v-model="ruleForm.level" placeholder="请选择级别">
-              <el-option label="重大项目" value="重大项目"></el-option>
-              <el-option label="面上项目" value="面上项目"></el-option>
-              <el-option label="重点项目" value="重点项目"></el-option>
-              <el-option label="青年项目" value="青年项目"></el-option>
-              <el-option label="一般项目" value="一般项目"></el-option>
-              <el-option label="基地项目" value="基地项目"></el-option>
-            </el-select>
+            <el-form-item label="项目级别" prop="level">
+              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:99%">
+                <el-option label="重大项目" value="重大项目"></el-option>
+                <el-option label="面上项目" value="面上项目"></el-option>
+                <el-option label="重点项目" value="重点项目"></el-option>
+                <el-option label="青年项目" value="青年项目"></el-option>
+                <el-option label="一般项目" value="一般项目"></el-option>
+                <el-option label="基地项目" value="基地项目"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="项目名称" prop="projectName">
           <el-col :span="12">
-            <el-autocomplete
-              clearable
-              v-model="ruleForm.projectName"
-              :fetch-suggestions="queryProjects"
-              placeholder="请输入内容"
-            ></el-autocomplete>
+            <el-form-item label="项目名称" prop="projectName">
+              <el-autocomplete
+                clearable
+                style="width:99%"
+                v-model="ruleForm.projectName"
+                :fetch-suggestions="queryProjects"
+                placeholder="请输入内容"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="直接经费" prop="projectFunds">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-input
-              clearable
-              v-model="ruleForm.projectFunds"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-            ></el-input>
+            <el-form-item label="直接经费" prop="projectFunds">
+              <el-input
+                style="width:99%"
+                clearable
+                v-model="ruleForm.projectFunds"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="项目主持人" prop="teacher">
           <el-col :span="12">
-            <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+            <el-form-item label="项目主持人" prop="teacher">
+              <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
+                <el-option
+                  style="width:99%"
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="附件" prop="files">
+        </el-row>
+        <!-- <el-form-item label="附件" prop="files">
           <el-upload
             class
             :headers="header"
@@ -247,30 +273,91 @@
           >
             <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
-        </el-form-item>
-        <el-form-item label="开始时间" prop="开始时间">
+        </el-form-item>-->
+        <el-row>
           <el-col :span="12">
-            <el-date-picker v-model="ruleForm.startDate" type="date" placeholder="选择日期时间"></el-date-picker>
+            <el-form-item label="开始时间" prop="开始时间">
+              <el-date-picker
+                v-model="ruleForm.startDate"
+                type="date"
+                placeholder="选择日期时间"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="结束时间" prop="结束时间">
           <el-col :span="12">
-            <el-date-picker v-model="ruleForm.endDate" type="date" placeholder="选择日期时间"></el-date-picker>
+            <el-form-item label="结束时间" prop="结束时间">
+              <el-date-picker
+                v-model="ruleForm.endDate"
+                type="date"
+                placeholder="选择日期时间"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
+        <div>
+          <el-divider content-position="left">附件</el-divider>
+          <el-table
+            :data="fileList"
+            border
+            style="width: 100%"
+            size="normal"
+            v-loading="fileLoading"
+            header-row-class-name="h30"
+            header-cell-class-name="tc-g2 bc-g"
+          >
+            <el-table-column
+              :show-overflow-tooltip="true"
+              type="index"
+              label="#"
+              align="center"
+              width="50"
+            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="create_time"
+              label="创建时间"
+              align="center"
+            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-upload
+            class="dragger"
+            :show-file-list="false"
+            :on-success="uploadSuccess"
+            drag
+            :data="fileData"
+            :action="action"
+            multiple
+          >
+            <div class="el-upload__tip" slot="tip"></div>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">
+              将文件拖到此处，或
+              <em>点击上传</em>
+            </div>
+          </el-upload>
+        </div>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="ruleForm.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+            style="width:99%"
+          >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -294,6 +381,9 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
+      fileLoading: false,
+      fileData: "",
+      action: "",
       examineDialog: false,
       loading: false,
       tableData: [],

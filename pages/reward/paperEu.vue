@@ -3,10 +3,10 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="论文名称:">
-          <el-input v-model="query.title" placeholder="" size="normal"></el-input>
+          <el-input v-model="query.title" placeholder size="normal"></el-input>
         </el-form-item>
         <el-form-item label="DOI号:">
-          <el-input v-model="query.doi" placeholder="" size="normal"></el-input>
+          <el-input v-model="query.doi" placeholder size="normal"></el-input>
         </el-form-item>
         <el-form-item label="期刊分级:">
           <el-select v-model="query.level" size="normal" placeholder="请选择分级">
@@ -22,7 +22,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="期刊名称:">
-          <el-input v-model="query.journal" placeholder="" size="normal"></el-input>
+          <el-input v-model="query.journal" placeholder size="normal"></el-input>
         </el-form-item>
         <!-- <el-form-item label="通讯作者姓名:">
           <el-input v-model="query.coauthorName" placeholder="请输入通讯作者姓名"></el-input>
@@ -36,7 +36,7 @@
             <el-option label="半价" value="1"></el-option>
             <el-option label="原价" value="0"></el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
@@ -87,25 +87,57 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        type="index"
+        label="序号"
+        align="center"
+        width="50"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="doi" align="center" label="DOI号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="wos" align="center" label="WoS号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="subsidizeSource" align="center" label="资助来源"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="subsidizeSource"
+        align="center"
+        label="资助来源"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="期刊分级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="期刊ISSN号"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="cateNumber"
+        align="center"
+        label="期刊ISSN号"
+      ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="ESI经济"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="ESI经济"
+      ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorOrg" align="center" label="通讯作者单位"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="coauthorName" align="center" label="第一作者"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="coauthorName"
+        align="center"
+        label="第一作者"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
@@ -113,7 +145,13 @@
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="300" v-if="deptid==31||roleId==1">
+      <el-table-column
+        fixed="right"
+        align="center"
+        label="操作"
+        width="300"
+        v-if="deptid==31||roleId==1"
+      >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text">编辑</el-button>
@@ -160,14 +198,14 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible"> 
+    <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
       <div slot="title" class="header-title">
-         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
           <el-button @click="dialogFormVisible = false">取消</el-button>
           <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
           <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
         </div>
-      </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -194,22 +232,22 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="DOI号" prop="doi">
-              <el-input learable v-model="ruleForm.doi" placeholder="" style="width:98%"></el-input>
+              <el-input learable v-model="ruleForm.doi" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-form-item label="论文名称:" prop="contracttype">
-          <el-input learable v-model="ruleForm.title" placeholder="" style="width:99%"></el-input>
+          <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="期刊名称" prop="journal">
-          <el-input  v-model="ruleForm.journal" placeholder="" style="width:99%"></el-input>
+          <el-input v-model="ruleForm.journal" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="资助课题来源" prop="subsidizeSource">
-          <el-input learable v-model="ruleForm.subsidizeSource" placeholder="" style="width:99%"></el-input>
+          <el-input learable v-model="ruleForm.subsidizeSource" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="核心收录" prop="">
+            <el-form-item label="核心收录" prop>
               <el-select placeholder="请选择" style="width:98%">
                 <el-option label="CSTPCD" value="CSTPCD"></el-option>
                 <el-option label="CSCD扩展" value="CSCD扩展"></el-option>
@@ -219,15 +257,15 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="期刊所属学科" prop="">
-              <el-input learable placeholder="" style="width:99%"></el-input>
+            <el-form-item label="期刊所属学科" prop>
+              <el-input learable placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="WoS号" prop="wos">
-              <el-input  v-model="ruleForm.wos" placeholder="" style="width:98%"></el-input>
+              <el-input v-model="ruleForm.wos" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -247,12 +285,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="" prop="">
-              <el-checkbox >商学高被引 1%</el-checkbox>
+            <el-form-item label prop>
+              <el-checkbox>商学高被引 1%</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="时间" prop="">
+            <el-form-item label="时间" prop>
               <el-date-picker
                 style="width:98%"
                 size="normal"
@@ -267,12 +305,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="" prop="">
-              <el-checkbox >商学高被引 1‰</el-checkbox>
+            <el-form-item label prop>
+              <el-checkbox>商学高被引 1‰</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="时间" prop="">
+            <el-form-item label="时间" prop>
               <el-date-picker
                 style="width:98%"
                 size="normal"
@@ -287,12 +325,12 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="年代卷期" prop="">
-              <el-input  placeholder="" style="width:98%"></el-input>
+            <el-form-item label="年代卷期" prop>
+              <el-input placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="JCR分区" prop="">
+            <el-form-item label="JCR分区" prop>
               <el-select placeholder="请选择级别" style="width:98%">
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
@@ -304,51 +342,77 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="被引用次数" prop="">
-              <el-input  placeholder="" style="width:98%"></el-input>
+            <el-form-item label="被引用次数" prop>
+              <el-input placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="期刊ISSN号" prop="cateNumber">
-              <el-input clearable v-model="ruleForm.cateNumber" placeholder="" style="width:98%"></el-input>
+              <el-input clearable v-model="ruleForm.cateNumber" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="是否国际合作论文" prop="">
-              <el-select placeholder="请选择" v-model="ruleForm.isnationalitycooperation" style="width:98%">
+            <el-form-item label="是否国际合作论文" prop>
+              <el-select
+                placeholder="请选择"
+                v-model="ruleForm.isnationalitycooperation"
+                style="width:98%"
+              >
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item v-if="ruleForm.isnationalitycooperation == '是'" label="合作人信息" prop="studentId">
+        <el-form-item
+          v-if="ruleForm.isnationalitycooperation == '是'"
+          label="合作人信息"
+          prop="studentId"
+        >
           <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一作者" prop="">
-              <el-input clearable v-model="ruleForm.highlyCited" placeholder="" style="width:98%"></el-input>
+            <el-form-item label="第一作者" prop>
+              <el-input clearable v-model="ruleForm.highlyCited" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一作者单位" prop="">
-          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
+        <el-form-item label="第一作者单位" prop>
+          <el-input
+            type="textarea"
+            clearable
+            v-model="ruleForm.cateNumber"
+            placeholder
+            style="width:99%"
+          ></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一通讯作者" prop="">
-              <el-input clearable v-model="ruleForm.highlyCited" placeholder="" style="width:99%"></el-input>
+            <el-form-item label="第一通讯作者" prop>
+              <el-input clearable v-model="ruleForm.highlyCited" placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一通讯作者单位" prop="">
-          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
+        <el-form-item label="第一通讯作者单位" prop>
+          <el-input
+            type="textarea"
+            clearable
+            v-model="ruleForm.cateNumber"
+            placeholder
+            style="width:99%"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="全体作者" prop="">
-          <el-input type="textarea" clearable v-model="ruleForm.cateNumber" placeholder="" style="width:99%"></el-input>
+        <el-form-item label="全体作者" prop>
+          <el-input
+            type="textarea"
+            clearable
+            v-model="ruleForm.cateNumber"
+            placeholder
+            style="width:99%"
+          ></el-input>
         </el-form-item>
         <!-- <el-form-item label="论文研究领域" prop="level">
           <el-col :span="12">
@@ -371,7 +435,7 @@
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.score" placeholder=""></el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>-->
         <!-- <el-form-item label="通讯作者单位" prop="coauthorOrg">
           <el-col :span="12">
             <el-autocomplete
@@ -419,11 +483,11 @@
             <el-checkbox v-model="teacherArr.tx">是否是通讯作者</el-checkbox>
             <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>-->
         <!-- <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
-        </el-form-item> -->
-        <div >
+        </el-form-item>-->
+        <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
             :data="fileList"
@@ -434,9 +498,20 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column :show-overflow-tooltip="true" type="index" label="#" align="center" width="50"></el-table-column>
+            <el-table-column
+              :show-overflow-tooltip="true"
+              type="index"
+              label="#"
+              align="center"
+              width="50"
+            ></el-table-column>
             <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="create_time" label="创建时间" align="center"></el-table-column>
+            <el-table-column
+              :show-overflow-tooltip="true"
+              prop="create_time"
+              label="创建时间"
+              align="center"
+            ></el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
@@ -451,10 +526,14 @@
             drag
             :data="fileData"
             :action="action"
-            multiple>
+            multiple
+          >
             <div class="el-upload__tip" slot="tip"></div>
             <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            <div class="el-upload__text">
+              将文件拖到此处，或
+              <em>点击上传</em>
+            </div>
           </el-upload>
         </div>
         <!-- <el-form-item v-if="['edit'].includes(operate) && ruleForm.id" label="附件" prop="files">
@@ -467,7 +546,7 @@
           >
             <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
@@ -499,7 +578,10 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
-      deptid: "", 
+      fileLoading: false,
+      fileData: "",
+      action: "",
+      deptid: "",
       examineDialog: false,
       tableData: [],
       operate: "",
@@ -1019,13 +1101,13 @@ export default {
 
 <style>
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 .el-autocomplete {
   width: 100%;
@@ -1038,29 +1120,29 @@ el-from {
   width: 600px;
 }
 .dragger {
-    background-color: #fff;
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    box-sizing: border-box;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  background-color: #fff;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 .el-upload-dragger .el-icon-upload {
-    font-size: 67px;
-    color: #C0C4CC;
-    margin: 40px 0 16px;
-    line-height: 0px;
+  font-size: 67px;
+  color: #c0c4cc;
+  margin: 40px 0 16px;
+  line-height: 0px;
 }
 .el-upload-dragger {
-    background-color: #fff;
-    border: 0px dashed #d9d9d9;
-    border-radius: 0px;
-    box-sizing: border-box;
-    width: 360px;
-    height: 100px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  background-color: #fff;
+  border: 0px dashed #d9d9d9;
+  border-radius: 0px;
+  box-sizing: border-box;
+  width: 360px;
+  height: 100px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 </style>
