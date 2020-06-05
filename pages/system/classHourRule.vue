@@ -67,7 +67,7 @@
       title="学时规则"
       :visible.sync="dialogFormVisible"
     >
-      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="100px">
+      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="150px">
         <el-form-item label="年度:">
           <el-date-picker
             size="normal"

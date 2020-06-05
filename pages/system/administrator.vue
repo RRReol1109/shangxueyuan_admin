@@ -43,7 +43,7 @@
 
     <!-- 学时查看窗口 -->
     <el-drawer size="60%" style="min-height:500px" title="新增管理员" :visible.sync="dialogFormVisible">
-      <el-form :disabled="formDisabled" :model="form" label-width="100px">
+      <el-form :disabled="formDisabled" :model="form" label-width="150px">
         <el-form-item label="管理员账号">
           <el-col :span="6">
             <el-input v-model="form.name" size="normal"></el-input>

@@ -98,10 +98,25 @@
       <el-table-column :show-overflow-tooltip="true" prop="degree" align="center" label="在读学位类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="profession" align="center" label="专业"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="internalTutor" align="center" label="国内导师"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="internalTutor"
+        align="center"
+        label="国内导师"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studyPlan" align="center" label="拟留学身份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studySchool" align="center" label="留学单位（英文）"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="overseasTutor" align="center" label="海外导师"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="studySchool"
+        align="center"
+        label="留学单位（英文）"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="overseasTutor"
+        align="center"
+        label="海外导师"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studyTime" align="center" label="学习期限"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="fundingType" align="center" label="资助类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机号"></el-table-column>
@@ -144,7 +159,7 @@
         :model="examineForm"
         :rules="rules"
         ref="examineForm"
-        label-width="100px"
+        label-width="150px"
         class="demo-examineForm"
       >
         <el-form-item>
@@ -164,115 +179,146 @@
       </el-form>
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title="出国学生" :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
-        label-width="100px"
+        label-width="150px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="在读学位类型" prop="degree">
-          <el-select v-model="form.degree" size="normal" placeholder="请选择">
-            <el-option label="本科" value="本科"></el-option>
-            <el-option label="硕士" value="硕士"></el-option>
-            <el-option label="博士" value="博士"></el-option>
-            <el-option label="硕博连读" value="硕博连读"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="学号" prop="studentId">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.studentId" autocomplete="off"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="在读学位类型" prop="degree">
+              <el-select v-model="form.degree" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="本科" value="本科"></el-option>
+                <el-option label="硕士" value="硕士"></el-option>
+                <el-option label="博士" value="博士"></el-option>
+                <el-option label="硕博连读" value="硕博连读"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学号" prop="studentId">
+              <el-input size="normal" v-model="form.studentId" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="normal" placeholder="请选择">
-            <el-option label="男" value="1"></el-option>
-            <el-option label="女" value="2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="生日" prop="birthday">
-          <el-col :span="6">
-            <el-date-picker
-              size="normal"
-              type="date"
-              placeholder="选择日期"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              v-model="form.birthday"
-              style="width: 100%;"
-            ></el-date-picker>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.phone" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="1"></el-option>
+                <el-option label="女" value="2"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.email" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="生日" prop="birthday">
+              <el-date-picker
+                size="normal"
+                type="date"
+                placeholder="选择日期"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                v-model="form.birthday"
+                style="width: 99%;"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="拟留学身份" prop="studyPlan">
-          <el-select v-model="form.studyPlan" size="normal" placeholder="请选择">
-            <el-option label="博士联合培养" value="博士联合培养"></el-option>
-            <el-option label="攻读博士学位" value="攻读博士学位"></el-option>
-            <el-option label="硕士联合培养" value="硕士联合培养"></el-option>
-            <el-option label="攻读硕士学位" value="攻读硕士学位"></el-option>
-          </el-select>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="手机号" prop="phone">
+              <el-input size="normal" v-model="form.phone" autocomplete="off" style="width: 99%;"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              <el-input size="normal" v-model="form.email" autocomplete="off" style="width: 99%;"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="拟留学身份" prop="studyPlan">
+              <el-select
+                v-model="form.studyPlan"
+                size="normal"
+                placeholder="请选择"
+                style="width: 99%;"
+              >
+                <el-option label="博士联合培养" value="博士联合培养"></el-option>
+                <el-option label="攻读博士学位" value="攻读博士学位"></el-option>
+                <el-option label="硕士联合培养" value="硕士联合培养"></el-option>
+                <el-option label="攻读硕士学位" value="攻读硕士学位"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- <el-form-item v-if="form.identity === '3' || form.identity === '4'" label="外语成绩">
           <el-col :span="6">
             <el-input size="normal" v-model="form.languageAchievement" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="专业" prop="profession">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.profession" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <!-- <el-form-item v-if="form.identity === '3' || form.identity === '4'" label="本科学校">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专业" prop="profession">
+              <el-input
+                size="normal"
+                v-model="form.profession"
+                autocomplete="off"
+                style="width: 99%;"
+              ></el-input>
+            </el-form-item>
+            <!-- <el-form-item v-if="form.identity === '3' || form.identity === '4'" label="本科学校">
           <el-col :span="6">
             <el-input size="normal" v-model="form.undergraduateSchool" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>-->
-        <el-form-item label="年级" prop="grade">
-          <el-col :span="6">
-            <el-date-picker v-model="form.grade" type="date" format="yyyy" placeholder="选择日期时间"></el-date-picker>
+            </el-form-item>-->
           </el-col>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="年级" prop="grade">
+              <el-date-picker
+                v-model="form.grade"
+                type="date"
+                format="yyyy"
+                placeholder="选择日期时间"
+                style="width: 99%;"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="留学单位（英文）" prop="studySchool">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.studySchool" autocomplete="off"></el-input>
-          </el-col>
+          <el-input size="normal" v-model="form.studySchool" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="国内导师" prop="internalTutor">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.internalTutor" autocomplete="off"></el-input>
-          </el-col>
+          <el-input size="normal" v-model="form.internalTutor" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="海外导师" prop="overseasTutor">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.overseasTutor" autocomplete="off"></el-input>
-          </el-col>
+          <el-input size="normal" v-model="form.overseasTutor" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="学习期限" prop="studyTime">
-          <el-col :span="5">
-            <el-date-picker
-              size="normal"
-              type="date"
-              placeholder="选择日期"
-              v-model="form.studyTime"
-              format="yyyy-MM-dd"
-              value-format="yyyy-MM-dd"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-col>
+          <el-date-picker
+            size="normal"
+            type="date"
+            placeholder="选择日期"
+            v-model="form.studyTime"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            style="width: 100%;"
+          ></el-date-picker>
           <!-- <el-col class="line" :span="0.5">-</el-col>
           <el-col :span="5">
             <el-date-picker
@@ -309,11 +355,6 @@
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>

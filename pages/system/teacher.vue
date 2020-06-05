@@ -132,7 +132,7 @@
     </nav>
     <!-- 学时查看窗口 -->
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form :model="examineForm" ref="examineForm" label-width="100px" class="demo-examineForm">
+      <el-form :model="examineForm" ref="examineForm" label-width="150px" class="demo-examineForm">
         <el-form-item>
           <el-form-item label="选择角色:">
             <el-select v-model="examineForm.roleIds" size="normal" placeholder="请选择状态">
