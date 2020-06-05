@@ -100,7 +100,7 @@
         fixed="right"
         align="center"
         label="操作"
-        width="200"
+        width="300"
         v-if="deptid==31||roleId==1"
       >
         <template slot-scope="scope">
@@ -151,6 +151,12 @@
       </el-form>
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
+          <el-button @click="resetForm('ruleForm')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :disabled="!['edit', 'add'].includes(operate)"
         :model="ruleForm"
@@ -159,35 +165,46 @@
         label-width="150px"
         class="demo-ruleForm"
       >
-        <el-form-item label="年度:">
-          <el-date-picker
-            size="normal"
-            v-model="ruleForm.year"
-            type="year"
-            format="yyyy"
-            value-format="yyyy"
-            placeholder="选择年份"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="类型" prop="type">
+        <el-divider content-position="left">基本信息</el-divider>
+        <el-row>
           <el-col :span="12">
-            <el-select v-model="ruleForm.type" placeholder="请选择类型">
-              <el-option label="著作" value="著作"></el-option>
-              <el-option label="教材" value="教材"></el-option>
-            </el-select>
+            <el-form-item label="年度">
+              <el-date-picker
+                size="normal"
+                v-model="ruleForm.year"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择年份"
+                style="width:98%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="出版时间" prop="publishDate">
           <el-col :span="12">
-            <el-date-picker v-model="ruleForm.publishDate" type="date" placeholder="选择日期时间"></el-date-picker>
+            <el-form-item label="类型" prop="type">
+                <el-select v-model="ruleForm.type" placeholder="请选择类型" style="width:98%">
+                  <el-option label="著作" value="著作"></el-option>
+                  <el-option label="教材" value="教材"></el-option>
+                </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="出版时间" prop="publishDate">
+              <el-date-picker v-model="ruleForm.publishDate" type="date" placeholder="选择日期时间" style="width:98%"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="ISBN编号" prop="isbn">
+              <el-input clearable v-model="ruleForm.isbn" placeholder="请输入内容" style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="著作/教材名称" prop="name">
-          <el-col :span="12">
-            <el-input clearable v-model="ruleForm.name" placeholder="请输入内容"></el-input>
-          </el-col>
+          <el-input clearable v-model="ruleForm.name" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="附件" prop="files">
+        <!-- <el-form-item label="附件" prop="files">
           <el-upload
             class
             :headers="header"
@@ -197,49 +214,44 @@
           >
             <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
-        </el-form-item>
-        <el-form-item label="ISBN编号" prop="isbn">
-          <el-col :span="12">
-            <el-input clearable v-model="ruleForm.isbn" placeholder="请输入内容"></el-input>
-          </el-col>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="出版社名称" prop="publishHouse">
-          <el-col :span="12">
-            <el-autocomplete
-              clearable
-              v-model="ruleForm.publishHouse"
-              :fetch-suggestions="queryProjects"
-              placeholder="请输入内容"
-            ></el-autocomplete>
-          </el-col>
+          <el-autocomplete
+            clearable
+            v-model="ruleForm.publishHouse"
+            :fetch-suggestions="queryProjects"
+            placeholder="请输入内容"
+            style="width:99%"
+          ></el-autocomplete>
         </el-form-item>
         <el-form-item label="署名单位" prop="signature">
-          <el-col :span="12">
-            <el-autocomplete
-              clearable
-              v-model="ruleForm.signature"
-              :fetch-suggestions="queryProjects"
-              placeholder="请输入内容"
-            ></el-autocomplete>
-          </el-col>
+          <el-autocomplete
+            clearable
+            v-model="ruleForm.signature"
+            :fetch-suggestions="queryProjects"
+            style="width:99%"
+            placeholder="请输入内容"
+          ></el-autocomplete>
         </el-form-item>
-        <el-form-item label="总字数（万）" prop="wordCount">
+        <el-row>
           <el-col :span="12">
-            <el-input
-              clearable
-              v-model="ruleForm.wordCount"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-              placeholder="请输入内容"
-            ></el-input>
+            <el-form-item label="总字数（万）" prop="wordCount">
+              <el-input
+                clearable
+                v-model="ruleForm.wordCount"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+                placeholder="请输入内容"
+                style="width:98%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item
           v-for="(teacherArr, index) in ruleForm.teacherArr"
           :label="'作者信息' + (index+1)"
           :key="teacherArr.key"
           :prop="'teacherArr.' + index + '.value'"
         >
-          <el-col :span="12">
             <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
               <el-option
                 v-for="item in teacherList"
@@ -248,21 +260,24 @@
                 :value="item.id"
               ></el-option>
             </el-select>
+            分数：
             <el-input
               clearable
+              style="width:120px"
               v-model="teacherArr.point"
               oninput="value=value.replace(/[^\d.]/g,'')"
               placeholder="请输入分数"
               label="字数"
             ></el-input>
+            字数：
             <el-input
               clearable
+              style="width:120px"
               v-model="teacherArr.num"
               oninput="value=value.replace(/[^\d.]/g,'')"
               placeholder="请输入字数"
             ></el-input>
-            <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
-          </el-col>
+            <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
         </el-form-item>
         <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
@@ -273,16 +288,46 @@
             <el-input v-model="ruleForm.authors" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
+        <div >
+          <el-divider content-position="left">附件</el-divider>
+          <el-table
+            :data="fileList"
+            border
+            style="width: 100%"
+            size="normal"
+            v-loading="fileLoading"
+            header-row-class-name="h30"
+            header-cell-class-name="tc-g2 bc-g"
+          >
+            <el-table-column :show-overflow-tooltip="true" type="index" label="#" align="center" width="50"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="create_time" label="创建时间" align="center"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-upload
+            class="dragger"
+            :show-file-list="false"
+            :on-success="uploadSuccess"
+            drag
+            :data="fileData"
+            :action="action"
+            multiple>
+            <div class="el-upload__tip" slot="tip"></div>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          </el-upload>
+        </div>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>
           </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </el-drawer>
@@ -317,7 +362,7 @@ export default {
       formDisabled: false,
       courseNames: [],
       yearsOptions: [],
-      loading: false,
+      loading: true,
       page: 1,
       fileurl: "",
       cFlag: false,

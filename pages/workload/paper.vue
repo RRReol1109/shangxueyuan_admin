@@ -147,7 +147,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="120px"
+        label-width="150px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -246,7 +246,7 @@
             type="textarea"
             clearable
             v-model="ruleForm.cateNumber"
-            placeholder
+            placeholder="201301020225-张三-经管2班；201301020221-李四-经管1班；"
             style="width:99%"
           ></el-input>
         </el-form-item>
