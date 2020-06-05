@@ -195,7 +195,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="100px"
+        label-width="150px"
         class="demo-ruleForm"
       >
         <el-row>
