@@ -144,14 +144,17 @@ export default {
           break;
         case "33":
           // this.ids = [777, 46, 47, 48, 49];
+          this.ids = [];
           break;
         case "34":
           // this.ids = [777, 50, 51, 52, 53];
+          this.ids = [];
           break;
         case "35":
           this.ids = [777, 40];
           break;
         case "36":
+          this.ids = [];
           break;
         case "37":
           this.ids = [777, 51, 56, 37, 39, 38];
@@ -176,8 +179,10 @@ export default {
           ];
           break;
         case "39":
+          this.ids = [];
           break;
         case "40":
+          this.ids = [];
           break;
         case "1":
           this.ids = [
@@ -275,7 +280,7 @@ export default {
         roleId: this.roleId,
         ids: this.ids.join()
       });
-      this.$store.commit('setRole', this.ids);
+      this.$store.commit("setRole", this.ids);
       // let refresh = Request.getSession().getAttribute("refresh");
       window.sessionStorage.setItem("flag", true);
       // location.reload();

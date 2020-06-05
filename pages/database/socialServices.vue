@@ -70,24 +70,24 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="智库"></el-table-column>
-      <el-table-column prop="userName" align="center" label="高端人才培训"></el-table-column>
-      <el-table-column prop="type" align="center" label="服务学科与学术发展"></el-table-column>
-      <el-table-column prop="count" align="center" label="社会公共与公益服务"></el-table-column>
-      <el-table-column prop="graduationCount" align="center" label="文化传承/中外人文交流"></el-table-column>
-      <el-table-column prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="智库"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="高端人才培训"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="服务学科与学术发展"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="社会公共与公益服务"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationCount" align="center" label="文化传承/中外人文交流"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="desc" align="center" label="备注"></el-table-column> -->
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column> -->
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

@@ -45,17 +45,17 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="num" align="center" label="学号"></el-table-column>
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="major" align="center" label="录取专业"></el-table-column>
-      <el-table-column prop="name" align="center" label="年级"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="导师"></el-table-column>
-      <el-table-column prop="scholarship" align="center" label="奖学金名称"></el-table-column>
-      <el-table-column prop="stipend" align="center" label="助学金名称"></el-table-column>
-      <el-table-column prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column prop="graduationSchool" align="center" label="毕业学校"></el-table-column>
-      <el-table-column prop="graduation" align="center" label="毕业专业"></el-table-column>
-      <el-table-column prop="remarks" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="录取专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="导师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="scholarship" align="center" label="奖学金名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="stipend" align="center" label="助学金名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationSchool" align="center" label="毕业学校"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduation" align="center" label="毕业专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remarks" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="normal">查看</el-button>

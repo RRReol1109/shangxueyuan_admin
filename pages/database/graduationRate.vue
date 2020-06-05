@@ -62,14 +62,14 @@
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column fixed prop="year" align="center" label="届别"></el-table-column>
-      <el-table-column prop="major" align="center" label="专业"></el-table-column>
-      <el-table-column prop="totalCnt" align="center" label="毕业生人数"></el-table-column>
-      <el-table-column prop="graduateCnt" align="center" label="毕业人数"></el-table-column>
-      <el-table-column prop="finishedCnt" align="center" label="结业人数"></el-table-column>
-      <el-table-column prop="degreeCnt" align="center" label="有学位"></el-table-column>
-      <el-table-column prop="graduateRate" align="center" label="毕业率"></el-table-column>
-      <el-table-column prop="degreeRate" align="center" label="授予学位率"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="totalCnt" align="center" label="毕业生人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduateCnt" align="center" label="毕业人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="finishedCnt" align="center" label="结业人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="degreeCnt" align="center" label="有学位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduateRate" align="center" label="毕业率"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="degreeRate" align="center" label="授予学位率"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

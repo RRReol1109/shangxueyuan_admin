@@ -57,14 +57,14 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="age" align="center" label="年龄"></el-table-column>
-      <el-table-column prop="bachelor" align="center" label="学士获得时间,学校，学科"></el-table-column>
-      <el-table-column prop="master" align="center" label="硕士获得时间,学校，学科"></el-table-column>
-      <el-table-column prop="doctor" align="center" label="博士获得时间,学校，学科"></el-table-column>
-      <el-table-column prop="desc" align="center" label="简介"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="age" align="center" label="年龄"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="bachelor" align="center" label="学士获得时间,学校，学科"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="master" align="center" label="硕士获得时间,学校，学科"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="doctor" align="center" label="博士获得时间,学校，学科"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="简介"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

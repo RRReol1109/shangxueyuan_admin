@@ -20,9 +20,9 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="type" align="center" label="类别"></el-table-column>
-      <el-table-column prop="desc" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="show(scope.row)" type="text" size="normal">查看</el-button>

@@ -75,22 +75,22 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <!-- <el-table-column prop="name" align="center" label="姓名"></el-table-column> -->
-      <el-table-column prop="type" align="center" label="项目类型"></el-table-column>
-      <el-table-column prop="level" align="center" label="项目级别"></el-table-column>
-      <el-table-column prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column prop="projectFunds" align="center" label="直接经费"></el-table-column>
-      <el-table-column prop="userName" align="center" label="项目主持人"></el-table-column>
-      <el-table-column prop="startDate" align="center" label="开始时间"></el-table-column>
-      <el-table-column prop="endDate" align="center" label="结束时间"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="项目类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="projectFunds" align="center" label="直接经费"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="项目主持人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="开始时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="endDate" align="center" label="结束时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

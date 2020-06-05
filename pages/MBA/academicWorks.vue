@@ -61,21 +61,21 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column prop="teacherId" align="center" label="主编工号"></el-table-column>
-      <el-table-column prop="name" align="center" label="主编姓名"></el-table-column>
-      <el-table-column prop="authorCnt" align="center" label="作者总数"></el-table-column>
-      <el-table-column prop="author" align="center" label="全部作者列表"></el-table-column>
-      <el-table-column prop="title" align="center" label="题目"></el-table-column>
-      <el-table-column prop="type" align="center" label="类别(著作,教材)"></el-table-column>
-      <!-- <el-table-column prop="level" align="center" label="项目级别"></el-table-column> -->
-      <el-table-column prop="publisher" align="center" label="出版社"></el-table-column>
-      <el-table-column prop="isbn" align="center" label="ISBN号"></el-table-column>
-      <el-table-column prop="wordCnt" align="center" label="总字数(万字)"></el-table-column>
-      <el-table-column prop="ownCnt" align="center" label="本人撰写字数"></el-table-column>
-      <!-- <el-table-column prop="pdfUrl" align="center" label="上传封面和版权页PDF电子版"></el-table-column> -->
-      <el-table-column prop="point" align="center" label="业绩点"></el-table-column>
-      <el-table-column prop="score" align="center" label="考核分"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacherId" align="center" label="主编工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="主编姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="authorCnt" align="center" label="作者总数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="author" align="center" label="全部作者列表"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="题目"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类别(著作,教材)"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="publisher" align="center" label="出版社"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="wordCnt" align="center" label="总字数(万字)"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="ownCnt" align="center" label="本人撰写字数"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="pdfUrl" align="center" label="上传封面和版权页PDF电子版"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

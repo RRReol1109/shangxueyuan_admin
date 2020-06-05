@@ -34,20 +34,20 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="id" align="center" label="学号"></el-table-column>
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="birthday" align="center" label="出生日期"></el-table-column>
-      <el-table-column prop="major" align="center" label="授予硕士学位专业"></el-table-column>
-      <el-table-column prop="category" align="center" label="专业"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="导师"></el-table-column>
-      <el-table-column prop="score" align="center" label="课程学习情况（总学分/学位课学分/平均绩点）"></el-table-column>
-      <el-table-column prop="paper" align="center" label="在读期间发表论文"></el-table-column>
-      <el-table-column prop="pleaDate" align="center" label="答辩日期"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="毕业时间"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="毕业去向"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="电话"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="邮箱"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="birthday" align="center" label="出生日期"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="授予硕士学位专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="category" align="center" label="专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="导师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="课程学习情况（总学分/学位课学分/平均绩点）"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="paper" align="center" label="在读期间发表论文"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="pleaDate" align="center" label="答辩日期"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="毕业时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="毕业去向"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

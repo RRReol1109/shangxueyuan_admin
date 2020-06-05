@@ -28,12 +28,12 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column prop="id" align="center" label="教师工号"></el-table-column>
-      <el-table-column prop="name" align="center" label="教师姓名"></el-table-column>
-      <el-table-column prop="entrance" align="center" label="指导研究生类别"></el-table-column>
-      <el-table-column prop="student" align="center" label="指导研究生姓名"></el-table-column>
-      <el-table-column prop="graduationStudent" align="center" label="研究生人数"></el-table-column>
-      <el-table-column prop="eliminate" align="center" label="工作量"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="教师工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="指导研究生类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="student" align="center" label="指导研究生姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationStudent" align="center" label="研究生人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="eliminate" align="center" label="工作量"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

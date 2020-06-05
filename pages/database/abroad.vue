@@ -80,22 +80,22 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="englishName" align="center" label="英文名"></el-table-column>
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="birthday" align="center" label="生日"></el-table-column>
-      <el-table-column prop="major" align="center" label="专业"></el-table-column>
-      <el-table-column prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column prop="qq" align="center" label="QQ"></el-table-column>
-      <el-table-column prop="wechat" align="center" label="微信"></el-table-column>
-      <el-table-column prop="country" align="center" label="国籍"></el-table-column>
-      <el-table-column prop="passport" align="center" label="护照"></el-table-column>
-      <el-table-column prop="registrationNumber" align="center" label="登记编号"></el-table-column>
-      <el-table-column prop="entryTime" align="center" label="入专时间"></el-table-column>
-      <el-table-column prop="graduationTime" align="center" label="预计毕业时间"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="englishName" align="center" label="英文名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="wechat" align="center" label="微信"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="country" align="center" label="国籍"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="passport" align="center" label="护照"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="registrationNumber" align="center" label="登记编号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="entryTime" align="center" label="入专时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationTime" align="center" label="预计毕业时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

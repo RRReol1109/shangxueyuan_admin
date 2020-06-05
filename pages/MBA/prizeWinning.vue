@@ -61,20 +61,20 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column prop="teacherId" align="center" label="教师工号"></el-table-column>
-      <el-table-column prop="name" align="center" label="教师姓名"></el-table-column>
-      <el-table-column prop="title" align="center" label="职称"></el-table-column>
-      <el-table-column prop="awardName" align="center" label="获奖项目名称"></el-table-column>
-      <el-table-column prop="awardLevel" align="center" label="奖项类别"></el-table-column>
-      <el-table-column prop="awardType" align="center" label="奖励级别"></el-table-column>
-      <el-table-column prop="awardOrganize" align="center" label="颁奖机构"></el-table-column>
-      <el-table-column prop="awardId" align="center" label="获奖证书编号"></el-table-column>
-      <el-table-column prop="awardDate" align="center" label="获奖年月"></el-table-column>
-      <el-table-column prop="pdfUrl" align="center" label="上传获奖证书PDF电子版"></el-table-column>
-      <el-table-column prop="ratio" align="center" label="系数"></el-table-column>
-      <el-table-column prop="point" align="center" label="业绩点"></el-table-column>
-      <el-table-column prop="score" align="center" label="考核分"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacherId" align="center" label="教师工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="职称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardName" align="center" label="获奖项目名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardLevel" align="center" label="奖项类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardType" align="center" label="奖励级别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardOrganize" align="center" label="颁奖机构"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardId" align="center" label="获奖证书编号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="获奖年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="pdfUrl" align="center" label="上传获奖证书PDF电子版"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="ratio" align="center" label="系数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

@@ -70,21 +70,21 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column prop="count" align="center" label="指导人数"></el-table-column>
-      <el-table-column prop="graduationCount" align="center" label="毕业人数"></el-table-column>
-      <el-table-column prop="secretaryCount" align="center" label="答辩秘班级数"></el-table-column>
-      <el-table-column prop="studentType" align="center" label="学生类型"></el-table-column>
-      <el-table-column prop="hours" align="center" label="所有学生"></el-table-column>
-      <el-table-column prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="指导人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationCount" align="center" label="毕业人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="secretaryCount" align="center" label="答辩秘班级数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentType" align="center" label="学生类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="所有学生"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

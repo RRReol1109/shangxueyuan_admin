@@ -99,39 +99,39 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="name" align="center" label="课程名称"></el-table-column>
-      <el-table-column prop="name" align="center" label="教师"></el-table-column>
-      <el-table-column prop="type" align="center" label="类型"></el-table-column>
-      <el-table-column prop="type" align="center" label="课程类型1"></el-table-column>
-      <el-table-column prop="type" align="center" label="课程类型2"></el-table-column>
-      <el-table-column prop="type" align="center" label="学分"></el-table-column>
-      <el-table-column prop="type" align="center" label="总学时"></el-table-column>
-      <el-table-column prop="type" align="center" label="理论学时"></el-table-column>
-      <el-table-column prop="type" align="center" label="实验学时"></el-table-column>
-      <el-table-column prop="type" align="center" label="上机学时"></el-table-column>
-      <el-table-column prop="type" align="center" label="实践学时"></el-table-column>
-      <el-table-column prop="type" align="center" label="集中实验周"></el-table-column>
-      <el-table-column prop="type" align="center" label="班级数"></el-table-column>
-      <el-table-column prop="type" align="center" label="班级名称"></el-table-column>
-      <el-table-column prop="type" align="center" label="选课人数"></el-table-column>
-      <el-table-column prop="type" align="center" label="承担单位"></el-table-column>
-      <el-table-column prop="type" align="center" label="精品示范课程"></el-table-column>
-      <el-table-column prop="type" align="center" label="标签类别"></el-table-column>
-      <el-table-column prop="type" align="center" label="是否参与部门统计"></el-table-column>
-      <el-table-column prop="english" align="center" label="是否为全英文授课"></el-table-column>
-      <el-table-column prop="target" align="center" label="授课对象"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="教师"></el-table-column>
-      <el-table-column prop="hours" align="center" label="实际课时"></el-table-column>
-      <el-table-column prop="count" align="center" label="授课人数"></el-table-column>
-      <el-table-column prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="课程名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="课程类型1"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="课程类型2"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="学分"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="总学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="理论学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实验学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="上机学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实践学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="集中实验周"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="班级数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="班级名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="选课人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="承担单位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="精品示范课程"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="标签类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="是否参与部门统计"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否为全英文授课"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="target" align="center" label="授课对象"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="授课人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -183,6 +183,13 @@
       </el-form>
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :disabled="!['edit', 'add'].includes(operate)"
         :model="ruleForm"
@@ -191,13 +198,6 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <div slot="title" class="header-title">
-          <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-            <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-            <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
-            <el-button size="normal" @click="resetForm('form')">重置</el-button>
-          </div>
-        </div>
         <el-row>
           <el-col :span="12">
             <el-form-item label="年度" prop="year">

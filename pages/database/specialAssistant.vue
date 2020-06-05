@@ -59,23 +59,23 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="gender" align="center" label="年级"></el-table-column>
-      <el-table-column prop="education" align="center" label="第一学历毕业学校"></el-table-column>
-      <el-table-column prop="major" align="center" label="专业名称"></el-table-column>
-      <el-table-column prop="phone" align="center" label="手机"></el-table-column>
-      <el-table-column prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column prop="scholarshipName" align="center" label="奖学金名称"></el-table-column>
-      <el-table-column prop="financialAidName" align="center" label="助学金名称"></el-table-column>
-      <el-table-column prop="majorCode" align="center" label="专业代码"></el-table-column>
-      <el-table-column prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
-      <el-table-column prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
-      <el-table-column prop="admissionMethod" align="center" label="录取方式"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="第一学历毕业学校"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="scholarshipName" align="center" label="奖学金名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="financialAidName" align="center" label="助学金名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="admissionMethod" align="center" label="录取方式"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

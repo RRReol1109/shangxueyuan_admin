@@ -75,22 +75,22 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" fixed align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" fixed align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="type" align="center" label="获奖类型"></el-table-column>
-      <el-table-column prop="level" align="center" label="项目级别"></el-table-column>
-      <el-table-column prop="awardName" align="center" label="成果名称"></el-table-column>
-      <el-table-column prop="firstUnit" align="center" label="第一完成单位"></el-table-column>
-      <el-table-column prop="firstPerson" align="center" label="第一获奖人"></el-table-column>
-      <el-table-column prop="persons" align="center" label="全体获奖人"></el-table-column>
-      <el-table-column prop="awardDate" align="center" label="获奖时间"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="获奖类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardName" align="center" label="成果名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="firstUnit" align="center" label="第一完成单位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="firstPerson" align="center" label="第一获奖人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="全体获奖人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="获奖时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

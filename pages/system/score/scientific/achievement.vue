@@ -26,16 +26,16 @@
       </el-form>
     </div>
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
-      <el-table-column prop="id" label="id" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度" width="100"></el-table-column>
-      <el-table-column prop="level" align="center" label="项目类型" ></el-table-column>
-      <el-table-column prop="baseScore" align="center" label="基础分数"></el-table-column>
-      <el-table-column prop="guangzhaoScore" align="center" label="光召科技奖"></el-table-column>
-      <el-table-column prop="gongxianScore" align="center" label="杰出贡献奖"></el-table-column>
-      <el-table-column prop="levelOne" align="center" label="一等奖"></el-table-column>
-      <el-table-column prop="levelTwo" align="center" label="二等奖"></el-table-column>
-      <el-table-column prop="levelThree" align="center" label="三等奖"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="id" label="id" align="center" width="50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度" width="100"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目类型" ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="baseScore" align="center" label="基础分数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="guangzhaoScore" align="center" label="光召科技奖"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gongxianScore" align="center" label="杰出贡献奖"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="levelOne" align="center" label="一等奖"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="levelTwo" align="center" label="二等奖"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="levelThree" align="center" label="三等奖"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

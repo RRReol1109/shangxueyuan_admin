@@ -27,17 +27,17 @@
     </div>
     <el-table v-loading="loading" :data="tableData" border style="width: 100%">
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="id" align="center" label="ID"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="name" align="center" label="规则名称"></el-table-column>
-      <el-table-column prop="type" align="center" label="教学类别"></el-table-column>
-      <el-table-column prop="english" align="center" label="是否是全英文授课">
+      <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="ID"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="规则名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="教学类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否是全英文授课">
         <template slot-scope="scope">
             {{ scope.row.english | formatEnglishText }}
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="rules" align="center" label="规则内容"></el-table-column> -->
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="rules" align="center" label="规则内容"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

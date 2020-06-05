@@ -76,19 +76,25 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="teacher" align="center" label="教师"></el-table-column>
-      <el-table-column prop="classes" align="center" label="指导班级"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column prop="weeks" align="center" label="周次"></el-table-column>
-      <el-table-column prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="weeks" align="center" label="周次"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -140,6 +146,13 @@
       </el-form>
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -148,62 +161,74 @@
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年度" prop="year">
+        <el-row>
           <el-col :span="12">
-            <el-date-picker
-              size="normal"
-              v-model="ruleForm.year"
-              type="year"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择年份"
-            ></el-date-picker>
+            <el-form-item label="年度" prop="year">
+              <el-date-picker
+                size="normal"
+                v-model="ruleForm.year"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
           <el-col :span="12">
-            <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+            <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
+              <el-select v-model="ruleForm.teacher" placeholder="请选择老师" style="width:99%">
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="指导班级" prop="classes">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-autocomplete v-model="ruleForm.classes" :fetch-suggestions="queryClasses"></el-autocomplete>
+            <el-form-item label="指导班级" prop="classes">
+              <el-autocomplete
+                v-model="ruleForm.classes"
+                :fetch-suggestions="queryClasses"
+                style="width:99%"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
           <el-col :span="12">
-            <el-autocomplete v-model="ruleForm.remark" :fetch-suggestions="queryTopicArr"></el-autocomplete>
+            <el-form-item label="备注" prop="remark">
+              <el-autocomplete
+                v-model="ruleForm.remark"
+                :fetch-suggestions="queryTopicArr"
+                style="width:99%"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item label="周次" prop="weeks">
-          <el-col :span="12">
-            <el-input
-              v-model="ruleForm.weeks"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-              clearable
-            ></el-input>
-          </el-col>
+          <el-input
+            style="width:99%"
+            v-model="ruleForm.weeks"
+            oninput="value=value.replace(/[^\d.]/g,'')"
+            clearable
+          ></el-input>
         </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="ruleForm.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+            style="width:99%"
+          >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -670,12 +695,12 @@ export default {
 
 <style>
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

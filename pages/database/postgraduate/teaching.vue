@@ -73,16 +73,16 @@
         </template>
       </el-table-column>
       <!-- <el-table-column fixed prop="id" align="center" label="ID"></el-table-column> -->
-      <el-table-column prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="college" align="center" label="学院"></el-table-column>
-      <el-table-column prop="firstLevelCategory" align="center" label="一级学科"></el-table-column>
-      <el-table-column prop="trainingLevel" align="center" label="培养层次"></el-table-column>
-      <el-table-column prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column prop="funding" align="center" label="经费（万元）"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="学院"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="firstLevelCategory" align="center" label="一级学科"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="trainingLevel" align="center" label="培养层次"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="funding" align="center" label="经费（万元）"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

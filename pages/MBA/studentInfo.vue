@@ -91,33 +91,33 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column prop="classes" align="center" label="班级名称"></el-table-column>
-      <!-- <el-table-column prop="id" align="center" label="研究生学号"></el-table-column> -->
-      <el-table-column prop="name" align="center" label="研究生姓名"></el-table-column>
-      <!-- <el-table-column prop="student" align="center" label="学员人数"></el-table-column> -->
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="birth" align="center" label="出生年月"></el-table-column>
-      <el-table-column prop="masterType" align="center" label="研究生类别"></el-table-column>
-      <el-table-column prop="studyType" align="center" label="学制"></el-table-column>
-      <el-table-column prop="acceptedType" align="center" label="录取类型"></el-table-column>
-      <el-table-column prop="startDate" align="center" label="入学年月"></el-table-column>
-      <el-table-column prop="graduateDate" align="center" label="毕业年月"></el-table-column>
-      <el-table-column prop="major" align="center" label="专业名称"></el-table-column>
-      <el-table-column prop="college" align="center" label="二级学院"></el-table-column>
-      <el-table-column prop="education" align="center" label="前置学历"></el-table-column>
-      <el-table-column prop="school" align="center" label="毕业院校"></el-table-column>
-      <el-table-column prop="oversea" align="center" label="是否留学生"></el-table-column>
-      <!-- <el-table-column prop="eliminate" align="center" label="专业"></el-table-column> -->
-      <el-table-column prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column prop="nativePlace" align="center" label="籍贯"></el-table-column>
-      <el-table-column prop="nation" align="center" label="民族"></el-table-column>
-      <el-table-column prop="industry" align="center" label="工作单位所属行业"></el-table-column>
-      <el-table-column prop="postName" align="center" label="岗位及职称"></el-table-column>
-      <el-table-column prop="qq" align="center" label="QQ"></el-table-column>
-      <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column prop="research" align="center" label="科研成果"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="班级名称"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="研究生学号"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="研究生姓名"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="student" align="center" label="学员人数"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="birth" align="center" label="出生年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="masterType" align="center" label="研究生类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studyType" align="center" label="学制"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="acceptedType" align="center" label="录取类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="入学年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduateDate" align="center" label="毕业年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="二级学院"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="前置学历"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="school" align="center" label="毕业院校"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="oversea" align="center" label="是否留学生"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="eliminate" align="center" label="专业"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="籍贯"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="民族"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="industry" align="center" label="工作单位所属行业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="postName" align="center" label="岗位及职称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="research" align="center" label="科研成果"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

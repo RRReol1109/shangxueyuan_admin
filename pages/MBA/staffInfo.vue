@@ -77,33 +77,33 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="name" align="center" label="教职工姓名"></el-table-column>
-      <el-table-column prop="college" align="center" label="所在系"></el-table-column>
-      <el-table-column prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column prop="nativePlace" align="center" label="籍贯"></el-table-column>
-      <el-table-column prop="nation" align="center" label="民族"></el-table-column>
-      <el-table-column prop="political" align="center" label="政治面貌"></el-table-column>
-      <el-table-column prop="idNum" align="center" label="身份证号码"></el-table-column>
-      <el-table-column prop="startDate" align="center" label="来院工作年月"></el-table-column>
-      <el-table-column prop="address" align="center" label="现住址"></el-table-column>
-      <el-table-column prop="state" align="center" label="状态"></el-table-column>
-      <el-table-column prop="editorDeptName" align="center" label="岗位"></el-table-column>
-      <el-table-column prop="title" align="center" label="现职称"></el-table-column>
-      <el-table-column prop="titleDate" align="center" label="获得现职称年月"></el-table-column>
-      <el-table-column prop="level" align="center" label="现职级"></el-table-column>
-      <el-table-column prop="tutor" align="center" label="导师资格"></el-table-column>
-      <el-table-column prop="personType" align="center" label="人才类别"></el-table-column>
-      <el-table-column prop="post" align="center" label="现职务"></el-table-column>
-      <el-table-column prop="postDate" align="center" label="任现职务年月"></el-table-column>
-      <el-table-column prop="highEducation" align="center" label="最高学历"></el-table-column>
-      <el-table-column prop="highDegree" align="center" label="最高学位"></el-table-column>
-      <el-table-column prop="school" align="center" label="毕业学校"></el-table-column>
-      <el-table-column prop="college" align="center" label="毕业专业"></el-table-column>
-      <el-table-column prop="startDate" align="center" label="毕业年月"></el-table-column>
-      <el-table-column prop="qq" align="center" label="QQ"></el-table-column>
-      <el-table-column prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column prop="homePhone" align="center" label="家庭电话"></el-table-column>
-      <el-table-column prop="email" align="center" label="电子邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教职工姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="所在系"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="籍贯"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="民族"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="political" align="center" label="政治面貌"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="idNum" align="center" label="身份证号码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="来院工作年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="现住址"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="editorDeptName" align="center" label="岗位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="现职称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="titleDate" align="center" label="获得现职称年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="现职级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师资格"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="personType" align="center" label="人才类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="post" align="center" label="现职务"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="postDate" align="center" label="任现职务年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="highEducation" align="center" label="最高学历"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="highDegree" align="center" label="最高学位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="school" align="center" label="毕业学校"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="毕业专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="毕业年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="homePhone" align="center" label="家庭电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="电子邮箱"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

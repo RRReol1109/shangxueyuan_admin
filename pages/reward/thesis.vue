@@ -76,20 +76,20 @@
     </div>
 
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column prop="userName" align="center" label="指导教师姓名"></el-table-column>
-      <el-table-column prop="type" align="center" label="获奖类别"></el-table-column>
-      <el-table-column prop="studentName" align="center" label="获奖学生姓名"></el-table-column>
-      <el-table-column prop="studentId" align="center" label="获奖学生学号"></el-table-column>
-      <el-table-column prop="date" align="center" label="获奖日期"></el-table-column>
-      <el-table-column prop="score" align="center" label="本人计分"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="指导教师姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="获奖类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="获奖学生姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentId" align="center" label="获奖学生学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="获奖日期"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="本人计分"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

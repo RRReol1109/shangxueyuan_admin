@@ -19,7 +19,12 @@
           <el-input id="nameBox" v-model="query.signature" placeholder="请输入出版社名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="出版时间:">
-          <el-date-picker v-model="query.publishDate" type="date" placeholder="选择日期时间" size="normal"></el-date-picker>
+          <el-date-picker
+            v-model="query.publishDate"
+            type="date"
+            placeholder="选择日期时间"
+            size="normal"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -60,22 +65,33 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading" id="table1">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)" name="checks" :checked="cFlag"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="type" label="类型" align="center"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="publishDate" align="center" label="出版时间"></el-table-column>
-      <el-table-column prop="name" align="center" label="著作教程名称"></el-table-column>
-      <el-table-column prop="publishHouse" align="center" label="出版社名称"></el-table-column>
-      <el-table-column prop="signature" align="center" label="署名单位"></el-table-column>
-      <el-table-column prop="wordCount" align="center" label="总字数（万）"></el-table-column>
-      <el-table-column prop="userName" align="center" label="作者"></el-table-column>
-      <el-table-column prop="isbn" align="center" label="ISBN编号"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        type="index"
+        label="序号"
+        align="center"
+        width="50"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" label="类型" align="center"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="publishDate" align="center" label="出版时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="著作教程名称"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="publishHouse"
+        align="center"
+        label="出版社名称"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="signature" align="center" label="署名单位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="wordCount" align="center" label="总字数（万）"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN编号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

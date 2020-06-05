@@ -56,12 +56,12 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="activityTheme" align="center" label="活动主题"></el-table-column>
-      <el-table-column prop="activityTime" align="center" label="活动时间"></el-table-column>
-      <el-table-column prop="content" align="center" label="活动内容"></el-table-column>
-      <el-table-column prop="department" align="center" label="负责部门"></el-table-column>
-      <el-table-column prop="semester" align="center" label="学期"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="activityTheme" align="center" label="活动主题"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="activityTime" align="center" label="活动时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="content" align="center" label="活动内容"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="department" align="center" label="负责部门"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="semester" align="center" label="学期"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

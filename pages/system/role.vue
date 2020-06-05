@@ -15,9 +15,9 @@
     </div>
     <el-table v-loading="loading" :data="tableData" border style="width: 100%">
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="id" type="hidden" align="center" label="角色ID"></el-table-column>
-      <el-table-column prop="name" align="center" label="角色名称"></el-table-column>
-      <el-table-column prop="tips" align="center" label="别名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="id" type="hidden" align="center" label="角色ID"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="角色名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="tips" align="center" label="别名"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button type="text" @click="edit(scope.row)" size="normal">编辑权限</el-button>

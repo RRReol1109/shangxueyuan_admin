@@ -25,9 +25,9 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="id" align="center" label="管理员账号"></el-table-column>
-      <el-table-column prop="name" align="center" label="用户名"></el-table-column>
-      <el-table-column prop="describe" align="center" label="角色"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="管理员账号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="用户名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="describe" align="center" label="角色"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="show(scope.row)" type="text" size="normal">查看</el-button>

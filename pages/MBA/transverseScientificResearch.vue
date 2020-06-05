@@ -61,17 +61,17 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column prop="teacherId" align="center" label="教职工工号"></el-table-column>
-      <el-table-column prop="name" align="center" label="教职工姓名"></el-table-column>
-      <el-table-column prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column prop="projectId" align="center" label="合同编号"></el-table-column>
-      <el-table-column prop="projectOrganizer" align="center" label="立项单位"></el-table-column>
-      <el-table-column prop="date" align="center" label="立项年月"></el-table-column>
-      <el-table-column prop="startDate" align="center" label="起始年月日"></el-table-column>
-      <el-table-column prop="endDate" align="center" label="终止年月日"></el-table-column>
-      <el-table-column prop="funds" align="center" label="合同经费(万元"></el-table-column>
-      <el-table-column prop="pdfUrl" align="center" label="上传合同PDF文件"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacherId" align="center" label="教职工工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教职工姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="projectId" align="center" label="合同编号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="projectOrganizer" align="center" label="立项单位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="立项年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="起始年月日"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="endDate" align="center" label="终止年月日"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="funds" align="center" label="合同经费(万元"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="pdfUrl" align="center" label="上传合同PDF文件"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

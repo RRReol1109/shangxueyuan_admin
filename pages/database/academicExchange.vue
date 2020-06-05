@@ -69,20 +69,20 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column prop="interviewTime" align="center" label="来访时间"></el-table-column>
-      <el-table-column prop="accessType" align="center" label="访问类型"></el-table-column>
-      <el-table-column prop="visitor" align="center" label="专家姓名"></el-table-column>
-      <el-table-column prop="passport" align="center" label="护照号"></el-table-column>
-      <el-table-column prop="jobTitle" align="center" label="职称"></el-table-column>
-      <el-table-column prop="citizenshipCountry" align="center" label="国籍"></el-table-column>
-      <el-table-column prop="unit" align="center" label="工作单位"></el-table-column>
-      <el-table-column prop="expertCategory" align="center" label="专家类别"></el-table-column>
-      <el-table-column prop="researchAreas" align="center" label="研究领域"></el-table-column>
-      <el-table-column prop="discipline" align="center" label="所属学科"></el-table-column>
-      <el-table-column prop="communicationContent" align="center" label="交流内容"></el-table-column>
-      <el-table-column prop="inviter" align="center" label="邀请人"></el-table-column>
-      <el-table-column prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="interviewTime" align="center" label="来访时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="accessType" align="center" label="访问类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="visitor" align="center" label="专家姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="passport" align="center" label="护照号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="jobTitle" align="center" label="职称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="citizenshipCountry" align="center" label="国籍"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="unit" align="center" label="工作单位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="expertCategory" align="center" label="专家类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="researchAreas" align="center" label="研究领域"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="discipline" align="center" label="所属学科"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="communicationContent" align="center" label="交流内容"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="inviter" align="center" label="邀请人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>

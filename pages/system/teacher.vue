@@ -67,47 +67,47 @@
       </el-form>
     </div>
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
-      <el-table-column prop="pick" label align="center" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" label align="center" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="id" align="center" label="工号"></el-table-column>
-      <el-table-column prop="account" align="center" label="用户名"></el-table-column>
-      <el-table-column prop="name" align="center" label="教师名"></el-table-column>
-      <el-table-column prop="name" align="center" label="性别"></el-table-column>
-      <el-table-column prop="name" align="center" label="出生年月"></el-table-column>
-      <el-table-column prop="name" align="center" label="身份证号码"></el-table-column>
-      <el-table-column prop="name" align="center" label="年龄"></el-table-column>
-      <el-table-column prop="name" align="center" label="民族"></el-table-column>
-      <el-table-column prop="name" align="center" label="政治面貌"></el-table-column>
-      <el-table-column prop="name" align="center" label="参加工作年月"></el-table-column>
-      <el-table-column prop="name" align="center" label="状态"></el-table-column>
-      <el-table-column prop="name" align="center" label="岗位"></el-table-column>
-      <el-table-column prop="name" align="center" label="现职称"></el-table-column>
-      <el-table-column prop="name" align="center" label="获得现职称年月"></el-table-column>
-      <el-table-column prop="name" align="center" label="现职级"></el-table-column>
-      <el-table-column prop="name" align="center" label="导师资格"></el-table-column>
-      <el-table-column prop="name" align="center" label="现职务"></el-table-column>
-      <el-table-column prop="name" align="center" label="最高学历"></el-table-column>
-      <el-table-column prop="name" align="center" label="最高学位"></el-table-column>
-      <el-table-column prop="name" align="center" label="毕业学校"></el-table-column>
-      <el-table-column prop="name" align="center" label="毕业专业"></el-table-column>
-      <el-table-column prop="name" align="center" label="毕业年月"></el-table-column>
-      <el-table-column prop="name" align="center" label="导师"></el-table-column>
-      <el-table-column prop="name" align="center" label="学科类别"></el-table-column>
-      <el-table-column prop="name" align="center" label="研究方向"></el-table-column>
-      <el-table-column prop="name" align="center" label="人才类别"></el-table-column>
-      <el-table-column prop="name" align="center" label="海外研修经历"></el-table-column>
-      <el-table-column prop="name" align="center" label="国家级奖项"></el-table-column>
-      <el-table-column prop="name" align="center" label="省级奖项"></el-table-column>
-      <el-table-column prop="phone" align="center" label="移动电话"></el-table-column>
-      <el-table-column prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column prop="deptName" align="center" label="部门"></el-table-column>
-      <el-table-column prop="roleName" align="center" label="角色"></el-table-column>
-      <el-table-column prop="statusName" align="center" label="状态"></el-table-column>
-      <el-table-column prop="statusName" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="account" align="center" label="用户名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="出生年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="身份证号码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年龄"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="民族"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="政治面貌"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="参加工作年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="状态"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="岗位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="现职称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="获得现职称年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="现职级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="导师资格"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="现职务"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="最高学历"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="最高学位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="毕业学校"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="毕业专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="毕业年月"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="导师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="学科类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="研究方向"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="人才类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="海外研修经历"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="国家级奖项"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="省级奖项"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="移动电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="部门"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="roleName" align="center" label="角色"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="statusName" align="center" label="状态"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="statusName" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

@@ -30,13 +30,21 @@
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="simplename" align="center" label="部门简称"></el-table-column>
-      <el-table-column prop="fullname" align="center" label="部门全称"></el-table-column>
-      <el-table-column prop="tips" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="simplename" align="center" label="部门简称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="fullname" align="center" label="部门全称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="tips" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="operate='show';operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button
+            @click="operate='show';operate='show';showDialog(scope.row)"
+            type="text"
+            size="normal"
+          >查看</el-button>
+          <el-button
+            @click="operate='edit';operate='edit';showDialog(scope.row)"
+            type="text"
+            size="normal"
+          >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -53,7 +61,7 @@
         :page-size="14"
         :total="this.total"
       ></el-pagination>
-    </nav> -->
+    </nav>-->
 
     <!-- 新建部门 -->
     <el-drawer
@@ -61,22 +69,31 @@
       title="新增部门"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
+
       <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="100px">
-        <el-form-item label="部门简称">
-          <el-col :span="8">
-            <el-input v-model="form.simplename" size="medium"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="部门简称">
+              <el-input v-model="form.simplename" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="部门全称">
-          <el-col :span="8">
-            <el-input v-model="form.fullname" size="medium"></el-input>
+          <el-col :span="12">
+            <el-form-item label="部门全称">
+              <el-input v-model="form.fullname" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item label="备注">
-          <el-col :span="10">
-            <el-input v-model="form.tips" size="medium"></el-input>
-          </el-col>
+          <el-input v-model="form.tips" style="width:99%"></el-input>
         </el-form-item>
         <!-- <el-form-item label="状态">
           <el-select v-model="form.status" size="medium">
@@ -89,11 +106,6 @@
           </el-select>
         </el-form-item>-->
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm()" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm()">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -218,12 +230,12 @@ export default {
   width: 200px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

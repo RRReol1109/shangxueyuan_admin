@@ -70,26 +70,26 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column prop="pick" align="center" label="选择" width="50">
+      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column prop="type" align="center" label="研究生类别"></el-table-column>
-      <el-table-column prop="count" align="center" label="进校人数"></el-table-column>
-      <el-table-column prop="graduationCount" align="center" label="毕业人数"></el-table-column>
-      <el-table-column prop="studentName" align="center" label="学生信息"></el-table-column>
-      <!-- <el-table-column prop="hours" align="center" label="实际课时数"></el-table-column> -->
-      <el-table-column prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column prop="auditFlag" align="center" label="审核状态">
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="研究生类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="进校人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="graduationCount" align="center" label="毕业人数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="学生信息"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时数"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="desc" align="center" label="备注"></el-table-column> -->
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column> -->
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -137,6 +137,13 @@
       </el-form>
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -145,58 +152,64 @@
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年度" prop="year">
-          <el-date-picker
-            size="normal"
-            v-model="ruleForm.year"
-            type="year"
-            format="yyyy"
-            value-format="yyyy"
-            placeholder="选择年份"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
+        <el-row>
           <el-col :span="12">
-            <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+            <el-form-item label="年度" prop="year">
+              <el-date-picker
+                size="normal"
+                v-model="ruleForm.year"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="研究生类别" prop="type">
           <el-col :span="12">
-            <el-select v-model="ruleForm.type" placeholder="请选择类别">
-              <el-option label="博士" value="博士"></el-option>
-              <el-option label="学术硕士" value="学术硕士"></el-option>
-              <el-option label="EMBA" value="EMBA"></el-option>
-              <el-option label="MBA" value="MBA"></el-option>
-              <el-option label="工程硕士" value="工程硕士"></el-option>
-              <el-option label="专业硕士" value="专业硕士"></el-option>
-            </el-select>
+            <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
+              <el-select v-model="ruleForm.teacher" placeholder="请选择老师" style="width:99%">
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="进校人数" prop="count">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-input
-              v-model="ruleForm.count"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-              clearable
-            ></el-input>
+            <el-form-item label="研究生类别" prop="type">
+              <el-select v-model="ruleForm.type" placeholder="请选择类别" style="width:99%">
+                <el-option label="博士" value="博士"></el-option>
+                <el-option label="学术硕士" value="学术硕士"></el-option>
+                <el-option label="EMBA" value="EMBA"></el-option>
+                <el-option label="MBA" value="MBA"></el-option>
+                <el-option label="工程硕士" value="工程硕士"></el-option>
+                <el-option label="专业硕士" value="专业硕士"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-
+          <el-col :span="12">
+            <el-form-item label="进校人数" prop="count">
+              <el-input
+                style="width:99%"
+                v-model="ruleForm.count"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+                clearable
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="毕业人数" prop="graduationCount">
-          <el-col :span="12">
-            <el-input
-              v-model="ruleForm.graduationCount"
-              oninput="value=value.replace(/[^\d.]/g,'')"
-              clearable
-            ></el-input>
-          </el-col>
+          <el-input
+            v-model="ruleForm.graduationCount"
+            style="width:99%"
+            oninput="value=value.replace(/[^\d.]/g,'')"
+            clearable
+          ></el-input>
         </el-form-item>
         <!-- <el-form-item label="答辩秘书班级数" prop="secretaryCount">
           <el-col :span="12">
@@ -217,25 +230,28 @@
           </el-col>
         </el-form-item>-->
         <el-form-item label="学生信息：" prop="studentName">
-          <el-col :span="12">
-            <label>学号-名字-入学年份-专业-班级-一级学科</label>
-            <el-input v-model="ruleForm.studentName" rows="5" type="textarea" placeholder></el-input>
-          </el-col>
+          <label>学号-名字-入学年份-专业-班级-一级学科</label>
+          <el-input
+            v-model="ruleForm.studentName"
+            rows="5"
+            type="textarea"
+            placeholder
+            style="width:99%"
+          ></el-input>
         </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="ruleForm.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+            style="width:99%"
+          >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -686,12 +702,12 @@ export default {
 
 <style>
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>
