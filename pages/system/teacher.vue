@@ -76,6 +76,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="工号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="account" align="center" label="用户名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="所在系"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="出生年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="身份证号码"></el-table-column>
@@ -102,6 +103,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="海外研修经历"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="国家级奖项"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="省级奖项"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="移动电话"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="部门"></el-table-column>
@@ -197,6 +199,29 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="所在系" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="管理科学与信息管理系" value="管理科学与信息管理系"></el-option>
+                <el-option label="企业管理系" value="企业管理系"></el-option>
+                <el-option label="金融学系" value="金融学系"></el-option>
+                <el-option label="财务与投资管理系" value="财务与投资管理系"></el-option>
+                <el-option label="经济与贸易系" value="经济与贸易系"></el-option>
+                <el-option label="会计学系" value="会计学系"></el-option>
+                <el-option label="市场营销系" value="市场营销系"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item v-if="['add'].includes(operate)" label="密码">
               <el-input v-model="form.password" style="width:99%"></el-input>
             </el-form-item>
@@ -229,18 +254,18 @@
           </el-col>
         </el-row>
         <el-divider content-position="left">基本信息</el-divider>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="身份证号码">
-              <el-input v-model="form.password" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
+        <!-- <el-row>
+        <el-col :span="12">-->
+        <el-form-item label="身份证号码">
+          <el-input v-model="form.password" style="width:99%"></el-input>
+        </el-form-item>
+        <!-- </el-col> -->
+        <!-- <el-col :span="12">
             <el-form-item label="年龄">
               <el-input v-model="form.rePassword" style="width:99%"></el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
+        </el-col>-->
+        <!-- </el-row> -->
         <el-row>
           <el-col :span="12">
             <el-form-item label="民族">
@@ -360,8 +385,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="毕业专业">
+              <el-input v-model="form.phone" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="导师">
               <el-input v-model="form.phone" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="类型">
+              <el-select v-model="query.deptName" size="normal" style="width:99%" placeholder="请选择">
+                <el-option label="教学部门" value="教学部门"></el-option>
+                <el-option label="行政部门" value="行政部门"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>

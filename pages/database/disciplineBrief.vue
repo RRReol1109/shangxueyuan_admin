@@ -120,26 +120,31 @@
     <el-drawer
       style="min-height:500px"
       title
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="320px">
-        <el-form-item label="年份" label-width="320px">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.year"
-              align="right"
-              size="normal"
-              type="date"
-              placeholder="年份"
-              value-format="yyyy"
-            ></el-date-picker>
-          </el-col>
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
+      <el-form :model="form" label-width="150px">
+        <el-form-item label="年份">
+          <el-date-picker
+            v-model="form.year"
+            align="right"
+            size="normal"
+            type="date"
+            placeholder="年份"
+            value-format="yyyy"
+            style="width:99%"
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item label="备注" label-width="320px" prop="remark">
-          <el-col :span="6">
-            <el-input v-model="form.remark" placeholder="请输入内容"></el-input>
-          </el-col>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
         <div v-if="['add'].includes(operate)">
           <el-form-item label="文件上传" label-width="320px">
@@ -155,11 +160,6 @@
           </el-form-item>
         </div>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -431,6 +431,15 @@ export default {
 </script>
 
 <style scoped>
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
+}
 .search-form {
   margin-bottom: 10px;
 }

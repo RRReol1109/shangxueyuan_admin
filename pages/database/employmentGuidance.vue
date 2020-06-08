@@ -117,9 +117,7 @@ export default {
         pleaDate: "",
         remark: ""
       },
-      tableData: [
-       
-      ]
+      tableData: []
     };
   },
   methods: {
@@ -213,5 +211,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

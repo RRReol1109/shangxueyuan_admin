@@ -139,6 +139,7 @@
         label="第一作者"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="是否为教改论文"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -487,6 +488,11 @@
         <!-- <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>-->
+        <el-form-item label="是否为教改论文" prop="english">
+          <el-col :span="12">
+            <el-checkbox v-model="ruleForm.english"></el-checkbox>
+          </el-col>
+        </el-form-item>
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table

@@ -78,6 +78,8 @@
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="班级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="是否在读"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="学历"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="employer" align="center" label="工作单位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="家庭住址"></el-table-column>
@@ -136,8 +138,16 @@
       style="min-height:500px"
       title="通讯录"
       :visible.sync="dialogFormVisible"
+      size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -145,70 +155,88 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
-          </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="学号">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="学号">
           <el-col :span="6">
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>-->
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="normal" placeholder="请选择">
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
+            </el-form-item>-->
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="手机号" prop="phone">
+              <el-input size="normal" v-model="form.phone" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年级" prop="grade">
+              <el-input size="normal" v-model="form.grade" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="班级" prop="classes">
+              <el-input size="normal" v-model="form.classes" placeholder="请输入班级" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="导师" prop="tutor">
+              <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" style="width:99%">
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专业" prop="major">
+              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="工作单位" prop="employer">
+              <el-input size="normal" v-model="form.employer" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="状态" prop="english">
+          <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+            <el-option label="在读" value="在读"></el-option>
+            <el-option label="已毕业" value="已毕业"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.phone" autocomplete="off"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="家庭地址" prop="address">
+              <el-input size="normal" v-model="form.address" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="年级" prop="grade">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.grade" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学历" prop="address">
+              <el-input size="normal" v-model="form.address" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="班级" prop="classes">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.classes" placeholder="请输入班级"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="导师" prop="tutor">
-          <el-col :span="6">
-            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="专业" prop="major">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="工作单位" prop="employer">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.employer" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="家庭地址" prop="address">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.address" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
+        </el-row>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -520,5 +548,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

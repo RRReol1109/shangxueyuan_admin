@@ -56,8 +56,18 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="activityTheme" align="center" label="活动主题"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="activityTime" align="center" label="活动时间"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="activityTheme"
+        align="center"
+        label="活动主题"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="activityTime"
+        align="center"
+        label="活动时间"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="content" align="center" label="活动内容"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="department" align="center" label="负责部门"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="semester" align="center" label="学期"></el-table-column>
@@ -116,9 +126,17 @@
     <el-drawer
       style="min-height:500px"
       title="通讯录"
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -126,50 +144,53 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="活动主题" prop="activityTheme">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.activityTheme"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="活动主题" prop="activityTheme">
+              <el-input size="normal" v-model="form.activityTheme" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="活动时间" prop="activityTime">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.activityTime"
-              align="right"
-              size="normal"
-              type="date"
-              placeholder="活动时间"
-            ></el-date-picker>
+          <el-col :span="12">
+            <el-form-item label="活动时间" prop="activityTime">
+              <el-date-picker
+                v-model="form.activityTime"
+                align="right"
+                size="normal"
+                type="date"
+                style="width:99%"
+                placeholder="活动时间"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="活动内容" prop="content">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.content"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="活动内容" prop="content">
+              <el-input size="normal" v-model="form.content" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="负责部门" prop="department">
-          <el-col :span="6">
-            <el-select v-model="form.department" placeholder="请选择部门" prop="fullname">
-              <el-option
-                v-for="item in depList"
-                :key="item.id"
-                :label="item.fullname"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="负责部门" prop="department">
+              <el-select
+                v-model="form.department"
+                placeholder="请选择部门"
+                prop="fullname"
+                style="width:99%"
+              >
+                <el-option
+                  v-for="item in depList"
+                  :key="item.id"
+                  :label="item.fullname"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item label="学期" prop="semester">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.semester"></el-input>
-          </el-col>
+          <el-input size="normal" v-model="form.semester" style="width:99%"></el-input>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -502,6 +523,15 @@ export default {
 </script>
 
 <style scoped>
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
+}
 .search-form {
   margin-bottom: 10px;
 }

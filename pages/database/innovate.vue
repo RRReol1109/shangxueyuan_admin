@@ -77,8 +77,18 @@
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="学院"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="firstLevelCategory" align="center" label="一级学科"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="trainingLevel" align="center" label="培养层次"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="firstLevelCategory"
+        align="center"
+        label="一级学科"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="trainingLevel"
+        align="center"
+        label="培养层次"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="funding" align="center" label="经费（万元）"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
@@ -144,7 +154,15 @@
       style="min-height:500px"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -152,58 +170,86 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
-          </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="学号" prop="name">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="学号" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>-->
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="normal" placeholder="性别">
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="年度:" prop="year">
-          <el-date-picker
-            v-model="form.year"
-            align="right"
-            size="normal"
-            type="date"
-            format="yyyy"
-            value-format="yyyy"
-            placeholder="年度"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="学院" prop="college">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.college" autocomplete="off"></el-input>
+            </el-form-item>-->
           </el-col>
-        </el-form-item>
-        <el-form-item label="一级学科" prop="firstLevelCategory">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.firstLevelCategory" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="性别" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="培养层次" prop="trainingLevel">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.trainingLevel" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年度:" prop="year">
+              <el-date-picker
+                v-model="form.year"
+                align="right"
+                size="normal"
+                type="date"
+                format="yyyy"
+                value-format="yyyy"
+                style="width:99%"
+                placeholder="年度"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="项目名称" prop="projectName">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.projectName" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学院" prop="college">
+              <el-input size="normal" v-model="form.college" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="经费（万元）" prop="funding">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.funding" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="一级学科" prop="firstLevelCategory">
+              <el-input
+                size="normal"
+                v-model="form.firstLevelCategory"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="培养层次" prop="trainingLevel">
+              <el-input
+                size="normal"
+                v-model="form.trainingLevel"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="项目名称" prop="projectName">
+              <el-input
+                size="normal"
+                v-model="form.projectName"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="经费（万元）" prop="funding">
+              <el-input size="normal" v-model="form.funding" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- <el-form-item label="毕业学校">
           <el-col :span="6">
             <el-input size="normal" v-model="form.graduationSchool" autocomplete="off"></el-input>
@@ -215,16 +261,9 @@
           </el-col>
         </el-form-item>-->
         <el-form-item size="normal" label="备注" prop="remark">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
-          </el-col>
+          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -246,7 +285,7 @@ export default {
         order: "desc",
         condition: ""
       },
-      deptid: "", 
+      deptid: "",
       fileList: [],
       header: {},
       form: {
@@ -537,5 +576,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

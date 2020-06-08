@@ -123,10 +123,18 @@
 
     <el-drawer
       style="min-height:500px"
-      title="通讯录"
+      title="毕业率"
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -134,50 +142,69 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="届别" prop="year">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.year"
-              align="right"
-              size="normal"
-              type="date"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="年度"
-            ></el-date-picker>
+        <div slot="title" class="header-title">
+          <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+            <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+            <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+            <el-button size="normal" @click="resetForm('form')">重置</el-button>
+          </div>
+        </div>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="届别" prop="year">
+              <el-date-picker
+                v-model="form.year"
+                align="right"
+                size="normal"
+                type="date"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="年度"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业生人数" prop="totalCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.totalCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="毕业生人数" prop="totalCnt">
+              <el-input size="normal" v-model="form.totalCnt" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="专业" prop="major">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专业" prop="major">
+              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业人数" prop="graduateCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduateCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="毕业人数" prop="graduateCnt">
+              <el-input
+                size="normal"
+                v-model="form.graduateCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="结业人数" prop="finishedCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.finishedCnt" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="结业人数" prop="finishedCnt">
+              <el-input
+                size="normal"
+                v-model="form.finishedCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="有学位" prop="degreeCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.degreeCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="有学位" prop="degreeCnt">
+              <el-input size="normal" v-model="form.degreeCnt" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -485,5 +512,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>
