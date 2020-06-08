@@ -128,9 +128,17 @@
     <el-drawer
       style="min-height:500px"
       title
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -138,30 +146,29 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="normal" placeholder="请选择">
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
-          </el-select>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="学科" prop="major">
-          <el-select v-model="form.major" size="normal" placeholder="请选择">
+          <el-select v-model="form.major" size="normal" placeholder="请选择" style="width:99%">
             <el-option label="管理" value="管理"></el-option>
             <el-option label="工商" value="工商"></el-option>
             <el-option label="应经" value="应经"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -362,7 +369,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-skry.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-三科人员.xls";
           break;
         case "download":
           this.exportData();
@@ -382,7 +390,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-skry.xls");
+        link.setAttribute("download", "数据库-三科人员.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -446,5 +454,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

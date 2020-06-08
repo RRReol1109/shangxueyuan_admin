@@ -371,6 +371,18 @@
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="使用教材">
+              <el-input v-model="ruleForm.email" style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="教材类型">
+              <el-input v-model="ruleForm.email" style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
             <el-form-item label="实际课时" prop="hours" style="width:99%">
               <el-input
                 v-model="ruleForm.hours"
@@ -581,7 +593,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "工作量-课堂教学.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -799,7 +811,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/gzl-ktjx.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/工作量-课堂教学.xls";
           break;
       }
     },

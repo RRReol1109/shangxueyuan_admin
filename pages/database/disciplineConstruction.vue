@@ -130,12 +130,21 @@
       style="min-height:500px"
       title="学硕毕业情况"
       :visible.sync="dialogFormVisible"
+      size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         style="min-height:500px"
         title="通讯录"
         :visible.sync="dialogFormVisible"
+        label-width="150px"
         :disabled="!['edit', 'add'].includes(operate)"
       >
         <!-- <el-form-item label="ID" label-width="320px">
@@ -143,20 +152,19 @@
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="年份" label-width="320px">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.year"
-              align="right"
-              size="normal"
-              type="date"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="年份"
-            ></el-date-picker>
-          </el-col>
+        <el-form-item label="年份">
+          <el-date-picker
+            v-model="form.year"
+            align="right"
+            size="normal"
+            type="date"
+            format="yyyy"
+            value-format="yyyy"
+            style="width:99%"
+            placeholder="年份"
+          ></el-date-picker>
         </el-form-item>
-        <el-form-item label="文件上传" label-width="320px">
+        <el-form-item label="文件上传">
           <el-upload
             class="upload-demo"
             :file-list="fileList"
@@ -167,17 +175,10 @@
             <el-button size="normal" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
-        <el-form-item size="normal" label="备注" prop="remark" label-width="320px">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
-          </el-col>
+        <el-form-item size="normal" label="备注" prop="remark">
+          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -357,7 +358,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-xkjs.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-学科建设.xls";
           break;
         case "download":
           this.exportData();
@@ -377,7 +378,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-xkjs.xls");
+        link.setAttribute("download", "数据库-学科建设.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -438,6 +439,15 @@ export default {
 </script>
 
 <style scoped>
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
+}
 .search-form {
   margin-bottom: 10px;
 }

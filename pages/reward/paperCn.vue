@@ -101,6 +101,7 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="是否为教改论文"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
@@ -360,6 +361,11 @@
             <el-input clearable v-model="ruleForm.score" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
+        <el-form-item label="是否为教改论文" prop="english">
+          <el-col :span="12">
+            <el-checkbox v-model="ruleForm.english"></el-checkbox>
+          </el-col>
+        </el-form-item>
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
@@ -633,7 +639,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "科研奖励-中文论文.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -842,7 +848,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/kyjl-zwlw.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/科研奖励-中文论文.xls";
           break;
       }
     },

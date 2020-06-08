@@ -359,15 +359,15 @@ export default {
                 value: ""
               },
               childs: [
-                {
-                  entity: {
-                    id: 47,
-                    name: "undergraduatesTeaching",
-                    alias: "本科生教学",
-                    state: "ENABLE",
-                    value: "/database/undergraduates/teaching"
-                  }
-                },
+                // {
+                //   entity: {
+                //     id: 47,
+                //     name: "undergraduatesTeaching",
+                //     alias: "本科生教学",
+                //     state: "ENABLE",
+                //     value: "/database/undergraduates/teaching"
+                //   }
+                // },
                 {
                   entity: {
                     id: 48,

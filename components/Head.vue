@@ -49,6 +49,8 @@
   background: #fff;
 }
 .grid-content {
+  background-color:#545c64;
+  color:#fff;
   height: 45px;
   border-bottom: 1px solid #e6e6e6;
   box-shadow: 0px 0px 5px 0px #aaa;
@@ -71,6 +73,7 @@
 .name {
   line-height: 45px;
   font-size: 16px;
+  color:#fff;
 }
 .title {
   font-size: 24px;
@@ -80,7 +83,9 @@
 }
 
 .item {
-  font-size: 18px;
+  font-size: 16px;
+  text-align: center;
+  width: 202px;
 }
 </style>
 
@@ -140,7 +145,7 @@ export default {
           this.ids = [777, 30];
           break;
         case "25":
-          this.ids = [777, 49, 53, 57, 38, 59, 41];
+          this.ids = [777, 49, 53, 57, 38, 59, 41, 34];
           break;
         case "33":
           // this.ids = [777, 46, 47, 48, 49];
@@ -151,7 +156,7 @@ export default {
           this.ids = [];
           break;
         case "35":
-          this.ids = [777, 40];
+          this.ids = [777, 13, 14, 16, 17, , 18, 19, 40, 29, 30, 31, 37];
           break;
         case "36":
           this.ids = [];
@@ -265,6 +270,12 @@ export default {
             75,
             76
           ];
+          break;
+        case "12":
+          this.ids = [];
+          break;
+        case "2":
+          this.ids = [777, 1, 5];
           break;
       }
       window.sessionStorage.setItem("select", key);

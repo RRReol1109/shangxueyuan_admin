@@ -5,13 +5,13 @@
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="性别:">
+        <!-- <el-form-item label="性别:">
           <el-select v-model="query.gender" size="normal" placeholder="请选择">
             <el-option label="全部" value></el-option>
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
@@ -59,9 +59,24 @@
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="age" align="center" label="年龄"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="bachelor" align="center" label="学士获得时间,学校，学科"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="master" align="center" label="硕士获得时间,学校，学科"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="doctor" align="center" label="博士获得时间,学校，学科"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="bachelor"
+        align="center"
+        label="学士获得时间,学校，学科"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="master"
+        align="center"
+        label="硕士获得时间,学校，学科"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="doctor"
+        align="center"
+        label="博士获得时间,学校，学科"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="简介"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
@@ -126,8 +141,16 @@
       style="min-height:500px"
       title="优秀毕业生"
       :visible.sync="dialogFormVisible"
+      size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -135,74 +158,76 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="年龄" prop="age">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.age"></el-input>
+          <el-col :span="12">
+            <el-form-item label="年龄" prop="age">
+              <el-input size="normal" v-model="form.age" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="学士获得时间,学校，学科" prop="bachelor">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.bachelor"
-              align="right"
-              size="normal"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="年份"
-            ></el-date-picker>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="学士获得时间,学校，学科" prop="bachelor">
+              <el-date-picker
+                v-model="form.bachelor"
+                align="right"
+                size="normal"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="硕士获得时间,学校，学科" prop="master">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.master"
-              align="right"
-              size="normal"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="年份"
-            ></el-date-picker>
+          <el-col :span="12">
+            <el-form-item label="硕士获得时间,学校，学科" prop="master">
+              <el-date-picker
+                v-model="form.master"
+                align="right"
+                size="normal"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="博士获得时间,学校，学科" prop="doctor">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.doctor"
-              align="right"
-              size="normal"
-              type="date"
-              value-format="yyyy-MM-dd"
-              placeholder="年份"
-            ></el-date-picker>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="博士获得时间,学校，学科" prop="doctor">
+              <el-date-picker
+                v-model="form.doctor"
+                align="right"
+                size="normal"
+                type="date"
+                value-format="yyyy-MM-dd"
+                placeholder="年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="简介" prop="desc">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.desc"></el-input>
+          <el-col :span="12">
+            <el-form-item label="简介" prop="desc">
+              <el-input size="normal" v-model="form.desc" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.remark"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="性别:" prop="gender">
+        </el-row>
+        <!-- <el-form-item label="性别:" prop="gender">
           <el-select v-model="form.gender" size="normal" placeholder="请选择">
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
           </el-select>
+        </el-form-item>-->
+        <el-form-item label="备注" prop="remark">
+          <el-input size="normal" v-model="form.remark" style="width:99%"></el-input>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -410,7 +435,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-yxbys.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-优秀毕业生简况.xls";
           break;
         case "download":
           this.exportData();
@@ -431,7 +456,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-yxbys.xls");
+        link.setAttribute("download", "数据库-优秀毕业生简况.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -495,5 +520,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

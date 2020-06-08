@@ -151,7 +151,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="130px"
+        label-width="150px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -182,7 +182,7 @@
             <el-input clearable v-model="ruleForm.teacherId" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="教师" prop="teacher" v-if="showTeachInput">
+        <el-form-item label="指导老师" prop="teacher" v-if="showTeachInput">
           <el-col :span="12">
             <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
               <el-option
@@ -201,6 +201,19 @@
             </el-select>
           </el-col>
         </el-form-item>
+        <el-form-item label="获奖论文题目" prop="studentName">
+          <el-autocomplete
+              clearable
+              v-model="ruleForm.studentName"
+              :fetch-suggestions="queryStudent"
+              placeholder="请输入内容"
+            ></el-autocomplete>
+        </el-form-item>
+        <el-form-item label="获奖学生学号" prop="studentId">
+          <el-col :span="12">
+            <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容"></el-input>
+          </el-col>
+        </el-form-item>
         <el-form-item label="获奖学生姓名" prop="studentName">
           <el-col :span="12">
             <el-autocomplete
@@ -211,7 +224,7 @@
             ></el-autocomplete>
           </el-col>
         </el-form-item>
-        <el-form-item label="获奖学生学号" prop="studentId">
+        <el-form-item label="获奖学生专业班级" prop="studentId">
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容"></el-input>
           </el-col>

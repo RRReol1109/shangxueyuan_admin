@@ -62,18 +62,48 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="第一学历毕业学校"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="education"
+        align="center"
+        label="第一学历毕业学校"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scholarshipName" align="center" label="奖学金名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="financialAidName" align="center" label="助学金名称"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="scholarshipName"
+        align="center"
+        label="奖学金名称"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="financialAidName"
+        align="center"
+        label="助学金名称"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="admissionMethod" align="center" label="录取方式"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduatedSchool"
+        align="center"
+        label="毕业学校"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationMajor"
+        align="center"
+        label="毕业专业"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="admissionMethod"
+        align="center"
+        label="录取方式"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -130,7 +160,15 @@
       style="min-height:500px"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -138,100 +176,134 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
-          </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="学号" prop="name">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="学号" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>-->
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="normal" placeholder="请选择">
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="第一学历毕业学校" prop="education">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.education" autocomplete="off"></el-input>
+            </el-form-item>-->
           </el-col>
-        </el-form-item>
-        <el-form-item label="专业名称" prop="major">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="手机号" prop="phone">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.phone" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="第一学历毕业学校" prop="education">
+              <el-input size="normal" v-model="form.education" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.email" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="专业名称" prop="major">
+              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="导师" prop="tutor">
-          <el-col :span="6">
-            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="手机号" prop="phone">
+              <el-input size="normal" v-model="form.phone" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="奖学金名称" prop="scholarshipName">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.scholarshipName" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="邮箱" prop="email">
+              <el-input size="normal" v-model="form.email" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="助学金名称" prop="financialAidName">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.financialAidName" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="导师" prop="tutor">
+              <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" style="width:99%">
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="专业代码" prop="majorCode">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.majorCode" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="奖学金名称" prop="scholarshipName">
+              <el-input
+                size="normal"
+                v-model="form.scholarshipName"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="年级" prop="grade">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.grade" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="助学金名称" prop="financialAidName">
+              <el-input
+                size="normal"
+                v-model="form.financialAidName"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业学校" prop="graduatedSchool">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduatedSchool" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="专业代码" prop="majorCode">
+              <el-input size="normal" v-model="form.majorCode" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业专业" prop="graduationMajor">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduationMajor" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年级" prop="grade">
+              <el-input size="normal" v-model="form.grade" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="录取方式" prop="admissionMethod">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.admissionMethod" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="毕业学校" prop="graduatedSchool">
+              <el-input
+                size="normal"
+                v-model="form.graduatedSchool"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="毕业专业" prop="graduationMajor">
+              <el-input
+                size="normal"
+                v-model="form.graduationMajor"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="录取方式" prop="admissionMethod">
+              <el-input
+                size="normal"
+                v-model="form.admissionMethod"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item size="normal" label="备注" prop="remark">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
-          </el-col>
+          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -458,7 +530,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-zsmd.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-专硕名单.xls";
           break;
         case "download":
           this.exportData();
@@ -478,7 +550,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-zsmd.xls");
+        link.setAttribute("download", "数据库-专硕名单.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -572,5 +644,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

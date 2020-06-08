@@ -1,10 +1,10 @@
 <template>
   <el-row :gutter="0">
+    <Head></Head>
     <el-col :xs="24" :sm="8" :md="6" :lg="4" :xl="3">
       <Menu></Menu>
     </el-col>
     <el-col :xs="24" :sm="16" :md="18" :lg="20" :xl="21">
-      <Head></Head>
       <div class="main">
         <router-view></router-view>
       </div>
@@ -47,6 +47,7 @@ export default {
 }
 html body {
   background: #fff;
+  font-weight: bold;
   /* overflow: hidden; */
 }
 .main {

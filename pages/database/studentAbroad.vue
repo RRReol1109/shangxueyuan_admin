@@ -599,7 +599,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-cgxs.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-出国学生.xls";
           break;
         case "download":
           this.exportData();
@@ -619,7 +619,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-cgxs.xls");
+        link.setAttribute("download", "数据库-出国学生.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -708,5 +708,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

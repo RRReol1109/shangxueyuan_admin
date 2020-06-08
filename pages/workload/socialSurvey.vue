@@ -372,7 +372,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "工作量-社会调查.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -575,7 +575,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/gzl-shdc.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/工作量-社会调查.xls";
           break;
       }
     },

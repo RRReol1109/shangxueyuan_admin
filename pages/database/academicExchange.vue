@@ -69,17 +69,42 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="interviewTime" align="center" label="来访时间"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="interviewTime"
+        align="center"
+        label="来访时间"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="accessType" align="center" label="访问类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="visitor" align="center" label="专家姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="passport" align="center" label="护照号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="jobTitle" align="center" label="职称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="citizenshipCountry" align="center" label="国籍"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="citizenshipCountry"
+        align="center"
+        label="国籍"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="unit" align="center" label="工作单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="expertCategory" align="center" label="专家类别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="researchAreas" align="center" label="研究领域"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="expertCategory"
+        align="center"
+        label="专家类别"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="researchAreas"
+        align="center"
+        label="研究领域"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="discipline" align="center" label="所属学科"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="communicationContent" align="center" label="交流内容"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="communicationContent"
+        align="center"
+        label="交流内容"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="inviter" align="center" label="邀请人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
@@ -135,10 +160,18 @@
     </el-drawer>
     <el-drawer
       style="min-height:500px"
+      size="60%"
       title="学术交流"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -146,90 +179,125 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="专家姓名" prop="visitor">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.visitor" autocomplete="off"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专家姓名" prop="visitor">
+              <el-input size="normal" v-model="form.visitor" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="访问类型" prop="accessType">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.accessType" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="访问类型" prop="accessType">
+              <el-input
+                size="normal"
+                v-model="form.accessType"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="职称" prop="jobTitle">
-          <el-col :span="6">
-            <el-select v-model="form.jobTitle" size="normal" placeholder="请输入">
-              <el-option label="教授" value="教授"></el-option>
-              <el-option label="副教授" value="副教授"></el-option>
-              <el-option label="其他" value="其他"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="职称" prop="jobTitle">
+              <el-select v-model="form.jobTitle" size="normal" placeholder="请输入" style="width:99%">
+                <el-option label="教授" value="教授"></el-option>
+                <el-option label="副教授" value="副教授"></el-option>
+                <el-option label="其他" value="其他"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="护照号" prop="passport">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.passport" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="护照号" prop="passport">
+              <el-input size="normal" v-model="form.passport" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="国籍" prop="citizenshipCountry">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.citizenshipCountry" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="国籍" prop="citizenshipCountry">
+              <el-input
+                size="normal"
+                v-model="form.citizenshipCountry"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="工作单位" prop="unit">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.unit" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="工作单位" prop="unit">
+              <el-input size="normal" v-model="form.unit" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="专家类别" prop="expertCategory">
-          <el-col :span="6">
-            <el-select v-model="form.expertCategory" size="normal" placeholder="请输入">
-              <el-option label="国内" value="国内"></el-option>
-              <el-option label="国外" value="国外"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专家类别" prop="expertCategory">
+              <el-select
+                v-model="form.expertCategory"
+                size="normal"
+                placeholder="请输入"
+                style="width:99%"
+              >
+                <el-option label="国内" value="国内"></el-option>
+                <el-option label="国外" value="国外"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="来访时间" prop="interviewTime">
-          <el-col :span="5">
-            <el-date-picker
-              size="normal"
-              type="date"
-              placeholder="选择日期"
-              v-model="form.interviewTime"
-              style="width: 100%;"
-            ></el-date-picker>
+          <el-col :span="12">
+            <el-form-item label="来访时间" prop="interviewTime">
+              <el-date-picker
+                size="normal"
+                type="date"
+                placeholder="选择日期"
+                v-model="form.interviewTime"
+                style="width: 99%;"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="研究领域" prop="researchAreas">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.researchAreas" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="研究领域" prop="researchAreas">
+              <el-input
+                size="normal"
+                v-model="form.researchAreas"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="所属学科" prop="discipline">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.discipline" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="所属学科" prop="discipline">
+              <el-input
+                size="normal"
+                v-model="form.discipline"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="邀请人" prop="inviter">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.inviter" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="邀请人" prop="inviter">
+              <el-input size="normal" v-model="form.inviter" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="交流内容" prop="communicationContent">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.communicationContent" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="交流内容" prop="communicationContent">
+              <el-input
+                size="normal"
+                v-model="form.communicationContent"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
         <el-form-item size="normal" label="备注" prop="remark">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
-          </el-col>
+          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -413,7 +481,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-xsjl.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-学术交流.xls";
           break;
         case "download":
           this.exportData();
@@ -434,7 +502,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-xsjl.xls");
+        link.setAttribute("download", "数据库-学术交流.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -575,5 +643,14 @@ export default {
 <style scoped>
 .search-form {
   margin-bottom: 10px;
+}
+.el-drawer__body {
+  overflow: auto;
+  /* overflow-x: auto; */
+}
+
+/*2.隐藏滚动条，太丑了*/
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>
