@@ -435,7 +435,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-yxbys.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-优秀毕业生简况.xls";
           break;
         case "download":
           this.exportData();
@@ -456,7 +456,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-yxbys.xls");
+        link.setAttribute("download", "数据库-优秀毕业生简况.xls");
         document.body.appendChild(link);
         link.click();
       }

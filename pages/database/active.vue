@@ -432,7 +432,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-hdgh.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-活动规划.xls";
           break;
 
         case "download":
@@ -454,7 +454,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-hdgh.xls");
+        link.setAttribute("download", "数据库-活动规划.xls");
         document.body.appendChild(link);
         link.click();
       }

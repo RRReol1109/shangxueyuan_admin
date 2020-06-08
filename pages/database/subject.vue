@@ -369,7 +369,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-skry.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-三科人员.xls";
           break;
         case "download":
           this.exportData();
@@ -389,7 +390,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-skry.xls");
+        link.setAttribute("download", "数据库-三科人员.xls");
         document.body.appendChild(link);
         link.click();
       }

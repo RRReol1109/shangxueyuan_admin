@@ -70,7 +70,13 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -80,7 +86,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="研究生类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="进校人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationCount" align="center" label="毕业人数"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationCount"
+        align="center"
+        label="毕业人数"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="学生信息"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时数"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
@@ -399,7 +410,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "工作量-研究生指导.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -582,7 +593,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/gzl-yjszd.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/工作量-研究生指导.xls";
           break;
       }
     },

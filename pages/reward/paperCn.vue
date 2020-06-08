@@ -630,7 +630,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "科研奖励-中文论文.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -839,7 +839,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/kyjl-zwlw.xls";
+          location.href = "http://bsoa.csu.edu.cn/excel-model/科研奖励-中文论文.xls";
           break;
       }
     },

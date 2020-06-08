@@ -491,7 +491,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/kyjl-zzjc.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-教师教改项目.xls";
           break;
         case "download":
           this.exportData();
@@ -512,7 +513,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "excel.xls");
+        link.setAttribute("download", "数据库-教师教改项目.xls");
         document.body.appendChild(link);
         link.click();
       }
