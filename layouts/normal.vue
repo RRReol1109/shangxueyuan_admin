@@ -64,5 +64,8 @@ html body {
     padding: 0 12px 0 0;
     box-sizing: border-box;
 }
+.el-checkbox__label {
+  font-size: 16px;
+}
 </style>
 

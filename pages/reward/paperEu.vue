@@ -210,7 +210,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
         size="normal"
         :disabled="!['edit', 'add'].includes(operate)"
@@ -231,9 +231,6 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="DOI号" prop="doi">
-              <el-input learable v-model="ruleForm.doi" placeholder style="width:98%"></el-input>
-            </el-form-item>
           </el-col>
         </el-row>
         <el-form-item label="论文名称:" prop="contracttype">
@@ -241,6 +238,9 @@
         </el-form-item>
         <el-form-item label="期刊名称" prop="journal">
           <el-input v-model="ruleForm.journal" placeholder style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="期刊ISSN号" prop="cateNumber">
+          <el-input clearable v-model="ruleForm.cateNumber" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="资助课题来源" prop="subsidizeSource">
           <el-input learable v-model="ruleForm.subsidizeSource" placeholder style="width:99%"></el-input>
@@ -269,7 +269,28 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学校/学院期刊分级" prop="level">
+            <el-form-item label="DOI号" prop="doi">
+              <el-input learable v-model="ruleForm.doi" placeholder style="width:98%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="学校期刊分级" prop="level">
+              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
+                <el-option label="英文A+" value="A+"></el-option>
+                <el-option label="英文A" value="A"></el-option>
+                <el-option label="英文A-" value="A-"></el-option>
+                <el-option label="英文B+" value="B+"></el-option>
+                <el-option label="英文B" value="B"></el-option>
+                <el-option label="英文B-" value="B-"></el-option>
+                <el-option label="英文C+" value="C+"></el-option>
+                <el-option label="英文C" value="C"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="学院期刊分级" prop="level">
               <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
                 <el-option label="英文A+" value="A+"></el-option>
                 <el-option label="英文A" value="A"></el-option>
@@ -286,11 +307,18 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label prop>
-              <el-checkbox>商学高被引 1%</el-checkbox>
+              <el-checkbox>是否ESI经济学商学论文</el-checkbox>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label prop>
+              <el-checkbox>ESI高被引 1%（百分之一）</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="时间" prop>
+            <el-form-item label="进入1%时间" prop>
               <el-date-picker
                 style="width:98%"
                 size="normal"
@@ -306,11 +334,11 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label prop>
-              <el-checkbox>商学高被引 1‰</el-checkbox>
+              <el-checkbox>ESI高被引 0.1%（千分之一）</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="时间" prop>
+            <el-form-item label="进入0.1%时间" prop>
               <el-date-picker
                 style="width:98%"
                 size="normal"
@@ -330,7 +358,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="JCR分区" prop>
+            <el-form-item label="汤森路透JCR分区" prop>
               <el-select placeholder="请选择级别" style="width:98%">
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
@@ -346,9 +374,71 @@
               <el-input placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
+            <el-col :span="12">
+              <el-form-item label="中科院JCR分区" prop>
+                <el-select placeholder="请选择级别" style="width:98%">
+                  <el-option label="1" value="1"></el-option>
+                  <el-option label="2" value="2"></el-option>
+                  <el-option label="3" value="3"></el-option>
+                  <el-option label="4" value="4"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-form-item label="期刊ISSN号" prop="cateNumber">
-              <el-input clearable v-model="ruleForm.cateNumber" placeholder style="width:98%"></el-input>
+            <el-form-item label="" prop>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="金融时报FT50" prop>
+              <el-select
+                placeholder="请选择"
+                v-model="ruleForm.isnationalitycooperation"
+                style="width:98%"
+              >
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="" prop>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="ABS" prop>
+              <el-select
+                placeholder="请选择"
+                v-model="ruleForm.isnationalitycooperation"
+                style="width:98%"
+              >
+                <el-option label="1" value="1"></el-option>
+                <el-option label="2" value="2"></el-option>
+                <el-option label="3" value="3"></el-option>
+                <el-option label="4" value="4"></el-option>
+                <el-option label="4*" value="4*"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="" prop>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="UTD24" prop>
+              <el-select
+                placeholder="请选择"
+                v-model="ruleForm.isnationalitycooperation"
+                style="width:98%"
+              >
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>

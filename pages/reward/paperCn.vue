@@ -196,6 +196,14 @@
         <el-form-item label="论文名称:" prop="contracttype">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
         </el-form-item>
+        <el-form-item label="期刊ISSN号" prop="cateNumber">
+          <el-input
+            clearable
+            v-model="ruleForm.cateNumber"
+            placeholder="请输入内容"
+            style="width:99%"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="论文英文名称:" prop="contracttype">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
         </el-form-item>
@@ -204,7 +212,7 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学校/学院期刊分级" prop="level">
+            <el-form-item label="学校期刊分级" prop="level">
               <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
                 <el-option label="中文A+" value="A+"></el-option>
                 <el-option label="中文A" value="A"></el-option>
@@ -215,13 +223,21 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="期刊ISSN号" prop="cateNumber">
-              <el-input
-                clearable
-                v-model="ruleForm.cateNumber"
-                placeholder="请输入内容"
-                style="width:98%"
-              ></el-input>
+            <el-form-item label="学院期刊分级" prop="level">
+              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
+                <el-option label="中文A+" value="A+"></el-option>
+                <el-option label="中文A" value="A"></el-option>
+                <el-option label="中文A-" value="A-"></el-option>
+                <el-option label="中文B" value="B"></el-option>
+                <el-option label="中文C" value="C"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年代卷期" prop>
+              <el-input placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -239,13 +255,6 @@
           <el-col :span="12">
             <el-form-item label="期刊所属学科" prop>
               <el-input learable placeholder style="width:98%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="年代卷期" prop>
-              <el-input placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
