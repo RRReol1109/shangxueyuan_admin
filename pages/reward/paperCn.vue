@@ -9,7 +9,7 @@
           <el-input v-model="query.doi" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="期刊分级:">
-          <el-select v-model="query.level" size="normal" placeholder="请选择分级">
+          <el-select v-model="query.collegeLevel" size="normal" placeholder="请选择分级">
             <el-option label="全部" value></el-option>
             <el-option label="中文A+" value="中文A+"></el-option>
             <el-option label="中文A" value="中文A"></el-option>
@@ -88,19 +88,36 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文英文名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="titleEn" align="center" label="论文英文名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="期刊分级"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="cateNumber"
+        prop="schoolLevel"
         align="center"
-        label="期刊ISSN号"
+        label="学校期刊分级"
       ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="collegeLevel"
+        align="center"
+        label="学院期刊分级"
+      ></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
+      <el-table-column :show-overflow-tooltip="true" prop="issn" align="center" label="期刊ISSN号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者单位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="第一通讯作者单位"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="是否为教改论文"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -194,27 +211,22 @@
           </el-col>
           <el-col :span="12"></el-col>
         </el-row>
-        <el-form-item label="论文名称:" prop="contracttype">
+        <el-form-item label="论文名称:" prop="title">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="期刊ISSN号" prop="cateNumber">
-          <el-input
-            clearable
-            v-model="ruleForm.cateNumber"
-            placeholder="请输入内容"
-            style="width:99%"
-          ></el-input>
+        <el-form-item label="期刊ISSN号" prop="issn">
+          <el-input clearable v-model="ruleForm.issn" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="论文英文名称:" prop="contracttype">
-          <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
+        <el-form-item label="论文英文名称:" prop="titleEn">
+          <el-input learable v-model="ruleForm.titleEn" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="期刊名称" prop="journal">
           <el-input v-model="ruleForm.journal" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学校期刊分级" prop="level">
-              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
+            <el-form-item label="学校期刊分级" prop="schoolLevel">
+              <el-select v-model="ruleForm.schoolLevel" placeholder="请选择级别" style="width:98%">
                 <el-option label="中文A+" value="A+"></el-option>
                 <el-option label="中文A" value="A"></el-option>
                 <el-option label="中文A-" value="A-"></el-option>
@@ -224,8 +236,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学院期刊分级" prop="level">
-              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
+            <el-form-item label="学院期刊分级" prop="collegeLevel">
+              <el-select v-model="ruleForm.collegeLevel" placeholder="请选择级别" style="width:98%">
                 <el-option label="中文A+" value="A+"></el-option>
                 <el-option label="中文A" value="A"></el-option>
                 <el-option label="中文A-" value="A-"></el-option>
@@ -237,15 +249,15 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="年代卷期" prop>
-              <el-input placeholder style="width:98%"></el-input>
+            <el-form-item label="年代卷期" prop="yearDate">
+              <el-input placeholder style="width:98%" v-model="ruleForm.yearDate"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="核心收录" prop>
-              <el-select placeholder="请选择" style="width:98%">
+            <el-form-item label="核心收录" prop="included">
+              <el-select placeholder="请选择" style="width:98%" v-model="ruleForm.included">
                 <el-option label="CSTPCD" value="CSTPCD"></el-option>
                 <el-option label="CSCD扩展" value="CSCD扩展"></el-option>
                 <el-option label="CSSCI核心" value="CSSCI核心"></el-option>
@@ -254,14 +266,14 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="期刊所属学科" prop>
-              <el-input learable placeholder style="width:98%"></el-input>
+            <el-form-item label="期刊所属学科" prop="subject">
+              <el-input learable placeholder style="width:98%" v-model="ruleForm.subject"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="论文研究领域" prop="level">
+        <!-- <el-form-item label="论文研究领域" prop="collegeLevel">
           <el-col :span="12">
-            <el-select v-model="ruleForm.level" placeholder="论文研究领域">
+            <el-select v-model="ruleForm.collegeLevel" placeholder="论文研究领域">
               <el-option label="基础理论研究" value="基础理论研究"></el-option>
               <el-option label="应用研究" value="应用研究"></el-option>
               <el-option label="教学研究" value="教学研究"></el-option>
@@ -477,7 +489,7 @@ export default {
       ruleForm: {
         title: "",
         journal: "",
-        level: "1",
+        collegeLevel: "1",
         half: "1",
         score: "",
         finalScore: "",
@@ -517,7 +529,9 @@ export default {
         ],
         authors: [{ required: true, message: "请输入作者", trigger: "blur" }],
         half: [{ required: true, message: "请选择是否半价", trigger: "blur" }],
-        level: [{ required: true, message: "请选择分级", trigger: "blur" }],
+        collegeLevel: [
+          { required: true, message: "请选择分级", trigger: "blur" }
+        ],
         year: [{ required: true, message: "请输入年份", trigger: "blur" }],
         title: [{ required: true, message: "请输入论文名称", trigger: "blur" }]
         // files: [{ required: true, message: "请上传附件", trigger: "blur" }]
@@ -734,7 +748,7 @@ export default {
           id: "",
           title: "",
           journal: "",
-          level: "",
+          collegeLevel: "",
           half: "",
           score: "",
           authors: "",
@@ -848,7 +862,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/科研奖励-中文论文.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/科研奖励-中文论文.xls";
           break;
       }
     },

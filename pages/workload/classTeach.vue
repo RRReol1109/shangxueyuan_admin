@@ -186,8 +186,8 @@
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
           <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
-          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
         </div>
       </div>
       <el-form
@@ -558,13 +558,13 @@ export default {
       }
       console.log(this.role, "============role");
       let query = this.query;
-      for (let i = 0; i < this.teacherList.length; i++) {
-        const element = this.teacherList[i];
-        console.log(element.name);
-        if (element.name === query.teacher) {
-          query.teacher = element.id;
-        }
-      }
+      // for (let i = 0; i < this.teacherList.length; i++) {
+      //   const element = this.teacherList[i];
+      //   console.log(element.name);
+      //   if (element.name === query.teacher) {
+      //     query.teacher = element.id;
+      //   }
+      // }
       let res = await axios.$post("/teaching/list", query);
       for (let i = 0; i < res.rows.length; i++) {
         const element = res.rows[i];

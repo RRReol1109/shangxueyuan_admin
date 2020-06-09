@@ -8,7 +8,7 @@
         <el-form-item label="DOI号:">
           <el-input v-model="query.doi" placeholder size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="期刊分级:">
+        <!-- <el-form-item label="期刊分级:">
           <el-select v-model="query.level" size="normal" placeholder="请选择分级">
             <el-option label="全部" value></el-option>
             <el-option label="英文A+" value="A+"></el-option>
@@ -20,7 +20,7 @@
             <el-option label="英文C+" value="C+"></el-option>
             <el-option label="英文C" value="C"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="期刊名称:">
           <el-input v-model="query.journal" placeholder size="normal"></el-input>
         </el-form-item>
@@ -116,7 +116,7 @@
         align="center"
         label="资助来源"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="期刊分级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="学院期刊分级"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="cateNumber"
@@ -132,6 +132,19 @@
         label="ESI经济"
       ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorOrg" align="center" label="通讯作者单位"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="核心收录"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="期刊所属学科"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="学校期刊分级"
+      ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="coauthorName"
@@ -140,6 +153,74 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="是否为教改论文"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="是否为ESI经济商学论"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="ESI高倍引1%(百分之一)"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="ESI高倍引0.1%(千分之一)"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="年代期卷"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="被引用次数"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="汤森路透JCR分区"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="中科院JCR分区"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="金融时报FT50"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="ABS"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="UTD24"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="合作人信息"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="是否是国际合作论文"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highlyCited"
+        align="center"
+        label="是否是教改论文"
+      ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -231,8 +312,7 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-          </el-col>
+          <el-col :span="12"></el-col>
         </el-row>
         <el-form-item label="论文名称:" prop="contracttype">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
@@ -360,7 +440,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="汤森路透JCR分区" prop>
-              <el-select placeholder="请选择级别" style="width:98%">
+              <el-select placeholder="请选择级别" v-model="ruleForm.jcr" style="width:98%">
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
                 <el-option label="3" value="3"></el-option>
@@ -375,21 +455,20 @@
               <el-input placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
-            <el-col :span="12">
-              <el-form-item label="中科院JCR分区" prop>
-                <el-select placeholder="请选择级别" style="width:98%">
-                  <el-option label="1" value="1"></el-option>
-                  <el-option label="2" value="2"></el-option>
-                  <el-option label="3" value="3"></el-option>
-                  <el-option label="4" value="4"></el-option>
-                </el-select>
-              </el-form-item>
-            </el-col>
+          <el-col :span="12">
+            <el-form-item label="中科院JCR分区" prop>
+              <el-select placeholder="请选择级别" v-model="ruleForm.jcr" style="width:98%">
+                <el-option label="1" value="1"></el-option>
+                <el-option label="2" value="2"></el-option>
+                <el-option label="3" value="3"></el-option>
+                <el-option label="4" value="4"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="" prop>
-            </el-form-item>
+            <el-form-item label prop></el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="金融时报FT50" prop>
@@ -406,8 +485,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="" prop>
-            </el-form-item>
+            <el-form-item label prop></el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="ABS" prop>
@@ -427,16 +505,11 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="" prop>
-            </el-form-item>
+            <el-form-item label prop></el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="UTD24" prop>
-              <el-select
-                placeholder="请选择"
-                v-model="ruleForm.isnationalitycooperation"
-                style="width:98%"
-              >
+              <el-select placeholder="请选择" v-model="ruleForm.utd24" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
               </el-select>
@@ -675,7 +748,7 @@ export default {
         auditFlag: "0"
       },
       fileLoading: false,
-      fileData: "",
+      fileData: [],
       action: "",
       deptid: "",
       examineDialog: false,
@@ -1092,7 +1165,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/科研奖励-英文论文.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/科研奖励-英文论文.xls";
           break;
       }
     },

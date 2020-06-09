@@ -77,7 +77,7 @@ export default {
               entity: {
                 id: 5,
                 name: "teacher",
-                alias: "教职工信息",
+                alias: "用户管理",
                 state: "ENABLE",
                 value: "/system/teacher"
               }
@@ -466,6 +466,15 @@ export default {
             },
             {
               entity: {
+                id: 80,
+                name: "teacherInfo",
+                alias: "教职工信息管理",
+                state: "ENABLE",
+                value: "/database/teacherInfo"
+              }
+            },
+            {
+              entity: {
                 id: 30,
                 name: "studentAbroad",
                 alias: "出国学生",
@@ -823,12 +832,12 @@ export default {
     this.initTree();
   },
   computed: {
-    roles () {
+    roles() {
       return this.$store.state.roles;
     }
   },
   watch: {
-    roles (newVal, oldVal) {
+    roles(newVal, oldVal) {
       this.initTree();
     }
   }

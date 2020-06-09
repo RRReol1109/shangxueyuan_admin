@@ -49,8 +49,8 @@
   background: #fff;
 }
 .grid-content {
-  background-color:#545c64;
-  color:#fff;
+  background-color: #545c64;
+  color: #fff;
   height: 45px;
   border-bottom: 1px solid #e6e6e6;
   box-shadow: 0px 0px 5px 0px #aaa;
@@ -73,7 +73,7 @@
 .name {
   line-height: 45px;
   font-size: 16px;
-  color:#fff;
+  color: #fff;
 }
 .title {
   font-size: 24px;
@@ -156,7 +156,31 @@ export default {
           this.ids = [];
           break;
         case "35":
-          this.ids = [777, 13, 14, 16, 17, , 18, 19, 40, 29, 30, 31, 37];
+          this.ids = [
+            777,
+            13,
+            14,
+            16,
+            17,
+            18,
+            19,
+            40,
+            29,
+            30,
+            31,
+            37,
+            21,
+            22,
+            23,
+            24,
+            25,
+            60,
+            26,
+            27,
+            61,
+            62,
+            28
+          ];
           break;
         case "36":
           this.ids = [];
@@ -268,7 +292,8 @@ export default {
             73,
             74,
             75,
-            76
+            76,
+            80
           ];
           break;
         case "12":

@@ -13,15 +13,14 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师:">
-          <el-select size="normal" v-model="query.teacher" placeholder="请选择老师">
-            <el-option label="全部" value></el-option>
-            <el-option
-              v-for="item in teacherList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>
+          <el-autocomplete
+            id="nameBox"
+            v-model="query.teacher"
+            placeholder="请输入教师"
+            :fetch-suggestions="queryTeacher"
+            size="normal"
+          ></el-autocomplete>
+          <!-- </el-select> -->
         </el-form-item>
         <el-form-item label="状态:">
           <el-select v-model="query.auditFlag" size="normal" placeholder="请选择状态">
@@ -151,8 +150,8 @@
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
           <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
-          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
         </div>
       </div>
       <el-form
@@ -179,14 +178,14 @@
           </el-col>
           <el-col :span="12">
             <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
-              <el-select v-model="ruleForm.teacher" placeholder="请选择老师" style="width:99%">
-                <el-option
-                  v-for="item in teacherList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
+              <el-autocomplete
+                id="nameBox"
+                v-model="query.teacher"
+                placeholder="请输入教师"
+                :fetch-suggestions="queryTeacher"
+                size="normal"
+                style="width:99%"
+              ></el-autocomplete>
             </el-form-item>
           </el-col>
         </el-row>
@@ -371,13 +370,13 @@ export default {
         }
       }
 
-      for (let i = 0; i < this.teacherList.length; i++) {
-        const element = this.teacherList[i];
-        console.log(element.name);
-        if (element.name === this.query.teacher) {
-          this.query.teacher = element.id;
-        }
-      }
+      // for (let i = 0; i < this.teacherList.length; i++) {
+      //   const element = this.teacherList[i];
+      //   console.log(element.name);
+      //   if (element.name === this.query.teacher) {
+      //     this.query.teacher = element.id;
+      //   }
+      // }
 
       let user = localStorage.getItem("roles");
       if (!user.includes(888)) {
@@ -386,7 +385,7 @@ export default {
       } else {
         this.role = true;
       }
-      console.log(this.query, "============role");
+      // console.log(this.query, "============role");
       let res = await axios.$post("/postgraduate/list", this.query);
       this.tableData = res.rows;
       for (let i = 0; i < this.tableData.length; i++) {

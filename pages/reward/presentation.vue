@@ -164,8 +164,8 @@
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
           <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
-          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
         </div>
       </div>
       <el-form

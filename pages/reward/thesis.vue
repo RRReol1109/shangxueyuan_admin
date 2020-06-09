@@ -76,7 +76,13 @@
     </div>
 
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -85,7 +91,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="指导教师姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="获奖类别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="获奖学生姓名"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="studentName"
+        align="center"
+        label="获奖学生姓名"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentId" align="center" label="获奖学生学号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="获奖日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="本人计分"></el-table-column>
@@ -147,6 +158,13 @@
       </el-form>
     </el-drawer>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="ruleForm"
         :rules="rules"
@@ -155,19 +173,20 @@
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年份" prop="year">
+        <el-row>
           <el-col :span="12">
-            <el-date-picker
-              size="normal"
-              v-model="ruleForm.year"
-              type="year"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择年份"
-            ></el-date-picker>
-          </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="指导教师姓名" prop="teacher">
+            <el-form-item label="年份" prop="year">
+              <el-date-picker
+                size="normal"
+                style="width:99%"
+                v-model="ruleForm.year"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择年份"
+              ></el-date-picker>
+            </el-form-item>
+            <!-- <el-form-item label="指导教师姓名" prop="teacher">
           <el-col :span="12">
             <el-autocomplete
               clearable
@@ -176,82 +195,118 @@
               placeholder="请输入内容"
             ></el-autocomplete>
           </el-col>
-        </el-form-item>-->
-        <!-- <el-form-item label="指导教师工号" prop="teacher">
+            </el-form-item>-->
+            <!-- <el-form-item label="指导教师工号" prop="teacher">
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.teacherId" placeholder="请输入内容"></el-input>
           </el-col>
-        </el-form-item>-->
-        <el-form-item label="指导老师" prop="teacher" v-if="showTeachInput">
-          <el-col :span="12">
-            <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
+            </el-form-item>-->
           </el-col>
-        </el-form-item>
-        <el-form-item label="获奖类别" prop="type">
           <el-col :span="12">
-            <el-select v-model="ruleForm.type" placeholder="请选择类型">
-              <el-option label="湖南省优秀硕士论文" value="1"></el-option>
-            </el-select>
+            <el-form-item label="指导老师" prop="teacher" v-if="showTeachInput">
+              <!-- <el-select v-model="ruleForm.teacher" placeholder="请选择老师" style="width:99%">
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>-->
+              <el-autocomplete
+                class="inline-input"
+                v-model="ruleForm.teacher"
+                :fetch-suggestions="queryTeacher"
+                placeholder="请输入内容"
+                :trigger-on-focus="false"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="获奖论文题目" prop="studentName">
-          <el-autocomplete
-              clearable
-              v-model="ruleForm.studentName"
-              :fetch-suggestions="queryStudent"
-              placeholder="请输入内容"
-            ></el-autocomplete>
-        </el-form-item>
-        <el-form-item label="获奖学生学号" prop="studentId">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容"></el-input>
+            <el-form-item label="获奖类别" prop="type">
+              <el-select v-model="ruleForm.type" placeholder="请选择类型" style="width:99%">
+                <el-option label="湖南省优秀硕士论文" value="1"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="获奖学生姓名" prop="studentName">
           <el-col :span="12">
-            <el-autocomplete
-              clearable
-              v-model="ruleForm.studentName"
-              :fetch-suggestions="queryStudent"
-              placeholder="请输入内容"
-            ></el-autocomplete>
+            <el-form-item label="获奖论文题目" prop="studentName">
+              <el-autocomplete
+                style="width:99%"
+                clearable
+                v-model="ruleForm.studentName"
+                :fetch-suggestions="queryStudent"
+                placeholder="请输入内容"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="获奖学生专业班级" prop="studentId">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容"></el-input>
+            <el-form-item label="获奖学生学号" prop="studentId">
+              <el-input
+                clearable
+                v-model="ruleForm.studentId"
+                placeholder="请输入内容"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="获奖日期" prop="date">
           <el-col :span="12">
-            <el-date-picker v-model="ruleForm.date" type="date" placeholder="选择日期时间"></el-date-picker>
+            <el-form-item label="获奖学生姓名" prop="studentName">
+              <el-autocomplete
+                clearable
+                v-model="ruleForm.studentName"
+                :fetch-suggestions="queryStudent"
+                placeholder="请输入内容"
+                style="width:99%"
+              ></el-autocomplete>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="本人计分" prop="score">
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-input clearable v-model="ruleForm.score" placeholder="请输入内容"></el-input>
+            <el-form-item label="获奖学生专业班级" prop="studentId">
+              <el-input
+                clearable
+                v-model="ruleForm.studentId"
+                placeholder="请输入内容"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="获奖日期" prop="date">
+              <el-date-picker
+                v-model="ruleForm.date"
+                type="date"
+                placeholder="选择日期时间"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="本人计分" prop="score">
+              <el-input clearable v-model="ruleForm.score" placeholder="请输入内容" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="ruleForm.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+            style="width:99%"
+          >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
             <el-option label="审核未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -321,7 +376,7 @@ export default {
       },
       names: [],
       stuNames: [],
-      teacherList: {}
+      teacherList: []
     };
   },
 
@@ -560,11 +615,26 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/kyjl-ktjx.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/科研奖励-优秀硕博论文.xls";
           break;
       }
     },
 
+    async exportData() {
+      let data = await axios.$download("/excellentPapers/export", {
+        params: this.query
+      });
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "科研奖励-优秀硕博论文.xls");
+        document.body.appendChild(link);
+        link.click();
+      }
+    },
     uploadSuccess() {
       this.list();
     },
