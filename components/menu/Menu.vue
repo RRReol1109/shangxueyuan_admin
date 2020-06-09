@@ -1,5 +1,5 @@
 <template>
-  <div class="navMenu">
+  <div class="navMenu" style="margin-top: -1px;">
     <label v-for="navMenu in navMenus" v-bind:key="navMenu.id">
       <nuxt-link
         :to="navMenu.entity.value + '#' + navMenu.entity.name"

@@ -13,6 +13,7 @@ import qs from 'qs';
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = 'http://bsoa.csu.edu.cn/bs/';
+axios.defaults.baseURL = 'http://bs.hk.darkal.cn/';
 
 
 //http request 拦截器

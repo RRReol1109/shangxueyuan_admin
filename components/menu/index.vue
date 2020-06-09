@@ -837,7 +837,10 @@ export default {
 
 <style>
 .el-menu-vertical {
-  min-height: 1500px;
+  height: 1500px;
+  overflow-y: auto;
+  /* overflow-y: auto; */
+  /* overflow-x: hidden; */
   /* margin-bottom: -2000px;
   padding-bottom: 2000px; */
 }

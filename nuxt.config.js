@@ -46,7 +46,8 @@ export default {
     '@nuxtjs/axios',
   ],
   axios: {
-    prefix: 'http://bsoa.csu.edu.cn/bs/',
+    // prefix: 'http://bsoa.csu.edu.cn/bs/',
+    prefix: 'http://bs.hk.darkal.cn/',
     proxy: true
   },
   /*

@@ -583,10 +583,10 @@
             <el-checkbox v-model="ruleForm.english"></el-checkbox>
           </el-col>
         </el-form-item>
-        <div>
-          <el-divider content-position="left">附件</el-divider>
-          <el-table
-            :data="fileList"
+        <!-- <div>
+          <el-divider content-position="left">附件</el-divider> -->
+          <!-- <el-table
+            :data="existFileList"
             border
             style="width: 100%"
             size="normal"
@@ -601,27 +601,21 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="create_time"
-              label="创建时间"
-              align="center"
-            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件路径" align="center"></el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
                 <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
-          </el-table>
-          <el-upload
+          </el-table> -->
+          <!-- <el-upload
             class="dragger"
+            :headers="header"
             :show-file-list="false"
-            :on-success="uploadSuccess"
+            :on-success="additionUploadSuccess"
             drag
-            :data="fileData"
-            :action="action"
+            action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
@@ -631,18 +625,18 @@
               <em>点击上传</em>
             </div>
           </el-upload>
-        </div>
-        <!-- <el-form-item v-if="['edit'].includes(operate) && ruleForm.id" label="附件" prop="files">
+        </div> -->
+        <el-form-item v-if="['edit'].includes(operate) && ruleForm.id" label="附件" prop="files">
           <el-upload
             class
             :headers="header"
             :file-list="fileLists"
             :on-success="fileUploadSuccess"
-            action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+            action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
           >
             <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
-        </el-form-item>-->
+        </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
@@ -696,6 +690,7 @@ export default {
       fileurl: "",
       header: {},
       fileList: [],
+      existFileList: [],
       ruleForm: {
         coauthorName: "",
         doi: "",
@@ -709,6 +704,7 @@ export default {
         companys: [],
         subsidizeSource: "",
         wos: "",
+        files: [],
         teacherArr: [
           {
             name: "",
@@ -1062,6 +1058,12 @@ export default {
     },
     uploadSuccess() {
       this.list();
+    },
+    additionUploadSuccess(response) {
+      this.ruleForm.files.push(response);
+      this.existFileList.push({
+        name: response
+      })
     },
     async handleCommand(command) {
       console.log(command);
