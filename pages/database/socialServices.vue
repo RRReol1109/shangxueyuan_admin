@@ -13,7 +13,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师:">
-          <el-select size="normal" v-model="query.teacher" placeholder="请选择老师">
+          <el-select size="normal" v-model="query.teacher" filterable placeholder="请选择老师">
             <el-option label="全部" value></el-option>
             <el-option
               v-for="item in teacherList"
@@ -70,7 +70,13 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -80,7 +86,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="高端人才培训"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="服务学科与学术发展"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="社会公共与公益服务"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationCount" align="center" label="文化传承/中外人文交流"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationCount"
+        align="center"
+        label="文化传承/中外人文交流"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">

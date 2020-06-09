@@ -116,32 +116,27 @@
         align="center"
         label="资助来源"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="学院期刊分级"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="cateNumber"
+        prop="collegeLevel"
         align="center"
-        label="期刊ISSN号"
+        label="学院期刊分级"
       ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="issn" align="center" label="期刊ISSN号"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
-      <el-table-column
+      <!-- <el-table-column
         :show-overflow-tooltip="true"
         prop="highlyCited"
         align="center"
         label="ESI经济"
-      ></el-table-column>
+      ></el-table-column>-->
       <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorOrg" align="center" label="通讯作者单位"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="核心收录"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
-        align="center"
-        label="期刊所属学科"
-      ></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="schoolLevel"
         align="center"
         label="学校期刊分级"
       ></el-table-column>
@@ -152,72 +147,69 @@
         label="第一作者"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="是否为教改论文"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="reformPaper"
         align="center"
-        label="是否为ESI经济商学论"
+        label="是否为教改论文"
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="esiEconomics"
         align="center"
-        label="ESI高倍引1%(百分之一)"
+        label="是否ESI经济学商学论文"
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="esi1"
         align="center"
-        label="ESI高倍引0.1%(千分之一)"
-      ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="年代期卷"></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="highlyCited"
-        align="center"
-        label="被引用次数"
+        label="ESI高被引1%(百分之一)"
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="esi1Date"
+        align="center"
+        label="进入1%(百分之一)时间"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="esi01"
+        align="center"
+        label="ESI高被引0.1%(千分之一)"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="esi01Date"
+        align="center"
+        label="进入0.1%(千分之一)时间"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="timesCited" align="center" label="被引用次数"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="jcrLevel1"
         align="center"
         label="汤森路透JCR分区"
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="jcrLevel2"
         align="center"
         label="中科院JCR分区"
       ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="ft50" align="center" label="金融时报FT50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="abs" align="center" label="ABS"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="utd24" align="center" label="UTD24"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="cooAuthor" align="center" label="合作人信息"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="cooPaper"
         align="center"
-        label="金融时报FT50"
-      ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="highlyCited" align="center" label="ABS"></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="highlyCited"
-        align="center"
-        label="UTD24"
+        label="是否国际合作论文"
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="highlyCited"
-        align="center"
-        label="合作人信息"
-      ></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="highlyCited"
-        align="center"
-        label="是否是国际合作论文"
-      ></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="highlyCited"
+        prop="reformPaper"
         align="center"
         label="是否是教改论文"
       ></el-table-column>
@@ -328,8 +320,8 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="核心收录" prop>
-              <el-select placeholder="请选择" style="width:98%">
+            <el-form-item label="核心收录" prop="included">
+              <el-select placeholder="请选择" style="width:98%" v-model="ruleForm.included">
                 <el-option label="CSTPCD" value="CSTPCD"></el-option>
                 <el-option label="CSCD扩展" value="CSCD扩展"></el-option>
                 <el-option label="CSSCI核心" value="CSSCI核心"></el-option>
@@ -338,8 +330,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="期刊所属学科" prop>
-              <el-input learable placeholder style="width:99%"></el-input>
+            <el-form-item label="期刊所属学科" prop="subject">
+              <el-input learable placeholder style="width:99%" v-model="ruleForm.subject"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -357,8 +349,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学校期刊分级" prop="level">
-              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
+            <el-form-item label="学校期刊分级" prop="schoolLevel">
+              <el-select v-model="ruleForm.schoolLevel" placeholder="请选择级别" style="width:98%">
                 <el-option label="英文A+" value="A+"></el-option>
                 <el-option label="英文A" value="A"></el-option>
                 <el-option label="英文A-" value="A-"></el-option>
@@ -371,8 +363,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学院期刊分级" prop="level">
-              <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:98%">
+            <el-form-item label="学院期刊分级" prop="collegeLevel">
+              <el-select v-model="ruleForm.collegeLevel" placeholder="请选择级别" style="width:98%">
                 <el-option label="英文A+" value="A+"></el-option>
                 <el-option label="英文A" value="A"></el-option>
                 <el-option label="英文A-" value="A-"></el-option>
@@ -387,15 +379,15 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label prop>
-              <el-checkbox>是否ESI经济学商学论文</el-checkbox>
+            <el-form-item label prop="esiEconomics">
+              <el-checkbox v-model="ruleForm.esiEconomics">是否ESI经济学商学论文</el-checkbox>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label prop>
-              <el-checkbox>ESI高被引 1%（百分之一）</el-checkbox>
+            <el-form-item label prop="esi1">
+              <el-checkbox v-model="ruleForm.esi1">ESI高被引 1%（百分之一）</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -403,7 +395,7 @@
               <el-date-picker
                 style="width:98%"
                 size="normal"
-                v-model="ruleForm.year"
+                v-model="ruleForm.esi1Date"
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
@@ -414,8 +406,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label prop>
-              <el-checkbox>ESI高被引 0.1%（千分之一）</el-checkbox>
+            <el-form-item label prop="esi01">
+              <el-checkbox v-model="ruleForm.esi1">ESI高被引 0.1%（千分之一）</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -423,7 +415,7 @@
               <el-date-picker
                 style="width:98%"
                 size="normal"
-                v-model="ruleForm.year"
+                v-model="ruleForm.esi01Date"
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
@@ -434,13 +426,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="年代卷期" prop>
-              <el-input placeholder style="width:98%"></el-input>
+            <el-form-item label="年代卷期" prop="yearDate">
+              <el-input placeholder style="width:98%" v-model="ruleForm.yearDate"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="汤森路透JCR分区" prop>
-              <el-select placeholder="请选择级别" v-model="ruleForm.jcr" style="width:98%">
+            <el-form-item label="汤森路透JCR分区" prop="jcrLevel1">
+              <el-select placeholder="请选择级别" v-model="ruleForm.jcrLevel1" style="width:98%">
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
                 <el-option label="3" value="3"></el-option>
@@ -451,13 +443,13 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="被引用次数" prop>
-              <el-input placeholder style="width:98%"></el-input>
+            <el-form-item label="被引用次数" prop="timesCited">
+              <el-input placeholder style="width:98%" v-model="ruleForm.timesCited"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="中科院JCR分区" prop>
-              <el-select placeholder="请选择级别" v-model="ruleForm.jcr" style="width:98%">
+              <el-select placeholder="请选择级别" v-model="ruleForm.jcrLevel2" style="width:98%">
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
                 <el-option label="3" value="3"></el-option>
@@ -471,12 +463,8 @@
             <el-form-item label prop></el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="金融时报FT50" prop>
-              <el-select
-                placeholder="请选择"
-                v-model="ruleForm.isnationalitycooperation"
-                style="width:98%"
-              >
+            <el-form-item label="金融时报FT50" prop="ft50">
+              <el-select placeholder="请选择" v-model="ruleForm.ruleForm" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
               </el-select>
@@ -488,12 +476,8 @@
             <el-form-item label prop></el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="ABS" prop>
-              <el-select
-                placeholder="请选择"
-                v-model="ruleForm.isnationalitycooperation"
-                style="width:98%"
-              >
+            <el-form-item label="ABS" prop="abs">
+              <el-select placeholder="请选择" v-model="ruleForm.abs" style="width:98%">
                 <el-option label="1" value="1"></el-option>
                 <el-option label="2" value="2"></el-option>
                 <el-option label="3" value="3"></el-option>
@@ -508,7 +492,7 @@
             <el-form-item label prop></el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="UTD24" prop>
+            <el-form-item label="UTD24" prop="utd24">
               <el-select placeholder="请选择" v-model="ruleForm.utd24" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
@@ -518,12 +502,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="是否国际合作论文" prop>
-              <el-select
-                placeholder="请选择"
-                v-model="ruleForm.isnationalitycooperation"
-                style="width:98%"
-              >
+            <el-form-item label="是否国际合作论文" prop="cooPaper">
+              <el-select placeholder="请选择" v-model="ruleForm.cooPaper" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
               </el-select>
@@ -533,9 +513,9 @@
         <el-form-item
           v-if="ruleForm.isnationalitycooperation == '是'"
           label="合作人信息"
-          prop="studentId"
+          prop="cooAuthor"
         >
-          <el-input clearable v-model="ruleForm.studentId" placeholder="请输入内容" style="width:99%"></el-input>
+          <el-input clearable v-model="ruleForm.cooAuthor" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
@@ -651,9 +631,9 @@
         <!-- <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>-->
-        <el-form-item label="是否为教改论文" prop="english">
+        <el-form-item label="是否为教改论文" prop="reformPaper">
           <el-col :span="12">
-            <el-checkbox v-model="ruleForm.english"></el-checkbox>
+            <el-checkbox v-model="ruleForm.reformPaper"></el-checkbox>
           </el-col>
         </el-form-item>
         <div>

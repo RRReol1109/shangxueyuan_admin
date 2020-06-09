@@ -94,6 +94,7 @@
         label="出版社名称"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="signature" align="center" label="署名单位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="chiefEditor" align="center" label="主编信息"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="wordCount" align="center" label="总字数（万）"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="作者"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN编号"></el-table-column>
@@ -257,13 +258,8 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="主编信息" prop="">
-          <el-input
-            clearable
-            v-model="ruleForm.x"
-            placeholder="请输入内容"
-            style="width:99%"
-          ></el-input>
+        <el-form-item label="主编信息" prop="chiefEditor">
+          <el-input clearable v-model="ruleForm.chiefEditor" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
         <el-form-item
           v-for="(teacherArr, index) in ruleForm.teacherArr"
@@ -271,7 +267,7 @@
           :key="teacherArr.key"
           :prop="'teacherArr.' + index + '.value'"
         >
-          <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
+          <el-select v-model="teacherArr.name" filterable placeholder="请选择老师" prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -795,7 +791,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/科研奖励-著作教材.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/科研奖励-著作教材.xls";
           break;
       }
     },

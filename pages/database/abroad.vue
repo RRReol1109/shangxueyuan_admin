@@ -80,10 +80,10 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="number" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNum" align="center" label="学号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="englishName" align="center" label="英文名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="englishName" align="center" label="学历"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="学历"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
@@ -199,8 +199,8 @@
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学号" prop="englishName">
-              <el-input size="normal" v-model="form.englishName" style="width:99%"></el-input>
+            <el-form-item label="学号" prop="studentNum">
+              <el-input size="normal" v-model="form.studentNum" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -216,8 +216,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学历" prop="name">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="学历" prop="education">
+              <el-input size="normal" v-model="form.education" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -249,7 +249,13 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="导师" prop="tutor">
-              <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" style="width:99%">
+              <el-select
+                v-model="form.tutor"
+                placeholder="请选择老师"
+                filterable
+                prop="name"
+                style="width:99%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
@@ -588,7 +594,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-留学生信息.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-留学生信息.xls";
           break;
       }
     },

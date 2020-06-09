@@ -78,8 +78,8 @@
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="班级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="是否在读"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="学历"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="学历"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="employer" align="center" label="工作单位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="家庭住址"></el-table-column>
@@ -195,7 +195,13 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="导师" prop="tutor">
-              <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" style="width:99%">
+              <el-select
+                v-model="form.tutor"
+                placeholder="请选择老师"
+                filterable
+                prop="name"
+                style="width:99%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
@@ -218,8 +224,8 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="状态" prop="english">
-          <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+        <el-form-item label="状态" prop="state">
+          <el-select v-model="form.state" size="normal" placeholder="请选择" style="width:99%">
             <el-option label="在读" value="在读"></el-option>
             <el-option label="已毕业" value="已毕业"></el-option>
           </el-select>
@@ -231,8 +237,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学历" prop="address">
-              <el-input size="normal" v-model="form.address" autocomplete="off" style="width:99%"></el-input>
+            <el-form-item label="学历" prop="education">
+              <el-input size="normal" v-model="form.education" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -458,7 +464,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-通讯录.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-通讯录.xls";
           break;
         case "download":
           this.exportData();

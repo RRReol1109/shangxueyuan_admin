@@ -15,32 +15,41 @@
         </el-dropdown>
       </div>
     </div>
-    <div style="width:100%;">
-      <el-menu
-        class="el-menu-demo"
-        mode="horizontal"
-        background-color="#545c64"
-        text-color="#fff"
-        active-text-color="#FFA500"
-        @select="menuSelect"
-        :default-active="activeIndex"
-      >
-        <el-menu-item class="item" index="1" v-if="roleId==1">全部</el-menu-item>
-        <el-menu-item class="item" index="2">行政办公室</el-menu-item>
-        <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
-        <el-menu-item class="item" index="32">对外交流与国际认证中心</el-menu-item>
-        <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
-        <el-menu-item class="item" index="33">本科生工作办公室</el-menu-item>
-        <el-menu-item class="item" index="34">研究生工作办公室</el-menu-item>
-        <el-menu-item class="item" index="35">本科生教学管理中心</el-menu-item>
-        <el-menu-item class="item" index="36">专业学位教育管理中心</el-menu-item>
-        <el-menu-item class="item" index="37">研究生教学管理中心</el-menu-item>
-        <el-menu-item class="item" index="38">MBA中心</el-menu-item>
-        <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
-        <el-menu-item class="item" index="40">EDP中心</el-menu-item>
-        <el-menu-item class="item" index="12">教师个人</el-menu-item>
-      </el-menu>
-    </div>
+    <el-collapse style="border: 0px">
+      <el-collapse-item title="选择部门" name="1">
+        <template slot="title">
+          <div class="headline">
+            <i class="el-icon-guide"></i>
+            <span>选择部门(鼠标移动到此位置可展开部门选择)</span>
+          </div>
+        </template>
+        <div style="width:100%;">
+          <el-menu
+            mode="horizontal"
+            background-color="#545c64"
+            text-color="#fff"
+            active-text-color="#FFA500"
+            @select="menuSelect"
+            :default-active="activeIndex"
+          >
+            <el-menu-item class="item" index="1" v-if="roleId==1">全部</el-menu-item>
+            <el-menu-item class="item" index="2">行政办公室</el-menu-item>
+            <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
+            <el-menu-item class="item" index="32">对外交流国际认证中心</el-menu-item>
+            <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
+            <el-menu-item class="item" index="33">本科生工作办公室</el-menu-item>
+            <el-menu-item class="item" index="34">研究生工作办公室</el-menu-item>
+            <el-menu-item class="item" index="35">本科生教学管理中心</el-menu-item>
+            <el-menu-item class="item" index="36">专业学位教育管理中心</el-menu-item>
+            <el-menu-item class="item" index="37">研究生教学管理中心</el-menu-item>
+            <el-menu-item class="item" index="38">MBA中心</el-menu-item>
+            <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
+            <el-menu-item class="item" index="40">EDP中心</el-menu-item>
+            <el-menu-item class="item" index="12">教师个人</el-menu-item>
+          </el-menu>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
@@ -51,8 +60,8 @@
 .grid-content {
   background-color: #545c64;
   color: #fff;
-  height: 45px;
-  border-bottom: 1px solid #e6e6e6;
+  height: 60px;
+  /* border-bottom: 1px solid #e6e6e6; */
   box-shadow: 0px 0px 5px 0px #aaa;
 }
 .crumbs {
@@ -71,21 +80,63 @@
   user-select: none;
 }
 .name {
-  line-height: 45px;
-  font-size: 16px;
+  line-height: 60px;
+  font-size: 18px;
   color: #fff;
 }
 .title {
-  font-size: 24px;
+  line-height: 60px;
+  font-size: 30px;
   position: absolute;
   left: 50%;
+  margin-left: -195px;
   text-align: center;
 }
 
 .item {
   font-size: 16px;
   text-align: center;
-  width: 202px;
+  width: 200px;
+}
+
+.el-menu--horizontal > .el-menu-item {
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  margin: 0;
+  border-bottom: 2px solid transparent;
+  color: #909399;
+}
+
+.el-collapse-item__content {
+  padding-bottom: 0px;
+  font-size: 13px;
+  color: #303133;
+  line-height: 1.769230769230769;
+}
+.headline {
+  font-size: 20px;
+  position: absolute;
+  left: 50%;
+  margin-left: -207.24px;
+}
+.el-collapse-item__header {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 48px;
+  line-height: 48px;
+  background-color: #545c64;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 1px solid #ebeef5;
+  font-size: 13px;
+  font-weight: 500;
+  -webkit-transition: border-bottom-color 0.3s;
+  transition: border-bottom-color 0.3s;
+  outline: 0;
 }
 </style>
 

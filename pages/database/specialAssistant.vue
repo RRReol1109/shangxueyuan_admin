@@ -223,7 +223,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="导师" prop="tutor">
-              <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" style="width:99%">
+              <el-select v-model="form.tutor" placeholder="请选择老师" filterable style="width:99%">
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
@@ -530,7 +530,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-专硕名单.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-专硕名单.xls";
           break;
         case "download":
           this.exportData();

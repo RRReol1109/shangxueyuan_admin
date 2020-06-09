@@ -263,7 +263,7 @@
           :key="teacherArr.key"
           :prop="'teacherArr.' + index + '.value'"
         >
-          <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
+          <el-select v-model="teacherArr.name" placeholder="请选择老师" filterable　prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -386,7 +386,7 @@ export default {
       },
       fileLoading: false,
       fileData: "",
-      action:"",
+      action: "",
       loading: false,
       yearsOptions: [],
       roleId: 0,
@@ -729,7 +729,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/科研奖励-获奖.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/科研奖励-获奖.xls";
           break;
       }
     },

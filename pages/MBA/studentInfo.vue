@@ -100,9 +100,19 @@
       <el-table-column :show-overflow-tooltip="true" prop="birth" align="center" label="出生年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="masterType" align="center" label="研究生类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studyType" align="center" label="学制"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="acceptedType" align="center" label="录取类型"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="acceptedType"
+        align="center"
+        label="录取类型"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="入学年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduateDate" align="center" label="毕业年月"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduateDate"
+        align="center"
+        label="毕业年月"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="二级学院"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="前置学历"></el-table-column>
@@ -112,7 +122,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="籍贯"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="民族"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="industry" align="center" label="工作单位所属行业"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="industry"
+        align="center"
+        label="工作单位所属行业"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="postName" align="center" label="岗位及职称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
@@ -279,7 +294,13 @@
         </el-form-item>
         <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
-            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" size="normal">
+            <el-select
+              v-model="form.tutor"
+              filterable
+              placeholder="请选择老师"
+              prop="name"
+              size="normal"
+            >
               <el-option
                 v-for="item in teacherList"
                 :key="item.id"

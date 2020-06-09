@@ -98,6 +98,13 @@
         label="获奖学生姓名"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentId" align="center" label="获奖学生学号"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="studentClass"
+        align="center"
+        label="获奖学生专业班级"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="获奖论文题目"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="获奖日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="本人计分"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
@@ -204,21 +211,26 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="指导老师" prop="teacher" v-if="showTeachInput">
-              <!-- <el-select v-model="ruleForm.teacher" placeholder="请选择老师" style="width:99%">
+              <el-select
+                v-model="ruleForm.teacher"
+                filterable
+                placeholder="请选择老师"
+                style="width:99%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
                   :label="item.name"
                   :value="item.id"
                 ></el-option>
-              </el-select>-->
-              <el-autocomplete
+              </el-select>
+              <!-- <el-autocomplete
                 class="inline-input"
                 v-model="ruleForm.teacher"
                 :fetch-suggestions="queryTeacher"
                 placeholder="请输入内容"
                 :trigger-on-focus="false"
-              ></el-autocomplete>
+              ></el-autocomplete>-->
             </el-form-item>
           </el-col>
         </el-row>
@@ -231,11 +243,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="获奖论文题目" prop="studentName">
+            <el-form-item label="获奖论文题目" prop="title">
               <el-autocomplete
                 style="width:99%"
                 clearable
-                v-model="ruleForm.studentName"
+                v-model="ruleForm.title"
                 :fetch-suggestions="queryStudent"
                 placeholder="请输入内容"
               ></el-autocomplete>
@@ -267,10 +279,10 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="获奖学生专业班级" prop="studentId">
+            <el-form-item label="获奖学生专业班级" prop="studentClass">
               <el-input
                 clearable
-                v-model="ruleForm.studentId"
+                v-model="ruleForm.studentClass"
                 placeholder="请输入内容"
                 style="width:99%"
               ></el-input>
@@ -532,6 +544,7 @@ export default {
               }
             }
           }
+          let teacherName = this.ruleForm.teacher;
           await axios.$post("/excellentPapers/add", this.ruleForm);
           break;
         case "edit":

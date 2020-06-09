@@ -13,7 +13,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师:">
-          <el-select size="normal" v-model="query.teacher" placeholder="请选择老师">
+          <el-select size="normal" v-model="query.teacher" 　filterable placeholder="请选择老师">
             <el-option label="全部" value></el-option>
             <el-option
               v-for="item in teacherList"
@@ -177,7 +177,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
-              <el-select v-model="ruleForm.teacher" placeholder="请选择老师" style="width:99%">
+              <el-select
+                v-model="ruleForm.teacher"
+                placeholder="请选择老师"
+                　filterable
+                style="width:99%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"

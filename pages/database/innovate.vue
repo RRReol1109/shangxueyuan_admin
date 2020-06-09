@@ -13,18 +13,6 @@
             placeholder="年度"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="学院:">
-          <el-input v-model="query.college" placeholder="请输入学院" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="一级学科:">
-          <el-input v-model="query.firstLevelCategory" placeholder="请输入学科" size="normal"></el-input>
-        </el-form-item>
         <el-form-item label="项目名称:">
           <el-input v-model="query.projectName" placeholder="请输入项目名称" size="normal"></el-input>
         </el-form-item>
@@ -56,7 +44,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/teachingReform/upload?token='AuthenticationToken'"
+                  action="http://bsoa.csu.edu.cn/bs/educationalReform/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -73,7 +61,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="学院"></el-table-column>
@@ -91,7 +79,16 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="funding" align="center" label="经费（万元）"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      ID
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>-->
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="立项时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="项目类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="级别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="author" align="center" label="负责人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="系所"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span>{{scope.row.auditFlag | statusFilter}}</span>
@@ -172,14 +169,87 @@
       >
         <el-row>
           <el-col :span="12">
+            <el-form-item label="年度:" prop="year">
+              <el-date-picker
+                v-model="form.year"
+                align="right"
+                size="normal"
+                type="date"
+                format="yyyy"
+                value-format="yyyy"
+                style="width:99%"
+                placeholder="年度"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="立项时间:" prop="date">
+              <el-date-picker
+                v-model="form.date"
+                align="right"
+                size="normal"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                style="width:99%"
+                placeholder="立项时间"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="项目类型" prop="type">
+              <el-input size="normal" v-model="form.type" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="级别" prop="level">
+              <el-select v-model="form.level" size="normal" placeholder="级别" style="width:99%">
+                <el-option label="国家级" value="国家级"></el-option>
+                <el-option label="省级" value="省级"></el-option>
+                <el-option label="校级" value="校级"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="负责人" prop="author">
+              <el-input size="normal" v-model="form.author" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="性别" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="系所" prop="college">
+              <el-input size="normal" v-model="form.college" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="项目名称" prop="title">
+              <el-input size="normal" v-model="form.title" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- <el-row>
+          <el-col :span="12">
             <el-form-item label="姓名" prop="name">
               <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="学号" prop="name">
+             <el-form-item label="学号" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-            </el-form-item>-->
+            </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="性别" prop="gender">
@@ -250,7 +320,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="毕业学校">
+         <el-form-item label="毕业学校">
           <el-col :span="6">
             <el-input size="normal" v-model="form.graduationSchool" autocomplete="off"></el-input>
           </el-col>
@@ -259,10 +329,10 @@
           <el-col :span="6">
             <el-input size="normal" v-model="form.funding" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>-->
+        </el-form-item>
         <el-form-item size="normal" label="备注" prop="remark">
           <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
     </el-drawer>
   </div>
@@ -356,7 +426,7 @@ export default {
       if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/teachingReform/list", this.query);
+      let res = await axios.$post("/educationalReform/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
@@ -384,10 +454,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/teachingReform/add", this.form);
+          await axios.$post("/educationalReform/add", this.form);
           break;
         case "edit":
-          await axios.$post("/teachingReform/update", this.form);
+          await axios.$post("/educationalReform/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -421,9 +491,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let teachingReformId = row.id;
-          await axios.$post("/teachingReform/delete", {
-            teachingReformId: teachingReformId
+          let educationalReformId = row.id;
+          await axios.$post("/educationalReform/delete", {
+            educationalReformId: educationalReformId
           });
           this.list();
           this.$message({
@@ -455,7 +525,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/teachingReform/update", this.examineForm);
+        await axios.$post("/educationalReform/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -505,7 +575,7 @@ export default {
     },
 
     async exportData() {
-      let data = await axios.$download("/teachingReform/export", {
+      let data = await axios.$download("/educationalReform/export", {
         params: this.query
       });
       if (data) {
@@ -543,9 +613,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let teachingReformId = element.id;
-            await axios.$post("/teachingReform/delete", {
-              teachingReformId: teachingReformId
+            let educationalReformId = element.id;
+            await axios.$post("/educationalReform/delete", {
+              educationalReformId: educationalReformId
             });
           }
           this.tableData = [];

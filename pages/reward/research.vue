@@ -251,7 +251,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="项目主持人" prop="teacher">
-              <el-select v-model="ruleForm.teacher" placeholder="请选择老师">
+              <el-select v-model="ruleForm.teacher" filterable　placeholder="请选择老师">
                 <el-option
                   style="width:99%"
                   v-for="item in teacherList"

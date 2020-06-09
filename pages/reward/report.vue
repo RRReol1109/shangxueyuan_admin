@@ -200,7 +200,7 @@
           :key="teacherArr.key"
           :prop="'teacherArr.' + index + '.value'"
         >
-          <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="name">
+          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师" prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"

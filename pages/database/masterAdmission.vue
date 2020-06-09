@@ -23,7 +23,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-select v-model="query.tutor" placeholder="请选择老师" prop="name">
+          <el-select v-model="query.tutor" filterable placeholder="请选择老师" prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -276,7 +276,13 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="导师" prop="tutor">
-              <el-select v-model="form.tutor" placeholder="请选择老师" prop="name" style="width:99%">
+              <el-select
+                v-model="form.tutor"
+                placeholder="请选择老师"
+                filterable
+                prop="name"
+                style="width:99%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"

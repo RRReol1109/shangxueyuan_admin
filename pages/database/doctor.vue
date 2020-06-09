@@ -22,7 +22,7 @@
           <el-input v-model="query.major" placeholder="请输入学号" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+          <el-select v-model="form.tutor" filterable placeholder="请选择老师" prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"

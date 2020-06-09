@@ -23,7 +23,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-select v-model="query.tutor" placeholder="请选择老师" prop="name">
+          <el-select v-model="query.tutor" placeholder="请选择老师" filterable prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -95,11 +95,31 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="邮箱"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scholarshipName" align="center" label="奖学金名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="financialAidName" align="center" label="助学金名称"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="scholarshipName"
+        align="center"
+        label="奖学金名称"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="financialAidName"
+        align="center"
+        label="助学金名称"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduatedSchool"
+        align="center"
+        label="毕业学校"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationMajor"
+        align="center"
+        label="毕业专业"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remarks" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -241,7 +261,7 @@
         </el-form-item>
         <el-form-item label="导师" prop="tutor">
           <el-col :span="6">
-            <el-select v-model="form.tutor" placeholder="请选择老师" prop="name">
+            <el-select v-model="form.tutor" placeholder="请选择老师" filterable prop="name">
               <el-option
                 v-for="item in teacherList"
                 :key="item.id"
