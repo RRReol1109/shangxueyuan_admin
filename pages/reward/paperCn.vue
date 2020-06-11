@@ -475,7 +475,6 @@ export default {
         title: "",
         journal: "",
         collegeLevel: "1",
-        half: "1",
         score: "",
         finalScore: "",
         cateNumber: "",
@@ -633,7 +632,6 @@ export default {
       this.tableData = res.rows;
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];
-        this.tableData[i].half = element.half == true ? "是" : "否";
         // let teachers = this.tableData[i].authors.split("|");
         // for (let j = 0; j < teachers.length; j++) {
         //   const item = teachers[j];
