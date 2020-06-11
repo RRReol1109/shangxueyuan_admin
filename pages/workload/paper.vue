@@ -28,7 +28,7 @@
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -141,7 +141,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -281,7 +281,7 @@
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -361,7 +361,7 @@ export default {
   },
   filters: {
     statusFilter: function(value) {
-      let test = { 0: "未审核", "1": "审核已通过", "2": "审核未通过" };
+      let test = { 0: "未审核", "1": "已审核", "2": "未通过" };
       console.log(test);
       if (!isNaN(parseInt(value))) {
         return test[value.toString()];

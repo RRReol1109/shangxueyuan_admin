@@ -124,7 +124,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">

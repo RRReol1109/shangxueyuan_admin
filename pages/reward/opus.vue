@@ -86,22 +86,23 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" label="类型" align="center"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="publishDate" align="center" label="出版时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="著作教程名称"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="publishDate" align="center" label="出版时间"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="name" align="center" label="著作教程名称"></el-table-column>
       <el-table-column
+      width="150"
         :show-overflow-tooltip="true"
         prop="publishHouse"
         align="center"
         label="出版社名称"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="signature" align="center" label="署名单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="chiefEditor" align="center" label="主编信息"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="wordCount" align="center" label="总字数（万）"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="作者"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN编号"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="signature" align="center" label="署名单位"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="chiefEditor" align="center" label="主编信息"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="wordCount" align="center" label="总字数（万）"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="作者"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN编号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -147,7 +148,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -353,7 +354,7 @@
           <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -440,8 +441,8 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "审核已通过",
-        "2": "审核未通过"
+        "1": "已审核",
+        "2": "未通过"
       }[value.toString()];
     }
   },

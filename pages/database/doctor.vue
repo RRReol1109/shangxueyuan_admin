@@ -115,7 +115,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
@@ -153,7 +153,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -343,8 +343,8 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "审核已通过",
-        "2": "审核未通过"
+        "1": "已审核",
+        "2": "未通过"
       }[value.toString()];
     }
   },
