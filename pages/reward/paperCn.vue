@@ -385,7 +385,6 @@
             border
             style="width: 100%"
             size="normal"
-            v-loading="fileLoading"
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
@@ -415,8 +414,7 @@
             :show-file-list="false"
             :on-success="uploadSuccess"
             drag
-            :data="fileData"
-            :action="action"
+            action="'http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>

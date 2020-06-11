@@ -336,8 +336,7 @@
             :show-file-list="false"
             :on-success="uploadSuccess"
             drag
-            :data="fileData"
-            :action="action"
+            action="action"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>

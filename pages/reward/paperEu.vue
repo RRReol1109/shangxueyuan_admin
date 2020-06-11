@@ -146,7 +146,12 @@
         align="center"
         label="第一作者"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="coauthorOrg"
+        align="center"
+        label="第一通讯作者"
+      ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="reformPaper"
@@ -464,7 +469,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="金融时报FT50" prop="ft50">
-              <el-select placeholder="请选择" v-model="ruleForm.ruleForm" style="width:98%">
+              <el-select placeholder="请选择" v-model="ruleForm.ft50" style="width:98%">
                 <el-option label="是" value="是"></el-option>
                 <el-option label="否" value="否"></el-option>
               </el-select>
@@ -535,8 +540,8 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一通讯作者" prop>
-              <el-input clearable v-model="ruleForm.highlyCited" placeholder style="width:99%"></el-input>
+            <el-form-item label="第一通讯作者" prop="coauthorOrg">
+              <el-input clearable v-model="ruleForm.coauthorOrg" placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -639,10 +644,11 @@
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="fileList"
+            :data="fileItems"
             border
             style="width: 100%"
             size="normal"
+            :disabled="true"
             v-loading="fileLoading"
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
@@ -654,10 +660,10 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="files" label="文件名" align="center"></el-table-column>
             <el-table-column
               :show-overflow-tooltip="true"
-              prop="create_time"
+              prop="createTime"
               label="创建时间"
               align="center"
             ></el-table-column>
@@ -671,10 +677,10 @@
           <el-upload
             class="dragger"
             :show-file-list="false"
-            :on-success="uploadSuccess"
+            :on-success="uploadFileSuccess"
             drag
-            :data="fileData"
-            :action="action"
+            :headers="header"
+            action="http://bs.hk.darkal.cn/mgr/upload"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
@@ -774,6 +780,8 @@ export default {
       teacherList: [],
       loading: true,
       companyArr: [],
+      filesInfo: [],
+      fileItems: [],
       rules: {
         journal: [
           { required: true, message: "请输入期刊名称", trigger: "blur" }
@@ -841,6 +849,18 @@ export default {
       localStorage.setItem("names", JSON.stringify(this.companys));
     },
     downLoadFile(rows) {
+      alert(rows);
+      if (rows.files) {
+        window.open(rows.files);
+      } else {
+        this.$message({
+          type: "info",
+          message: "该条记录无附件"
+        });
+      }
+    },
+    downLoadFile1(rows) {
+      alert(rows);
       if (rows.files) {
         window.open(rows.files);
       } else {
@@ -1011,7 +1031,7 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          this.ruleForm.files = this.fileurl;
+          this.ruleForm.files = JSON.stringify(this.filesInfo);
           await axios.$post("/articleEn/add", this.ruleForm);
           this.fileurl = "";
           break;
@@ -1048,6 +1068,9 @@ export default {
           ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+      } else if (this.operate === "show") {
+        console.log(row);
+        this.fileItems = JSON.parse(row.files);
       } else {
         this.ruleForm = row;
         this.ruleForm.teacherArr = [];
@@ -1115,6 +1138,16 @@ export default {
     },
     uploadSuccess() {
       this.list();
+    },
+    uploadFileSuccess(res, file) {
+      console.log(res);
+      console.log(file);
+      this.filesInfo.push({
+        url: res,
+        files: file.name,
+        createTime: moment(new Date()).format("YYYY-MM-DD")
+      });
+      console.log(this.filesInfo[0]);
     },
     async handleCommand(command) {
       console.log(command);

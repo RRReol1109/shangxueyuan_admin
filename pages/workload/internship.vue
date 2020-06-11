@@ -279,7 +279,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item
+        <!-- <el-form-item
           v-for="(teacherArr, index) in ruleForm.teacherArr"
           :label="'老师' + (index+1)"
           :key="teacherArr.key"
@@ -301,8 +301,8 @@
               ></el-option>
             </el-select>
             <el-select v-model="teacherArr.title" placeholder="职称" style="width:99%">
-              <el-option label="教授" value="教授"></el-option>
-              <el-option label="副教授" value="副教授"></el-option>
+              <el-option label="教授" value="0"></el-option>
+              <el-option label="副教授" value="1"></el-option>
             </el-select>
             <el-checkbox v-model="teacherArr.flag">是否是队长</el-checkbox>
             <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
@@ -310,13 +310,37 @@
         </el-form-item>
         <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
-        </el-form-item>
+        </el-form-item>-->
         <!-- <el-form-item label="老师信息:" :prop="'teacherInfo'" v-if="['show'].includes(operate)">
           <el-col :span="12">
             <label>教师id-教师姓名-职称（教授/副教授）-是否是队长</label>
             <el-input v-model="ruleForm.teachers" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
+        <el-form-item
+          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          :label="'作者信息' + (index+1)"
+          :key="teacherArr.key"
+          :prop="'teacherArr.' + index + '.value'"
+        >
+          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师" prop="name">
+            <el-option
+              v-for="item in teacherList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+          <el-select v-model="teacherArr.title" placeholder="职称" style="width:120px">
+            <el-option label="教授" value="0"></el-option>
+            <el-option label="副教授" value="1"></el-option>
+          </el-select>
+          <el-checkbox v-model="teacherArr.flag">是否是队长</el-checkbox>
+          <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
+        </el-form-item>
+        <el-form-item v-if="!['show'].includes(operate)">
+          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
+        </el-form-item>
         <el-row>
           <el-col :span="12">
             <el-form-item label="指导班级" prop="classes">
@@ -401,7 +425,6 @@ export default {
         address: "",
         type: "1",
         count: 0,
-        hours: 0,
         days: 0,
         ratio: "1.0",
         teacherArr: [
@@ -418,10 +441,6 @@ export default {
         address: [{ required: true, message: "请输入地址", trigger: "blur" }],
         count: [
           { required: true, message: "请输入实习人数", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
-        ],
-        hours: [
-          { required: true, message: "请输入学时", trigger: "blur" },
           { validator: validateNumber, trigger: "blur" }
         ],
         classes: [
@@ -637,7 +656,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.ruleForm.count = parseInt(this.ruleForm.count);
-          this.ruleForm.hours = parseInt(this.ruleForm.hours);
+          // this.ruleForm.hours = parseInt(this.ruleForm.hours);
           console.log(this.ruleForm);
           this.updataCache();
         } else {
@@ -811,7 +830,6 @@ export default {
             }
           ],
           type: "",
-          hours: 0,
           count: 0,
           teachers: "",
           english: "0",

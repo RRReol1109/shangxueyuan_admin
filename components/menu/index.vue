@@ -6,7 +6,7 @@
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(0, 0, 0, 0.4)"
       :default-active="sidebar"
-      class="el-menu-vertical"
+      class="el-menu-vertical menu"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
@@ -852,6 +852,10 @@ export default {
   /* overflow-x: hidden; */
   /* margin-bottom: -2000px;
   padding-bottom: 2000px; */
+}
+
+.meun {
+  overflow: hidden;
 }
 .show {
   display: block;
