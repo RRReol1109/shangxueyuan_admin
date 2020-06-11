@@ -86,17 +86,19 @@
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="titleEn" align="center" label="论文英文名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="reformPaper" align="center" label="是否为教改论文"></el-table-column>
+      <el-table-column width="200" :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
+      <el-table-column width="200" :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="schoolLevel"
         align="center"
         label="学校期刊分级"
       ></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="collegeLevel"
         align="center"
@@ -104,24 +106,16 @@
       ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
-      <el-table-column :show-overflow-tooltip="true" prop="issn" align="center" label="期刊ISSN号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="userName"
-        align="center"
-        label="第一通讯作者单位"
-      ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="是否为教改论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="issn" align="center" label="期刊ISSN号"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
+      <el-table-column width="300" :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -209,7 +203,14 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12"></el-col>
+          <el-col :span="12">
+            <el-form-item label="是否为教改论文" prop="reformPaper">
+              <el-select v-model="ruleForm.reformPaper" placeholder="请选择级别" style="width:98%">
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-form-item label="论文名称:" prop="title">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
@@ -330,7 +331,14 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="第一作者" prop>
-              <el-input clearable v-model="ruleForm.highlyCited" placeholder style="width:98%"></el-input>
+              <el-select v-model="ruleForm.firstauthor" filterable placeholder="请选择老师" prop="" style="width:98%">
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -363,25 +371,28 @@
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.cateNumber"
-            placeholder
+            placeholder="张三，李四_外单位，王五_张三"
+            v-model="ruleForm.authors"
             style="width:99%"
           ></el-input>
+          <span style="color:#F56C6C">注：以上示例中王五是张三的学生</span>
         </el-form-item>
         <!-- <el-form-item label="计分" prop="score">
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.score" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="是否为教改论文" prop="english">
-          <el-col :span="12">
-            <el-checkbox v-model="ruleForm.english"></el-checkbox>
-          </el-col>
+        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
+            <el-option label="未审核" value="0"></el-option>
+            <el-option label="通过" value="1"></el-option>
+            <el-option label="未通过" value="2"></el-option>
+          </el-select>
         </el-form-item>
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="fileList"
+            :data="ruleForm.files"
             border
             style="width: 100%"
             size="normal"
@@ -396,25 +407,19 @@
               width="50"
             ></el-table-column>
             <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="create_time"
-              label="创建时间"
-              align="center"
-            ></el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
           <el-upload
             class="dragger"
             :show-file-list="false"
-            :on-success="uploadSuccess"
+            :on-success="uploadAdditionSuccess"
             drag
-            action="'http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+            action="http://bs.hk.darkal.cn/mgr/upload"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
@@ -425,24 +430,6 @@
             </div>
           </el-upload>
         </div>
-        <!-- <el-form-item label="附件" prop="files">
-          <el-upload
-            class
-            :headers="header"
-            :file-list="fileLists"
-            :on-success="fileUploadSuccess"
-            action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
-          >
-            <el-button size="normal" class type="primary">附件上传</el-button>
-          </el-upload>
-        </el-form-item>-->
-        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
-            <el-option label="未审核" value="0"></el-option>
-            <el-option label="通过" value="1"></el-option>
-            <el-option label="未通过" value="2"></el-option>
-          </el-select>
-        </el-form-item>
       </el-form>
     </el-drawer>
   </div>
@@ -547,6 +534,19 @@ export default {
     }
   },
   methods: {
+    uploadAdditionSuccess(response) {
+      if(response && response.indexOf('http') != -1) {
+         this.ruleForm.files.push({
+            name: response
+        });
+      }
+    },
+    downloadAdditionFile(row) {
+      console.log('downloadAdditionFile:::', row);
+    },
+    deleteAdditionFile(row) {
+      console.log('deleteAdditionFile:::', row);
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
@@ -657,33 +657,33 @@ export default {
       }
     },
     async submitForm(formName) {
-      for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
-        let element = this.ruleForm.teacherArr[i];
-        for (const key in element) {
-          if (element.hasOwnProperty(key)) {
-            let info = element[key];
-            console.log(info);
-            if (key == "name") {
-              this.ruleForm.authors += parseInt(info);
-            }
-            if (key == "num") {
-              this.ruleForm.authors += "|" + info;
-            }
-            if (key == "stu") {
-              this.ruleForm.authors += "|" + info;
-            }
-            if (key == "tx") {
-              this.ruleForm.authors += "|" + info + ",";
-            }
-          }
-        }
-        if (i == this.ruleForm.teacherArr.length - 1) {
-          this.ruleForm.authors = this.ruleForm.authors.substr(
-            0,
-            this.ruleForm.authors.length - 1
-          );
-        }
-      }
+      // for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+      //   let element = this.ruleForm.teacherArr[i];
+      //   for (const key in element) {
+      //     if (element.hasOwnProperty(key)) {
+      //       let info = element[key];
+      //       console.log(info);
+      //       if (key == "name") {
+      //         this.ruleForm.authors += parseInt(info);
+      //       }
+      //       if (key == "num") {
+      //         this.ruleForm.authors += "|" + info;
+      //       }
+      //       if (key == "stu") {
+      //         this.ruleForm.authors += "|" + info;
+      //       }
+      //       if (key == "tx") {
+      //         this.ruleForm.authors += "|" + info + ",";
+      //       }
+      //     }
+      //   }
+      //   if (i == this.ruleForm.teacherArr.length - 1) {
+      //     this.ruleForm.authors = this.ruleForm.authors.substr(
+      //       0,
+      //       this.ruleForm.authors.length - 1
+      //     );
+      //   }
+      // }
       let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -708,7 +708,7 @@ export default {
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
-          this.ruleForm.authorCnt = this.ruleForm.teacherArr.length;
+          this.ruleForm.authorCnt = this.ruleForm.authors.split('，').length || 0;
           // for (const key in this.ruleForm) {
           //   if (this.ruleForm.hasOwnProperty(key)) {
           //     const element = this.ruleForm[key];
