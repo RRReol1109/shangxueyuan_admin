@@ -42,7 +42,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/verticalResearch/upload?token='AuthenticationToken'"
@@ -63,9 +63,24 @@
       <!-- <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="序号"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="projectId" align="center" label="项目编号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="projectOrigin" align="center" label="项目来源"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="projectOrganizer" align="center" label="立项机构"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="projectLevel" align="center" label="项目级别"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="projectOrigin"
+        align="center"
+        label="项目来源"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="projectOrganizer"
+        align="center"
+        label="立项机构"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="projectLevel"
+        align="center"
+        label="项目级别"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="立项年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="起始年月日"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="endDate" align="center" label="终止年月日"></el-table-column>
@@ -339,6 +354,10 @@ export default {
       this.loading = false;
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async examineData() {

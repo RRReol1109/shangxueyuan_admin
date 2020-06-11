@@ -32,7 +32,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="指导研究生类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="student" align="center" label="指导研究生姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationStudent" align="center" label="研究生人数"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationStudent"
+        align="center"
+        label="研究生人数"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="eliminate" align="center" label="工作量"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
@@ -250,6 +255,10 @@ export default {
       this.loading = false;
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async examineData() {
@@ -471,12 +480,12 @@ export default {
   margin-bottom: 10px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

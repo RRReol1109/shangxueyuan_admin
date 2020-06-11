@@ -50,7 +50,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/academicExchange/upload?token='AuthenticationToken'"
@@ -482,7 +482,8 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/数据库-学术交流.xls";
+          location.href =
+            "http://bsoa.csu.edu.cn/excel-model/数据库-学术交流.xls";
           break;
         case "download":
           this.exportData();
@@ -491,6 +492,10 @@ export default {
     },
 
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
 

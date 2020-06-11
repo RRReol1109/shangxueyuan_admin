@@ -188,249 +188,303 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="教职工姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="教职工姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="所在系" prop="college">
-          <el-col :span="6">
-            <el-select v-model="form.gender" size="normal" placeholder="请选择">
-              <el-option label="企管系" value="男"></el-option>
-              <el-option label="营销系" value="营销系"></el-option>
-              <el-option label="信息系" value="信息系"></el-option>
-              <el-option label="金融系" value="金融系"></el-option>
-              <el-option label="财管系" value="财管系"></el-option>
-              <el-option label="经贸系" value="经贸系"></el-option>
-              <el-option label="会计系" value="会计系"></el-option>
-              <el-option label="行政" value="行政"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="所在系" prop="college">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="企管系" value="男"></el-option>
+                <el-option label="营销系" value="营销系"></el-option>
+                <el-option label="信息系" value="信息系"></el-option>
+                <el-option label="金融系" value="金融系"></el-option>
+                <el-option label="财管系" value="财管系"></el-option>
+                <el-option label="经贸系" value="经贸系"></el-option>
+                <el-option label="会计系" value="会计系"></el-option>
+                <el-option label="行政" value="行政"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别" prop="gender">
-          <el-col :span="6">
-            <el-select v-model="form.gender" size="normal" placeholder="请选择">
-              <el-option label="男" value="男"></el-option>
-              <el-option label="女" value="女"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="籍贯" prop="nativePlace">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.nativePlace"></el-input>
+          <el-col :span="12">
+            <el-form-item label="籍贯" prop="nativePlace">
+              <el-input size="normal" v-model="form.nativePlace" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="民族" prop="nation">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.nation"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="民族" prop="nation">
+              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="政治面貌" prop="political">
-          <el-col :span="6">
-            <el-select v-model="form.political" size="normal" placeholder="请选择">
-              <el-option label="共产党员" value="共产党员"></el-option>
-              <el-option label="民主党派" value="民主党派"></el-option>
-              <el-option label="无党派" value="无党派"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="政治面貌" prop="political">
+              <el-select v-model="form.political" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="共产党员" value="共产党员"></el-option>
+                <el-option label="民主党派" value="民主党派"></el-option>
+                <el-option label="无党派" value="无党派"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="身份证号码" prop="idNum">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.idNum"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="身份证号码" prop="idNum">
+              <el-input size="normal" v-model="form.idNum"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="来院工作年月:" prop="startDate">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.startDate"
-              type="date"
-              format="yyyy-MM"
-              value-format="yyyy-MM"
-              placeholder="选择日期时间"
-              size="normal"
-            ></el-date-picker>
+          <el-col :span="12">
+            <el-form-item label="来院工作年月:" prop="startDate">
+              <el-date-picker
+                v-model="form.startDate"
+                type="date"
+                style="width:99%"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                size="normal"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="现住址" prop="address">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.address"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="现住址" prop="address">
+              <el-input size="normal" v-model="form.address" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="状态" prop="state">
-          <el-col :span="6">
-            <el-select v-model="form.state" size="normal" placeholder="请选择">
-              <el-option label="在职" value="在职"></el-option>
-              <el-option label="退休" value="退休"></el-option>
-              <el-option label="调走" value="调走"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="状态" prop="state">
+              <el-select v-model="form.state" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="在职" value="在职"></el-option>
+                <el-option label="退休" value="退休"></el-option>
+                <el-option label="调走" value="调走"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="岗位" prop="editorDeptName">
-          <el-col :span="6">
-            <el-select v-model="form.editorDeptName" size="normal" placeholder="请选择">
-              <el-option label="教学科研" value="教学科研"></el-option>
-              <el-option label="教学" value="教学"></el-option>
-              <el-option label="科研" value="科研"></el-option>
-              <el-option label="开发" value="开发"></el-option>
-              <el-option label="行政" value="行政"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="岗位" prop="editorDeptName">
+              <el-select
+                v-model="form.editorDeptName"
+                size="normal"
+                placeholder="请选择"
+                style="width:99%"
+              >
+                <el-option label="教学科研" value="教学科研"></el-option>
+                <el-option label="教学" value="教学"></el-option>
+                <el-option label="科研" value="科研"></el-option>
+                <el-option label="开发" value="开发"></el-option>
+                <el-option label="行政" value="行政"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="现职称" prop="title">
-          <el-col :span="6">
-            <el-select v-model="form.title" size="normal" placeholder="请选择">
-              <el-option label="教授" value="教授"></el-option>
-              <el-option label="副教授" value="副教授"></el-option>
-              <el-option label="讲师" value="讲师"></el-option>
-              <el-option label="助教" value="助教"></el-option>
-              <el-option label="研究员" value="研究员"></el-option>
-              <el-option label="副研究员" value="副研究员"></el-option>
-              <el-option label="高级工程师" value="高级工程师"></el-option>
-              <el-option label="工程师" value="工程师"></el-option>
-              <el-option label="高级实验师" value="高级实验师"></el-option>
-              <el-option label="实验师" value="实验师"></el-option>
-              <el-option label="图书馆员" value="图书馆员"></el-option>
-              <el-option label="会计师" value="会计师"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="现职称" prop="title">
+              <el-select v-model="form.title" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="教授" value="教授"></el-option>
+                <el-option label="副教授" value="副教授"></el-option>
+                <el-option label="讲师" value="讲师"></el-option>
+                <el-option label="助教" value="助教"></el-option>
+                <el-option label="研究员" value="研究员"></el-option>
+                <el-option label="副研究员" value="副研究员"></el-option>
+                <el-option label="高级工程师" value="高级工程师"></el-option>
+                <el-option label="工程师" value="工程师"></el-option>
+                <el-option label="高级实验师" value="高级实验师"></el-option>
+                <el-option label="实验师" value="实验师"></el-option>
+                <el-option label="图书馆员" value="图书馆员"></el-option>
+                <el-option label="会计师" value="会计师"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="获得现职称年月:" prop="titleDate">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.titleDate"
-              type="date"
-              format="yyyy-MM"
-              value-format="yyyy-MM"
-              placeholder="选择日期时间"
-              size="normal"
-            ></el-date-picker>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="获得现职称年月:" prop="titleDate">
+              <el-date-picker
+                v-model="form.titleDate"
+                style="width:99%"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                size="normal"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="现职级" prop="level">
-          <el-col :span="6">
-            <el-select v-model="form.level" size="normal" placeholder="请选择">
-              <el-option label="教授一级" value="教授一级"></el-option>
-              <el-option label="教授二级" value="教授二级"></el-option>
-              <el-option label="教授三级" value="教授三级"></el-option>
-              <el-option label="教授四级" value="教授四级"></el-option>
-              <el-option label="副教授一级" value="副教授一级"></el-option>
-              <el-option label="副教授二级" value="副教授二级"></el-option>
-              <el-option label="副教授三级" value="副教授三级"></el-option>
-              <el-option label="讲师一级" value="讲师一级"></el-option>
-              <el-option label="讲师二级" value="讲师二级"></el-option>
-              <el-option label="讲师三级" value="讲师三级"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="现职级" prop="level">
+              <el-select v-model="form.level" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="教授一级" value="教授一级"></el-option>
+                <el-option label="教授二级" value="教授二级"></el-option>
+                <el-option label="教授三级" value="教授三级"></el-option>
+                <el-option label="教授四级" value="教授四级"></el-option>
+                <el-option label="副教授一级" value="副教授一级"></el-option>
+                <el-option label="副教授二级" value="副教授二级"></el-option>
+                <el-option label="副教授三级" value="副教授三级"></el-option>
+                <el-option label="讲师一级" value="讲师一级"></el-option>
+                <el-option label="讲师二级" value="讲师二级"></el-option>
+                <el-option label="讲师三级" value="讲师三级"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="导师资格" prop="tutor">
-          <el-col :span="6">
-            <el-select v-model="form.tutor" size="normal" placeholder="请选择">
-              <el-option label="博导" value="博导"></el-option>
-              <el-option label="硕导" value="硕导"></el-option>
-              <el-option label="本导" value="本导"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="导师资格" prop="tutor">
+              <el-select v-model="form.tutor" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="博导" value="博导"></el-option>
+                <el-option label="硕导" value="硕导"></el-option>
+                <el-option label="本导" value="本导"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="人才类别" prop="personType">
-          <el-col :span="6">
-            <el-select v-model="form.personType" size="normal" placeholder="请选择">
-              <el-option label="国务院政府特殊津贴专家" value="国务院政府特殊津贴专家"></el-option>
-              <el-option label="长江学者" value="长江学者"></el-option>
-              <el-option label="教育部新世纪人才" value="教育部新世纪人才"></el-option>
-              <el-option label="中南大学531第一层次人才" value="中南大学531第一层次人才"></el-option>
-              <el-option label="中南大学531第二层次人才" value="中南大学531第二层次人才"></el-option>
-              <el-option label="中南大学531第三层次人才" value="中南大学531第三层次人才"></el-option>
-              <el-option label="青年骨干教师" value="青年骨干教师"></el-option>
-              <el-option label="升华猎英" value="升华猎英"></el-option>
-              <el-option label="升华育英" value="升华育英"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="人才类别" prop="personType">
+              <el-select
+                v-model="form.personType"
+                size="normal"
+                placeholder="请选择"
+                style="width:99%"
+              >
+                <el-option label="国务院政府特殊津贴专家" value="国务院政府特殊津贴专家"></el-option>
+                <el-option label="长江学者" value="长江学者"></el-option>
+                <el-option label="教育部新世纪人才" value="教育部新世纪人才"></el-option>
+                <el-option label="中南大学531第一层次人才" value="中南大学531第一层次人才"></el-option>
+                <el-option label="中南大学531第二层次人才" value="中南大学531第二层次人才"></el-option>
+                <el-option label="中南大学531第三层次人才" value="中南大学531第三层次人才"></el-option>
+                <el-option label="青年骨干教师" value="青年骨干教师"></el-option>
+                <el-option label="升华猎英" value="升华猎英"></el-option>
+                <el-option label="升华育英" value="升华育英"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="现职务" prop="post">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.post"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="现职务" prop="post">
+              <el-input size="normal" v-model="form.post" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="任现职务年月:" prop="postDate">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.postDate"
-              type="date"
-              format="yyyy-MM"
-              value-format="yyyy-MM"
-              placeholder="选择日期时间"
-              size="normal"
-            ></el-date-picker>
+          <el-col :span="12">
+            <el-form-item label="任现职务年月:" prop="postDate">
+              <el-date-picker
+                v-model="form.postDate"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                style="width:99%"
+                size="normal"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="最高学历" prop="highEducation">
-          <el-col :span="6">
-            <el-select v-model="form.highEducation" size="normal" placeholder="请选择">
-              <el-option label="博士研究生" value="博士研究生"></el-option>
-              <el-option label="硕士研究生" value="硕士研究生"></el-option>
-              <el-option label="本科生" value="本科生"></el-option>
-              <el-option label="专科生" value="专科生"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="最高学历" prop="highEducation">
+              <el-select
+                v-model="form.highEducation"
+                size="normal"
+                placeholder="请选择"
+                style="width:99%"
+              >
+                <el-option label="博士研究生" value="博士研究生"></el-option>
+                <el-option label="硕士研究生" value="硕士研究生"></el-option>
+                <el-option label="本科生" value="本科生"></el-option>
+                <el-option label="专科生" value="专科生"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="最高学位" prop="highDegree">
-          <el-col :span="6">
-            <el-select v-model="form.highDegree" size="normal" placeholder="请选择">
-              <el-option label="博士" value="博导"></el-option>
-              <el-option label="硕士" value="硕导"></el-option>
-              <el-option label="学士" value="本导"></el-option>
-              <el-option label="无" value="无"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="最高学位" prop="highDegree">
+              <el-select
+                v-model="form.highDegree"
+                size="normal"
+                placeholder="请选择"
+                style="width:99%"
+              >
+                <el-option label="博士" value="博导"></el-option>
+                <el-option label="硕士" value="硕导"></el-option>
+                <el-option label="学士" value="本导"></el-option>
+                <el-option label="无" value="无"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业学校" prop="school">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.school"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="毕业学校" prop="school">
+              <el-input size="normal" v-model="form.school" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业专业" prop="college">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.college"></el-input>
+          <el-col :span="12">
+            <el-form-item label="毕业专业" prop="college">
+              <el-input size="normal" v-model="form.college" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业年月" prop="graduateDate">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.graduateDate"
-              type="date"
-              format="yyyy-MM"
-              value-format="yyyy-MM"
-              placeholder="选择日期时间"
-              size="normal"
-            ></el-date-picker>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="毕业年月" prop="graduateDate">
+              <el-date-picker
+                v-model="form.graduateDate"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                style="width:99%"
+                size="normal"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="家庭电话" prop="homePhone">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.homePhone"></el-input>
+          <el-col :span="12">
+            <el-form-item label="家庭电话" prop="homePhone">
+              <el-input size="normal" v-model="form.homePhone" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="移动电话" prop="phone">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.phone"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="移动电话" prop="phone">
+              <el-input size="normal" v-model="form.phone" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="电子邮箱" prop="email">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.email"></el-input>
+          <el-col :span="12">
+            <el-form-item label="电子邮箱" prop="email">
+              <el-input size="normal" v-model="form.email" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="QQ号" prop="qq">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.qq"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="QQ号" prop="qq">
+              <el-input size="normal" v-model="form.qq" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
+        </el-row>
+        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+          <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+            <el-option label="未审核" value="0"></el-option>
+            <el-option label="审核通过" value="1"></el-option>
+            <el-option label="审核未通过" value="2"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -542,6 +596,10 @@ export default {
       this.loading = false;
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async examineData() {
@@ -630,6 +688,7 @@ export default {
           email: ""
         };
       } else {
+        row.auditFlag = row.auditFlag.toString();
         this.form = row;
       }
     },

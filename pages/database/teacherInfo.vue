@@ -88,15 +88,30 @@
       <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="postName" align="center" label="岗位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="现职称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="titleDate" align="center" label="获得现职称年月"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="titleDate"
+        align="center"
+        label="获得现职称年月"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="现职级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师资格"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="post" align="center" label="现职务"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="highEducation" align="center" label="最高学历"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highEducation"
+        align="center"
+        label="最高学历"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="highDegree" align="center" label="最高学位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="school" align="center" label="毕业学校"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="毕业专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduateDate" align="center" label="毕业年月"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduateDate"
+        align="center"
+        label="毕业年月"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="导师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="学科类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="研究方向"></el-table-column>
@@ -584,6 +599,10 @@ export default {
       this.list();
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     handleCurrentChange(val) {

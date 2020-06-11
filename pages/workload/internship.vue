@@ -90,7 +90,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/internship/upload?token='AuthenticationToken'"
@@ -779,7 +779,10 @@ export default {
       };
     },
     uploadSuccess() {
-      console.log("GHS");
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     queryCompany(queryString, cb) {

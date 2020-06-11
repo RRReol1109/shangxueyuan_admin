@@ -64,7 +64,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/masterEnroll/upload?token='AuthenticationToken'"
@@ -96,11 +96,31 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="邮箱"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scholarshipName" align="center" label="奖学金名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="financialAidName" align="center" label="助学金名称"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="scholarshipName"
+        align="center"
+        label="奖学金名称"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="financialAidName"
+        align="center"
+        label="助学金名称"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduatedSchool" align="center" label="毕业学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationMajor" align="center" label="毕业专业"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduatedSchool"
+        align="center"
+        label="毕业学校"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationMajor"
+        align="center"
+        label="毕业专业"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remarks" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -489,6 +509,10 @@ export default {
       });
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async handleCommand(command) {
@@ -527,6 +551,10 @@ export default {
     },
 
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
 

@@ -57,7 +57,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/postgraduate/upload?token='AuthenticationToken'"
@@ -71,7 +71,13 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="pick" align="center" label="选择" width="50">
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pick"
+        align="center"
+        label="选择"
+        width="50"
+      >
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -81,16 +87,31 @@
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="入藏号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="论文标题"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="作者"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationCount" align="center" label="我院老师姓名"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationCount"
+        align="center"
+        label="我院老师姓名"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="期刊"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时数"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="ESI学科"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="地址"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="机构"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="发表年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="首次记录时间"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="首次记录时间"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="奖励类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="科研部奖励批次"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="科研部奖励批次"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="被引级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="年份"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
@@ -536,6 +557,10 @@ export default {
         });
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async queryTeacher(queryString, cb) {

@@ -42,7 +42,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/teacherAward/upload?token='AuthenticationToken'"
@@ -67,9 +67,19 @@
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="工作单位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="职称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="student" align="center" label="职务"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationStudent" align="center" label="学历"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationStudent"
+        align="center"
+        label="学历"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="学位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="专业学位类别/领域"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="admission"
+        align="center"
+        label="专业学位类别/领域"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="联系电话"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="邮箱"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="校内导师"></el-table-column>
@@ -282,6 +292,10 @@ export default {
       this.loading = false;
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async examineData() {

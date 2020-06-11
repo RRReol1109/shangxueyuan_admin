@@ -309,6 +309,10 @@ export default {
       this.list();
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     handleCurrentChange(val) {
