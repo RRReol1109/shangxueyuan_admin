@@ -41,10 +41,11 @@
               <el-dropdown-item>
                 <el-upload
                   class
-                  :file-list="fileList"
+                  :show-file-list="false"
+:file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/teacherMaterial/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/teacherMaterial/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -128,8 +129,16 @@
       style="min-height:500px"
       title
       :visible.sync="dialogFormVisible"
+      size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -137,100 +146,116 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年份" prop="year">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.year"
-              type="date"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择日期时间"
-              size="normal"
-            ></el-date-picker>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年份" prop="year">
+              <el-date-picker
+                v-model="form.year"
+                type="date"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择日期时间"
+                size="normal"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="主编工号" prop="teacherId">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.teacherId"></el-input>
+          <el-col :span="12">
+            <el-form-item label="主编工号" prop="teacherId">
+              <el-input size="normal" v-model="form.teacherId" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="主编姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="主编姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="作者总数" prop="authorCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.authorCnt"></el-input>
+          <el-col :span="12">
+            <el-form-item label="作者总数" prop="authorCnt">
+              <el-input size="normal" v-model="form.authorCnt" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="全部作者列表" prop="author">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.author"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="全部作者列表" prop="author">
+              <el-input size="normal" v-model="form.author" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="题目" prop="title">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.title"></el-input>
+          <el-col :span="12">
+            <el-form-item label="题目" prop="title">
+              <el-input size="normal" v-model="form.title" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="类别" prop="type">
-          <el-col :span="6">
-            <el-select v-model="form.type" size="normal" placeholder="请选择">
-              <el-option label="著作" value="著作"></el-option>
-              <el-option label="教材" value="教材"></el-option>
-            </el-select>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="类别" prop="type">
+              <el-select v-model="form.type" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="著作" value="著作"></el-option>
+                <el-option label="教材" value="教材"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="出版社" prop="publisher">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.publisher"></el-input>
+          <el-col :span="12">
+            <el-form-item label="出版社" prop="publisher">
+              <el-input size="normal" v-model="form.publisher" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="ISBN号" prop="isbn">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.isbn"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="ISBN号" prop="isbn">
+              <el-input size="normal" v-model="form.isbn" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="总字数(万字)" prop="wordCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.wordCnt"></el-input>
+          <el-col :span="12">
+            <el-form-item label="总字数(万字)" prop="wordCnt">
+              <el-input size="normal" v-model="form.wordCnt" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="本人撰写字数" prop="ownCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.ownCnt"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="PDF上传" prop="pdfUrl">
-          <el-col :span="6">
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="本人撰写字数" prop="ownCnt">
+              <el-input size="normal" v-model="form.ownCnt" style="width:99%"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="PDF上传" prop="pdfUrl">
             <el-upload
               class
               :headers="header"
               :file-list="fileLists"
               :on-success="fileUploadSuccess"
-              action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+              action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
             >
               <el-button size="normal" class type="primary">附件上传</el-button>
-            </el-upload>
+            </el-upload>>
+            </el-form-item>-->
           </el-col>
-        </el-form-item>
-        <el-form-item label="业绩点" prop="point">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.point"></el-input>
+          <el-col :span="12">
+            <el-form-item label="业绩点" prop="point">
+              <el-input size="normal" v-model="form.point" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="考核分" prop="score">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.score"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="考核分" prop="score">
+              <el-input size="normal" v-model="form.score" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
+        </el-row>
+
+        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+          <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+            <el-option label="未审核" value="0"></el-option>
+            <el-option label="审核通过" value="1"></el-option>
+            <el-option label="审核未通过" value="2"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -432,6 +457,7 @@ export default {
           score: ""
         };
       } else {
+        row.auditFlag = row.auditFlag.toString();
         this.form = row;
       }
     },

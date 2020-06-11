@@ -63,10 +63,11 @@
               <el-dropdown-item>
                 <el-upload
                   class
-                  :file-list="fileList"
+                  :show-file-list="false"
+:file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/masterEnroll/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/masterEnroll/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>

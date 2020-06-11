@@ -56,10 +56,11 @@
               <el-dropdown-item>
                 <el-upload
                   class
+                  :show-file-list="false"
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/teacherInfo/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/teacherInfo/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -87,15 +88,30 @@
       <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="来院工作年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="现住址"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="editorDeptName" align="center" label="岗位"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="editorDeptName"
+        align="center"
+        label="岗位"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="现职称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="titleDate" align="center" label="获得现职称年月"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="titleDate"
+        align="center"
+        label="获得现职称年月"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="现职级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师资格"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="personType" align="center" label="人才类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="post" align="center" label="现职务"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="postDate" align="center" label="任现职务年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="highEducation" align="center" label="最高学历"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="highEducation"
+        align="center"
+        label="最高学历"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="highDegree" align="center" label="最高学位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="school" align="center" label="毕业学校"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="毕业专业"></el-table-column>
@@ -155,7 +171,16 @@
       title
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
+
       <el-form
         :model="form"
         :rules="rules"

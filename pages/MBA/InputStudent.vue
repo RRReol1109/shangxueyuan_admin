@@ -58,10 +58,11 @@
               <el-dropdown-item>
                 <el-upload
                   class
-                  :file-list="fileList"
+                  :show-file-list="false"
+:file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/recruit/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/recruit/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -81,15 +82,35 @@
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="index" align="center" label="序号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="入学年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduateDate" align="center" label="毕业年月"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduateDate"
+        align="center"
+        label="毕业年月"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentCnt" align="center" label="学员人数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="graduateCnt" align="center" label="毕业人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="fulltimeCnt" align="center" label="全日制人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="parttimeCnt" align="center" label="非全日制人数"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="fulltimeCnt"
+        align="center"
+        label="全日制人数"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="parttimeCnt"
+        align="center"
+        label="非全日制人数"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="origin" align="center" label="学员来源"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="requestCnt" align="center" label="申请人数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="acceptedCnt" align="center" label="录取人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="acceptedRate" align="center" label="录取比例"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="acceptedRate"
+        align="center"
+        label="录取比例"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="degreeCnt" align="center" label="授予学位人数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="leaveCnt" align="center" label="分流淘汰人员"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
@@ -121,7 +142,15 @@
       title="通讯录"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -129,103 +158,156 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年份:">
-          <el-date-picker
-            v-model="form.year"
-            align="right"
-            size="normal"
-            type="date"
-            format="yyyy"
-            value-format="yyyy"
-            placeholder="年份"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="姓名">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年份:">
+              <el-date-picker
+                v-model="form.year"
+                align="right"
+                size="normal"
+                type="date"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="年份"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="学号">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.index" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="姓名">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="入学年月:">
-          <el-date-picker
-            v-model="form.startDate"
-            type="date"
-            format="yyyy-MM"
-            value-format="yyyy-MM"
-            placeholder="选择日期时间"
-            size="normal"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="毕业年月:">
-          <el-date-picker
-            v-model="form.graduateDate"
-            type="date"
-            format="yyyy-MM"
-            value-format="yyyy-MM"
-            placeholder="选择日期时间"
-            size="normal"
-          ></el-date-picker>
-        </el-form-item>
-        <el-form-item label="学员人数" prop="studentCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.studentCnt" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="学号">
+              <el-input size="normal" v-model="form.index" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="毕业人数" prop="graduateCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduateCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="入学年月:">
+              <el-date-picker
+                v-model="form.startDate"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                size="normal"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="全日制人数" prop="fulltimeCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.fulltimeCnt" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="毕业年月:">
+              <el-date-picker
+                v-model="form.graduateDate"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                size="normal"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="非全日制人数" prop="parttimeCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.parttimeCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学员人数" prop="studentCnt">
+              <el-input
+                size="normal"
+                v-model="form.studentCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="学员来源" prop="origin">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.origin" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="毕业人数" prop="graduateCnt">
+              <el-input
+                size="normal"
+                v-model="form.graduateCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="申请人数" prop="requestCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.requestCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="全日制人数" prop="fulltimeCnt">
+              <el-input
+                size="normal"
+                v-model="form.fulltimeCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="录取人数" prop="acceptedCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.acceptedCnt" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="非全日制人数" prop="parttimeCnt">
+              <el-input
+                size="normal"
+                v-model="form.parttimeCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="授予学位人数" prop="degreeCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.degreeCnt" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学员来源" prop="origin">
+              <el-input size="normal" v-model="form.origin" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="分流淘汰人员" prop="leaveCnt">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.leaveCnt" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="申请人数" prop="requestCnt">
+              <el-input
+                size="normal"
+                v-model="form.requestCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="录取人数" prop="acceptedCnt">
+              <el-input
+                size="normal"
+                v-model="form.acceptedCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="授予学位人数" prop="degreeCnt">
+              <el-input size="normal" v-model="form.degreeCnt" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="分流淘汰人员" prop="leaveCnt">
+              <el-input size="normal" v-model="form.leaveCnt" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item size="normal" label="备注">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
-          </el-col>
+          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+          <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+            <el-option label="未审核" value="0"></el-option>
+            <el-option label="审核通过" value="1"></el-option>
+            <el-option label="审核未通过" value="2"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>

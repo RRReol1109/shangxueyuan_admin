@@ -51,10 +51,11 @@
               <el-dropdown-item>
                 <el-upload
                   class
-                  :file-list="fileList"
+                  :show-file-list="false"
+:file-list="fileList"
                   :headers="header"
                   :on-success="fileUploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/textbook/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/textbook/upload?token='AuthenticationToken'"
                 >
                   <el-button size="normal" class type="text">批量上传数据</el-button>
                 </el-upload>
@@ -222,7 +223,7 @@
             :headers="header"
             :file-list="fileLists"
             :on-success="uploadSuccess"
-            action="http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+            action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
           >
             <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
@@ -337,7 +338,7 @@
             :show-file-list="false"
             :on-success="uploadSuccess"
             drag
-            action="'http://bsoa.csu.edu.cn/bs/mgr/upload?token='AuthenticationToken'"
+            action="'http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
