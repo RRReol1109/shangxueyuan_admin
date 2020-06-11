@@ -28,7 +28,7 @@
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -93,17 +93,17 @@
         label="毕业人数"
       ></el-table-column>
       <el-table-column
+      width="150"
         :show-overflow-tooltip="true"
         prop="secretaryCount"
         align="center"
-        label="答辩秘班级数"
+        label="答辩秘书班级数"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentType" align="center" label="学生类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="所有学生"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
@@ -141,7 +141,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -164,7 +164,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -281,7 +281,7 @@
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -361,7 +361,7 @@ export default {
   },
   filters: {
     statusFilter: function(value) {
-      let test = { 0: "未审核", "1": "审核已通过", "2": "审核未通过" };
+      let test = { 0: "未审核", "1": "已审核", "2": "未通过" };
       console.log(test);
       if (!isNaN(parseInt(value))) {
         return test[value.toString()];

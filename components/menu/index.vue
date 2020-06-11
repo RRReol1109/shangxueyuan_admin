@@ -846,12 +846,11 @@ export default {
 
 <style>
 .el-menu-vertical {
-  height: 1500px;
+  height: 1000px;
   overflow-y: auto;
-  /* overflow-y: auto; */
-  /* overflow-x: hidden; */
-  /* margin-bottom: -2000px;
-  padding-bottom: 2000px; */
+}
+.el-menu-vertical::-webkit-scrollbar {
+  display: none;/*隐藏滚动条*/
 }
 
 .meun {

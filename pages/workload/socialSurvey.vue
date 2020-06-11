@@ -34,7 +34,7 @@
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -92,12 +92,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="weeks" align="center" label="周次"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
@@ -135,7 +135,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -172,17 +172,17 @@
                 format="yyyy"
                 value-format="yyyy"
                 placeholder="选择年份"
-                style="width:99%"
+                style="width:98%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
+            <el-form-item v-if="showTeachInput" label="指导老师" prop="teacher">
               <el-select
                 v-model="ruleForm.teacher"
                 placeholder="请选择老师"
                 　filterable
-                style="width:99%"
+                style="width:98%"
               >
                 <el-option
                   v-for="item in teacherList"
@@ -196,31 +196,30 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="指导班级" prop="classes">
-              <el-autocomplete
-                v-model="ruleForm.classes"
-                :fetch-suggestions="queryClasses"
-                style="width:99%"
-              ></el-autocomplete>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="备注" prop="remark">
-              <el-autocomplete
-                v-model="ruleForm.remark"
-                :fetch-suggestions="queryTopicArr"
-                style="width:99%"
-              ></el-autocomplete>
+            <el-form-item label="周次" prop="weeks">
+              <el-input
+                style="width:98%"
+                v-model="ruleForm.weeks"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+                clearable
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="周次" prop="weeks">
-          <el-input
+        <el-form-item label="指导班级" prop="classes">
+          <el-autocomplete
+            v-model="ruleForm.classes"
+            :fetch-suggestions="queryClasses"
             style="width:99%"
-            v-model="ruleForm.weeks"
-            oninput="value=value.replace(/[^\d.]/g,'')"
-            clearable
-          ></el-input>
+          ></el-autocomplete>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input
+                style="width:99%"
+                v-model="ruleForm.remark"
+                clearable
+                type="textarea"
+              ></el-input>
         </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
@@ -231,7 +230,7 @@
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -269,7 +268,7 @@ export default {
         order: "desc",
         condition: ""
       },
-      loading: false,
+      loading: true,
       pick: false,
       examineForm: {
         auditFlag: "0"
@@ -315,8 +314,8 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "审核已通过",
-        "2": "审核未通过"
+        "1": "已审核",
+        "2": "未通过"
       }[value.toString()];
     }
   },

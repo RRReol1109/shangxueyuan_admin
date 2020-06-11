@@ -28,7 +28,7 @@
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="模拟类别" prop="type">
@@ -98,10 +98,9 @@
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -137,7 +136,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -168,7 +167,7 @@
           <el-col :span="12">
             <el-form-item label="年度" prop="year">
               <el-date-picker
-                style="width:99%"
+                style="width:98%"
                 size="normal"
                 v-model="ruleForm.year"
                 type="year"
@@ -184,7 +183,7 @@
                 v-model="ruleForm.teacher"
                 　filterable
                 placeholder="请选择老师"
-                style="width:99%"
+                style="width:98%"
               >
                 <el-option
                   v-for="item in teacherList"
@@ -194,6 +193,20 @@
                 ></el-option>
               </el-select>
             </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="周次" prop="weeks">
+              <el-input
+                v-model="ruleForm.weeks"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+                clearable
+                style="width:98%"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
           </el-col>
         </el-row>
         <el-form-item label="模拟类别" prop="type">
@@ -216,23 +229,9 @@
             style="width:99%"
           ></el-input>
         </el-form-item>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="周次" prop="weeks">
-              <el-input
-                v-model="ruleForm.weeks"
-                oninput="value=value.replace(/[^\d.]/g,'')"
-                clearable
-                style="width:99%"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="班级" prop="grade">
-              <el-input v-model="ruleForm.grade" style="width:99%" clearable></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item label="班级" prop="grade">
+          <el-input v-model="ruleForm.grade" style="width:99%" clearable></el-input>
+        </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
@@ -242,7 +241,7 @@
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -276,7 +275,7 @@ export default {
       dialogFormVisible: false,
       formDisabled: false,
       yearsOptions: [],
-      loading: false,
+      loading: true ,
       page: 1,
       header: {},
       fileList: [],
@@ -314,8 +313,8 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "审核已通过",
-        "2": "审核未通过"
+        "1": "已审核",
+        "2": "未通过"
       }[value.toString()];
     }
   },

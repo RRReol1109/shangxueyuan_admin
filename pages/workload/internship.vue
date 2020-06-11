@@ -724,7 +724,6 @@ export default {
           console.log(this.teacherArr, "=============this.teacherArr");
           for (let i = 0; i < this.teacherArr.length; i++) {
             let element = this.teacherArr[i];
-            element.id = element.name;
             for (const key in element) {
               if (element.hasOwnProperty(key)) {
                 let info = element[key];
