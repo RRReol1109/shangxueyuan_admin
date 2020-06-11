@@ -60,7 +60,7 @@
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label>
@@ -128,7 +128,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column>
@@ -167,7 +167,7 @@
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
-              <el-option label="审核未通过" value="2"></el-option>
+              <el-option label="未通过" value="2"></el-option>
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
@@ -210,23 +210,22 @@
                 format="yyyy"
                 value-format="yyyy"
                 placeholder="选择年份"
-                style="width:99%"
+                style="width:98%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="地址" prop="address">
-              <el-autocomplete
-                clearable
-                v-model="ruleForm.address"
-                :fetch-suggestions="queryAddress"
-                placeholder="请输入内容"
-                :disabled="read"
-                style="width:99%"
-              ></el-autocomplete>
-            </el-form-item>
-          </el-col>
+          <el-col :span="12"></el-col>
         </el-row>
+        <el-form-item label="地址" prop="address">
+          <el-autocomplete
+            clearable
+            v-model="ruleForm.address"
+            :fetch-suggestions="queryAddress"
+            placeholder="请输入内容"
+            :disabled="read"
+            style="width:99%"
+          ></el-autocomplete>
+        </el-form-item>
         <el-row>
           <el-col :span="12">
             <el-form-item label="实习地点" prop="type">
@@ -234,7 +233,7 @@
                 v-model="ruleForm.type"
                 placeholder="请选择地点"
                 :disabled="read"
-                style="width:99%"
+                style="width:98%"
               >
                 <el-option label="校内" value="校内"></el-option>
                 <el-option label="市内" value="市内"></el-option>
@@ -249,6 +248,7 @@
                 oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
                 :disabled="read"
+                style="width:98%"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -271,17 +271,24 @@
                 oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
                 :disabled="read"
+                style="width:98%"
               ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="核定系数" prop="ratio">
-              <el-input clearable v-model="ruleForm.ratio" placeholder="核定系数" :disabled="read"></el-input>
+              <el-input
+                clearable
+                v-model="ruleForm.ratio"
+                placeholder="核定系数"
+                :disabled="read"
+                style="width:98%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <!-- <el-form-item
-          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          v-for="(teacherArr, index) in teacherArr"
           :label="'老师' + (index+1)"
           :key="teacherArr.key"
           :prop="'teacherArr.' + index + '.value'"
@@ -318,13 +325,31 @@
             <el-input v-model="ruleForm.teachers" :rows="5" type="textarea" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
+        <el-form-item label="指导班级" prop="classes">
+          <el-autocomplete
+            v-model="ruleForm.classes"
+            :fetch-suggestions="queryClasses"
+            placeholder="请输入班级"
+            :disabled="read"
+            style="width:99%"
+          ></el-autocomplete>
+        </el-form-item>
+        <el-form-item label="实习单位" prop="company">
+          <el-autocomplete
+            v-model="ruleForm.company"
+            :fetch-suggestions="queryCompany"
+            placeholder="请输入实习单位"
+            :disabled="read"
+            style="width:99%"
+          ></el-autocomplete>
+        </el-form-item>
         <el-form-item
           v-for="(teacherArr, index) in teacherArr"
-          :label="'作者信息' + (index+1)"
+          :label="'指导老师' + (index+1)"
           :key="teacherArr.key"
-          :prop="'teacherArr' + index "
+          :prop="'teacherArr' + index"
         >
-          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师">
+          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师" prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -342,30 +367,6 @@
         <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="指导班级" prop="classes">
-              <el-autocomplete
-                v-model="ruleForm.classes"
-                :fetch-suggestions="queryClasses"
-                placeholder="请输入班级"
-                :disabled="read"
-                style="width:99%"
-              ></el-autocomplete>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="实习单位" prop="company">
-              <el-autocomplete
-                v-model="ruleForm.company"
-                :fetch-suggestions="queryCompany"
-                placeholder="请输入实习单位"
-                :disabled="read"
-                style="width:99%"
-              ></el-autocomplete>
-            </el-form-item>
-          </el-col>
-        </el-row>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
@@ -375,7 +376,7 @@
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
+            <el-option label="未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -404,7 +405,7 @@ export default {
       pick: false,
       fileList: [],
       read: false,
-      loading: false,
+      loading: true,
       header: {},
       teacherList: [],
       dialogFormVisible: false,
@@ -433,7 +434,6 @@ export default {
       },
       teacherArr: [
         {
-          id: "",
           name: "",
           title: "",
           flag: false
@@ -472,8 +472,8 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "审核已通过",
-        "2": "审核未通过"
+        "1": "已审核",
+        "2": "未通过"
       }[value.toString()];
     }
   },
@@ -518,7 +518,6 @@ export default {
     async list() {
       this.loading = true;
       this.userList = await axios.$post("/mgr/list", this.query);
-
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
@@ -534,9 +533,11 @@ export default {
       } else {
         this.role = true;
       }
+      console.log(this.query.editor);
       let query = this.query;
       for (let i = 0; i < this.teacherList.length; i++) {
         const element = this.teacherList[i];
+        console.log(element.name);
         if (element.name === query.teachers) {
           query.teachers = element.id;
         }
@@ -567,7 +568,6 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-
     async changeFlag(row) {
       row.pick = !row.pick;
     },
@@ -615,7 +615,6 @@ export default {
           });
         });
     },
-
     async examineData() {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
@@ -667,13 +666,11 @@ export default {
       switch (this.operate) {
         case "add":
           console.log(this.rules.count, "========count");
-          console.log(this.teacherArr, "========teacherArr");
           for (let i = 0; i < this.teacherArr.length; i++) {
             let element = this.teacherArr[i];
             for (const key in element) {
               if (element.hasOwnProperty(key)) {
                 let info = element[key];
-                element.id = element.name;
                 if (key == "name") {
                   this.ruleForm.teachers += info;
                 }
@@ -716,19 +713,26 @@ export default {
         case "edit":
           for (let i = 0; i < this.teacherList.length; i++) {
             const element = this.teacherList[i];
-            if (this.ruleForm.teacher == element.name) {
-              this.ruleForm.teacher = element.id.toString();
+            if (this.ruleForm.teachers == element.name) {
+              this.ruleForm.teachers = element.id.toString();
             }
           }
           this.ruleForm.teachers = "";
-          console.log(this.teacherArr, "=============this.teacherArr");
           for (let i = 0; i < this.teacherArr.length; i++) {
             let element = this.teacherArr[i];
             for (const key in element) {
               if (element.hasOwnProperty(key)) {
                 let info = element[key];
-                if (key == "id") {
-                  this.ruleForm.teachers += info;
+                let tid = "";
+                if (key == "name") {
+                  for (let j = 0; j < this.teacherList.length; j++) {
+                    const item = this.teacherList[j];
+                    if (info == item.name) {
+                      tid = item.id;
+                    }
+                  }
+                  if (tid) this.ruleForm.teachers += tid;
+                  else this.ruleForm.teachers += info;
                 }
                 if (key == "title") {
                   this.ruleForm.teachers += "|" + info;
@@ -753,7 +757,6 @@ export default {
           break;
       }
       this.dialogFormVisible = false;
-
       await this.list();
     },
     resetForm(formName) {
@@ -766,13 +769,11 @@ export default {
       });
       this.addressArr = _.uniqWith(this.addressArr, _.isEqual);
       localStorage.setItem("addressArr", JSON.stringify(this.addressArr));
-
       this.classesArr.push({
         value: this.ruleForm.classes
       });
       this.classesArr = _.uniqWith(this.classesArr, _.isEqual);
       localStorage.setItem("classesArr", JSON.stringify(this.classesArr));
-
       this.companyArr.push({
         value: this.ruleForm.company
       });
@@ -795,7 +796,6 @@ export default {
         );
       };
     },
-
     queryClasses(queryString, cb) {
       var classesArr = this.classesArr;
       var results = queryString
@@ -837,7 +837,6 @@ export default {
     },
     addTeacher() {
       this.teacherArr.push({
-        id: "",
         name: "",
         title: "",
         flag: ""
@@ -849,7 +848,6 @@ export default {
       if (index !== -1 && index != 0) {
         this.teacherArr.splice(index, 1);
       }
-      console.log(this.teacherArr, "=======================teacherArr");
     },
     showDialog(row) {
       this.dialogFormVisible = true;
@@ -864,6 +862,13 @@ export default {
           english: "0",
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.teacherArr = [
+          {
+            name: "",
+            title: "",
+            flag: false
+          }
+        ];
       } else {
         this.ruleForm = row;
         this.teacherArr = [];
@@ -871,7 +876,6 @@ export default {
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
           this.teacherArr.push({
-            id: "",
             name: "",
             title: "",
             flag: false
@@ -882,9 +886,9 @@ export default {
             console.log(item, "======item");
             if (j == 0) {
               this.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
-              this.teacherArr[i].id = this.ruleForm.teachers.split(",")[i];
-              this.teacherArr[i].id = this.teacherArr[i].id.split("|")[0];
-              this.teacherArr[i].id = this.teacherArr[i].id.toString();
+              // this.teacherArr[i].name = this.ruleForm.teachers.split(",")[i];
+              // this.teacherArr[i].name = this.teacherArr[i].name.split("|")[0];
+              // this.teacherArr[i].name = this.teacherArr[i].name.toString();
             } else if (j == 1) {
               this.teacherArr[i].title = item;
             } else {
@@ -925,6 +929,7 @@ export default {
         });
     },
     async queryTeacher(queryString, cb) {
+      console.log(queryString);
       let teacher = await axios.$get("/mgr/quicklist", {
         name: queryString
       });
@@ -933,6 +938,7 @@ export default {
         const element = teacher[i];
         teachers.push({ value: element.name, id: element.id });
       }
+      console.log(teachers);
       var results = queryString
         ? teachers.filter(this.createFilter(queryString))
         : teachers;
@@ -963,7 +969,6 @@ export default {
       }
     }
   },
-
   async mounted() {
     this.checkCanUse();
     this.header = {
@@ -1003,7 +1008,6 @@ export default {
 .el-autocomplete {
   width: 100%;
 }
-
 .list {
   background-color: rgba(255, 255, 255, 0);
   border: none;
@@ -1012,7 +1016,6 @@ export default {
   overflow: auto;
   /* overflow-x: auto; */
 }
-
 /*2.隐藏滚动条，太丑了*/
 .el-drawer__container ::-webkit-scrollbar {
   display: none;
