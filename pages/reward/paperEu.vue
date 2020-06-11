@@ -28,7 +28,7 @@
           <el-input v-model="query.coauthorName" placeholder="请输入通讯作者姓名"></el-input>
         </el-form-item>
         <el-form-item label="通讯作者单位:">
-          <el-input v-model="query.coauthorOrg" placeholder="请输入作者单位"></el-input>
+          <el-input v-model="query.coauthorName" placeholder="请输入作者单位"></el-input>
         </el-form-item>-->
         <!-- <el-form-item label="半价/原价:">
           <el-select v-model="query.half" size="normal" placeholder="请选择">
@@ -131,7 +131,7 @@
         align="center"
         label="ESI经济"
       ></el-table-column>-->
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorOrg" align="center" label="通讯作者单位"></el-table-column> -->
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorName" align="center" label="通讯作者单位"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
       <el-table-column
@@ -148,7 +148,7 @@
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="coauthorOrg"
+        prop="coauthorName"
         align="center"
         label="第一通讯作者"
       ></el-table-column>
@@ -157,19 +157,31 @@
         prop="reformPaper"
         align="center"
         label="是否为教改论文"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.reformPaper | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="esiEconomics"
         align="center"
         label="是否ESI经济学商学论文"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.esiEconomics | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="esi1"
         align="center"
         label="ESI高被引1%(百分之一)"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.esiEconomics | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="esi1Date"
@@ -181,7 +193,11 @@
         prop="esi01"
         align="center"
         label="ESI高被引0.1%(千分之一)"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.esiEconomics | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="esi01Date"
@@ -211,13 +227,11 @@
         prop="cooPaper"
         align="center"
         label="是否国际合作论文"
-      ></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="reformPaper"
-        align="center"
-        label="是否是教改论文"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.cooPaper | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -309,7 +323,14 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12"></el-col>
+          <el-col :span="12">
+            <el-form-item label="是否为教改论文" prop="reformPaper">
+              <el-select placeholder="请选择" style="width:98%" v-model="ruleForm.reformPaper">
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
         </el-row>
         <el-form-item label="论文名称:" prop="contracttype">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
@@ -412,7 +433,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label prop="esi01">
-              <el-checkbox v-model="ruleForm.esi1">ESI高被引 0.1%（千分之一）</el-checkbox>
+              <el-checkbox v-model="ruleForm.esi01">ESI高被引 0.1%（千分之一）</el-checkbox>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -509,8 +530,8 @@
           <el-col :span="12">
             <el-form-item label="是否国际合作论文" prop="cooPaper">
               <el-select placeholder="请选择" v-model="ruleForm.cooPaper" style="width:98%">
-                <el-option label="是" value="是"></el-option>
-                <el-option label="否" value="否"></el-option>
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -540,28 +561,29 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一通讯作者" prop="coauthorOrg">
-              <el-input clearable v-model="ruleForm.coauthorOrg" placeholder style="width:99%"></el-input>
+            <el-form-item label="第一通讯作者" prop="coauthorName">
+              <el-input clearable v-model="ruleForm.coauthorName" placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一通讯作者单位" prop>
+        <el-form-item label="第一通讯作者单位" prop="coauthorOrg">
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.cateNumber"
+            v-model="ruleForm.coauthorOrg"
             placeholder
             style="width:99%"
           ></el-input>
         </el-form-item>
-        <el-form-item label="全体作者" prop>
+        <el-form-item label="全体作者" prop="authors">
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.cateNumber"
-            placeholder
+            v-model="ruleForm.authors"
+            placeholder="张三，李四_外单位，王五_张三"
             style="width:99%"
           ></el-input>
+          <span style="color:#F56C6C">注：以上示例中王五是张三的学生</span>
         </el-form-item>
         <!-- <el-form-item label="论文研究领域" prop="level">
           <el-col :span="12">
@@ -585,11 +607,11 @@
             <el-input clearable v-model="ruleForm.score" placeholder=""></el-input>
           </el-col>
         </el-form-item>-->
-        <!-- <el-form-item label="通讯作者单位" prop="coauthorOrg">
+        <!-- <el-form-item label="通讯作者单位" prop="coauthorName">
           <el-col :span="12">
             <el-autocomplete
               clearable
-              v-model="ruleForm.coauthorOrg"
+              v-model="ruleForm.coauthorName"
               :fetch-suggestions="queryCompany"
               placeholder=""
             ></el-autocomplete>
@@ -636,11 +658,6 @@
         <!-- <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>-->
-        <el-form-item label="是否为教改论文" prop="reformPaper">
-          <el-col :span="12">
-            <el-checkbox v-model="ruleForm.reformPaper"></el-checkbox>
-          </el-col>
-        </el-form-item>
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
@@ -759,7 +776,7 @@ export default {
         coauthorName: "",
         doi: "",
         level: "",
-        // coauthorOrg: "",
+        // coauthorName: "",
         score: "",
         journal: "",
         authors: "",
@@ -829,6 +846,12 @@ export default {
         "1": "已通过",
         "2": "未通过"
       }[value.toString()];
+    },
+    flagFilter: function(value) {
+      return {
+        true: "是",
+        false: "否"
+      }[value.toString()];
     }
   },
   mounted() {
@@ -843,7 +866,7 @@ export default {
     },
     updataCache() {
       this.companys.push({
-        value: this.ruleForm.coauthorOrg
+        value: this.ruleForm.coauthorName
       });
       this.companys = _.uniqWith(this.companys, _.isEqual);
       localStorage.setItem("names", JSON.stringify(this.companys));
@@ -1031,7 +1054,8 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          this.ruleForm.files = JSON.stringify(this.filesInfo);
+          if (this.filesInfo != [])
+            this.ruleForm.files = JSON.stringify(this.filesInfo);
           await axios.$post("/articleEn/add", this.ruleForm);
           this.fileurl = "";
           break;
@@ -1052,7 +1076,7 @@ export default {
           doi: "",
           level: "",
           // coauthorName: "",
-          // coauthorOrg: "",
+          // coauthorName: "",
           score: "",
           journal: "",
           authors: "",
@@ -1068,12 +1092,11 @@ export default {
           ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
-      } else if (this.operate === "show") {
-        console.log(row);
-        this.fileItems = JSON.parse(row.files);
       } else {
         this.ruleForm = row;
         this.ruleForm.teacherArr = [];
+        console.log(row);
+        this.fileItems = JSON.parse(row.files);
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
