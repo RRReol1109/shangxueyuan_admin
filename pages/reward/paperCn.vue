@@ -24,8 +24,8 @@
         <!-- <el-form-item label="半价/原价:">
           <el-select v-model="query.half" size="normal" placeholder="请选择类型">
             <el-option label="全部" value></el-option>
-            <el-option label="半价" value="半价"></el-option>
-            <el-option label="原价" value="原价"></el-option>
+            <el-option label="半价" :value="1"></el-option>
+            <el-option label="原价" :value="0"></el-option>
           </el-select>
         </el-form-item>-->
         <el-form-item label>
@@ -53,10 +53,11 @@
               <el-dropdown-item>
                 <el-upload
                   class
-                  :file-list="fileList"
+                  :show-file-list="false"
+:file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bsoa.csu.edu.cn/bs/articleCn/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/articleCn/upload?token='AuthenticationToken'"
                 >
                   <el-button size="normal" class type="text">批量上传</el-button>
                 </el-upload>
@@ -112,7 +113,7 @@
       <el-table-column width="150" :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
       <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
       <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
-      <el-table-column width="300" :show-overflow-tooltip="true" prop="userName" align="center" label="全体作者"></el-table-column>
+      <el-table-column width="300" :show-overflow-tooltip="true" prop="authors" align="center" label="全体作者"></el-table-column>
       <el-table-column width="150" :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -392,7 +393,7 @@
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="ruleForm.files"
+            :data="additionFiles"
             border
             style="width: 100%"
             size="normal"
@@ -406,7 +407,11 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="" label="文件名" align="center">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name.split('/').pop() }}</span>
+              </template>
+            </el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
@@ -419,6 +424,7 @@
             :show-file-list="false"
             :on-success="uploadAdditionSuccess"
             drag
+            :headers="header"
             action="http://bs.hk.darkal.cn/mgr/upload"
             multiple
           >
@@ -471,10 +477,13 @@ export default {
       fileList: [],
       operate: "",
       fileurl: "",
+      additionFiles: [],
       ruleForm: {
+        files: '',
         title: "",
         journal: "",
         collegeLevel: "1",
+        half: 0,
         score: "",
         finalScore: "",
         cateNumber: "",
@@ -534,17 +543,18 @@ export default {
   },
   methods: {
     uploadAdditionSuccess(response) {
+      console.log('this.ruleForm:::', this.ruleForm);
       if(response && response.indexOf('http') != -1) {
-         this.ruleForm.files.push({
+         this.additionFiles.push({
             name: response
         });
       }
     },
     downloadAdditionFile(row) {
-      console.log('downloadAdditionFile:::', row);
+      window.open(row.name);
     },
     deleteAdditionFile(row) {
-      console.log('deleteAdditionFile:::', row);
+      this.additionFiles = this.additionFiles.filter(it => it.name !== row.name);
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -682,6 +692,7 @@ export default {
       //     );
       //   }
       // }
+      this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -762,6 +773,7 @@ export default {
         };
       } else {
         this.ruleForm = row;
+        this.additionFiles = JSON.parse(row.files);
         this.ruleForm.teacherArr = [];
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {

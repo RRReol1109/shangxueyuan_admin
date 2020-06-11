@@ -73,7 +73,8 @@
           </el-col>
         </el-form-item>
         <el-form-item label="备注" label-width="320px">
-          <el-upload class="upload-demo" action :on-change="handleChange" :file-list="fileList">
+          <el-upload class="upload-demo" action :on-change="handleChange" :show-file-list="false"
+:file-list="fileList">
             <el-button size="normal" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
