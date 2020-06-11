@@ -92,17 +92,17 @@
         label="毕业人数"
       ></el-table-column>
       <el-table-column
+      width="150"
         :show-overflow-tooltip="true"
         prop="secretaryCount"
         align="center"
-        label="答辩秘班级数"
+        label="答辩秘书班级数"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentType" align="center" label="学生类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="所有学生"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
@@ -163,7 +163,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >

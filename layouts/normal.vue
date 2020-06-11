@@ -54,6 +54,11 @@ html body {
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
+  height: 1000px;
+  overflow-y: auto;
+}
+.main::-webkit-scrollbar {
+  display: none;/*隐藏滚动条*/
 }
 .el-form-item__label {
     text-align: right;
@@ -67,6 +72,10 @@ html body {
 }
 .el-checkbox__label {
   font-size: 16px;
+}
+html,body {
+  height: 100%;
+  width: 100%;
 }
 </style>
 

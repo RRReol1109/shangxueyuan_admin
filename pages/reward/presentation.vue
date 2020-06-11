@@ -111,7 +111,7 @@
         fixed="right"
         align="center"
         label="操作"
-        width="200"
+        width="300"
         v-if="deptid==31||roleId==1"
       >
         <template slot-scope="scope">
@@ -160,7 +160,7 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+    <el-drawer size="60%" style="min-height:500px"  title :visible.sync="dialogFormVisible">
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
           <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
@@ -201,8 +201,18 @@
           <el-col :span="12">
             <el-form-item label="奖项类型" prop="type">
               <el-select v-model="ruleForm.type" placeholder="请选择类型" style="width:99%">
-                <el-option label="国家课题结题评优" value="国家课题结题评优"></el-option>
-                <el-option label="湖南省自然科学奖" value="湖南省自然科学奖"></el-option>
+                <el-option label="国家级“三大奖”" value="国家级“三大奖”"></el-option>
+                <el-option label="教育部人文社科奖" value="教育部人文社科奖"></el-option>
+                <el-option label="省部级" value="省部级"></el-option>
+                <el-option label="国家自科基金和国家社科基金结题评估" value="国家自科基金和国家社科基金结题评估"></el-option>
+                <el-option label="成果入选《高校智库专刊》" value="成果入选《高校智库专刊》"></el-option>
+                <el-option label="成果入选教育部社科委 《专家建议》" value="成果入选教育部社科委 《专家建议》"></el-option>
+                <el-option label="成果入选中宣部社科规划办《成果要报》" value="成果入选中宣部社科规划办《成果要报》"></el-option>
+                <el-option label="成果入选人民日报(理论版)" value="成果入选人民日报(理论版)"></el-option>
+                <el-option label="成果入选光明日报(理论版)" value="成果入选光明日报(理论版)"></el-option>
+                <el-option label="成果入选经济日报(理论版)" value="成果入选经济日报(理论版)"></el-option>
+                <el-option label="成果获得领导批示" value="成果获得领导批示"></el-option>
+                <el-option label="专利(含软件著作权)" value="专利(含软件著作权)"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -270,7 +280,7 @@
               :label="item.name"
               :value="item.id"
             ></el-option>
-          </el-select>字数:
+          </el-select>分数:
           <el-input clearable style="width:120px" v-model="teacherArr.num" placeholder="请输入分数"></el-input>
           <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
         </el-form-item>
@@ -386,7 +396,7 @@ export default {
       fileLoading: false,
       fileData: "",
       action: "",
-      loading: false,
+      loading: true,
       yearsOptions: [],
       roleId: 0,
       examineDialog: false,

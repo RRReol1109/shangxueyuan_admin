@@ -3,12 +3,9 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="论文名称:">
-          <el-input v-model="query.title" placeholder="请输入作者单位" size="normal"></el-input>
+          <el-input v-model="query.title" style="width:250px" placeholder="" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="DOI号:">
-          <el-input v-model="query.doi" placeholder="请输入姓名" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="期刊分级:">
+        <el-form-item label="期刊学院分级:">
           <el-select v-model="query.collegeLevel" size="normal" placeholder="请选择分级">
             <el-option label="全部" value></el-option>
             <el-option label="中文A+" value="中文A+"></el-option>
@@ -19,7 +16,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="期刊名称:">
-          <el-input v-model="query.journal" placeholder="请输入期刊名称" size="normal"></el-input>
+          <el-input v-model="query.journal" style="width:250px" placeholder="请输入期刊名称" size="normal"></el-input>
         </el-form-item>
         <!-- <el-form-item label="半价/原价:">
           <el-select v-model="query.half" size="normal" placeholder="请选择类型">
@@ -215,25 +212,26 @@
         <el-form-item label="论文名称:" prop="title">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="期刊ISSN号" prop="issn">
-          <el-input clearable v-model="ruleForm.issn" placeholder="请输入内容" style="width:99%"></el-input>
-        </el-form-item>
         <el-form-item label="论文英文名称:" prop="titleEn">
           <el-input learable v-model="ruleForm.titleEn" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="期刊名称" prop="journal">
           <el-input v-model="ruleForm.journal" placeholder style="width:99%"></el-input>
         </el-form-item>
+        <el-form-item label="期刊ISSN号" prop="issn">
+          <el-input clearable v-model="ruleForm.issn" placeholder="请输入内容" style="width:99%"></el-input>
+        </el-form-item>
         <el-row>
           <el-col :span="12">
             <el-form-item label="学校期刊分级" prop="schoolLevel">
-              <el-select v-model="ruleForm.schoolLevel" placeholder="请选择级别" style="width:98%">
+              <el-input v-model="ruleForm.schoolLevel" placeholder style="width:98%"></el-input>
+              <!-- <el-select v-model="ruleForm.schoolLevel" placeholder="请选择级别" style="width:98%">
                 <el-option label="中文A+" value="A+"></el-option>
                 <el-option label="中文A" value="A"></el-option>
                 <el-option label="中文A-" value="A-"></el-option>
                 <el-option label="中文B" value="B"></el-option>
                 <el-option label="中文C" value="C"></el-option>
-              </el-select>
+              </el-select> -->
             </el-form-item>
           </el-col>
           <el-col :span="12">

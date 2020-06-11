@@ -258,7 +258,7 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
-      loading: false,
+      loading: true,
       yearsOptions: [],
       roleId: 0,
       examineDialog: false,
