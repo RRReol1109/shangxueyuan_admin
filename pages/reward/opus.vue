@@ -52,7 +52,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="fileUploadSuccess"
                   action="http://bs.hk.darkal.cn/textbook/upload?token='AuthenticationToken'"
@@ -727,8 +727,11 @@ export default {
       }
     },
     fileUploadSuccess(res, file, files) {
-      console.log(files, "5645+9656+5");
-      // this.list();
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
+      this.list();
     },
     uploadSuccess(res, file, files) {
       for (let i = 0; i < files.length; i++) {

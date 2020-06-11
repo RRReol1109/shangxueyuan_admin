@@ -51,7 +51,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/reportResult/upload?token='AuthenticationToken'"
@@ -362,6 +362,10 @@ export default {
       this.list();
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async list() {
@@ -541,9 +545,6 @@ export default {
             message: "已取消删除"
           });
         });
-    },
-    uploadSuccess() {
-      this.list();
     },
     async handleCommand(command) {
       console.log(command);

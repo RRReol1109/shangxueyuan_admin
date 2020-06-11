@@ -39,7 +39,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/teacherAward/upload?token='AuthenticationToken'"
@@ -64,7 +64,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="任务来源"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="student" align="center" label="研究生课程名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduationStudent" align="center" label="授课对象"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="graduationStudent"
+        align="center"
+        label="授课对象"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="实际课时"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="grant" align="center" label="实际人数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="eliminate" align="center" label="核定系数"></el-table-column>
@@ -298,6 +303,10 @@ export default {
       this.loading = false;
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async examineData() {

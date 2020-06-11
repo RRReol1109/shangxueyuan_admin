@@ -54,7 +54,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/articleCn/upload?token='AuthenticationToken'"
@@ -87,10 +87,34 @@
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="reformPaper" align="center" label="是否为教改论文"></el-table-column>
-      <el-table-column width="200" :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
-      <el-table-column width="200" :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="发表日期"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="reformPaper"
+        align="center"
+        label="是否为教改论文"
+      ></el-table-column>
+      <el-table-column
+        width="200"
+        :show-overflow-tooltip="true"
+        prop="title"
+        align="center"
+        label="论文名称"
+      ></el-table-column>
+      <el-table-column
+        width="200"
+        :show-overflow-tooltip="true"
+        prop="journal"
+        align="center"
+        label="期刊名称"
+      ></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
@@ -107,14 +131,62 @@
       ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="issn" align="center" label="期刊ISSN号"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="第一作者"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="第一通讯作者"></el-table-column>
-      <el-table-column width="300" :show-overflow-tooltip="true" prop="authors" align="center" label="全体作者"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="issn"
+        align="center"
+        label="期刊ISSN号"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="included"
+        align="center"
+        label="核心收录"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="subject"
+        align="center"
+        label="期刊所属学科"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="yearDate"
+        align="center"
+        label="年代卷期"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="第一作者"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="第一通讯作者"
+      ></el-table-column>
+      <el-table-column
+        width="300"
+        :show-overflow-tooltip="true"
+        prop="authors"
+        align="center"
+        label="全体作者"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -332,7 +404,13 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="第一作者" prop>
-              <el-select v-model="ruleForm.firstauthor" filterable placeholder="请选择老师" prop="" style="width:98%">
+              <el-select
+                v-model="ruleForm.firstauthor"
+                filterable
+                placeholder="请选择老师"
+                prop
+                style="width:98%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
@@ -407,7 +485,7 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="" label="文件名" align="center">
+            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
               <template slot-scope="scope">
                 <span>{{ scope.row.name.split('/').pop() }}</span>
               </template>
@@ -479,7 +557,7 @@ export default {
       fileurl: "",
       additionFiles: [],
       ruleForm: {
-        files: '',
+        files: "",
         title: "",
         journal: "",
         collegeLevel: "1",
@@ -543,10 +621,10 @@ export default {
   },
   methods: {
     uploadAdditionSuccess(response) {
-      console.log('this.ruleForm:::', this.ruleForm);
-      if(response && response.indexOf('http') != -1) {
-         this.additionFiles.push({
-            name: response
+      console.log("this.ruleForm:::", this.ruleForm);
+      if (response && response.indexOf("http") != -1) {
+        this.additionFiles.push({
+          name: response
         });
       }
     },
@@ -554,7 +632,9 @@ export default {
       window.open(row.name);
     },
     deleteAdditionFile(row) {
-      this.additionFiles = this.additionFiles.filter(it => it.name !== row.name);
+      this.additionFiles = this.additionFiles.filter(
+        it => it.name !== row.name
+      );
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
@@ -717,7 +797,8 @@ export default {
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
-          this.ruleForm.authorCnt = this.ruleForm.authors.split('，').length || 0;
+          this.ruleForm.authorCnt =
+            this.ruleForm.authors.split("，").length || 0;
           // for (const key in this.ruleForm) {
           //   if (this.ruleForm.hasOwnProperty(key)) {
           //     const element = this.ruleForm[key];
@@ -814,8 +895,13 @@ export default {
     },
 
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
+
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",

@@ -42,7 +42,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/teacherAward/upload?token='AuthenticationToken'"
@@ -69,10 +69,20 @@
       <el-table-column :show-overflow-tooltip="true" prop="awardName" align="center" label="获奖项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="awardLevel" align="center" label="奖项类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="awardType" align="center" label="奖励级别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="awardOrganize" align="center" label="颁奖机构"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="awardOrganize"
+        align="center"
+        label="颁奖机构"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="awardId" align="center" label="获奖证书编号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="获奖年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="pdfUrl" align="center" label="上传获奖证书PDF电子版"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="pdfUrl"
+        align="center"
+        label="上传获奖证书PDF电子版"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="ratio" align="center" label="系数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
@@ -341,6 +351,10 @@ export default {
       this.loading = false;
     },
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async examineData() {

@@ -41,7 +41,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/abroad/upload?token='AuthenticationToken'"
@@ -155,9 +155,7 @@
         <el-divider content-position="left">基本信息</el-divider>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="课题名称" prop="teacher">
-
-            </el-form-item>
+            <el-form-item label="课题名称" prop="teacher"></el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="课题主持人" prop="teacher">
@@ -478,6 +476,10 @@ export default {
     },
 
     uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
     async changeFlag(row) {
