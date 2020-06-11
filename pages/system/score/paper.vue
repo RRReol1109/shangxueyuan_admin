@@ -37,15 +37,23 @@
     </nav>
 
     <!-- 学时查看窗口 -->
-    <el-drawer size="60%" style="min-height:500px" title="分数规则（论文）" :visible.sync="dialogFormVisible">
+    <el-drawer
+      size="60%"
+      style="min-height:500px"
+      title="分数规则（论文）"
+      :visible.sync="dialogFormVisible"
+    >
       <el-form :disabled="formDisabled" :model="form" label-width="150px">
         <el-form-item label="年度">
-          <el-select v-model="form.year" size="normal">
-            <el-option label="2019年" value="2019"></el-option>
-            <el-option label="2018年" value="2018"></el-option>
-            <el-option label="2017年" value="2017"></el-option>
-            <el-option label="2016年" value="2016"></el-option>
-          </el-select>
+          <el-date-picker
+            v-model="form.year"
+            align="right"
+            size="normal"
+            type="year"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="年度"
+          ></el-date-picker>
         </el-form-item>
         <el-form-item label="类别">
           <el-select v-model="form.type" size="normal">
@@ -235,12 +243,12 @@ export default {
   color: #606266;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

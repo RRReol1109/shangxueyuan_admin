@@ -167,9 +167,6 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-    <!-- 
-          论文编号	入藏号	论文标题	作者	我院老师姓名	期刊	ESI学科	地址	机构	发表年度	首次记录时间	奖励类型	科研部奖励批次	被引级	年份
-    -->
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
       <el-form
         :model="ruleForm"

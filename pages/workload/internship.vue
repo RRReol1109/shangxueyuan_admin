@@ -319,12 +319,12 @@
           </el-col>
         </el-form-item>-->
         <el-form-item
-          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          v-for="(teacherArr, index) in teacherArr"
           :label="'作者信息' + (index+1)"
           :key="teacherArr.key"
-          :prop="'teacherArr.' + index + '.value'"
+          :prop="'teacherArr' + index "
         >
-          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师" prop="name">
+          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -428,16 +428,17 @@ export default {
         count: 0,
         days: 0,
         ratio: "1.0",
-        teacherArr: [
-          {
-            name: "",
-            title: "",
-            flag: false
-          }
-        ],
         classes: "",
         company: ""
       },
+      teacherArr: [
+        {
+          id: "",
+          name: "",
+          title: "",
+          flag: false
+        }
+      ],
       rules: {
         address: [{ required: true, message: "请输入地址", trigger: "blur" }],
         count: [
@@ -533,11 +534,9 @@ export default {
       } else {
         this.role = true;
       }
-      console.log(this.query.editor);
       let query = this.query;
       for (let i = 0; i < this.teacherList.length; i++) {
         const element = this.teacherList[i];
-        console.log(element.name);
         if (element.name === query.teachers) {
           query.teachers = element.id;
         }
@@ -668,11 +667,13 @@ export default {
       switch (this.operate) {
         case "add":
           console.log(this.rules.count, "========count");
-          for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
-            let element = this.ruleForm.teacherArr[i];
+          console.log(this.teacherArr, "========teacherArr");
+          for (let i = 0; i < this.teacherArr.length; i++) {
+            let element = this.teacherArr[i];
             for (const key in element) {
               if (element.hasOwnProperty(key)) {
                 let info = element[key];
+                element.id = element.name;
                 if (key == "name") {
                   this.ruleForm.teachers += info;
                 }
@@ -688,7 +689,7 @@ export default {
                 }
               }
             }
-            if (i == this.ruleForm.teacherArr.length - 1) {
+            if (i == this.teacherArr.length - 1) {
               this.ruleForm.teachers = this.ruleForm.teachers.substr(
                 0,
                 this.ruleForm.teachers.length - 1
@@ -717,6 +718,36 @@ export default {
             const element = this.teacherList[i];
             if (this.ruleForm.teacher == element.name) {
               this.ruleForm.teacher = element.id.toString();
+            }
+          }
+          this.ruleForm.teachers = "";
+          console.log(this.teacherArr, "=============this.teacherArr");
+          for (let i = 0; i < this.teacherArr.length; i++) {
+            let element = this.teacherArr[i];
+            element.id = element.name;
+            for (const key in element) {
+              if (element.hasOwnProperty(key)) {
+                let info = element[key];
+                if (key == "id") {
+                  this.ruleForm.teachers += info;
+                }
+                if (key == "title") {
+                  this.ruleForm.teachers += "|" + info;
+                }
+                if (key == "flag") {
+                  if (info) {
+                    this.ruleForm.teachers += "|1,";
+                  } else {
+                    this.ruleForm.teachers += "|0,";
+                  }
+                }
+              }
+            }
+            if (i == this.teacherArr.length - 1) {
+              this.ruleForm.teachers = this.ruleForm.teachers.substr(
+                0,
+                this.ruleForm.teachers.length - 1
+              );
             }
           }
           await axios.$post("/internship/update", this.ruleForm);
@@ -806,7 +837,8 @@ export default {
       };
     },
     addTeacher() {
-      this.ruleForm.teacherArr.push({
+      this.teacherArr.push({
+        id: "",
         name: "",
         title: "",
         flag: ""
@@ -814,10 +846,11 @@ export default {
     },
     removeTeacher(item) {
       console.log(item);
-      var index = this.ruleForm.teacherArr.indexOf(item);
+      var index = this.teacherArr.indexOf(item);
       if (index !== -1 && index != 0) {
-        this.ruleForm.teacherArr.splice(index, 1);
+        this.teacherArr.splice(index, 1);
       }
+      console.log(this.teacherArr, "=======================teacherArr");
     },
     showDialog(row) {
       this.dialogFormVisible = true;
@@ -826,13 +859,6 @@ export default {
         this.read = false;
         this.ruleForm = {
           year: "",
-          teacherArr: [
-            {
-              name: "",
-              title: "",
-              flag: false
-            }
-          ],
           type: "",
           count: 0,
           teachers: "",
@@ -841,11 +867,12 @@ export default {
         };
       } else {
         this.ruleForm = row;
-        this.ruleForm.teacherArr = [];
+        this.teacherArr = [];
         let teacherInfo = row.teachers.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
-          this.ruleForm.teacherArr.push({
+          this.teacherArr.push({
+            id: "",
             name: "",
             title: "",
             flag: false
@@ -855,16 +882,17 @@ export default {
             const item = teacher[j];
             console.log(item, "======item");
             if (j == 0) {
-              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
-                ","
-              )[i];
+              this.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
+              this.teacherArr[i].id = this.ruleForm.teachers.split(",")[i];
+              this.teacherArr[i].id = this.teacherArr[i].id.split("|")[0];
+              this.teacherArr[i].id = this.teacherArr[i].id.toString();
             } else if (j == 1) {
-              this.ruleForm.teacherArr[i].title = item;
+              this.teacherArr[i].title = item;
             } else {
               if (item == 0) {
-                this.ruleForm.teacherArr[i].flag = false;
+                this.teacherArr[i].flag = false;
               } else {
-                this.ruleForm.teacherArr[i].flag = true;
+                this.teacherArr[i].flag = true;
               }
             }
           }
@@ -898,7 +926,6 @@ export default {
         });
     },
     async queryTeacher(queryString, cb) {
-      console.log(queryString);
       let teacher = await axios.$get("/mgr/quicklist", {
         name: queryString
       });
@@ -907,7 +934,6 @@ export default {
         const element = teacher[i];
         teachers.push({ value: element.name, id: element.id });
       }
-      console.log(teachers);
       var results = queryString
         ? teachers.filter(this.createFilter(queryString))
         : teachers;

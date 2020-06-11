@@ -7,7 +7,7 @@
             v-model="query.year"
             align="right"
             size="normal"
-            type="date"
+            type="year"
             format="yyyy"
             value-format="yyyy"
             placeholder="年度"
@@ -78,8 +78,18 @@
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="学院"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="firstLevelCategory" align="center" label="一级学科"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="trainingLevel" align="center" label="培养层次"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="firstLevelCategory"
+        align="center"
+        label="一级学科"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="trainingLevel"
+        align="center"
+        label="培养层次"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="funding" align="center" label="经费（万元）"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>

@@ -2,7 +2,7 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="年度:">
+        <!-- <el-form-item label="年度:">
           <el-date-picker
             size="normal"
             v-model="query.year"
@@ -11,7 +11,7 @@
             value-format="yyyy"
             placeholder="选择年份"
           ></el-date-picker>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="教师:">
           <el-select size="normal" v-model="query.teacher" filterable placeholder="请选择老师">
             <el-option label="全部" value></el-option>
