@@ -2,18 +2,13 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="年份:">
-          <el-date-picker
-            v-model="query.year"
-            align="right"
-            size="normal"
-            type="year"
-            format="yyyy"
-            value-format="yyyy"
-            placeholder="年级"
-          ></el-date-picker>
+        <el-form-item label="专业代码:">
+          <el-input v-model="query.id" placeholder="请输入专业代码" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="姓名:">
+        <el-form-item label="学号:">
+          <el-input v-model="query.name" placeholder="请输入学号" size="normal"></el-input>
+        </el-form-item>
+        <el-form-item label="学生姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
@@ -45,7 +40,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/teacherMaterial/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/teacherInfo/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -56,27 +51,34 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="teacherId" align="center" label="主编工号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="主编姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="authorCnt" align="center" label="作者总数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="author" align="center" label="全部作者列表"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="题目"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类别(著作,教材)"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="publisher" align="center" label="出版社"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="wordCnt" align="center" label="总字数(万字)"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="ownCnt" align="center" label="本人撰写字数"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="pdfUrl" align="center" label="上传封面和版权页PDF电子版"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
+      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="院系名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="院系代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="专业名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="专业代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="学生姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="political" align="center" label="项目名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="idNum" align="center" label="项目级别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="项目类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="立项时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="指导老师"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
+        <template slot-scope="scope">
+          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -123,13 +125,12 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-
     <el-drawer
       style="min-height:500px"
       title
       :visible.sync="dialogFormVisible"
-      size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
@@ -147,156 +148,88 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="年份" prop="year">
-              <el-date-picker
-                v-model="form.year"
-                type="year"
-                format="yyyy"
-                value-format="yyyy"
-                placeholder="选择日期时间"
-                size="normal"
-                style="width:99%"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="主编工号" prop="teacherId">
-              <el-input size="normal" v-model="form.teacherId" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="主编姓名" prop="name">
+            <el-form-item label="院系名称" prop="college">
               <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="作者总数" prop="authorCnt">
-              <el-input size="normal" v-model="form.authorCnt" style="width:99%"></el-input>
+            <el-form-item label="院系代码" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="全部作者列表" prop="author">
-              <el-input size="normal" v-model="form.author" style="width:99%"></el-input>
+            <el-form-item label="专业名称" prop="college">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="题目" prop="title">
-              <el-input size="normal" v-model="form.title" style="width:99%"></el-input>
+            <el-form-item label="专业代码" prop="gender">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="类别" prop="type">
+            <el-form-item label="学号" prop="nativePlace">
+              <el-input size="normal" v-model="form.nativePlace" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="学生姓名" prop="nation">
+              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- 院系名称	院系代码	专业名称	专业代码	学号	学生姓名	项目名称	项目级别	项目类别	立项时间	指导老师-->
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="项目名称" prop="political">
+              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="项目级别" prop="idNum">
               <el-select v-model="form.type" size="normal" placeholder="请选择" style="width:99%">
-                <el-option label="著作" value="著作"></el-option>
-                <el-option label="教材" value="教材"></el-option>
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
-            <el-form-item label="出版社" prop="publisher">
-              <el-input size="normal" v-model="form.publisher" style="width:99%"></el-input>
+            <el-form-item label="项目类别:" prop="startDate">
+              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="立项时间:" prop="startDate">
+              <el-date-picker
+                size="normal"
+                v-model="form.year"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择年份"
+                style="width:98%"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="ISBN号" prop="isbn">
-              <el-input size="normal" v-model="form.isbn" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="总字数(万字)" prop="wordCnt">
-              <el-input size="normal" v-model="form.wordCnt" style="width:99%"></el-input>
+            <el-form-item label="指导老师:" prop="startDate">
+              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="本人撰写字数" prop="ownCnt">
-              <el-input size="normal" v-model="form.ownCnt" style="width:99%"></el-input>
-            </el-form-item>
-            <!-- <el-form-item label="PDF上传" prop="pdfUrl">
-            <el-upload
-              class
-              :headers="header"
-              :file-list="fileLists"
-              :on-success="fileUploadSuccess"
-              action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
-            >
-              <el-button size="normal" class type="primary">附件上传</el-button>
-            </el-upload>>
-            </el-form-item>-->
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="业绩点" prop="point">
-              <el-input size="normal" v-model="form.point" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="考核分" prop="score">
-              <el-input size="normal" v-model="form.score" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <div>
-          <el-divider content-position="left">附件</el-divider>
-          <el-table
-            :data="additionFiles"
-            border
-            style="width: 100%"
-            size="normal"
-            header-row-class-name="h30"
-            header-cell-class-name="tc-g2 bc-g"
-          >
-            <el-table-column
-              :show-overflow-tooltip="true"
-              type="index"
-              label="#"
-              align="center"
-              width="50"
-            ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.name.split('/').pop() }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
-              <template slot-scope="scope">
-                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-upload
-            class="dragger"
-            :show-file-list="false"
-            :on-success="uploadAdditionSuccess"
-            drag
-            :headers="header"
-            action="http://bs.hk.darkal.cn/mgr/upload"
-            multiple
-          >
-            <div class="el-upload__tip" slot="tip"></div>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">
-              将文件拖到此处，或
-              <em>点击上传</em>
-            </div>
-          </el-upload>
-        </div>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
-            <el-option label="未通过" value="2"></el-option>
+            <el-option label="审核未通过" value="2"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -329,45 +262,46 @@ export default {
       examineForm: {},
       header: {},
       rules: {},
-      fileLists: [],
-      fileurl: "",
       form: {
-        year: "",
-        teacherId: "",
-        name: "",
-        authorCnt: "",
-        author: "",
+        college: "",
+        gender: "",
+        nativePlace: "",
+        nation: "",
+        political: "",
+        idNum: "",
+        startDate: "",
+        address: "",
+        state: "",
+        editorDeptName: "",
         title: "",
-        type: "",
+        titleDate: "",
         level: "",
-        publisher: "",
-        isbn: "",
-        wordCnt: "",
-        ownCnt: "",
-        pdfUrl: "",
-        point: "",
-        score: ""
+        tutor: "",
+        personType: "",
+        postDate: "",
+        highEducation: "",
+        highDegree: "",
+        school: "",
+        college: "",
+        startDate: "",
+        qq: "",
+        phone: "",
+        homePhone: "",
+        email: ""
       },
       tableData: []
     };
   },
+  filters: {
+    statusFilter: function(value) {
+      return {
+        "0": "未审核",
+        "1": "通过",
+        "2": "未通过"
+      }[value.toString()];
+    }
+  },
   methods: {
-    uploadAdditionSuccess(response) {
-      console.log("this.ruleForm:::", this.ruleForm);
-      if (response && response.indexOf("http") != -1) {
-        this.additionFiles.push({
-          name: response
-        });
-      }
-    },
-    downloadAdditionFile(row) {
-      window.open(row.name);
-    },
-    deleteAdditionFile(row) {
-      this.additionFiles = this.additionFiles.filter(
-        it => it.name !== row.name
-      );
-    },
     handleClick(row) {
       console.log(row);
     },
@@ -377,22 +311,6 @@ export default {
     },
     async changeFlag(row) {
       row.pick = !row.pick;
-    },
-    downLoadFile(rows) {
-      if (rows.pdfUrl) {
-        window.open(rows.pdfUrl);
-      } else {
-        this.$message({
-          type: "info",
-          message: "该条记录无附件"
-        });
-      }
-    },
-    fileUploadSuccess(res, file, files) {
-      for (let i = 0; i < files.length; i++) {
-        const element = files[i];
-        this.fileurl += element.response;
-      }
     },
     async list() {
       this.tableData = [];
@@ -415,7 +333,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/teacherMaterial/list", this.query);
+      let res = await axios.$post("/teacherInfo/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -454,7 +372,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/teacherMaterial/update", this.examineForm);
+        await axios.$post("/teacherInfo/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -486,14 +404,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          this.ruleForm.pdfUrl = JSON.stringify(this.additionFiles);
-          await axios.$post("/teacherMaterial/add", this.form);
-          this.fileurl = "";
+          await axios.$post("/teacherInfo/add", this.form);
           break;
         case "edit":
-          this.ruleForm.pdfUrl = JSON.stringify(this.additionFiles);
-          await axios.$post("/teacherMaterial/update", this.form);
-          this.fileurl = "";
+          await axios.$post("/teacherInfo/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -504,25 +418,34 @@ export default {
       this.formDisabled = false;
       if (this.operate === "add") {
         this.form = {
-          year: "",
-          teacherId: "",
-          name: "",
-          authorCnt: "",
-          author: "",
+          college: "",
+          gender: "",
+          nativePlace: "",
+          nation: "",
+          political: "",
+          idNum: "",
+          startDate: "",
+          address: "",
+          state: "",
+          editorDeptName: "",
           title: "",
-          type: "",
+          titleDate: "",
           level: "",
-          publisher: "",
-          isbn: "",
-          wordCnt: "",
-          ownCnt: "",
-          pdfUrl: "",
-          point: "",
-          score: ""
+          tutor: "",
+          personType: "",
+          postDate: "",
+          highEducation: "",
+          highDegree: "",
+          school: "",
+          college: "",
+          startDate: "",
+          qq: "",
+          phone: "",
+          homePhone: "",
+          email: ""
         };
       } else {
         row.auditFlag = row.auditFlag.toString();
-        this.additionFiles = JSON.parse(row.files);
         this.form = row;
       }
     },
@@ -565,7 +488,7 @@ export default {
       }
     },
     async exportData() {
-      let data = await axios.$download("/teacherMaterial/export", {
+      let data = await axios.$download("/teacherInfo/export", {
         params: this.query
       });
       if (data) {
@@ -604,7 +527,7 @@ export default {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
             let internationalStudentId = element.id;
-            await axios.$post("/teacherMaterial/delete", {
+            await axios.$post("/teacherInfo/delete", {
               internationalStudentId: internationalStudentId
             });
           }
@@ -632,7 +555,7 @@ export default {
         .then(async () => {
           console.log(row);
           let internationalStudentId = row.id;
-          await axios.$post("/teacherMaterial/delete", {
+          await axios.$post("/teacherInfo/delete", {
             internationalStudentId: internationalStudentId
           });
           this.list();
@@ -655,9 +578,6 @@ export default {
       offset: 0,
       limit: 999999
     });
-    this.header = {
-      Authorization: localStorage.getItem("message")
-    };
     this.teacherList = this.teacherList.rows;
     this.roleId = localStorage.getItem("roleId");
     this.list();

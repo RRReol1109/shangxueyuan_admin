@@ -158,7 +158,6 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text" size="normal">附件下载</el-button>
           <!-- <a class='download' :href='(scope.row.files)' download=""  title="下载">下载</a> -->
         </template>
       </el-table-column>

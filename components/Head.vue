@@ -157,6 +157,7 @@ export default {
     this.userInfo = window.localStorage.getItem("userInfo");
     // this.ids = window.localStorage.getItem("roles");
     this.roleId = roleId;
+
     this.selectDep();
   },
   methods: {
@@ -177,6 +178,10 @@ export default {
     selectDep() {
       let deptid = JSON.parse(this.userInfo).deptid;
       let flag = window.sessionStorage.getItem("flag");
+      if (this.roleId == 1) {
+        this.activeIndex = 1;
+        return;
+      }
       if (!flag) {
         // this.menuSelect(deptid.toString(), "");
         this.activeIndex = deptid.toString();
@@ -200,11 +205,11 @@ export default {
           break;
         case "33":
           // this.ids = [777, 46, 47, 48, 49];
-          this.ids = [];
+          this.ids = [777, 81, 82, 83, 84, 85, 86, 87, 88, 89];
           break;
         case "34":
           // this.ids = [777, 50, 51, 52, 53];
-          this.ids = [];
+          this.ids = [777, 81, 83, 84, 85, 86, 87, 88, 89];
           break;
         case "35":
           this.ids = [
@@ -330,7 +335,16 @@ export default {
             43,
             44,
             45,
-            80
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
           ];
           break;
         case "12":

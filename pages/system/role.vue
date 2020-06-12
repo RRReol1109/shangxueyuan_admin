@@ -314,11 +314,6 @@ export default {
               date: "",
               children: [
                 {
-                  id: 47,
-                  label: "教学",
-                  date: ""
-                },
-                {
                   id: 48,
                   label: "招生",
                   date: ""
@@ -467,6 +462,52 @@ export default {
             {
               id: 45,
               label: "活动规划",
+              date: ""
+            },
+            ,
+            {
+              id: 81,
+              label: "学生竞赛奖励",
+              date: ""
+            },
+            {
+              id: 82,
+              label: "学生创新创业",
+              date: ""
+            },
+            {
+              id: 83,
+              label: "学生发表学术论文",
+              date: ""
+            },
+            {
+              id: 84,
+              label: "学生获得专利",
+              date: ""
+            },
+            {
+              id: 85,
+              label: "学生个人荣誉称号",
+              date: ""
+            },
+            {
+              id: 86,
+              label: "学生学科信息",
+              date: ""
+            },
+            {
+              id: 87,
+              label: "学生党员情况",
+              date: ""
+            },
+            {
+              id: 88,
+              label: "毕业生",
+              date: ""
+            },
+            {
+              id: 89,
+              label: "商学院出国学生",
               date: ""
             }
           ]

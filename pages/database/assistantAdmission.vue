@@ -7,7 +7,7 @@
             v-model="query.grade"
             align="right"
             size="normal"
-            type="date"
+            type="year"
             placeholder="年份"
           ></el-date-picker>
         </el-form-item>

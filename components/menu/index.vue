@@ -662,6 +662,87 @@ export default {
                 state: "ENABLE",
                 value: "/database/active"
               }
+            },
+            {
+              entity: {
+                id: 81,
+                name: "competition",
+                alias: "学生竞赛奖励",
+                state: "ENABLE",
+                value: "/database/competition"
+              }
+            },
+            {
+              entity: {
+                id: 82,
+                name: "entrepreneurship",
+                alias: "学生创新创业训练计划项目情况",
+                state: "ENABLE",
+                value: "/database/entrepreneurship"
+              }
+            },
+            {
+              entity: {
+                id: 83,
+                name: "academicPaper",
+                alias: "学生发表学术论文情况",
+                state: "ENABLE",
+                value: "/database/academicPaper"
+              }
+            },
+            {
+              entity: {
+                id: 84,
+                name: "patent",
+                alias: "学生获得专利（软件著作权）情况",
+                state: "ENABLE",
+                value: "/database/patent"
+              }
+            },
+            {
+              entity: {
+                id: 85,
+                name: "honor",
+                alias: "学生个人荣誉称号",
+                state: "ENABLE",
+                value: "/database/honor"
+              }
+            },
+            {
+              entity: {
+                id: 86,
+                name: "course",
+                alias: "学生学科信息",
+                state: "ENABLE",
+                value: "/database/course"
+              }
+            },
+            {
+              entity: {
+                id: 87,
+                name: "member",
+                alias: "学生党员情况",
+                state: "ENABLE",
+                value: "/database/member"
+              }
+            },
+            {
+              entity: {
+                id: 88,
+                name: "graduate",
+                alias: "毕业生",
+                state: "ENABLE",
+                value: "/database/graduate"
+              }
+            },
+            {
+              entity: {
+                id: 89,
+                name: "overseas",
+                alias: "商学院出国学生",
+                state: "ENABLE",
+                value: "/database/overseas"
+              }
             }
           ]
         },
@@ -850,7 +931,7 @@ export default {
   overflow-y: auto;
 }
 .el-menu-vertical::-webkit-scrollbar {
-  display: none;/*隐藏滚动条*/
+  display: none; /*隐藏滚动条*/
 }
 
 .meun {

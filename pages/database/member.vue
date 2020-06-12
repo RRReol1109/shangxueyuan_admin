@@ -2,18 +2,14 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="上传用户名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
+        <el-form-item label="专业代码:">
+          <el-input v-model="query.id" placeholder="请输入专业代码" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="年份:">
-          <el-date-picker
-            v-model="query.year"
-            align="right"
-            size="normal"
-            type="year"
-            value-format="yyyy"
-            placeholder="年份"
-          ></el-date-picker>
+        <el-form-item label="学号:">
+          <el-input v-model="query.name" placeholder="请输入学号" size="normal"></el-input>
+        </el-form-item>
+        <el-form-item label="学生姓名:">
+          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -44,7 +40,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/subjectConstruction/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/teacherInfo/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -55,25 +51,39 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <!-- <el-table-column fixed prop="id" align="center" label="id"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="上传用户"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="文件名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="院系名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="院系代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="专业名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="专业代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="学生姓名"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="political"
+        align="center"
+        label="是否为预备党员"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="idNum" align="center" label="入党时间"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="downLoad(scope.row)" type="text" size="normal">下载</el-button>
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -94,7 +104,13 @@
       ></el-pagination>
     </nav>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form :model="examineForm" ref="examineForm" label-width="150px" class="demo-examineForm">
+      <el-form
+        :model="examineForm"
+        :rules="rules"
+        ref="examineForm"
+        label-width="150px"
+        class="demo-examineForm"
+      >
         <el-form-item>
           <el-form-item label="审核状态:">
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
@@ -111,13 +127,12 @@
         </el-form-item>
       </el-form>
     </el-drawer>
-
     <el-drawer
       style="min-height:500px"
       title
-      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
+      size="60%"
     >
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
@@ -126,35 +141,79 @@
           <el-button size="normal" @click="resetForm('form')">重置</el-button>
         </div>
       </div>
-      <el-form :model="form" label-width="150px">
-        <el-form-item label="年份">
-          <el-date-picker
-            v-model="form.year"
-            align="right"
-            size="normal"
-            type="year"
-            placeholder="年份"
-            value-format="yyyy"
-            style="width:99%"
-          ></el-date-picker>
+      <el-form
+        :model="form"
+        :rules="rules"
+        label-width="150px"
+        ref="form"
+        :disabled="!['edit', 'add'].includes(operate)"
+      >
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="院系名称" prop="college">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="院系代码" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专业名称" prop="college">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="专业代码" prop="gender">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="学号" prop="nativePlace">
+              <el-input size="normal" v-model="form.nativePlace" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="学生姓名" prop="nation">
+              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否为预备党员" prop="political">
+              <el-select v-model="form.type" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="是" value="0"></el-option>
+                <el-option label="否" value="1"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="入党时间" prop="idNum">
+              <el-date-picker
+                size="normal"
+                v-model="form.year"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择年份"
+                style="width:98%"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+          <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+            <el-option label="未审核" value="0"></el-option>
+            <el-option label="审核通过" value="1"></el-option>
+            <el-option label="审核未通过" value="2"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" placeholder="请输入内容" style="width:99%"></el-input>
-        </el-form-item>
-        <div v-if="['add'].includes(operate)">
-          <el-form-item label="文件上传" label-width="320px">
-            <el-upload
-              class="upload-demo"
-              :headers="header"
-              :show-file-list="false"
-              :file-list="fileList"
-              action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken"
-              :on-success="onSuccess"
-            >
-              <el-button size="normal" type="primary">点击上传</el-button>
-            </el-upload>
-          </el-form-item>
-        </div>
       </el-form>
     </el-drawer>
   </div>
@@ -162,29 +221,56 @@
 
 <script>
 import axios from "~/plugins/axios2";
+import moment from "moment";
 export default {
   layout: "normal",
-
   components: {},
   data() {
     return {
-      header: {},
-      flag: true,
+      operate: "",
+      dialogFormVisible: false,
       total: 0,
       page: 1,
-      operate: "",
       fileList: [],
-      dialogFormVisible: false,
       query: {
         limit: 14,
         offset: 0,
         order: "desc",
         condition: ""
       },
+      teacherList: [],
       roleId: 0,
       examineDialog: false,
       examineForm: {},
-      form: {},
+      header: {},
+      rules: {},
+      form: {
+        college: "",
+        gender: "",
+        nativePlace: "",
+        nation: "",
+        political: "",
+        idNum: "",
+        startDate: "",
+        address: "",
+        state: "",
+        editorDeptName: "",
+        title: "",
+        titleDate: "",
+        level: "",
+        tutor: "",
+        personType: "",
+        postDate: "",
+        highEducation: "",
+        highDegree: "",
+        school: "",
+        college: "",
+        startDate: "",
+        qq: "",
+        phone: "",
+        homePhone: "",
+        email: ""
+      },
       tableData: []
     };
   },
@@ -192,77 +278,69 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "已审核",
+        "1": "通过",
         "2": "未通过"
       }[value.toString()];
     }
   },
   methods: {
-    onSuccess(response, file, fileList) {
-      console.log(file);
-      this.form.name = file.name;
-      this.form.file = file.response;
-      // this.flag = false;
+    handleClick(row) {
+      console.log(row);
     },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
-    resetForm(formName) {
-      console.log(this.$refs[formName]);
-      this.$refs[formName].resetFields();
+    async changeFlag(row) {
+      row.pick = !row.pick;
     },
     async list() {
+      this.tableData = [];
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
+          if (key == "entryTime" || key == "graduationTime") {
+            if (element) {
+              this.query[key] = moment(element).format("YYYY-MM-DD");
+            } else {
+              delete this.query[key];
+            }
+          }
           if (element == "" && key != "condition" && key != "offset") {
             delete this.query[key];
           }
         }
       }
-      let user = localStorage.getItem("userInfo");
-      if (user.roleid == 7) {
+      let user = localStorage.getItem("roles");
+      if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/subjectConstruction/list", this.query);
+      let res = await axios.$post("/teacherInfo/list", this.query);
+      if (res) {
+        for (let i = 0; i < res.rows.length; i++) {
+          const element = res.rows[i];
+          for (const key in element) {
+            if (element.hasOwnProperty(key)) {
+              const item = element[key];
+              if (key == "entryTime" || key == "graduationTime") {
+                element[key] = moment(item).format("YYYY-MM-DD");
+                console.log(element[key]);
+              }
+            }
+          }
+        }
+      }
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    downLoad(row) {
-      window.open(row.file);
+    uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
+      this.list();
     },
-    async submitForm(formName) {
-      switch (this.operate) {
-        case "add":
-          await axios.$post("/subjectConstruction/add", this.form);
-          this.fileList = [];
-          break;
-        case "edit":
-          await axios.$post("/subjectConstruction/update", this.form);
-          break;
-      }
-      this.dialogFormVisible = false;
-      await this.list();
-    },
-    showDialog(row) {
-      this.dialogFormVisible = true;
-      this.formDisabled = false;
-      if (this.operate === "add") {
-        this.form = {
-          id: ""
-        };
-        this.form.user = localStorage.getItem("userId");
-      } else {
-        this.flag = false;
-        this.form = row;
-      }
-    },
-    async changeFlag(row) {
-      row.pick = !row.pick;
-    },
-
     async examineData() {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
@@ -276,7 +354,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/subjectConstruction/update", this.examineForm);
+        await axios.$post("/teacherInfo/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -285,10 +363,84 @@ export default {
         message: "审核成功!"
       });
     },
-
+    async submitForm(formName) {
+      let verification = false;
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          verification = true;
+          console.log("success");
+          return true;
+        } else {
+          verification = false;
+          console.log("error submit!!");
+          return false;
+        }
+      });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
+      switch (this.operate) {
+        case "add":
+          await axios.$post("/teacherInfo/add", this.form);
+          break;
+        case "edit":
+          await axios.$post("/teacherInfo/update", this.form);
+          break;
+      }
+      this.dialogFormVisible = false;
+      await this.list();
+    },
+    showDialog(row) {
+      this.dialogFormVisible = true;
+      this.formDisabled = false;
+      if (this.operate === "add") {
+        this.form = {
+          college: "",
+          gender: "",
+          nativePlace: "",
+          nation: "",
+          political: "",
+          idNum: "",
+          startDate: "",
+          address: "",
+          state: "",
+          editorDeptName: "",
+          title: "",
+          titleDate: "",
+          level: "",
+          tutor: "",
+          personType: "",
+          postDate: "",
+          highEducation: "",
+          highDegree: "",
+          school: "",
+          college: "",
+          startDate: "",
+          qq: "",
+          phone: "",
+          homePhone: "",
+          email: ""
+        };
+      } else {
+        row.auditFlag = row.auditFlag.toString();
+        this.form = row;
+      }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
     async handleCommand(command) {
       console.log(command);
       switch (command) {
+        case "download":
+          this.exportData();
+          break;
         case "examine":
           let deleteList = [];
           for (let i = 0; i < this.tableData.length; i++) {
@@ -308,30 +460,17 @@ export default {
           }
           this.examineDialog = true;
           break;
+
         case "delCount":
           this.delCount();
           break;
         case "temp":
-          location.href =
-            "http://bsoa.csu.edu.cn/excel-model/数据库-学科点简况.xls";
-          break;
-
-        case "download":
-          this.exportData();
+          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-lxsxx.xls";
           break;
       }
     },
-
-    uploadSuccess() {
-      this.$message({
-        type: "success",
-        message: "上传成功"
-      });
-      this.list();
-    },
-
     async exportData() {
-      let data = await axios.$download("/subjectConstruction/export", {
+      let data = await axios.$download("/teacherInfo/export", {
         params: this.query
       });
       if (data) {
@@ -339,7 +478,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "数据库-学科点简况.xls");
+        link.setAttribute("download", "sjk-lxsxx.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -369,9 +508,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let subjectConstructionId = element.id;
-            await axios.$post("/subjectConstruction/delete", {
-              subjectConstructionId: subjectConstructionId
+            let internationalStudentId = element.id;
+            await axios.$post("/teacherInfo/delete", {
+              internationalStudentId: internationalStudentId
             });
           }
           this.tableData = [];
@@ -397,9 +536,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let subjectConstructionId = row.id;
-          await axios.$post("/subjectConstruction/delete", {
-            subjectConstructionId: subjectConstructionId
+          let internationalStudentId = row.id;
+          await axios.$post("/teacherInfo/delete", {
+            internationalStudentId: internationalStudentId
           });
           this.list();
           this.$message({
@@ -421,17 +560,17 @@ export default {
       offset: 0,
       limit: 999999
     });
-    this.header = {
-      Authorization: localStorage.getItem("message")
-    };
-    this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
+    this.roleId = localStorage.getItem("roleId");
     this.list();
   }
 };
 </script>
 
 <style scoped>
+.search-form {
+  margin-bottom: 10px;
+}
 .el-drawer__body {
   overflow: auto;
   /* overflow-x: auto; */
@@ -440,8 +579,5 @@ export default {
 /*2.隐藏滚动条，太丑了*/
 .el-drawer__container ::-webkit-scrollbar {
   display: none;
-}
-.search-form {
-  margin-bottom: 10px;
 }
 </style>
