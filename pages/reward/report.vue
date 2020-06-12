@@ -196,10 +196,10 @@
           </el-col>
         </el-form-item>-->
         <el-form-item
-          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          v-for="(teacherArr, index) in teacherArr"
           :label="'作者信息' + (index+1)"
           :key="teacherArr.key"
-          :prop="'teacherArr.' + index + '.value'"
+          :prop="'teacherArr' + index"
         >
           <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师" prop="name">
             <el-option
@@ -279,6 +279,12 @@ export default {
       teacherList: [],
       header: {},
       tableData: [],
+      teacherArr: [
+        {
+          name: "",
+          num: ""
+        }
+      ],
       ruleForm: {
         type: "1",
         // level: "1",
@@ -410,33 +416,43 @@ export default {
     },
     removeTeacher(item) {
       console.log(item);
-      var index = this.ruleForm.teacherArr.indexOf(item);
+      var index = this.teacherArr.indexOf(item);
       if (index !== -1 && index != 0) {
-        this.ruleForm.teacherArr.splice(index, 1);
+        this.teacherArr.splice(index, 1);
       }
     },
     addTeacher() {
-      this.ruleForm.teacherArr.push({
+      this.teacherArr.push({
         name: "",
         num: ""
       });
     },
     async submitForm(formName) {
-      for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
-        let element = this.ruleForm.teacherArr[i];
+      this.ruleForm.persons = "";
+      for (let i = 0; i < this.teacherArr.length; i++) {
+        let element = this.teacherArr[i];
         for (const key in element) {
           if (element.hasOwnProperty(key)) {
             let info = element[key];
             console.log(info);
             if (key == "name") {
-              this.ruleForm.persons += info;
+              let names = "";
+              for (let j = 0; j < this.teacherList.length; j++) {
+                const item = this.teacherList[j];
+                if (item.id == info) {
+                  console.log(item);
+                  names = item.name;
+                }
+              }
+              if (names) this.ruleForm.persons += names;
+              else this.ruleForm.persons += info;
             }
             if (key == "num") {
               this.ruleForm.persons += "|" + info + ",";
             }
           }
         }
-        if (i == this.ruleForm.teacherArr.length - 1) {
+        if (i == this.teacherArr.length - 1) {
           this.ruleForm.persons = this.ruleForm.persons.substr(
             0,
             this.ruleForm.persons.length - 1
@@ -487,34 +503,32 @@ export default {
           persons: "",
           score: "",
           awardDate: moment().format("YYYY-MM-DD"),
-          teacherArr: [
-            {
-              name: "",
-              num: ""
-            }
-          ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.teacherArr = [
+          {
+            name: "",
+            num: ""
+          }
+        ];
       } else {
         this.ruleForm = row;
-        this.ruleForm.teacherArr = [];
+        this.teacherArr = [];
         let teacherInfo = row.persons.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
-          this.ruleForm.teacherArr.push({
+          this.teacherArr.push({
             name: "",
             num: ""
           });
           let teacher = element.split("|");
           for (let j = 0; j < teacher.length; j++) {
             const item = teacher[j];
-            console.log(item, "======item");
-            if (j == 0) {
-              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
-                ","
-              )[i];
-            } else if (j == 1) {
-              this.ruleForm.teacherArr[i].num = item;
+            console.log(item, "======item" + j);
+            if (j % 2 == 1) {
+              this.teacherArr[i].num = item;
+            } else if (j % 2 == 0) {
+              this.teacherArr[i].name = item;
             }
           }
         }

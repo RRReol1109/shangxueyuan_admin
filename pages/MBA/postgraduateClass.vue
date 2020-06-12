@@ -124,9 +124,17 @@
     <el-drawer
       style="min-height:500px"
       title
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -198,11 +206,6 @@
           </el-col>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>

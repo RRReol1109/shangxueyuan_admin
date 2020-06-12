@@ -106,9 +106,15 @@
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="year" align="center" label="发表日期"></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="发表日期"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="reformPaper"
         align="center"
@@ -118,25 +124,55 @@
           <span>{{scope.row.reformPaper | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="title" align="center" label="论文名称"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="journal" align="center" label="期刊名称"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="doi" align="center" label="DOI号"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="wos" align="center" label="WoS号"></el-table-column>
-      <el-table-column 
-      width="150"
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="title"
+        align="center"
+        label="论文名称"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="journal"
+        align="center"
+        label="期刊名称"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="doi"
+        align="center"
+        label="DOI号"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="wos"
+        align="center"
+        label="WoS号"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="subsidizeSource"
         align="center"
         label="资助来源"
       ></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
         :show-overflow-tooltip="true"
         prop="collegeLevel"
         align="center"
         label="学院期刊分级"
       ></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="issn" align="center" label="期刊ISSN号"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="issn"
+        align="center"
+        label="期刊ISSN号"
+      ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
       <!-- <el-table-column
@@ -146,8 +182,20 @@
         label="ESI经济"
       ></el-table-column>-->
       <!-- <el-table-column :show-overflow-tooltip="true" prop="coauthorName" align="center" label="通讯作者单位"></el-table-column> -->
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="included" align="center" label="核心收录"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="subject" align="center" label="期刊所属学科"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="included"
+        align="center"
+        label="核心收录"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="subject"
+        align="center"
+        label="期刊所属学科"
+      ></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
@@ -156,21 +204,21 @@
         label="学校期刊分级"
       ></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
         :show-overflow-tooltip="true"
         prop="coauthorName"
         align="center"
         label="第一作者"
       ></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
         :show-overflow-tooltip="true"
         prop="coauthorName"
         align="center"
         label="第一通讯作者"
       ></el-table-column>
       <el-table-column
-      width="180"
+        width="180"
         :show-overflow-tooltip="true"
         prop="esiEconomics"
         align="center"
@@ -189,9 +237,9 @@
         <template slot-scope="scope">
           <span>{{scope.row.esiEconomics | flagFilter}}</span>
         </template>
-      </el-table-column> -->
+      </el-table-column>-->
       <el-table-column
-      width="180"
+        width="180"
         :show-overflow-tooltip="true"
         prop="esi1Date"
         align="center"
@@ -206,35 +254,65 @@
         <template slot-scope="scope">
           <span>{{scope.row.esiEconomics | flagFilter}}</span>
         </template>
-      </el-table-column> -->
+      </el-table-column>-->
       <el-table-column
-      width="180"
+        width="180"
         :show-overflow-tooltip="true"
         prop="esi01Date"
         align="center"
         label="进入0.1%(千分之一)时间"
       ></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="yearDate" align="center" label="年代卷期"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="timesCited" align="center" label="被引用次数"></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="yearDate"
+        align="center"
+        label="年代卷期"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="timesCited"
+        align="center"
+        label="被引用次数"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="jcrLevel1"
         align="center"
         label="汤森路透JCR分区"
       ></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
         :show-overflow-tooltip="true"
         prop="jcrLevel2"
         align="center"
         label="中科院JCR分区"
       ></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="ft50" align="center" label="金融时报FT50"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="abs" align="center" label="ABS"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="utd24" align="center" label="UTD24"></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="ft50"
+        align="center"
+        label="金融时报FT50"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="abs"
+        align="center"
+        label="ABS"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="utd24"
+        align="center"
+        label="UTD24"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="cooPaper"
         align="center"
@@ -261,7 +339,6 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text">编辑</el-button>
           <el-button @click="del(scope.row)" type="text">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text">附件下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -350,8 +427,8 @@
         <el-form-item label="期刊名称" prop="journal">
           <el-input v-model="ruleForm.journal" placeholder style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item label="期刊ISSN号" prop="cateNumber">
-          <el-input clearable v-model="ruleForm.cateNumber" placeholder style="width:99%"></el-input>
+        <el-form-item label="期刊ISSN号" prop="issn">
+          <el-input clearable v-model="ruleForm.issn" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="资助课题来源" prop="subsidizeSource">
           <el-input learable v-model="ruleForm.subsidizeSource" placeholder style="width:99%"></el-input>
@@ -673,7 +750,7 @@
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="fileItems"
+            :data="additionFiles"
             border
             style="width: 100%"
             size="normal"
@@ -689,24 +766,22 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="files" label="文件名" align="center"></el-table-column>
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="createTime"
-              label="创建时间"
-              align="center"
-            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name.split('/').pop() }}</span>
+              </template>
+            </el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
           <el-upload
             class="dragger"
             :show-file-list="false"
-            :on-success="uploadFileSuccess"
+            :on-success="uploadAdditionSuccess"
             drag
             :headers="header"
             action="http://bs.hk.darkal.cn/mgr/upload"
@@ -784,6 +859,7 @@ export default {
       fileurl: "",
       header: {},
       fileList: [],
+      additionFiles: [],
       ruleForm: {
         coauthorName: "",
         doi: "",
@@ -894,16 +970,21 @@ export default {
         });
       }
     },
-    downLoadFile1(rows) {
-      alert(rows);
-      if (rows.files) {
-        window.open(rows.files);
-      } else {
-        this.$message({
-          type: "info",
-          message: "该条记录无附件"
+    uploadAdditionSuccess(response) {
+      console.log("this.ruleForm:::", this.ruleForm);
+      if (response && response.indexOf("http") != -1) {
+        this.additionFiles.push({
+          name: response
         });
       }
+    },
+    downloadAdditionFile(row) {
+      window.open(row.name);
+    },
+    deleteAdditionFile(row) {
+      this.additionFiles = this.additionFiles.filter(
+        it => it.name !== row.name
+      );
     },
     removeAuthor(item) {
       var index = this.ruleForm.author.indexOf(item);
@@ -979,10 +1060,10 @@ export default {
       this.loading = true;
       let res = await axios.$post("/articleEn/list", this.query);
       this.tableData = res.rows;
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        this.tableData[i].half = element.half == true ? "是" : "否";
-      }
+      // for (let i = 0; i < this.tableData.length; i++) {
+      //   const element = this.tableData[i];
+      //   this.tableData[i].half = element.half == true ? "是" : "否";
+      // }
       this.total = parseInt(res.total);
       this.loading = false;
     },
@@ -1016,33 +1097,34 @@ export default {
       }
     },
     async submitForm(formName) {
-      for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
-        let element = this.ruleForm.teacherArr[i];
-        for (const key in element) {
-          if (element.hasOwnProperty(key)) {
-            let info = element[key];
-            console.log(info);
-            if (key == "name") {
-              this.ruleForm.authors += parseInt(info);
-            }
-            if (key == "num") {
-              this.ruleForm.authors += "|" + info;
-            }
-            if (key == "stu") {
-              this.ruleForm.authors += "|" + info;
-            }
-            if (key == "tx") {
-              this.ruleForm.authors += "|" + info + ",";
-            }
-          }
-        }
-        if (i == this.ruleForm.teacherArr.length - 1) {
-          this.ruleForm.authors = this.ruleForm.authors.substr(
-            0,
-            this.ruleForm.authors.length - 1
-          );
-        }
-      }
+      // for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
+      //   let element = this.ruleForm.teacherArr[i];
+      //   for (const key in element) {
+      //     if (element.hasOwnProperty(key)) {
+      //       let info = element[key];
+      //       console.log(info);
+      //       if (key == "name") {
+      //         this.ruleForm.authors += parseInt(info);
+      //       }
+      //       if (key == "num") {
+      //         this.ruleForm.authors += "|" + info;
+      //       }
+      //       if (key == "stu") {
+      //         this.ruleForm.authors += "|" + info;
+      //       }
+      //       if (key == "tx") {
+      //         this.ruleForm.authors += "|" + info + ",";
+      //       }
+      //     }
+      //   }
+      //   if (i == this.ruleForm.teacherArr.length - 1) {
+      //     this.ruleForm.authors = this.ruleForm.authors.substr(
+      //       0,
+      //       this.ruleForm.authors.length - 1
+      //     );
+      //   }
+      // }
+      this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -1067,11 +1149,12 @@ export default {
       switch (this.operate) {
         case "add":
           if (this.filesInfo != [])
-            this.ruleForm.files = JSON.stringify(this.filesInfo);
-          await axios.$post("/articleEn/add", this.ruleForm);
+            // this.ruleForm.files = JSON.stringify(this.filesInfo);
+            await axios.$post("/articleEn/add", this.ruleForm);
           this.fileurl = "";
           break;
         case "edit":
+          this.ruleForm.cooPaper = "是" ? true : false;
           await axios.$post("/articleEn/update", this.ruleForm);
           break;
       }
@@ -1105,10 +1188,12 @@ export default {
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
       } else {
+        row.cooPaper = row.cooPaper.toString();
         this.ruleForm = row;
         this.ruleForm.teacherArr = [];
         console.log(row);
-        this.fileItems = JSON.parse(row.files);
+        this.additionFiles = JSON.parse(row.files);
+        // this.fileItems = JSON.parse(row.files);
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
@@ -1119,29 +1204,29 @@ export default {
             tx: false
           });
           let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item");
-            if (j == 0) {
-              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
-                ","
-              )[i];
-            } else if (j == 1) {
-              this.ruleForm.teacherArr[i].num = item;
-            } else if (j == 2) {
-              if (item == 0) {
-                this.ruleForm.teacherArr[i].stu = false;
-              } else {
-                this.ruleForm.teacherArr[i].stu = true;
-              }
-            } else {
-              if (item == 0) {
-                this.ruleForm.teacherArr[i].tx = false;
-              } else {
-                this.ruleForm.teacherArr[i].tx = true;
-              }
-            }
-          }
+          // for (let j = 0; j < teacher.length; j++) {
+          //   const item = teacher[j];
+          //   console.log(item, "======item");
+          //   if (j == 0) {
+          //     this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
+          //       ","
+          //     )[i];
+          //   } else if (j == 1) {
+          //     this.ruleForm.teacherArr[i].num = item;
+          //   } else if (j == 2) {
+          //     if (item == 0) {
+          //       this.ruleForm.teacherArr[i].stu = false;
+          //     } else {
+          //       this.ruleForm.teacherArr[i].stu = true;
+          //     }
+          //   } else {
+          //     if (item == 0) {
+          //       this.ruleForm.teacherArr[i].tx = false;
+          //     } else {
+          //       this.ruleForm.teacherArr[i].tx = true;
+          //     }
+          //   }
+          // }
         }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }

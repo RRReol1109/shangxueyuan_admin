@@ -3,7 +3,7 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="论文名称:">
-          <el-input v-model="query.title" style="width:250px" placeholder="" size="normal"></el-input>
+          <el-input v-model="query.title" style="width:250px" placeholder size="normal"></el-input>
         </el-form-item>
         <el-form-item label="期刊学院分级:">
           <el-select v-model="query.collegeLevel" size="normal" placeholder="请选择分级">
@@ -199,7 +199,6 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text" size="normal">附件下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -304,7 +303,7 @@
                 <el-option label="中文A-" value="A-"></el-option>
                 <el-option label="中文B" value="B"></el-option>
                 <el-option label="中文C" value="C"></el-option>
-              </el-select> -->
+              </el-select>-->
             </el-form-item>
           </el-col>
           <el-col :span="12">

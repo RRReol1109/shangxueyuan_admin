@@ -86,20 +86,62 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" label="类型" align="center"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="publishDate" align="center" label="出版时间"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="name" align="center" label="著作教程名称"></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="publishDate"
+        align="center"
+        label="出版时间"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="name"
+        align="center"
+        label="著作教程名称"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="publishHouse"
         align="center"
         label="出版社名称"
       ></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="signature" align="center" label="署名单位"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="chiefEditor" align="center" label="主编信息"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="wordCount" align="center" label="总字数（万）"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="userName" align="center" label="作者"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="isbn" align="center" label="ISBN编号"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="signature"
+        align="center"
+        label="署名单位"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="chiefEditor"
+        align="center"
+        label="主编信息"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="wordCount"
+        align="center"
+        label="总字数（万）"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="作者"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="isbn"
+        align="center"
+        label="ISBN编号"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -264,10 +306,10 @@
           <el-input clearable v-model="ruleForm.chiefEditor" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
         <el-form-item
-          v-for="(teacherArr, index) in ruleForm.teacherArr"
+          v-for="(teacherArr, index) in teacherArr"
           :label="'作者信息' + (index+1)"
           :key="teacherArr.key"
-          :prop="'teacherArr.' + index + '.value'"
+          :prop="'teacherArr' + index"
         >
           <el-select v-model="teacherArr.name" filterable placeholder="请选择老师" prop="name">
             <el-option
@@ -411,9 +453,9 @@ export default {
         publishHouse: "",
         signature: "",
         wordCount: 0,
-        teacherArr: [{ name: "", point: "", num: "" }],
         publishDate: moment().format("YYYY-MM-DD")
       },
+      teacherArr: [{ name: "", point: "", num: "" }],
       tableData: [],
       rules: {
         publishHouse: [
@@ -579,13 +621,13 @@ export default {
     },
     removeTeacher(item) {
       console.log(item);
-      var index = this.ruleForm.teacherArr.indexOf(item);
+      var index = this.teacherArr.indexOf(item);
       if (index !== -1 && index != 0) {
-        this.ruleForm.teacherArr.splice(index, 1);
+        this.teacherArr.splice(index, 1);
       }
     },
     addTeacher() {
-      this.ruleForm.teacherArr.push({
+      this.teacherArr.push({
         name: "",
         point: "",
         num: ""
@@ -619,8 +661,8 @@ export default {
           console.log(this.ruleForm);
           this.ruleForm.files = this.fileurl;
           console.log(this.teacherList);
-          for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
-            let element = this.ruleForm.teacherArr[i];
+          for (let i = 0; i < this.teacherArr.length; i++) {
+            let element = this.teacherArr[i];
             for (const key in element) {
               if (element.hasOwnProperty(key)) {
                 let info = element[key];
@@ -636,7 +678,7 @@ export default {
                 }
               }
             }
-            if (i == this.ruleForm.teacherArr.length - 1) {
+            if (i == this.teacherArr.length - 1) {
               this.ruleForm.authors = this.ruleForm.authors.substr(
                 0,
                 this.ruleForm.authors.length - 1
@@ -668,6 +710,38 @@ export default {
           this.fileurl = "";
           break;
         case "edit":
+          this.ruleForm.authors = "";
+          for (let i = 0; i < this.teacherArr.length; i++) {
+            let element = this.teacherArr[i];
+            for (const key in element) {
+              if (element.hasOwnProperty(key)) {
+                let info = element[key];
+                let tid = "";
+                if (key == "name") {
+                  for (let j = 0; j < this.teacherList.length; j++) {
+                    const item = this.teacherList[j];
+                    if (info == item.name) {
+                      tid = item.id;
+                    }
+                  }
+                  if (tid)  this.ruleForm.authors += tid;
+                  else  this.ruleForm.authors += info;
+                }
+                if (key == "point") {
+                  this.ruleForm.authors += "|" + info;
+                }
+                if (key == "num") {
+                  this.ruleForm.authors += "|" + info + ",";
+                }
+              }
+            }
+            if (i == this.teacherArr.length - 1) {
+               this.ruleForm.authors =  this.ruleForm.authors.substr(
+                0,
+                 this.ruleForm.authors.length - 1
+              );
+            }
+          }
           await axios.$post("/textbook/update", this.ruleForm);
           break;
       }
@@ -688,22 +762,22 @@ export default {
           authors: "",
           isbn: "",
           publishDate: moment().format("YYYY-MM-DD"),
-          teacherArr: [
-            {
-              name: "",
-              point: "",
-              num: ""
-            }
-          ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.teacherArr = [
+          {
+            name: "",
+            point: "",
+            num: ""
+          }
+        ];
       } else {
         this.ruleForm = row;
-        this.ruleForm.teacherArr = [];
+        this.teacherArr = [];
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
-          this.ruleForm.teacherArr.push({
+          this.teacherArr.push({
             name: "",
             title: "",
             flag: false
@@ -713,13 +787,11 @@ export default {
             const item = teacher[j];
             console.log(item, "======item");
             if (j == 0) {
-              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
-                ","
-              )[i];
+              this.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
             } else if (j == 1) {
-              this.ruleForm.teacherArr[i].point = item;
+              this.teacherArr[i].point = item;
             } else {
-              this.ruleForm.teacherArr[i].num = item;
+              this.teacherArr[i].num = item;
             }
           }
         }
