@@ -206,16 +206,30 @@
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
-        prop="coauthorName"
+        prop="firstAuthor"
         align="center"
         label="第一作者"
       ></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
-        prop="coauthorName"
+        prop="firstAuthorDept"
+        align="center"
+        label="第一作者单位"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="firstCorrespondent"
         align="center"
         label="第一通讯作者"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="firstCorrespondentDept"
+        align="center"
+        label="第一通讯作者单位"
       ></el-table-column>
       <el-table-column
         width="180"
@@ -465,16 +479,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="学校期刊分级" prop="schoolLevel">
-              <el-select v-model="ruleForm.schoolLevel" placeholder="请选择级别" style="width:98%">
-                <el-option label="英文A+" value="A+"></el-option>
-                <el-option label="英文A" value="A"></el-option>
-                <el-option label="英文A-" value="A-"></el-option>
-                <el-option label="英文B+" value="B+"></el-option>
-                <el-option label="英文B" value="B"></el-option>
-                <el-option label="英文B-" value="B-"></el-option>
-                <el-option label="英文C+" value="C+"></el-option>
-                <el-option label="英文C" value="C"></el-option>
-              </el-select>
+              <el-input learable v-model="ruleForm.schoolLevel" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -634,32 +639,37 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一作者" prop>
-              <el-input clearable v-model="ruleForm.highlyCited" placeholder style="width:98%"></el-input>
+            <el-form-item label="第一作者" prop="firstAuthor">
+              <el-input clearable v-model="ruleForm.firstAuthor" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一作者单位" prop>
+        <el-form-item label="第一作者单位" prop="firstAuthorDept">
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.cateNumber"
+            v-model="ruleForm.firstAuthorDept"
             placeholder
             style="width:99%"
           ></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一通讯作者" prop="coauthorName">
-              <el-input clearable v-model="ruleForm.coauthorName" placeholder style="width:99%"></el-input>
+            <el-form-item label="第一通讯作者" prop="firstCorrespondent">
+              <el-input
+                clearable
+                v-model="ruleForm.firstCorrespondent"
+                placeholder
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一通讯作者单位" prop="coauthorOrg">
+        <el-form-item label="第一通讯作者单位" prop="firstCorrespondentDept">
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.coauthorOrg"
+            v-model="ruleForm.firstCorrespondentDept"
             placeholder
             style="width:99%"
           ></el-input>

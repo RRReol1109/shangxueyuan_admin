@@ -97,7 +97,11 @@
         prop="reformPaper"
         align="center"
         label="是否为教改论文"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.reformPaper | reformPaperFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column
         width="200"
         :show-overflow-tooltip="true"
@@ -159,16 +163,30 @@
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
-        prop="userName"
+        prop="firstAuthor"
         align="center"
         label="第一作者"
       ></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
-        prop="userName"
+        prop="firstAuthorDept"
+        align="center"
+        label="第一作者单位"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="firstCorrespondent"
         align="center"
         label="第一通讯作者"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="firstCorrespondentDept"
+        align="center"
+        label="第一通讯作者单位"
       ></el-table-column>
       <el-table-column
         width="300"
@@ -275,8 +293,8 @@
           <el-col :span="12">
             <el-form-item label="是否为教改论文" prop="reformPaper">
               <el-select v-model="ruleForm.reformPaper" placeholder="请选择级别" style="width:98%">
-                <el-option label="是" value="是"></el-option>
-                <el-option label="否" value="否"></el-option>
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -400,9 +418,9 @@
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一作者" prop>
+            <el-form-item label="第一作者" prop="firstAuthor">
               <el-select
-                v-model="ruleForm.firstauthor"
+                v-model="ruleForm.firstAuthor"
                 filterable
                 placeholder="请选择老师"
                 prop
@@ -418,27 +436,32 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一作者单位" prop>
+        <el-form-item label="第一作者单位" prop="firstAuthorDept">
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.cateNumber"
+            v-model="ruleForm.firstAuthorDept"
             placeholder
             style="width:99%"
           ></el-input>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一通讯作者" prop>
-              <el-input clearable v-model="ruleForm.highlyCited" placeholder style="width:99%"></el-input>
+            <el-form-item label="第一通讯作者" prop="firstCorrespondent">
+              <el-input
+                clearable
+                v-model="ruleForm.firstCorrespondent"
+                placeholder
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="第一通讯作者单位" prop>
+        <el-form-item label="第一通讯作者单位" prop="firstCorrespondentDept">
           <el-input
             type="textarea"
             clearable
-            v-model="ruleForm.cateNumber"
+            v-model="ruleForm.firstCorrespondentDept"
             placeholder
             style="width:99%"
           ></el-input>
@@ -614,6 +637,12 @@ export default {
         "1": "通过",
         "2": "未通过"
       }[value.toString()];
+    },
+    reformPaperFilter: function(value) {
+      return {
+        true: "是",
+        false: "否"
+      }[value.toString()];
     }
   },
   methods: {
@@ -769,7 +798,8 @@ export default {
       //     );
       //   }
       // }
-      this.ruleForm.files = JSON.stringify(this.additionFiles);
+      if (this.additionFiles)
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -851,43 +881,10 @@ export default {
         };
       } else {
         this.ruleForm = row;
-        this.additionFiles = JSON.parse(row.files);
+        if (row.files) this.additionFiles = JSON.parse(row.files);
         this.ruleForm.teacherArr = [];
-        let teacherInfo = row.authors.split(",");
-        for (let i = 0; i < teacherInfo.length; i++) {
-          const element = teacherInfo[i];
-          this.ruleForm.teacherArr.push({
-            name: "",
-            num: "",
-            stu: false,
-            tx: false
-          });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item");
-            if (j == 0) {
-              this.ruleForm.teacherArr[i].name = this.ruleForm.userName.split(
-                ","
-              )[i];
-            } else if (j == 1) {
-              this.ruleForm.teacherArr[i].num = item;
-            } else if (j == 2) {
-              if (item == 0) {
-                this.ruleForm.teacherArr[i].stu = false;
-              } else {
-                this.ruleForm.teacherArr[i].stu = true;
-              }
-            } else {
-              if (item == 0) {
-                this.ruleForm.teacherArr[i].tx = false;
-              } else {
-                this.ruleForm.teacherArr[i].tx = true;
-              }
-            }
-          }
-        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
+        this.ruleForm.reformPaper = row.reformPaper.toString();
       }
     },
 

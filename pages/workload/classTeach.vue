@@ -28,8 +28,8 @@
         <el-form-item label="是否为全英文" prop="type">
           <el-select v-model="query.english" size="normal" placeholder="请选择状态">
             <el-option label="全部状态" value></el-option>
-            <el-option label="是" value="0"></el-option>
-            <el-option label="否" value="1"></el-option>
+            <el-option label="是" value="true"></el-option>
+            <el-option label="否" value="false"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="授课对象:">
@@ -47,6 +47,7 @@
             <el-option
               v-for="item in teacherList"
               :key="item.id"
+              filterable
               :label="item.name"
               :value="item.id"
             ></el-option>
@@ -114,27 +115,69 @@
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="课程名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="课程类型1"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="课程类型2"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="学分"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="总学时"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="理论学时"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实验学时"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="上机学时"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实践学时"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="集中实验周"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="班级数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="班级名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="选课人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="承担单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="精品示范课程"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="标签类别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="是否参与部门统计"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="courseType1"
+        align="center"
+        label="课程类型1"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="courseType2"
+        align="center"
+        label="课程类型2"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="学分"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="totalHours" align="center" label="总学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="theoryHours" align="center" label="理论学时"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="examHours" align="center" label="实验学时"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="computerHours"
+        align="center"
+        label="上机学时"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="practiceHours"
+        align="center"
+        label="实践学时"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="examWeek" align="center" label="集中实验周"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="classCnt" align="center" label="班级数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="className" align="center" label="班级名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="choiceCnt" align="center" label="选课人数"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="teachingUnit"
+        align="center"
+        label="承担单位"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="excellentCourse"
+        align="center"
+        label="精品示范课程"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="tagType" align="center" label="标签类别"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="statistics"
+        align="center"
+        label="是否参与部门统计"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="material" align="center" label="使用教材"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="materialType"
+        align="center"
+        label="教材类型"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否为全英文授课"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="target" align="center" label="授课对象"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="授课人数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
@@ -261,17 +304,17 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="课程类型1" prop="type">
-              <el-select v-model="ruleForm.type" placeholder="请选择授课类别" style="width:99%">
+            <el-form-item label="课程类型1" prop="courseType1">
+              <el-select v-model="ruleForm.courseType1" placeholder="请选择授课类别" style="width:99%">
                 <el-option label="任选" value="任选"></el-option>
                 <el-option label="必修" value="必修"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="课程类型2" prop="target">
+            <el-form-item label="课程类型2" prop="courseType2">
               <el-select
-                v-model="ruleForm.target"
+                v-model="ruleForm.courseType2"
                 size="normal"
                 style="width:99%"
                 placeholder="请输选择授课对象"
@@ -285,81 +328,81 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学分">
-              <el-input v-model="ruleForm.phone" style="width:99%"></el-input>
+            <el-form-item label="学分" prop="score">
+              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="总学时">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="理论学时">
-              <el-input v-model="ruleForm.phone" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="实验学时">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
+            <el-form-item label="总学时" prop="totalHours">
+              <el-input v-model="ruleForm.totalHours" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="上机学时">
-              <el-input v-model="ruleForm.phone" style="width:99%"></el-input>
+            <el-form-item label="理论学时" prop="theoryHours">
+              <el-input v-model="ruleForm.theoryHours" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="实践学时">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="集中实验周">
-              <el-input v-model="ruleForm.phone" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="班级数">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
+            <el-form-item label="实验学时" prop="examHours">
+              <el-input v-model="ruleForm.examHours" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="班级名称">
-              <el-input v-model="ruleForm.phone" style="width:99%"></el-input>
+            <el-form-item label="上机学时" prop="computerHours">
+              <el-input v-model="ruleForm.computerHours" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="选课人数">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="承担单位">
-              <el-input v-model="ruleForm.phone" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="精品示范课程">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
+            <el-form-item label="实践学时" prop="practiceHours">
+              <el-input v-model="ruleForm.practiceHours" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="标签类别">
+            <el-form-item label="集中实验周" prop="examWeek">
+              <el-input v-model="ruleForm.examWeek" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="班级数" prop="classCnt">
+              <el-input v-model="ruleForm.classCnt" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="班级名称" prop="className">
+              <el-input v-model="ruleForm.className" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="选课人数" prop="choiceCnt">
+              <el-input v-model="ruleForm.choiceCnt" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="承担单位" prop="teachingUnit">
+              <el-input v-model="ruleForm.teachingUnit" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="精品示范课程" prop="excellentCourse">
+              <el-input v-model="ruleForm.excellentCourse" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="标签类别" prop="tagType">
               <el-select
-                v-model="ruleForm.target"
+                v-model="ruleForm.tagType"
                 size="normal"
                 placeholder="请输选择授课对象"
                 style="width:99%"
@@ -371,20 +414,20 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否参与部门统计">
-              <el-input v-model="ruleForm.email" style="width:99%"></el-input>
+            <el-form-item label="是否参与部门统计" prop="statistics">
+              <el-input v-model="ruleForm.statistics" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="使用教材">
-              <el-input v-model="ruleForm.email" style="width:98%"></el-input>
+            <el-form-item label="使用教材" prop="material">
+              <el-input v-model="ruleForm.material" style="width:98%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="教材类型">
-              <el-input v-model="ruleForm.email" style="width:98%"></el-input>
+            <el-form-item label="教材类型" prop="materialType">
+              <el-input v-model="ruleForm.materialType" style="width:98%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -427,6 +470,7 @@
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
+                  filterable
                   :label="item.name"
                   :value="item.id"
                 ></el-option>
