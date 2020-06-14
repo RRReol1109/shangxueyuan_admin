@@ -313,7 +313,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="课程类型2" prop="courseType2">
-              <el-select
+              <!-- <el-select
                 v-model="ruleForm.courseType2"
                 size="normal"
                 style="width:99%"
@@ -322,7 +322,8 @@
                 <el-option label="本科生" value="本科生"></el-option>
                 <el-option label="研究生" value="研究生"></el-option>
                 <el-option label="博士生" value="博士生"></el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="ruleForm.courseType2" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -401,7 +402,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="标签类别" prop="tagType">
-              <el-select
+              <!-- <el-select
                 v-model="ruleForm.tagType"
                 size="normal"
                 placeholder="请输选择授课对象"
@@ -410,7 +411,8 @@
                 <el-option label="本科生" value="本科生"></el-option>
                 <el-option label="研究生" value="研究生"></el-option>
                 <el-option label="博士生" value="博士生"></el-option>
-              </el-select>
+              </el-select>-->
+              <el-input v-model="ruleForm.statistics" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
