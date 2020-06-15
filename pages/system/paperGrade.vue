@@ -66,6 +66,7 @@
 
     <!-- 学时查看窗口 -->
     <el-drawer
+      size="60%"
       style="min-height:500px"
       title="分数规则（论文）"
       :visible.sync="dialogFormVisible"
