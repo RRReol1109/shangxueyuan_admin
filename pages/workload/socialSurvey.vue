@@ -214,12 +214,7 @@
           ></el-autocomplete>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input
-                style="width:99%"
-                v-model="ruleForm.remark"
-                clearable
-                type="textarea"
-              ></el-input>
+          <el-input style="width:99%" v-model="ruleForm.remark" clearable type="textarea"></el-input>
         </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
@@ -416,6 +411,9 @@ export default {
                 return;
               }
             }
+          }
+          if (this.roleId == 1 || this.roleId == 19) {
+            this.ruleForm.auditFlag = 1;
           }
           await axios.$post("/survey/add", this.ruleForm);
           break;

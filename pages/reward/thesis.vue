@@ -27,12 +27,6 @@
         <el-form-item label="学生姓名:">
           <el-input v-model="query.studentName" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="获奖类别:">
-          <el-select v-model="query.type" size="normal" placeholder="请选择类别">
-            <el-option label="全部" value></el-option>
-            <el-option label="优秀硕博论文" value="1"></el-option>
-          </el-select>
-        </el-form-item>
         <el-form-item label="获奖时间">
           <el-date-picker v-model="query.date" type="date" placeholder="选择日期时间" size="normal"></el-date-picker>
         </el-form-item>
@@ -238,9 +232,13 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="获奖类别" prop="type">
-              <el-select v-model="ruleForm.type" placeholder="请选择类型" style="width:99%">
-                <el-option label="湖南省优秀硕士论文" value="1"></el-option>
-              </el-select>
+              <el-autocomplete
+                clearable
+                v-model="ruleForm.type"
+                :fetch-suggestions="queryStudent"
+                placeholder="请输入内容"
+                style="width:99%"
+              ></el-autocomplete>
             </el-form-item>
           </el-col>
           <el-col :span="12">

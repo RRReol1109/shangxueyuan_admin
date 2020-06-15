@@ -701,6 +701,9 @@ export default {
               }
             }
           }
+          if (this.roleId == 1 || this.roleId == 19) {
+            this.ruleForm.auditFlag = 1;
+          }
           await axios.$post("/internship/add", this.ruleForm);
           break;
         case "edit":

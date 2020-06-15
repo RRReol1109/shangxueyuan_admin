@@ -118,7 +118,6 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text" size="normal">附件下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -300,11 +299,10 @@
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="fileList"
+            :data="additionFiles"
             border
             style="width: 100%"
             size="normal"
-            v-loading="fileLoading"
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
@@ -315,13 +313,11 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="create_time"
-              label="创建时间"
-              align="center"
-            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name.split('/').pop() }}</span>
+              </template>
+            </el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
@@ -332,10 +328,10 @@
           <el-upload
             class="dragger"
             :show-file-list="false"
-            :on-success="uploadSuccess"
+            :on-success="uploadAdditionSuccess"
             drag
-            :data="fileData"
-            :action="action"
+            :headers="header"
+            action="http://bs.hk.darkal.cn/mgr/upload"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
@@ -406,6 +402,7 @@ export default {
       teacherList: [],
       fileList: [],
       fileLists: [],
+      additionFiles: [],
       ruleForm: {
         id: "",
         // name: "",
@@ -450,6 +447,22 @@ export default {
     }
   },
   methods: {
+    uploadAdditionSuccess(response) {
+      console.log("this.ruleForm:::", this.ruleForm);
+      if (response && response.indexOf("http") != -1) {
+        this.additionFiles.push({
+          name: response
+        });
+      }
+    },
+    downloadAdditionFile(row) {
+      window.open(row.name);
+    },
+    deleteAdditionFile(row) {
+      this.additionFiles = this.additionFiles.filter(
+        it => it.name !== row.name
+      );
+    },
     typeChage() {
       console.log(this.ruleForm.type, "type");
       if (this.ruleForm.type == "其他") {
@@ -549,6 +562,8 @@ export default {
           return false;
         }
       });
+      if (this.additionFiles)
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
@@ -610,6 +625,7 @@ export default {
         };
       } else {
         this.ruleForm = row;
+        if (row.files) this.additionFiles = JSON.parse(row.files);
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },

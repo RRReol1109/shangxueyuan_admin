@@ -93,7 +93,7 @@
         label="毕业人数"
       ></el-table-column>
       <el-table-column
-      width="150"
+        width="150"
         :show-overflow-tooltip="true"
         prop="secretaryCount"
         align="center"
@@ -461,6 +461,9 @@ export default {
                 return;
               }
             }
+          }
+          if (this.roleId == 1 || this.roleId == 19) {
+            this.ruleForm.auditFlag = "1";
           }
           await axios.$post("/paper/add", this.ruleForm);
           break;
