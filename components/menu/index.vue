@@ -86,7 +86,7 @@ export default {
               entity: {
                 id: 5,
                 name: "teacherInfo",
-                alias: "教职工信息管理",
+                alias: "教职工信息",
                 state: "ENABLE",
                 value: "/system/teacherInfo"
               }

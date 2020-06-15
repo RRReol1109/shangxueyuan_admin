@@ -179,14 +179,19 @@
           </el-col>
           <el-col :span="12">
             <el-form-item v-if="showTeachInput" label="教师" prop="teacher">
-              <el-autocomplete
-                id="nameBox"
+              <el-select
                 v-model="ruleForm.teacher"
-                placeholder="请输入教师"
-                :fetch-suggestions="queryTeacher"
-                size="normal"
+                　filterable
+                placeholder="请选择老师"
                 style="width:99%"
-              ></el-autocomplete>
+              >
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
