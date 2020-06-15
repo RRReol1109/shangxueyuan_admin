@@ -63,6 +63,7 @@
 
     <!-- 学时查看窗口 -->
     <el-drawer
+      size="60%"
       style="min-height:500px"
       title="学时规则"
       :visible.sync="dialogFormVisible"
