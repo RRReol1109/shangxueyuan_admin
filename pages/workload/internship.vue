@@ -131,7 +131,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column> -->
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>

@@ -74,27 +74,20 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="工号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="department" align="center" label="所在系"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="id" align="center" label="ID"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="account" align="center" label="工号/账号"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="department" align="center" label="所在系"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="sexName" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="birthday" align="center" label="出生年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="id_num" align="center" label="身份证号码"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="age" align="center" label="年龄"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="民族"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="最高学历"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="politic" align="center" label="政治面貌"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="work_date" align="center" label="参加工作年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="school_date" align="center" label="进校年月"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="work_date" align="center" label="参加工作年月"></el-table-column>
+      <el-table-column width="150" :show-overflow-tooltip="true" prop="school_date" align="center" label="进校年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="post" align="center" label="岗位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="现职称"></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="title_date"
-        align="center"
-        label="获得现职称年月"
-      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="现职级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tutor_state" align="center" label="导师资格"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="job" align="center" label="现职务"></el-table-column>
@@ -248,15 +241,15 @@
       <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="130px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工号" prop="account">
-              <el-input learable v-model="form.account" placeholder style="width:99%"></el-input>
+            <el-form-item label="工号/账号" prop="account">
+              <el-input learable v-model="form.account" placeholder style="width:98%"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="账号" prop="account">
               <el-input v-model="form.account" learable placeholder style="width:99%"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -305,7 +298,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item v-if="['add'].includes(operate)" label="密码">
               <el-input v-model="form.password" style="width:99%"></el-input>
@@ -316,7 +309,7 @@
               <el-input v-model="form.rePassword" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色">
@@ -497,35 +490,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="研究方向" prop="researchDirection">
-              <el-input v-model="form.researchDirection" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
             <el-form-item label="人才类别" prop="talentCategory">
               <el-input v-model="form.talentCategory" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="海外研修经历" porp="overseasExperience">
-              <el-input v-model="form.overseasExperience" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
         </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="国家级奖项" prop="nationalAward">
-              <el-input v-model="form.nationalAward" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="省级奖项" prop="provincialAward">
-              <el-input v-model="form.provincialAward" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <el-form-item label="研究方向" prop="researchDirection">
+          <el-input type="textarea" v-model="form.researchDirection" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="海外研修经历" porp="overseasExperience">
+          <el-input type="textarea" v-model="form.overseasExperience" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="国家级奖项" prop="nationalAward">
+          <el-input type="textarea" v-model="form.nationalAward" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item  label="省级奖项" prop="provincialAward">
+          <el-input type="textarea" v-model="form.provincialAward" style="width:99%"></el-input>
+        </el-form-item>
         <el-row>
           <el-col :span="12">
             <el-form-item label="是否工程背景" prop="engineeringBackground">
@@ -745,6 +726,8 @@ export default {
     async submitForm(formName) {
       switch (this.operate) {
         case "add":
+          this.form.password = this.form.account;
+          this.form.rePassword = this.form.account;
           await axios.$post("/mgr/add", this.form);
           break;
         case "edit":
