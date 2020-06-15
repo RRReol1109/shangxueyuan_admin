@@ -73,13 +73,22 @@ export default {
                 value: "/system/department"
               }
             },
+            // {
+            //   entity: {
+            //     id: 5,
+            //     name: "teacher",
+            //     alias: "用户管理",
+            //     state: "ENABLE",
+            //     value: "/system/teacher"
+            //   }
+            // },
             {
               entity: {
                 id: 5,
-                name: "teacher",
-                alias: "用户管理",
+                name: "teacherInfo",
+                alias: "教职工信息管理",
                 state: "ENABLE",
-                value: "/system/teacher"
+                value: "/system/teacherInfo"
               }
             },
             {
@@ -464,15 +473,7 @@ export default {
                 }
               ]
             },
-            {
-              entity: {
-                id: 80,
-                name: "teacherInfo",
-                alias: "教职工信息管理",
-                state: "ENABLE",
-                value: "/database/teacherInfo"
-              }
-            },
+
             {
               entity: {
                 id: 30,
