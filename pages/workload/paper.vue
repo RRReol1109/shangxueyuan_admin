@@ -388,13 +388,6 @@ export default {
         this.role = true;
       }
       let query = this.query;
-      for (let i = 0; i < this.teacherList.length; i++) {
-        const element = this.teacherList[i];
-        console.log(element.name);
-        if (element.name === query.teacher) {
-          query.teacher = element.id;
-        }
-      }
       console.log(this.query.teacher);
       let res = await axios.$post("/paper/list", query);
       this.tableData = res.rows;

@@ -535,13 +535,6 @@ export default {
       }
       console.log(this.query.editor);
       let query = this.query;
-      for (let i = 0; i < this.teacherList.length; i++) {
-        const element = this.teacherList[i];
-        console.log(element.name);
-        if (element.name === query.teachers) {
-          query.teachers = element.id;
-        }
-      }
       let res = await axios.$post("/internship/list", this.query);
       for (let i = 0; i < res.rows.length; i++) {
         const element = res.rows[i];

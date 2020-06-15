@@ -118,8 +118,8 @@ export default {
   margin-left: 70px;
 }
 .el-button {
-  width: 400px;
-  margin-left: 70px;
+  width: 580px;
+
 }
 .el-input__inner {
   border: 1px;

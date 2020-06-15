@@ -42,7 +42,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="教师:" :v-if="role">
-          <el-select size="normal" v-model="query.teacher" placeholder="请选择老师">
+          <el-select size="normal" v-model="query.teacher" filterable placeholder="请选择老师">
             <el-option label="全部" value></el-option>
             <el-option
               v-for="item in teacherList"
@@ -467,8 +467,13 @@
             </el-form-item>-->
           </el-col>
           <el-col :span="12">
-            <el-form-item label="教师" prop="teacher" filterable　v-if="showTeachInput">
-              <el-select v-model="ruleForm.teacher" placeholder="请选择老师" 　style="width:99%">
+            <el-form-item label="教师" prop="teacher" v-if="showTeachInput">
+              <el-select
+                v-model="ruleForm.teacher"
+                filterable
+                placeholder="请选择老师"
+                　style="width:99%"
+              >
                 <el-option
                   v-for="item in teacherList"
                   :key="item.id"
@@ -674,18 +679,26 @@ export default {
               this.ruleForm.teacher = element.id;
             }
           }
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (!element && key != "auditFlag") {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
+          let verification = false;
+          this.$refs[formName].validate(valid => {
+            if (valid) {
+              verification = true;
+              console.log("success");
+              return true;
+            } else {
+              verification = false;
+              this.ruleForm.persons = "";
+              console.log("error submit!!");
+              return false;
             }
+          });
+          if (verification) {
+          } else {
+            this.$message({
+              type: "info",
+              message: "请填写正确数据"
+            });
+            return;
           }
           await axios.$post("/teaching/add", this.ruleForm);
           break;

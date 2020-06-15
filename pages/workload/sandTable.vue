@@ -206,8 +206,7 @@
               ></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-          </el-col>
+          <el-col :span="12"></el-col>
         </el-row>
         <el-form-item label="模拟类别" prop="type">
           <el-select
@@ -275,7 +274,7 @@ export default {
       dialogFormVisible: false,
       formDisabled: false,
       yearsOptions: [],
-      loading: true ,
+      loading: true,
       page: 1,
       header: {},
       fileList: [],
@@ -397,13 +396,6 @@ export default {
         this.role = true;
       }
       let query = this.query;
-      for (let i = 0; i < this.teacherList.length; i++) {
-        const element = this.teacherList[i];
-        console.log(element.name);
-        if (element.name === query.teacher) {
-          query.teacher = element.id;
-        }
-      }
       let res = await axios.$post("/simulation/list", this.query);
       this.tableData = res.rows;
       for (let i = 0; i < this.tableData.length; i++) {

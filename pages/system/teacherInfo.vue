@@ -74,7 +74,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="id" align="center" label="工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="account" align="center" label="工号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="department" align="center" label="所在系"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="sexName" align="center" label="性别"></el-table-column>
@@ -252,11 +252,11 @@
               <el-input learable v-model="form.account" placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="账号" prop="account">
               <el-input v-model="form.account" learable placeholder style="width:99%"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row>
           <el-col :span="12">
