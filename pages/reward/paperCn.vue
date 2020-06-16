@@ -646,21 +646,29 @@ export default {
     }
   },
   methods: {
-    uploadAdditionSuccess(response) {
+    async uploadAdditionSuccess(response) {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
         this.additionFiles.push({
           name: response
         });
+        if (this.operate == "edit") {
+          this.ruleForm.files = JSON.stringify(this.additionFiles);
+          await axios.$post("/articleCn/update", this.ruleForm);
+        }
       }
     },
     downloadAdditionFile(row) {
       window.open(row.name);
     },
-    deleteAdditionFile(row) {
+    async deleteAdditionFile(row) {
       this.additionFiles = this.additionFiles.filter(
         it => it.name !== row.name
       );
+      if (this.operate == "edit") {
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
+        await axios.$post("/articleCn/update", this.ruleForm);
+      }
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();

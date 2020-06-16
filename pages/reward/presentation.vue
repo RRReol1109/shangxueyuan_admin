@@ -119,7 +119,6 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
-          <el-button @click="downLoadFile(scope.row)" type="text" size="normal">附件下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -313,10 +312,11 @@
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="fileList"
+            :data="additionFiles"
             border
             style="width: 100%"
             size="normal"
+            :disabled="true"
             v-loading="fileLoading"
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
@@ -328,26 +328,25 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="create_time"
-              label="创建时间"
-              align="center"
-            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name.split('/').pop() }}</span>
+              </template>
+            </el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
           <el-upload
             class="dragger"
             :show-file-list="false"
-            :on-success="uploadSuccess"
+            :on-success="uploadAdditionSuccess"
             drag
-            action="action"
+            :headers="header"
+            action="http://bs.hk.darkal.cn/mgr/upload"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
@@ -415,6 +414,7 @@ export default {
         order: "desc",
         condition: ""
       },
+      additionFiles: [],
       teacherList: [],
       header: {},
       tableData: [],
@@ -472,6 +472,41 @@ export default {
     }
   },
   methods: {
+    downLoadFile(rows) {
+      alert(rows);
+      if (rows.files) {
+        window.open(rows.files);
+      } else {
+        this.$message({
+          type: "info",
+          message: "该条记录无附件"
+        });
+      }
+    },
+    async uploadAdditionSuccess(response) {
+      console.log("this.ruleForm:::", this.ruleForm);
+      if (response && response.indexOf("http") != -1) {
+        this.additionFiles.push({
+          name: response
+        });
+        if (this.operate == "edit") {
+          this.ruleForm.files = JSON.stringify(this.additionFiles);
+          await axios.$post("/awardResult/update", this.ruleForm);
+        }
+      }
+    },
+    downloadAdditionFile(row) {
+      window.open(row.name);
+    },
+    async deleteAdditionFile(row) {
+      this.additionFiles = this.additionFiles.filter(
+        it => it.name !== row.name
+      );
+      if (this.operate == "edit") {
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
+        await axios.$post("/awardResult/update", this.ruleForm);
+      }
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
@@ -638,6 +673,8 @@ export default {
         });
         return;
       }
+      if (this.ruleForm.files)
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
@@ -675,6 +712,7 @@ export default {
         ];
       } else {
         this.ruleForm = row;
+        if (row.files) this.additionFiles = JSON.parse(row.files);
         this.teacherArr = [];
         let teacherInfo = row.persons.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {

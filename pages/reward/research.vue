@@ -320,8 +320,8 @@
             </el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -447,21 +447,29 @@ export default {
     }
   },
   methods: {
-    uploadAdditionSuccess(response) {
+    async uploadAdditionSuccess(response) {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
         this.additionFiles.push({
           name: response
         });
+        if (this.operate == "edit") {
+          this.ruleForm.files = JSON.stringify(this.additionFiles);
+          await axios.$post("/project/update", this.ruleForm);
+        }
       }
     },
     downloadAdditionFile(row) {
       window.open(row.name);
     },
-    deleteAdditionFile(row) {
+    async deleteAdditionFile(row) {
       this.additionFiles = this.additionFiles.filter(
         it => it.name !== row.name
       );
+      if (this.operate == "edit") {
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
+        await axios.$post("/project/update", this.ruleForm);
+      }
     },
     typeChage() {
       console.log(this.ruleForm.type, "type");

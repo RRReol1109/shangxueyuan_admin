@@ -168,56 +168,45 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="教职工姓名" prop="name">
-              <el-col :span="6">
-                <el-input size="normal" v-model="form.name"></el-input>
-              </el-col>
+              <el-input size="normal" v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item label="项目名称" prop="projectName">
-              <el-col :span="6">
-                <el-input size="normal" v-model="form.projectName"></el-input>
-              </el-col>
+              <el-input size="normal" v-model="form.projectName"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="合同编号" prop="projectId">
-              <el-col :span="6">
-                <el-input size="normal" v-model="form.projectId"></el-input>
-              </el-col>
+              >
+              <el-input size="normal" v-model="form.projectId"></el-input>
             </el-form-item>
             <el-form-item label="立项单位" prop="projectOrganizer">
-              <el-col :span="6">
-                <el-input size="normal" v-model="form.projectOrganizer"></el-input>
-              </el-col>
+              <el-input size="normal" v-model="form.projectOrganizer"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="立项年月" prop="date">
-              <el-col :span="6">
-                <el-date-picker
-                  v-model="form.date"
-                  type="date"
-                  format="yyyy-MM"
-                  value-format="yyyy-MM"
-                  placeholder="选择日期时间"
-                  size="normal"
-                ></el-date-picker>
-              </el-col>
+              <el-date-picker
+                v-model="form.date"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                size="normal"
+              ></el-date-picker>
             </el-form-item>
             <el-form-item label="起始年月日" prop="startDate">
-              <el-col :span="6">
-                <el-date-picker
-                  v-model="form.startDate"
-                  type="date"
-                  format="yyyy-MM"
-                  value-format="yyyy-MM"
-                  placeholder="选择日期时间"
-                  size="normal"
-                ></el-date-picker>
-              </el-col>
+              <el-date-picker
+                v-model="form.startDate"
+                type="date"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
+                placeholder="选择日期时间"
+                size="normal"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
@@ -239,9 +228,7 @@
           </el-col>
         </el-row>
         <el-form-item label="上传合同PDF文件" prop="pdfUrl">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.pdfUrl"></el-input>
-          </el-col>
+          <el-input size="normal" v-model="form.pdfUrl"></el-input>
         </el-form-item>
       </el-form>
     </el-drawer>

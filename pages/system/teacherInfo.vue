@@ -74,17 +74,53 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="id" align="center" label="ID"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="account" align="center" label="工号/账号"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="department" align="center" label="所在系"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="id"
+        align="center"
+        label="ID"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="account"
+        align="center"
+        label="工号/账号"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="name"
+        align="center"
+        label="姓名"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="department"
+        align="center"
+        label="所在系"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="sexName" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="age" align="center" label="年龄"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="民族"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="最高学历"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="politic" align="center" label="政治面貌"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="work_date" align="center" label="参加工作年月"></el-table-column>
-      <el-table-column width="150" :show-overflow-tooltip="true" prop="school_date" align="center" label="进校年月"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="work_date"
+        align="center"
+        label="参加工作年月"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="school_date"
+        align="center"
+        label="进校年月"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="post" align="center" label="岗位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="现职称"></el-table-column>
@@ -148,7 +184,7 @@
         align="center"
         label="省级奖项"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="double_teacher"
@@ -249,7 +285,7 @@
             <el-form-item label="账号" prop="account">
               <el-input v-model="form.account" learable placeholder style="width:99%"></el-input>
             </el-form-item>
-          </el-col> -->
+          </el-col>-->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -309,7 +345,7 @@
               <el-input v-model="form.rePassword" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-        </el-row> -->
+        </el-row>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="角色">
@@ -374,8 +410,8 @@
               <el-date-picker
                 v-model="form.schoolDate"
                 type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
                 placeholder="选择日期时间"
                 style="width: 98%"
               ></el-date-picker>
@@ -405,8 +441,8 @@
               <el-date-picker
                 v-model="form.titleDate"
                 type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
                 placeholder="选择日期时间"
                 style="width: 98%"
               ></el-date-picker>
@@ -455,8 +491,8 @@
               <el-date-picker
                 v-model="form.graduationDate"
                 type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
                 placeholder="选择日期时间"
                 style="width: 98%"
               ></el-date-picker>
@@ -476,7 +512,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="类型">
-              <el-select v-model="query.deptName" size="normal" style="width:99%" placeholder="请选择">
+              <el-select v-model="query.type" size="normal" style="width:99%" placeholder="请选择">
                 <el-option label="教学部门" value="教学部门"></el-option>
                 <el-option label="行政部门" value="行政部门"></el-option>
               </el-select>
@@ -504,7 +540,7 @@
         <el-form-item label="国家级奖项" prop="nationalAward">
           <el-input type="textarea" v-model="form.nationalAward" style="width:99%"></el-input>
         </el-form-item>
-        <el-form-item  label="省级奖项" prop="provincialAward">
+        <el-form-item label="省级奖项" prop="provincialAward">
           <el-input type="textarea" v-model="form.provincialAward" style="width:99%"></el-input>
         </el-form-item>
         <el-row>
