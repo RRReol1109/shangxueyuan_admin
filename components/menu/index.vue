@@ -394,6 +394,51 @@ export default {
                     state: "ENABLE",
                     value: "/database/undergraduates/graduation"
                   }
+                },
+                {
+                  entity: {
+                    id: 90,
+                    name: "advantage",
+                    alias: "优势专业情况",
+                    state: "ENABLE",
+                    value: "/database/undergraduates/advantage"
+                  }
+                },
+                {
+                  entity: {
+                    id: 91,
+                    name: "construction",
+                    alias: "本科教学工程情况",
+                    state: "ENABLE",
+                    value: "/database/undergraduates/construction"
+                  }
+                },
+                {
+                  entity: {
+                    id: 92,
+                    name: "information",
+                    alias: "本科教学信息化",
+                    state: "ENABLE",
+                    value: "/database/undergraduates/information"
+                  }
+                },
+                {
+                  entity: {
+                    id: 93,
+                    name: "undergraduatesPatent",
+                    alias: "教师专利",
+                    state: "ENABLE",
+                    value: "/database/undergraduates/patent"
+                  }
+                },
+                {
+                  entity: {
+                    id: 94,
+                    name: "basic",
+                    alias: "专业基本情况",
+                    state: "ENABLE",
+                    value: "/database/undergraduates/basic"
+                  }
                 }
               ]
             },

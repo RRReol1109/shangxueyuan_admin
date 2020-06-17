@@ -348,19 +348,20 @@ export default {
         point: "",
         score: ""
       },
+      additionFiles: [],
       tableData: []
     };
   },
   methods: {
     async uploadAdditionSuccess(response) {
-      console.log("this.ruleForm:::", this.ruleForm);
+      console.log("this.form:::", this.form);
       if (response && response.indexOf("http") != -1) {
         this.additionFiles.push({
           name: response
         });
         if (this.operate == "edit") {
-          this.ruleForm.files = JSON.stringify(this.additionFiles);
-          await axios.$post("/teacherMaterial/update", this.ruleForm);
+          this.form.files = JSON.stringify(this.additionFiles);
+          await axios.$post("/teacherMaterial/update", this.form);
         }
       }
     },
@@ -372,8 +373,8 @@ export default {
         it => it.name !== row.name
       );
       if (this.operate == "edit") {
-        this.ruleForm.files = JSON.stringify(this.additionFiles);
-        await axios.$post("/teacherMaterial/update", this.ruleForm);
+        this.form.files = JSON.stringify(this.additionFiles);
+        await axios.$post("/teacherMaterial/update", this.form);
       }
     },
     handleClick(row) {
@@ -494,12 +495,12 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          this.ruleForm.pdfUrl = JSON.stringify(this.additionFiles);
+          this.form.pdfUrl = JSON.stringify(this.additionFiles);
           await axios.$post("/teacherMaterial/add", this.form);
           this.fileurl = "";
           break;
         case "edit":
-          this.ruleForm.pdfUrl = JSON.stringify(this.additionFiles);
+          this.form.pdfUrl = JSON.stringify(this.additionFiles);
           await axios.$post("/teacherMaterial/update", this.form);
           this.fileurl = "";
           break;
@@ -530,7 +531,7 @@ export default {
         };
       } else {
         row.auditFlag = row.auditFlag.toString();
-        this.additionFiles = JSON.parse(row.files);
+        if (row.pdfUrl) this.additionFiles = JSON.parse(row.pdfUrl);
         this.form = row;
       }
     },
