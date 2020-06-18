@@ -3,13 +3,10 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="专业代码:">
-          <el-input v-model="query.id" placeholder="请输入专业代码" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="学号:">
-          <el-input v-model="query.name" placeholder="请输入学号" size="normal"></el-input>
+          <el-input v-model="query.majorCode" placeholder="请输入专业代码" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="学生姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
+          <el-input v-model="query.studentName" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -40,7 +37,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/teacherInfo/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/graduatePersonalHonorary/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -57,15 +54,25 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="院系名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="院系代码"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="专业名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="专业代码"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="学号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="学生姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="political" align="center" label="荣誉称号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="idNum" align="center" label="获得时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="获奖级别"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="departmentName"
+        align="center"
+        label="院系名称"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="departmentCode"
+        align="center"
+        label="院系代码"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorName" align="center" label="专业名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="学生姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="荣誉称号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="获得时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="获奖级别"></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
@@ -146,51 +153,51 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="院系名称" prop="college">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="院系名称" prop="departmentName">
+              <el-input size="normal" v-model="form.departmentName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="院系代码" prop="name">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="专业名称" prop="college">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="专业代码" prop="gender">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="院系代码" prop="departmentCode">
+              <el-input size="normal" v-model="form.departmentCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学号" prop="nativePlace">
-              <el-input size="normal" v-model="form.nativePlace" style="width:99%"></el-input>
+            <el-form-item label="专业名称" prop="majorName">
+              <el-input size="normal" v-model="form.majorName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学生姓名" prop="nation">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="专业代码" prop="majorCode">
+              <el-input size="normal" v-model="form.majorCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="荣誉称号" prop="political">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="学号" prop="studentNumber">
+              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="获得时间" prop="idNum">
+            <el-form-item label="学生姓名" prop="studentName">
+              <el-input size="normal" v-model="form.studentName" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="荣誉称号" prop="title">
+              <el-input size="normal" v-model="form.title" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="获得时间" prop="awardDate">
               <el-date-picker
                 size="normal"
-                v-model="form.year"
+                v-model="form.awardDate"
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
@@ -202,8 +209,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="获奖级别:" prop="startDate">
-              <el-select v-model="form.type" size="normal" placeholder="请选择" style="width:99%">
+            <el-form-item label="获奖级别:" prop="level">
+              <el-select v-model="form.level" size="normal" placeholder="请选择" style="width:99%">
                 <el-option label="国家级" value="国家级"></el-option>
                 <el-option label="省部级" value="省部级"></el-option>
                 <el-option label="校级" value="校级"></el-option>
@@ -250,11 +257,11 @@ export default {
       rules: {},
       form: {
         college: "",
-        gender: "",
+        majorCode: "",
         nativePlace: "",
         nation: "",
         political: "",
-        idNum: "",
+        awardDate: "",
         startDate: "",
         address: "",
         state: "",
@@ -319,7 +326,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/teacherInfo/list", this.query);
+      let res = await axios.$post("/graduatePersonalHonorary/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -358,7 +365,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/teacherInfo/update", this.examineForm);
+        await axios.$post("/graduatePersonalHonorary/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -390,10 +397,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/teacherInfo/add", this.form);
+          await axios.$post("/graduatePersonalHonorary/add", this.form);
           break;
         case "edit":
-          await axios.$post("/teacherInfo/update", this.form);
+          await axios.$post("/graduatePersonalHonorary/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -405,11 +412,11 @@ export default {
       if (this.operate === "add") {
         this.form = {
           college: "",
-          gender: "",
+          majorCode: "",
           nativePlace: "",
           nation: "",
           political: "",
-          idNum: "",
+          awardDate: "",
           startDate: "",
           address: "",
           state: "",
@@ -474,7 +481,7 @@ export default {
       }
     },
     async exportData() {
-      let data = await axios.$download("/teacherInfo/export", {
+      let data = await axios.$download("/graduatePersonalHonorary/export", {
         params: this.query
       });
       if (data) {
@@ -513,7 +520,7 @@ export default {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
             let internationalStudentId = element.id;
-            await axios.$post("/teacherInfo/delete", {
+            await axios.$post("/graduatePersonalHonorary/delete", {
               internationalStudentId: internationalStudentId
             });
           }
@@ -541,7 +548,7 @@ export default {
         .then(async () => {
           console.log(row);
           let internationalStudentId = row.id;
-          await axios.$post("/teacherInfo/delete", {
+          await axios.$post("/graduatePersonalHonorary/delete", {
             internationalStudentId: internationalStudentId
           });
           this.list();

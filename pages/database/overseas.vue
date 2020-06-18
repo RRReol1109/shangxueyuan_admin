@@ -3,10 +3,7 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="学号:">
-          <el-input v-model="query.name" placeholder="请输入学号" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="学生姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
+          <el-input v-model="query.studentNumber" placeholder="请输入学号" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -37,7 +34,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/teacherInfo/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/graduateOverseasStudent/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -54,17 +51,27 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="学号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="学院"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="political" align="center" label="学习学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="idNum" align="center" label="学习时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="学习形式"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="国家"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="备注"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorName" align="center" label="专业"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="departmentName"
+        align="center"
+        label="学院"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="school" align="center" label="学习学校"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="learningDate"
+        align="center"
+        label="学习时间"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="学习形式"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="country" align="center" label="国家"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
@@ -145,59 +152,54 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学号" prop="college">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="学号" prop="studentNumber">
+              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="姓名" prop="name">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="姓名" prop="studentName">
+              <el-input size="normal" v-model="form.studentName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="性别" prop="college">
-              <el-select
-                v-model="form.auditFlag"
-                size="normal"
-                placeholder="请选择状态"
-                style="width:99%"
-              >
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择状态" style="width:99%">
                 <el-option label="男" value="男"></el-option>
                 <el-option label="女" value="女"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="专业" prop="gender">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="专业" prop="majorName">
+              <el-input size="normal" v-model="form.majorName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学院" prop="nativePlace">
-              <el-input size="normal" v-model="form.nativePlace" style="width:99%"></el-input>
+            <el-form-item label="学院" prop="departmentName">
+              <el-input size="normal" v-model="form.departmentName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="年级" prop="nation">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="年级" prop="grade">
+              <el-input size="normal" v-model="form.grade" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学习学校" prop="political">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="学习学校" prop="school">
+              <el-input size="normal" v-model="form.school" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学习时间" prop="idNum">
+            <el-form-item label="学习时间" prop="learningDate">
               <el-date-picker
                 size="normal"
-                v-model="form.year"
+                v-model="form.learningDate"
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
@@ -209,20 +211,20 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学习形式:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="学习形式:" prop="type">
+              <el-input size="normal" v-model="form.type" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="国家:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="国家:" prop="country">
+              <el-input size="normal" v-model="form.country" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="备注" prop="political">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="备注" prop="remark">
+              <el-input size="normal" v-model="form.remark" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -334,7 +336,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/teacherInfo/list", this.query);
+      let res = await axios.$post("/graduateOverseasStudent/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -373,7 +375,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/teacherInfo/update", this.examineForm);
+        await axios.$post("/graduateOverseasStudent/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -405,10 +407,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/teacherInfo/add", this.form);
+          await axios.$post("/graduateOverseasStudent/add", this.form);
           break;
         case "edit":
-          await axios.$post("/teacherInfo/update", this.form);
+          await axios.$post("/graduateOverseasStudent/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -489,7 +491,7 @@ export default {
       }
     },
     async exportData() {
-      let data = await axios.$download("/teacherInfo/export", {
+      let data = await axios.$download("/graduateOverseasStudent/export", {
         params: this.query
       });
       if (data) {
@@ -528,7 +530,7 @@ export default {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
             let internationalStudentId = element.id;
-            await axios.$post("/teacherInfo/delete", {
+            await axios.$post("/graduateOverseasStudent/delete", {
               internationalStudentId: internationalStudentId
             });
           }
@@ -556,7 +558,7 @@ export default {
         .then(async () => {
           console.log(row);
           let internationalStudentId = row.id;
-          await axios.$post("/teacherInfo/delete", {
+          await axios.$post("/graduateOverseasStudent/delete", {
             internationalStudentId: internationalStudentId
           });
           this.list();

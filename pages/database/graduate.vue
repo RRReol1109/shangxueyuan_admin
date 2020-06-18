@@ -43,7 +43,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/teacherInfo/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/graduateGraduates/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -60,23 +60,38 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="用人单位评价"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="employerEvaluation"
+        align="center"
+        label="用人单位评价"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="获学位情况"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="优秀毕业生"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nativePlace" align="center" label="届别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="political" align="center" label="授予学位率"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="idNum" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="单位名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="degreeObtained" align="center" label="获学位情况"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="outstandingGraduates"
+        align="center"
+        label="优秀毕业生"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="届别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="degreeGrantingRate"
+        align="center"
+        label="授予学位率"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="companyName" align="center" label="单位名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="单位性质"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="单位行业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="岗位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="工作地点"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="QQ"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="微信"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="协议书号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="industry" align="center" label="单位行业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="station" align="center" label="岗位"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="workPlace" align="center" label="工作地点"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="wechat" align="center" label="微信"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="agreementNo" align="center" label="协议书号"></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
@@ -157,8 +172,8 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用人单位评价" prop="college">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="用人单位评价" prop="employerEvaluation">
+              <el-input size="normal" v-model="form.employerEvaluation" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -169,36 +184,36 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="获学位情况" prop="college">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="获学位情况" prop="degreeObtained">
+              <el-input size="normal" v-model="form.degreeObtained" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="优秀毕业生" prop="gender">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="届别" prop="nativePlace">
-              <el-input size="normal" v-model="form.nativePlace" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="专业" prop="nation">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="优秀毕业生" prop="outstandingGraduates">
+              <el-input size="normal" v-model="form.outstandingGraduates" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="授予学位率" prop="political">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="届别" prop="grade">
+              <el-input size="normal" v-model="form.grade" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="年份" prop="idNum">
+            <el-form-item label="专业" prop="major">
+              <el-input size="normal" v-model="form.major" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="授予学位率" prop="degreeGrantingRate">
+              <el-input size="normal" v-model="form.degreeGrantingRate" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="年份" prop="year">
               <el-date-picker
                 size="normal"
                 v-model="form.year"
@@ -213,8 +228,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="单位名称:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="单位名称:" prop="companyName">
+              <el-input size="normal" v-model="form.companyName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -225,44 +240,44 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="单位行业:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="单位行业:" prop="industry">
+              <el-input size="normal" v-model="form.industry" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="岗位:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="工作地点:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="QQ:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="岗位:" prop="station">
+              <el-input size="normal" v-model="form.station" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="微信:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="工作地点:" prop="workPlace">
+              <el-input size="normal" v-model="form.workPlace" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="邮箱:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="QQ:" prop="qq">
+              <el-input size="normal" v-model="form.qq" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="协议书号:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="微信:" prop="wechat">
+              <el-input size="normal" v-model="form.wechat" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="邮箱:" prop="email">
+              <el-input size="normal" v-model="form.email" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="协议书号:" prop="agreementNo">
+              <el-input size="normal" v-model="form.agreementNo" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -303,33 +318,7 @@ export default {
       examineForm: {},
       header: {},
       rules: {},
-      form: {
-        college: "",
-        gender: "",
-        nativePlace: "",
-        nation: "",
-        political: "",
-        idNum: "",
-        startDate: "",
-        address: "",
-        state: "",
-        editorDeptName: "",
-        title: "",
-        titleDate: "",
-        level: "",
-        tutor: "",
-        personType: "",
-        postDate: "",
-        highEducation: "",
-        highDegree: "",
-        school: "",
-        college: "",
-        startDate: "",
-        qq: "",
-        phone: "",
-        homePhone: "",
-        email: ""
-      },
+      form: {},
       tableData: []
     };
   },
@@ -374,7 +363,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/teacherInfo/list", this.query);
+      let res = await axios.$post("/graduateGraduates/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -413,7 +402,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/teacherInfo/update", this.examineForm);
+        await axios.$post("/graduateGraduates/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -445,10 +434,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/teacherInfo/add", this.form);
+          await axios.$post("/graduateGraduates/add", this.form);
           break;
         case "edit":
-          await axios.$post("/teacherInfo/update", this.form);
+          await axios.$post("/graduateGraduates/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -458,33 +447,7 @@ export default {
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
-        this.form = {
-          college: "",
-          gender: "",
-          nativePlace: "",
-          nation: "",
-          political: "",
-          idNum: "",
-          startDate: "",
-          address: "",
-          state: "",
-          editorDeptName: "",
-          title: "",
-          titleDate: "",
-          level: "",
-          tutor: "",
-          personType: "",
-          postDate: "",
-          highEducation: "",
-          highDegree: "",
-          school: "",
-          college: "",
-          startDate: "",
-          qq: "",
-          phone: "",
-          homePhone: "",
-          email: ""
-        };
+        this.form = {};
       } else {
         row.auditFlag = row.auditFlag.toString();
         this.form = row;
@@ -529,7 +492,7 @@ export default {
       }
     },
     async exportData() {
-      let data = await axios.$download("/teacherInfo/export", {
+      let data = await axios.$download("/graduateGraduates/export", {
         params: this.query
       });
       if (data) {
@@ -567,9 +530,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let internationalStudentId = element.id;
-            await axios.$post("/teacherInfo/delete", {
-              internationalStudentId: internationalStudentId
+            let graduateGraduatesId = element.id;
+            await axios.$post("/graduateGraduates/delete", {
+              graduateGraduatesId: graduateGraduatesId
             });
           }
           this.tableData = [];
@@ -596,7 +559,7 @@ export default {
         .then(async () => {
           console.log(row);
           let internationalStudentId = row.id;
-          await axios.$post("/teacherInfo/delete", {
+          await axios.$post("/graduateGraduates/delete", {
             internationalStudentId: internationalStudentId
           });
           this.list();
