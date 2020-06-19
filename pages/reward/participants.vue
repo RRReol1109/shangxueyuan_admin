@@ -519,7 +519,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];
@@ -544,7 +544,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/kyjl-ktjx.xls";
+          this.exportData(command);
           break;
       }
     },

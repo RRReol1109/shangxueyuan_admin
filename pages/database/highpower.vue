@@ -416,10 +416,15 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async exportData() {
-      let data = await axios.$download("/postgraduate/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/postgraduate/export?id=-1", {});
+      } else {
+        data = await axios.$download("/postgraduate/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
@@ -587,7 +592,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];
@@ -612,7 +617,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/gzl-yjszd.xls";
+          this.exportData(command);
           break;
       }
     },

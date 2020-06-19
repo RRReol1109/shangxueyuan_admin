@@ -41,7 +41,13 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="userId" label="ID" align="center" width="50"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="userId"
+        label="ID"
+        align="center"
+        width="50"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="总分"></el-table-column>
@@ -62,7 +68,7 @@
         @prev-click="handleCurrentChange"
         @size-change="handleCurrentChange"
         :current-page.sync="page"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
 
@@ -129,7 +135,7 @@ export default {
         series: []
       },
       query: {
-        limit: 10,
+        limit: 14,
         offset: 0,
         type: "",
         userId: "",
@@ -204,7 +210,8 @@ export default {
         res.records[i].scores = res.records[i].scores.toFixed(2);
       }
 
-      this.total = parseInt(res.pages);
+      this.total = parseInt(res.total);
+      // alert(this.total);
       this.tableData = res.records;
       this.loading = false;
     },
@@ -248,12 +255,12 @@ export default {
   width: 200px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

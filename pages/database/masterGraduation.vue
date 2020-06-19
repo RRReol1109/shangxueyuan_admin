@@ -40,7 +40,7 @@
                 <el-upload
                   class
                   :show-file-list="false"
-:file-list="fileList"
+                  :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
                   action="http://bs.hk.darkal.cn/masterGraduate/upload?token='AuthenticationToken'"
@@ -482,18 +482,22 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href =
-            "http://bsoa.csu.edu.cn/excel-model/数据库-学硕毕业情况.xls";
+          this.exportData(command);
           break;
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
       }
     },
-    async exportData() {
-      let data = await axios.$download("/masterGraduate/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/masterGraduate/export?id=-1", {});
+      } else {
+        data = await axios.$download("/masterGraduate/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");

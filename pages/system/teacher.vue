@@ -366,7 +366,7 @@ export default {
       let userList = [];
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "delCount":
           this.delCount();

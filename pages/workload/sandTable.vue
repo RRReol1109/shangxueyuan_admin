@@ -420,10 +420,15 @@ export default {
       });
       this.list();
     },
-    async exportData() {
-      let data = await axios.$download("/simulation/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/simulation/export?id=-1", {});
+      } else {
+        data = await axios.$download("/simulation/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
@@ -515,7 +520,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];
@@ -540,8 +545,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href =
-            "http://bsoa.csu.edu.cn/excel-model/工作量-沙盘模拟.xls";
+          this.exportData(command);
           break;
       }
     },

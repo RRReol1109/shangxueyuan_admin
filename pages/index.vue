@@ -52,20 +52,124 @@
         <span>个人信息</span>
       </div>
       <div>
-        <span>姓名:</span>
-        <span v-text="form.name"></span>
+        <el-row>
+          <el-col :span="6">
+            <span>姓名:</span>
+            <span v-text="form.name"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>生日:</span>
+            <span v-text="form.birthday"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>人才类别:</span>
+            <span v-text="form.talentCategory"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>职称:</span>
+            <span v-text="form.title"></span>
+          </el-col>
+        </el-row>
       </div>
       <div>
-        <span>账号:</span>
-        <span v-text="form.account"></span>
+        <el-row>
+          <el-col :span="6">
+            <span>账号:</span>
+            <span v-text="form.account"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>研究方向:</span>
+            <span v-text="form.researchDirection"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>导师资格:</span>
+            <span v-text="form.tutorState"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>获得现职称年月:</span>
+            <span v-text="form.titleDate"></span>
+          </el-col>
+        </el-row>
       </div>
       <div>
-        <span>邮箱:</span>
-        <span v-text="form.email"></span>
+        <el-row>
+          <el-col :span="6">
+            <span>邮箱:</span>
+            <span v-text="form.email"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>参加工作年月:</span>
+            <span v-text="form.workDate"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>民族:</span>
+            <span v-text="form.nation"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>毕业专业:</span>
+            <span v-text="form.major"></span>
+          </el-col>
+        </el-row>
       </div>
       <div>
-        <span>电话:</span>
-        <span v-text="form.phone"></span>
+        <el-row>
+          <el-col :span="6">
+            <span>电话:</span>
+            <span v-text="form.phone"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>毕业学校:</span>
+            <span v-text="form.school"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>职级:</span>
+            <span v-text="form.level"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>职务:</span>
+            <span v-text="form.job"></span>
+          </el-col>
+        </el-row>
+      </div>
+      <div>
+        <el-row>
+          <el-col :span="6">
+            <span>导师:</span>
+            <span v-text="form.tutor"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>导师资格:</span>
+            <span v-text="form.tutorState"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>政治面貌:</span>
+            <span v-text="form.politic"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>海外研修经历:</span>
+            <span v-text="form.overseasExperience"></span>
+          </el-col>
+        </el-row>
+      </div>
+      <div>
+        <el-row>
+          <el-col :span="6">
+            <span>省级奖项:</span>
+            <span v-text="form.provincialAward"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>国家级奖项:</span>
+            <span v-text="form.nationalAward"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>所在系:</span>
+            <span v-text="form.department"></span>
+          </el-col>
+          <el-col :span="6">
+            <span>状态:</span>
+            <span v-text="form.state"></span>
+          </el-col>
+        </el-row>
       </div>
     </el-card>
   </div>
@@ -74,6 +178,7 @@
 <script>
 import Logo from "~/components/Logo.vue";
 import axios from "~/plugins/axios2";
+import moment from "moment";
 export default {
   layout: "normal",
   components: {
@@ -100,11 +205,15 @@ export default {
     this.checkCanUse();
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     console.log(userInfo);
-    this.form.account = userInfo.account;
-    this.form.name = userInfo.name;
-    this.form.phone = userInfo.phone;
-    this.form.email = userInfo.email;
-    this.form.id = userInfo.id;
+    // this.form.account = userInfo.account;
+    // this.form.name = userInfo.name;
+    // this.form.phone = userInfo.phone;
+    // this.form.email = userInfo.email;
+    // this.form.id = userInfo.id;
+    this.form = userInfo;
+    this.form.birthday = moment(this.form.birthday).format("YYYY-MM-DD");
+    this.form.workDate = moment(this.form.workDate).format("YYYY-MM-DD");
+    this.form.titleDate = moment(this.form.titleDate).format("YYYY-MM-DD");
     this.roleid = userInfo.roleid;
     this.queryTeacher();
     this.queryInfo();

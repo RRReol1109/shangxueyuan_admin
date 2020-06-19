@@ -35,13 +35,13 @@
             <el-menu-item class="item" index="1" v-if="roleId==1">全部</el-menu-item>
             <el-menu-item class="item" index="2">行政办公室</el-menu-item>
             <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
-            <el-menu-item class="item" index="32">对外交流国际认证中心</el-menu-item>
-            <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
             <el-menu-item class="item" index="33">本科生工作办公室</el-menu-item>
             <el-menu-item class="item" index="34">研究生工作办公室</el-menu-item>
             <el-menu-item class="item" index="35">本科生教学管理中心</el-menu-item>
-            <el-menu-item class="item" index="36">专业学位教育管理中心</el-menu-item>
             <el-menu-item class="item" index="37">研究生教学管理中心</el-menu-item>
+            <el-menu-item class="item" index="32">对外交流国际认证中心</el-menu-item>
+            <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
+            <el-menu-item class="item" index="36">专业学位硕士办公室</el-menu-item>
             <el-menu-item class="item" index="38">MBA中心</el-menu-item>
             <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
             <el-menu-item class="item" index="40">EDP中心</el-menu-item>
@@ -157,8 +157,92 @@ export default {
     this.userInfo = window.localStorage.getItem("userInfo");
     // this.ids = window.localStorage.getItem("roles");
     this.roleId = roleId;
-
-    this.selectDep();
+    if (this.roleId == 1) {
+      this.ids = [
+        777,
+        888,
+        999,
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        6,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        60,
+        26,
+        27,
+        61,
+        62,
+        28,
+        29,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        39,
+        38,
+        58,
+        59,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94
+      ];
+      this.saveRoles();
+      this.activeIndex = 1;
+      return;
+    } else this.selectDep();
   },
   methods: {
     handleCommand(command) {
@@ -220,54 +304,67 @@ export default {
             17,
             18,
             19,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
             40,
             29,
             30,
             31,
-            37,
-            21,
-            22,
-            23,
-            24,
-            25,
-            60,
-            26,
-            27,
-            61,
-            62,
-            28
+            37
           ];
           break;
         case "36":
-          this.ids = [];
+          this.ids = [13, 14, 15, 16, 17, 18, 19, 20];
           break;
         case "37":
-          this.ids = [777, 51, 56, 37, 39, 38];
+          this.ids = [777, 51, 56, 37, 39, 38, 13, 14, 15, 16, 17, 18, 19, 20];
           break;
         case "38":
+          this.ids = [777, 77, 64, 65, 74, 75, 76];
+          break;
+        case "39":
           this.ids = [
             777,
             77,
             64,
             65,
-            66,
-            67,
-            68,
-            69,
-            70,
-            71,
-            72,
-            73,
             74,
             75,
-            76
+            76,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
           ];
           break;
-        case "39":
-          this.ids = [];
-          break;
         case "40":
-          this.ids = [];
+          this.ids = [
+            777,
+            77,
+            64,
+            65,
+            74,
+            75,
+            76,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ];
           break;
         case "1":
           this.ids = [
@@ -436,7 +533,7 @@ export default {
           ];
           break;
         case "2":
-          this.ids = [777, 1, 5];
+          this.ids = [777, 1, 5, 13, 14, 15, 16, 17, 18, 19, 20];
           break;
       }
       window.sessionStorage.setItem("select", key);

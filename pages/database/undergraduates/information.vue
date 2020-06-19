@@ -546,7 +546,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];

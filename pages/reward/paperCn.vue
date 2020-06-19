@@ -419,7 +419,7 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="第一作者" prop="firstAuthor">
-              <el-select
+              <!-- <el-select
                 v-model="ruleForm.firstAuthor"
                 filterable
                 placeholder="请选择老师"
@@ -432,7 +432,14 @@
                   :label="item.name"
                   :value="item.name"
                 ></el-option>
-              </el-select>
+              </el-select>-->
+              <el-input
+                type="textarea"
+                clearable
+                v-model="ruleForm.firstAuthor"
+                placeholder
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -764,10 +771,15 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
-    async exportData() {
-      let data = await axios.$download("/articleCn/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/articleCn/export?id=-1", {});
+      } else {
+        data = await axios.$download("/articleCn/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
@@ -933,7 +945,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];
@@ -958,8 +970,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href =
-            "http://bsoa.csu.edu.cn/excel-model/科研奖励-中文论文.xls";
+          this.exportData(command);
           break;
       }
     },

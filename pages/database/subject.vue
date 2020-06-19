@@ -370,11 +370,10 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href =
-            "http://bsoa.csu.edu.cn/excel-model/数据库-三科人员.xls";
+          this.exportData(command);
           break;
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
       }
     },
@@ -386,10 +385,15 @@ export default {
       this.list();
     },
 
-    async exportData() {
-      let data = await axios.$download("/threeDisciplinaryStaff/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/threeDisciplinaryStaff/export?id=-1", {});
+      } else {
+        data = await axios.$download("/threeDisciplinaryStaff/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");

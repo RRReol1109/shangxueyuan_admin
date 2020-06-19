@@ -122,7 +122,7 @@ export default {
                   entity: {
                     id: 10,
                     name: "teacherAchievement",
-                    alias: "科研成果",
+                    alias: "科研获奖",
                     state: "ENABLE",
                     value: "/system/score/scientific/achievement"
                   }

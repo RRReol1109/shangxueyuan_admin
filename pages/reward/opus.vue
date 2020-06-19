@@ -632,10 +632,15 @@ export default {
         num: ""
       });
     },
-    async exportData() {
-      let data = await axios.$download("/textbook/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/textbook/export?id=-1", {});
+      } else {
+        data = await axios.$download("/textbook/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
@@ -723,8 +728,8 @@ export default {
                       tid = item.id;
                     }
                   }
-                  if (tid)  this.ruleForm.authors += tid;
-                  else  this.ruleForm.authors += info;
+                  if (tid) this.ruleForm.authors += tid;
+                  else this.ruleForm.authors += info;
                 }
                 if (key == "point") {
                   this.ruleForm.authors += "|" + info;
@@ -735,9 +740,9 @@ export default {
               }
             }
             if (i == this.teacherArr.length - 1) {
-               this.ruleForm.authors =  this.ruleForm.authors.substr(
+              this.ruleForm.authors = this.ruleForm.authors.substr(
                 0,
-                 this.ruleForm.authors.length - 1
+                this.ruleForm.authors.length - 1
               );
             }
           }
@@ -840,7 +845,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];
@@ -865,8 +870,7 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href =
-            "http://bsoa.csu.edu.cn/excel-model/科研奖励-著作教材.xls";
+          this.exportData(command);
           break;
       }
     },

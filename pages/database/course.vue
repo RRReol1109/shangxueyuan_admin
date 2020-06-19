@@ -58,8 +58,18 @@
       </el-table-column>
 
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="departmentName" align="center" label="院系名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="departmentCode" align="center" label="院系代码"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="departmentName"
+        align="center"
+        label="院系名称"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="departmentCode"
+        align="center"
+        label="院系代码"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="majorName" align="center" label="专业名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
@@ -68,7 +78,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="birthplace" align="center" label="生源地"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="nationality" align="center" label="民族"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="politicalStatus" align="center" label="政治面貌"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="politicalStatus"
+        align="center"
+        label="政治面貌"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="birthDate" align="center" label="出生年月"></el-table-column>
       <el-table-column
         width="150"
@@ -469,7 +484,7 @@ export default {
       console.log(command);
       switch (command) {
         case "download":
-          this.exportData();
+          this.exportData(command);
           break;
         case "examine":
           let deleteList = [];
@@ -495,14 +510,19 @@ export default {
           this.delCount();
           break;
         case "temp":
-          location.href = "http://bsoa.csu.edu.cn/excel-model/sjk-lxsxx.xls";
+          this.exportData(command);
           break;
       }
     },
-    async exportData() {
-      let data = await axios.$download("/graduateSubjectInformation/export", {
-        params: this.query
-      });
+    async exportData(flag) {
+      let data = "";
+      if (flag == "temp") {
+        data = await axios.$download("/graduateSubjectInformation/export?id=-1", {});
+      } else {
+        data = await axios.$download("/graduateSubjectInformation/export", {
+          params: this.query
+        });
+      }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
