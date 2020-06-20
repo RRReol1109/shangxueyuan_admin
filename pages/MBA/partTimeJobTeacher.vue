@@ -105,30 +105,36 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-dialog size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
         ref="examineForm"
-        label-width="150px"
+        label-width="100px"
         class="demo-examineForm"
       >
-        <el-form-item>
-          <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
-              <el-option label="未审核" value="0"></el-option>
-              <el-option label="审核通过" value="1"></el-option>
-              <el-option label="未通过" value="2"></el-option>
-            </el-select>
+        <el-row>
+          <el-form-item>
+            <el-form-item label="审核状态:" v-if="role">
+              <el-select
+                v-model="examineForm.auditFlag"
+                style="width:99%;"
+                size="normal"
+                placeholder="请选择状态"
+              >
+                <el-option label="未审核" value="0"></el-option>
+                <el-option label="审核通过" value="1"></el-option>
+                <el-option label="未通过" value="2"></el-option>
+              </el-select>
+            </el-form-item>
           </el-form-item>
-          <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
-          </div>
-        </el-form-item>
+        </el-row>
       </el-form>
-    </el-drawer>
+      <div class="dialog-footer">
+        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+      </div>
+    </el-dialog>
 
     <el-drawer
       style="min-height:500px"

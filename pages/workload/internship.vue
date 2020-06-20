@@ -650,17 +650,27 @@ export default {
       }
     },
     async submitForm(formName) {
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.ruleForm.count = parseInt(this.ruleForm.count);
-          // this.ruleForm.hours = parseInt(this.ruleForm.hours);
-          console.log(this.ruleForm);
-          this.updataCache();
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           console.log(this.rules.count, "========count");

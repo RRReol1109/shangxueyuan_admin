@@ -430,18 +430,27 @@ export default {
       this.list();
     },
     async submitForm(formName) {
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.ruleForm.count = parseInt(this.ruleForm.count);
-          this.ruleForm.graduationCount = parseInt(
-            this.ruleForm.graduationCount
-          );
-          console.log(this.ruleForm);
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           if (this.loginUserId) {

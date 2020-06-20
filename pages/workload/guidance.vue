@@ -123,30 +123,36 @@
         :total="this.total"
       ></el-pagination>
     </nav>
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
+    <el-dialog size="60%" style="min-height:500px" title :visible.sync="examineDialog">
       <el-form
         :model="examineForm"
         :rules="rules"
         ref="examineForm"
-        label-width="150px"
+        label-width="100px"
         class="demo-examineForm"
       >
-        <el-form-item>
-          <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
-              <el-option label="未审核" value="0"></el-option>
-              <el-option label="审核通过" value="1"></el-option>
-              <el-option label="未通过" value="2"></el-option>
-            </el-select>
+        <el-row>
+          <el-form-item>
+            <el-form-item label="审核状态:" v-if="role">
+              <el-select
+                v-model="examineForm.auditFlag"
+                style="width:99%;"
+                size="normal"
+                placeholder="请选择状态"
+              >
+                <el-option label="未审核" value="0"></el-option>
+                <el-option label="审核通过" value="1"></el-option>
+                <el-option label="未通过" value="2"></el-option>
+              </el-select>
+            </el-form-item>
           </el-form-item>
-          <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
-          </div>
-        </el-form-item>
+        </el-row>
       </el-form>
-    </el-drawer>
+      <div class="dialog-footer">
+        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
+        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
+      </div>
+    </el-dialog>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
@@ -442,18 +448,27 @@ export default {
       });
     },
     async submitForm(formName) {
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.ruleForm.count = parseInt(this.ruleForm.count);
-          this.ruleForm.graduationCount = parseInt(
-            this.ruleForm.graduationCount
-          );
-          console.log(this.ruleForm);
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           if (this.loginUserId) {
@@ -463,19 +478,6 @@ export default {
             const element = this.teacherList[i];
             if (this.ruleForm.teacher == element.name) {
               this.ruleForm.teacher = element.id;
-            }
-          }
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (!element && key != "auditFlag") {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
             }
           }
           if (this.roleId == 1 || this.roleId == 19) {

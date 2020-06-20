@@ -384,15 +384,27 @@ export default {
       this.list();
     },
     async submitForm(formName) {
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
-          this.updataCache();
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           if (!this.showTeachInput) {
@@ -402,19 +414,6 @@ export default {
             const element = this.teacherList[i];
             if (this.ruleForm.teacher == element.name) {
               this.ruleForm.teacher = element.id;
-            }
-          }
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (!element && key != "auditFlag") {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
             }
           }
           if (this.roleId == 1 || this.roleId == 19) {
