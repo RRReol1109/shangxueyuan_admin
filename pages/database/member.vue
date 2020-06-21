@@ -574,9 +574,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let iundergraduatePartyId = row.id;
+          let undergraduatePartyId = row.id;
           await axios.$post("/undergraduateParty/delete", {
-            iundergraduatePartyId: iundergraduatePartyId
+            undergraduatePartyId: undergraduatePartyId
           });
           this.list();
           this.$message({

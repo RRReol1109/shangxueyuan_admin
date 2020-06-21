@@ -540,9 +540,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let iundergraduateOverseasStudentId = element.id;
+            let undergraduateOverseasStudentId = element.id;
             await axios.$post("/undergraduateOverseasStudent/delete", {
-              iundergraduateOverseasStudentId: iundergraduateOverseasStudentId
+              undergraduateOverseasStudentId: undergraduateOverseasStudentId
             });
           }
           this.tableData = [];
@@ -568,9 +568,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let iundergraduateOverseasStudentId = row.id;
+          let undergraduateOverseasStudentId = row.id;
           await axios.$post("/undergraduateOverseasStudent/delete", {
-            iundergraduateOverseasStudentId: iundergraduateOverseasStudentId
+            undergraduateOverseasStudentId: undergraduateOverseasStudentId
           });
           this.list();
           this.$message({
