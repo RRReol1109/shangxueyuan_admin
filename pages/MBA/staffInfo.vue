@@ -152,7 +152,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:" >
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"

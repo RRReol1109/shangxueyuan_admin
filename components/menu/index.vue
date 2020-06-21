@@ -477,6 +477,87 @@ export default {
                     state: "ENABLE",
                     value: "/database/postgraduate/graduation"
                   }
+                },
+                {
+                  entity: {
+                    id: 95,
+                    name: "competition1",
+                    alias: "学生竞赛奖励",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/competition"
+                  }
+                },
+                {
+                  entity: {
+                    id: 96,
+                    name: "entrepreneurship1",
+                    alias: "学生创新创业训练计划项目情况",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/entrepreneurship"
+                  }
+                },
+                {
+                  entity: {
+                    id: 97,
+                    name: "academicPaper1",
+                    alias: "学生发表学术论文情况",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/academicPaper"
+                  }
+                },
+                {
+                  entity: {
+                    id: 98,
+                    name: "patent1",
+                    alias: "学生获得专利（软件著作权）情况",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/patent"
+                  }
+                },
+                {
+                  entity: {
+                    id: 99,
+                    name: "honor1",
+                    alias: "学生个人荣誉称号",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/honor"
+                  }
+                },
+                {
+                  entity: {
+                    id: 100,
+                    name: "course1",
+                    alias: "学生学科信息",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/course"
+                  }
+                },
+                {
+                  entity: {
+                    id: 101,
+                    name: "member1",
+                    alias: "学生党员情况",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/member"
+                  }
+                },
+                {
+                  entity: {
+                    id: 102,
+                    name: "graduate1",
+                    alias: "毕业生",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/graduate"
+                  }
+                },
+                {
+                  entity: {
+                    id: 103,
+                    name: "overseas1",
+                    alias: "商学院出国学生",
+                    state: "ENABLE",
+                    value: "/database/postgraduate/overseas"
+                  }
                 }
               ]
             },

@@ -40,7 +40,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/graduateTrainingProgram/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduateTrainingProgram/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -136,7 +136,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:" >
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -343,7 +343,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/graduateTrainingProgram/list", this.query);
+      let res = await axios.$post("/undergraduateTrainingProgram/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -382,7 +382,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/graduateTrainingProgram/update", this.examineForm);
+        await axios.$post("/undergraduateTrainingProgram/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -414,10 +414,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/graduateTrainingProgram/add", this.form);
+          await axios.$post("/undergraduateTrainingProgram/add", this.form);
           break;
         case "edit":
-          await axios.$post("/graduateTrainingProgram/update", this.form);
+          await axios.$post("/undergraduateTrainingProgram/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -474,9 +474,9 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/graduateTrainingProgram/export?id=-1", {});
+        data = await axios.$download("/undergraduateTrainingProgram/export?id=-1", {});
       } else {
-        data = await axios.$download("/graduateTrainingProgram/export", {
+        data = await axios.$download("/undergraduateTrainingProgram/export", {
           params: this.query
         });
       }
@@ -515,9 +515,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let internationalStudentId = element.id;
-            await axios.$post("/graduateTrainingProgram/delete", {
-              internationalStudentId: internationalStudentId
+            let undergraduateTrainingProgramId = element.id;
+            await axios.$post("/undergraduateTrainingProgram/delete", {
+              undergraduateTrainingProgramId: undergraduateTrainingProgramId
             });
           }
           this.tableData = [];
@@ -543,9 +543,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let internationalStudentId = row.id;
-          await axios.$post("/graduateTrainingProgram/delete", {
-            internationalStudentId: internationalStudentId
+          let undergraduateTrainingProgramId = row.id;
+          await axios.$post("/undergraduateTrainingProgram/delete", {
+            undergraduateTrainingProgramId: undergraduateTrainingProgramId
           });
           this.list();
           this.$message({

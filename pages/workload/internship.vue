@@ -163,7 +163,7 @@
         class="demo-examineForm"
       >
         <el-form-item>
-          <el-form-item label="审核状态:" v-if="role">
+          <el-form-item label="审核状态:" >
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>

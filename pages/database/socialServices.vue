@@ -52,7 +52,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="role">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -132,7 +132,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:" >
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
