@@ -211,9 +211,12 @@ export default {
     // this.form.email = userInfo.email;
     // this.form.id = userInfo.id;
     this.form = userInfo;
-    this.form.birthday = moment(this.form.birthday).format("YYYY-MM-DD");
-    this.form.workDate = moment(this.form.workDate).format("YYYY-MM-DD");
-    this.form.titleDate = moment(this.form.titleDate).format("YYYY-MM-DD");
+    if (userInfo.birthday)
+      this.form.birthday = moment(this.form.birthday).format("YYYY-MM-DD");
+    if (userInfo.workDate)
+      this.form.workDate = moment(this.form.workDate).format("YYYY-MM-DD");
+    if (userInfo.titleDate)
+      this.form.titleDate = moment(this.form.titleDate).format("YYYY-MM-DD");
     this.roleid = userInfo.roleid;
     this.queryTeacher();
     this.queryInfo();

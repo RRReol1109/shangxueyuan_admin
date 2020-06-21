@@ -38,6 +38,9 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
+        <el-form-item label>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="downLoad">计算规则</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -164,6 +167,11 @@ export default {
     }
   },
   methods: {
+    downLoad() {
+      window.open(
+        "http://bsoa.csu.edu.cn/files/中商办字[2019]02号中南大学商学院科研奖励(计分)方案(2019年12月修订).pdf"
+      );
+    },
     async queryTeacher(queryString, cb) {
       console.log(queryString);
       let teacher = await axios.$get("/mgr/quicklist", {

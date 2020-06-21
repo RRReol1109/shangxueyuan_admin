@@ -90,7 +90,7 @@
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="weeks" align="center" label="周次"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
@@ -343,15 +343,6 @@ export default {
       let query = this.query;
       let res = await axios.$post("/survey/list", this.query);
       this.tableData = res.rows;
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        for (let j = 0; j < this.teacherList.length; j++) {
-          const teacher = this.teacherList[j];
-          if (element.teacher == teacher.id) {
-            element.teacher = teacher.name;
-          }
-        }
-      }
       this.total = parseInt(res.total);
       this.loading = false;
     },

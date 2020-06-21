@@ -511,7 +511,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-lxsxx.xls");
+        link.setAttribute("download", "数据库-学生竞赛奖励.xls");
         document.body.appendChild(link);
         link.click();
       }

@@ -38,10 +38,19 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
+        <el-form-item label>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="downLoad">计算规则</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column :show-overflow-tooltip="true" prop="userId" label="ID" align="center" width="50"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="userId"
+        label="ID"
+        align="center"
+        width="50"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="总工作量"></el-table-column>
@@ -161,6 +170,11 @@ export default {
     }
   },
   methods: {
+    downLoad() {
+      window.open(
+        "http://bsoa.csu.edu.cn/files/中商办字[2019]06号商学院教学与行政工作量计算办法.pdf"
+      );
+    },
     async queryTeacher(queryString, cb) {
       console.log(queryString);
       let teacher = await axios.$get("/mgr/quicklist", {
@@ -260,12 +274,12 @@ export default {
   width: 200px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

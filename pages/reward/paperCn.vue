@@ -73,8 +73,11 @@
         label="选择"
         width="50"
       >
+        <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
+          <el-checkbox-group>
+            <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
+          </el-checkbox-group>
         </template>
       </el-table-column>
       <el-table-column

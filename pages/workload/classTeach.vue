@@ -176,7 +176,7 @@
         label="教材类型"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否为全英文授课"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="target" align="center" label="授课对象"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="target" align="center" label="授课对象"></el-table-column> -->
       <!-- <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="授课人数"></el-table-column>
@@ -282,18 +282,31 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="类别" prop="type">
-              <el-select v-model="ruleForm.type" placeholder="请选择授课类别" style="width:99%">
-                <el-option label="本科教学" value="本科教学"></el-option>
-                <el-option label="研管安排" value="研管安排"></el-option>
-                <el-option label="MBA安排" value="MBA安排"></el-option>
-                <el-option label="专业硕士安排" value="专业硕士安排"></el-option>
-                <el-option label="EMBA、EDP其他" value="EMBA、EDP其他"></el-option>
-                <el-option label="本科文化素质课" value="本科文化素质课"></el-option>
+            <el-form-item label="是否为全英文" prop="english">
+              <el-select v-model="ruleForm.english" placeholder="请选择" style="width:99%">
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
+            <el-form-item label="类别" prop="type">
+              <el-select v-model="ruleForm.type" placeholder="请选择授课类别" style="width:99%">
+                <!-- <el-option label="本科教学" value="本科教学"></el-option>
+                <el-option label="研管安排" value="研管安排"></el-option>
+                <el-option label="MBA安排" value="MBA安排"></el-option>
+                <el-option label="专业硕士安排" value="专业硕士安排"></el-option>
+                <el-option label="EMBA、EDP其他" value="EMBA、EDP其他"></el-option>
+                <el-option label="本科文化素质课" value="本科文化素质课"></el-option>-->
+                <el-option label="本科生" value="本科生"></el-option>
+                <el-option label="博士生" value="博士生"></el-option>
+                <el-option label="MBA、工程硕士" value="MBA、工程硕士"></el-option>
+                <el-option label="非全日制会计专硕" value="非全日制会计专硕"></el-option>
+                <el-option label="统招硕士、会计硕士、金融硕士" value="统招硕士、会计硕士、金融硕士"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <!-- <el-col :span="12">
             <el-form-item label="授课对象" prop="target">
               <el-select
                 v-model="ruleForm.target"
@@ -306,7 +319,7 @@
                 <el-option label="博士生" value="博士生"></el-option>
               </el-select>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -461,18 +474,6 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="是否为全英文" prop="english">
-              <el-col :span="12">
-                <el-checkbox v-model="ruleForm.english"></el-checkbox>
-              </el-col>
-            </el-form-item>
-            <!-- <el-form-item label="是否国际课程" prop="english">
-          <el-col :span="12">
-            <el-checkbox v-model="ruleForm.english"></el-checkbox>
-          </el-col>
-            </el-form-item>-->
-          </el-col>
-          <el-col :span="12">
             <el-form-item label="教师" prop="teacher" v-if="showTeachInput">
               <el-select
                 v-model="ruleForm.teacher"
@@ -553,7 +554,7 @@ export default {
         hours: 0,
         count: 0,
         auditFlag: "0",
-        english: false,
+        english: "",
         desc: ""
       },
 
@@ -570,9 +571,9 @@ export default {
         type: [
           { required: true, message: "请选择授课类型", trigger: "change" }
         ],
-        target: [
-          { required: true, message: "请输入授课对象", trigger: "blur" }
-        ],
+        // target: [
+        //   { required: true, message: "请输入授课对象", trigger: "blur" }
+        // ],
         hours: [
           { required: true, message: "请输入课时", trigger: "blur" },
           { validator: validateNumber, trigger: "blur" }
@@ -781,7 +782,7 @@ export default {
           hours: 0,
           count: 0,
           auditFlag: "0",
-          english: false,
+          english: "",
           teacher: "",
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
@@ -790,7 +791,7 @@ export default {
         }
       } else {
         this.ruleForm = row;
-        this.ruleForm.english = this.ruleForm.english == "是" ? true : false;
+        this.ruleForm.english = this.ruleForm.english.toString();
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
