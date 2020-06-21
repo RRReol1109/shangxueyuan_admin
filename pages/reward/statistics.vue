@@ -27,13 +27,14 @@
           <el-input id="nameBox" v-model="query.condition" placeholder="姓名或工号" size="normal"></el-input>
         </el-form-item>-->
         <el-form-item label="教师:">
-          <el-autocomplete
-            id="nameBox"
-            v-model="query.userName"
-            placeholder="请输入教师"
-            :fetch-suggestions="queryTeacher"
-            size="normal"
-          ></el-autocomplete>
+          <el-select v-model="query.userName" filterable placeholder="请选择老师" prop style="width:98%">
+            <el-option
+              v-for="item in teacherList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name"
+            ></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -145,11 +146,18 @@ export default {
         // userName: ""
         year: moment().format("YYYY")
       },
+      teacherList: [],
       tableData: []
     };
   },
 
-  mounted() {
+  async mounted() {
+    this.teacherList = await axios.$post("/mgr/list", {
+      order: "desc",
+      offset: 0,
+      limit: 999999
+    });
+    this.teacherList = this.teacherList.rows;
     this.list();
   },
   filters: {
@@ -174,7 +182,7 @@ export default {
     },
     async queryTeacher(queryString, cb) {
       console.log(queryString);
-      let teacher = await axios.$get("/mgr/quicklist", {
+      let teacher = await axios.$get("/mgr/list", {
         name: queryString
       });
       var teachers = [];
@@ -211,10 +219,10 @@ export default {
       // 查询接口
       let user = localStorage.getItem("roles");
       let userInfo = localStorage.getItem("userInfo");
-      if (!user.includes(888) && userInfo.roleid != 19) {
-        this.query.userId = localStorage.getItem("userId");
-        this.role = false;
-      }
+      // if (!user.includes(888) && userInfo.roleid != 19) {
+      //   this.query.userId = localStorage.getItem("userId");
+      //   this.role = false;
+      // }
       let res = await axios.$post("award/list", this.query);
       for (let i = 0; i < res.records.length; i++) {
         res.records[i].scores = 0;
