@@ -101,7 +101,7 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="获奖论文题目"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="获奖日期"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="本人计分"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="本人计分"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -304,13 +304,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="本人计分" prop="score">
               <el-input clearable v-model="ruleForm.score" placeholder="请输入内容" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
@@ -367,7 +367,7 @@ export default {
         id: "",
         year: "",
         teacher: "",
-        type: "1",
+        type: "",
         studentName: "",
         studentId: "",
         score: "",
@@ -567,7 +567,7 @@ export default {
           id: "",
           year: "",
           teacher: "",
-          type: "1",
+          type: "",
           studentName: "",
           studentId: "",
           score: "",

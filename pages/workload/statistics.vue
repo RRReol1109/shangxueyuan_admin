@@ -72,7 +72,7 @@
         @prev-click="handleCurrentChange"
         @size-change="handleCurrentChange"
         :current-page.sync="page"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
 
@@ -234,7 +234,7 @@ export default {
         }
         res.records[i].scores = res.records[i].scores.toFixed(2);
       }
-      this.total = parseInt(res.pages);
+      this.total = parseInt(res.total);
       this.tableData = res.records;
       this.loading = false;
     },
