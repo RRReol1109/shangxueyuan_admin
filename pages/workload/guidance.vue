@@ -205,11 +205,9 @@
           <el-col :span="12">
             <el-form-item label="研究生类别" prop="type">
               <el-select v-model="ruleForm.type" placeholder="请选择类别" style="width:99%">
-                <el-option label="本科生" value="本科生"></el-option>
-                <el-option label="博士生" value="博士生"></el-option>
-                <el-option label="MBA、工程硕士" value="MBA、工程硕士"></el-option>
-                <el-option label="非全日制会计专硕" value="非全日制会计专硕"></el-option>
-                <el-option label="统招硕士、会计硕士、金融硕士" value="统招硕士、会计硕士、金融硕士"></el-option>
+                <el-option label="学术硕士和会计、金融专业硕士" value="学术硕士和会计、金融专业硕士"></el-option>
+                <el-option label="MBA、EMBA" value="MBA、EMBA"></el-option>
+                <el-option label="博士" value="博士"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
