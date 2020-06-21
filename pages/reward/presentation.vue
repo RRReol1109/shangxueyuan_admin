@@ -738,8 +738,14 @@ export default {
             const item = teacher[j];
             console.log(item, "======item");
             if (j % 2 == 0) {
-              this.teacherArr[i].name = item.toString();
-              this.teacherArr[i].name = this.teacherArr[i].name + "";
+              // this.teacherArr[i].name = item.toString();
+              // this.teacherArr[i].name = this.teacherArr[i].name + "";
+              for (let k = 0; k < this.teacherList.length; k++) {
+                const teachers = this.teacherList[k];
+                if (item == teachers.id) {
+                  this.teacherArr[i].name = teachers.name;
+                }
+              }
             } else if (j % 2 == 1) {
               this.teacherArr[i].num = item;
             }
