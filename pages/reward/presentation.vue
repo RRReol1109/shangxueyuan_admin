@@ -211,6 +211,8 @@
                 <el-option label="教育部人文社科奖" value="教育部人文社科奖"></el-option>
                 <el-option label="省部级" value="省部级"></el-option>
                 <el-option label="国家自科基金和国家社科基金结题评估" value="国家自科基金和国家社科基金结题评估"></el-option>
+                <el-option label="入选 CTTI 智库" value="入选 CTTI 智库"></el-option>
+                <el-option label="科睿唯安高被引" value="科睿唯安高被引"></el-option>
                 <el-option label="成果入选《高校智库专刊》" value="成果入选《高校智库专刊》"></el-option>
                 <el-option label="成果入选教育部社科委 《专家建议》" value="成果入选教育部社科委 《专家建议》"></el-option>
                 <el-option label="成果入选中宣部社科规划办《成果要报》" value="成果入选中宣部社科规划办《成果要报》"></el-option>
