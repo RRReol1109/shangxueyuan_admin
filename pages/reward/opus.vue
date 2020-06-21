@@ -317,14 +317,14 @@
               :label="item.name"
               :value="item.id"
             ></el-option>
-          </el-select>分数：
-          <el-input
+          </el-select>
+          <!--分数： <el-input
             clearable
             style="width:120px"
             v-model="teacherArr.point"
             placeholder="请输入分数"
             label="字数"
-          ></el-input>字数(万)：
+          ></el-input>字数(万)：-->
           <el-input clearable style="width:120px" v-model="teacherArr.num" placeholder="请输入字数"></el-input>
           <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
         </el-form-item>
