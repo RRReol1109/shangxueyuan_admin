@@ -322,17 +322,10 @@
             clearable
             style="width:120px"
             v-model="teacherArr.point"
-            oninput="value=value.replace(/[^\d.]/g,'')"
             placeholder="请输入分数"
             label="字数"
-          ></el-input>字数：
-          <el-input
-            clearable
-            style="width:120px"
-            v-model="teacherArr.num"
-            oninput="value=value.replace(/[^\d.]/g,'')"
-            placeholder="请输入字数"
-          ></el-input>
+          ></el-input>字数(万)：
+          <el-input clearable style="width:120px" v-model="teacherArr.num" placeholder="请输入字数"></el-input>
           <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
         </el-form-item>
         <el-form-item v-if="!['show'].includes(operate)">
@@ -347,7 +340,7 @@
         <div>
           <el-divider content-position="left">附件</el-divider>
           <el-table
-            :data="fileList"
+            :data="additionFiles"
             border
             style="width: 100%"
             size="normal"
@@ -361,26 +354,25 @@
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="name" label="文件名" align="center"></el-table-column>
-            <el-table-column
-              :show-overflow-tooltip="true"
-              prop="create_time"
-              label="创建时间"
-              align="center"
-            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name.split('/').pop() }}</span>
+              </template>
+            </el-table-column>
             <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
-                <el-button @click="downloadFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteFile(scope.row)" type="danger" size="mini">删除</el-button>
+                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
           <el-upload
             class="dragger"
             :show-file-list="false"
-            :on-success="uploadSuccess"
+            :on-success="uploadAdditionSuccess"
             drag
-            action="'http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
+            :headers="header"
+            action="http://bs.hk.darkal.cn/mgr/upload"
             multiple
           >
             <div class="el-upload__tip" slot="tip"></div>
@@ -434,6 +426,7 @@ export default {
       loading: true,
       page: 1,
       fileurl: "",
+      additionFiles: [],
       cFlag: false,
       query: {
         limit: 14,
@@ -494,6 +487,30 @@ export default {
   },
 
   methods: {
+    async uploadAdditionSuccess(response) {
+      console.log("this.ruleForm:::", this.ruleForm);
+      if (response && response.indexOf("http") != -1) {
+        this.additionFiles.push({
+          name: response
+        });
+        if (this.operate == "edit") {
+          this.ruleForm.files = JSON.stringify(this.additionFiles);
+          await axios.$post("/textbook/update", this.ruleForm);
+        }
+      }
+    },
+    downloadAdditionFile(row) {
+      window.open(row.name);
+    },
+    async deleteAdditionFile(row) {
+      this.additionFiles = this.additionFiles.filter(
+        it => it.name !== row.name
+      );
+      if (this.operate == "edit") {
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
+        await axios.$post("/textbook/update", this.ruleForm);
+      }
+    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
@@ -652,14 +669,29 @@ export default {
       }
     },
     async submitForm(formName) {
+      if (this.additionFiles)
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
+      let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm);
+          verification = true;
+          console.log("success");
+          return true;
         } else {
+          verification = false;
+          this.ruleForm.authors = "";
           console.log("error submit!!");
           return false;
         }
       });
+      if (verification) {
+      } else {
+        this.$message({
+          type: "info",
+          message: "请填写正确数据"
+        });
+        return;
+      }
       switch (this.operate) {
         case "add":
           console.log(this.ruleForm);
@@ -688,27 +720,6 @@ export default {
                 this.ruleForm.authors.length - 1
               );
             }
-          }
-          let verification = false;
-          this.$refs[formName].validate(valid => {
-            if (valid) {
-              verification = true;
-              console.log("success");
-              return true;
-            } else {
-              verification = false;
-              this.ruleForm.authors = "";
-              console.log("error submit!!");
-              return false;
-            }
-          });
-          if (verification) {
-          } else {
-            this.$message({
-              type: "info",
-              message: "请填写正确数据"
-            });
-            return;
           }
           await axios.$post("/textbook/add", this.ruleForm);
           this.fileurl = "";
@@ -778,6 +789,7 @@ export default {
       } else {
         this.ruleForm = row;
         this.teacherArr = [];
+        if (row.files) this.additionFiles = JSON.parse(row.files);
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];

@@ -120,7 +120,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="地址"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实习地点"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实习时长"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="days" align="center" label="实习周数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="days" align="center" label="实习天数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="ratio" align="center" label="核定系数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
@@ -265,7 +265,7 @@
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="实习周数" prop="days">
+            <el-form-item label="实习天数" prop="days">
               <el-input
                 v-model="ruleForm.days"
                 oninput="value=value.replace(/[^\d.]/g,'')"

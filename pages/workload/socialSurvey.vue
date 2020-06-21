@@ -92,7 +92,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="weeks" align="center" label="周次"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="weeks" align="center" label="指导班级数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
@@ -196,7 +196,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="周次" prop="weeks">
+            <el-form-item label="指导班级数" prop="weeks">
               <el-input
                 style="width:98%"
                 v-model="ruleForm.weeks"

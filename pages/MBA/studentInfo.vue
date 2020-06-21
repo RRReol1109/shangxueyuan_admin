@@ -672,7 +672,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "sjk-lxsxx.xls");
+        link.setAttribute("download", "MBA-学生.xls");
         document.body.appendChild(link);
         link.click();
       }
