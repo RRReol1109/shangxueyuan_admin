@@ -4,12 +4,12 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="校内专业代码:">
-          <el-input v-model="query.persons" placeholder="请输入项目名称" size="normal"></el-input>
+          <el-input v-model="query.schoolMajorCode" placeholder="请输入项目名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==31||roleId==1">
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -17,7 +17,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==31||roleId==1">
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -35,7 +35,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/reportResult/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduateMajorInfomation/upload?token='AuthenticationToken'"
                 >
                   <el-button size="normal" class type="text">批量上传数据</el-button>
                 </el-upload>
@@ -58,37 +58,60 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="校内专业代码"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="resultName"
+        prop="schoolMajorCode"
+        align="center"
+        label="校内专业代码"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="schoolMajorName"
         align="center"
         label="校内专业名称"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="专业名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="专业代码"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="代码版本"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="所属单位名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="所属单位号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="专业设置年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="学制"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="允许修业年限"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="授予学位门类"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="招生状态"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="是否新专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="是否师范类专业"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorName" align="center" label="专业名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="codeVersion" align="center" label="代码版本"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="所属单位名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="deptCode" align="center" label="所属单位号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorYear" align="center" label="专业设置年份"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studyLength" align="center" label="学制"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="maxStudyLength"
+        align="center"
+        label="允许修业年限"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="degreeCategory"
+        align="center"
+        label="授予学位门类"
+      ></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="enrollmentStatus"
+        align="center"
+        label="招生状态"
+      ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="newFlag" align="center" label="是否新专业">
+        <template slot-scope="scope">
+          <span>{{scope.row.newFlag | flagFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="teacherFlag"
+        align="center"
+        label="是否师范类专业"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        v-if="deptid==31||roleId==1"
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -120,7 +143,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -160,13 +183,13 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="校内专业代码" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="校内专业代码" prop="schoolMajorCode">
+              <el-input v-model="ruleForm.schoolMajorCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="校内专业名称" prop="resultName">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="校内专业名称" prop="schoolMajorName">
+              <el-input v-model="ruleForm.schoolMajorName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -179,28 +202,41 @@
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="专业名称" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="专业名称" prop="majorName">
+              <el-input v-model="ruleForm.majorName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="所属单位名称" prop="score">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="所属单位名称" prop="deptName">
+              <el-input v-model="ruleForm.deptName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="专业代码" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="专业代码" prop="majorCode">
+              <el-input v-model="ruleForm.majorCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="代码版本" prop="resultName">
+            <el-form-item label="代码版本" prop="codeVersion">
+              <el-autocomplete
+                style="width:99%"
+                clearable
+                v-model="ruleForm.codeVersion"
+                placeholder="请输入内容"
+              ></el-autocomplete>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专业设置年份" prop="majorYear">
+              <!-- -->
               <el-date-picker
                 size="normal"
                 style="width:99%"
-                v-model="ruleForm.awardDate"
+                v-model="ruleForm.majorYear"
                 type="year"
                 format="yyyy"
                 value-format="yyyy"
@@ -208,63 +244,51 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
-            <el-form-item label="专业设置年份" prop="resultName">
-              <el-autocomplete
-                style="width:99%"
-                clearable
-                v-model="ruleForm.resultName"
-                placeholder="请输入内容"
-              ></el-autocomplete>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="学制" prop="score">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="学制" prop="studyLength">
+              <el-input v-model="ruleForm.studyLength" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="所属单位号" prop="awardDate">
+            <el-form-item label="所属单位号" prop="deptCode">
               <el-autocomplete
                 style="width:99%"
                 clearable
-                v-model="ruleForm.resultName"
+                v-model="ruleForm.deptCode"
                 placeholder="请输入内容"
               ></el-autocomplete>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="所属单位名称" prop="score">
               <el-input v-model="ruleForm.score" style="width:99%"></el-input>
             </el-form-item>
+          </el-col>-->
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="允许修业年限" prop="maxStudyLength">
+              <el-input v-model="ruleForm.maxStudyLength" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="授予学位门类" prop="degreeCategory">
+              <el-input v-model="ruleForm.degreeCategory" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="允许修业年限" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="招生状态" prop="enrollmentStatus">
+              <el-input v-model="ruleForm.enrollmentStatus" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="授予学位门类" prop="score">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="招生状态" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="是否新专业" prop="score">
+            <el-form-item label="是否新专业" prop="newFlag">
               <el-select
-                v-model="ruleForm.auditFlag"
+                v-model="ruleForm.newFlag"
                 size="normal"
                 placeholder="请选择"
                 style="width:99%"
@@ -277,15 +301,15 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="是否师范类专业" prop="awardDate">
+            <el-form-item label="是否师范类专业" prop="teacherFlag">
               <el-select
-                v-model="ruleForm.auditFlag"
+                v-model="ruleForm.teacherFlag"
                 size="normal"
                 placeholder="请选择"
                 style="width:99%"
               >
-                <el-option label="是" value="true"></el-option>
-                <el-option label="否" value="false"></el-option>
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -385,6 +409,14 @@ export default {
         "1": "已审核",
         "2": "未通过"
       }[value.toString()];
+    },
+    flagFilter: function(value) {
+      if (value != undefined) {
+        return {
+          true: "是",
+          false: "否"
+        }[value.toString()];
+      }
     }
   },
   methods: {
@@ -464,13 +496,16 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = localStorage.getItem("userId");
       }
-      let res = await axios.$post("/reportResult/list", this.query);
+      let res = await axios.$post(
+        "/undergraduateMajorInfomation/list",
+        this.query
+      );
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
     async exportData() {
-      let data = await axios.$download("/reportResult/export", {
+      let data = await axios.$download("/undergraduateMajorInfomation/export", {
         params: this.query
       });
       if (data) {
@@ -551,10 +586,13 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/reportResult/add", this.ruleForm);
+          await axios.$post("/undergraduateMajorInfomation/add", this.ruleForm);
           break;
         case "edit":
-          await axios.$post("/reportResult/update", this.ruleForm);
+          await axios.$post(
+            "/undergraduateMajorInfomation/update",
+            this.ruleForm
+          );
           break;
       }
       this.dialogFormVisible = false;
@@ -571,7 +609,6 @@ export default {
           resultName: "",
           persons: "",
           score: "",
-          awardDate: moment().format("YYYY-MM-DD"),
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
         this.teacherArr = [
@@ -583,24 +620,7 @@ export default {
       } else {
         this.ruleForm = row;
         this.teacherArr = [];
-        let teacherInfo = row.persons.split(",");
-        for (let i = 0; i < teacherInfo.length; i++) {
-          const element = teacherInfo[i];
-          this.teacherArr.push({
-            name: "",
-            num: ""
-          });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item" + j);
-            if (j % 2 == 1) {
-              this.teacherArr[i].num = item;
-            } else if (j % 2 == 0) {
-              this.teacherArr[i].name = item;
-            }
-          }
-        }
+        this.ruleForm.newFlag = this.ruleForm.newFlag.toString();
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
@@ -612,9 +632,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let reportResultId = row.id;
-          await axios.$post("/reportResult/delete", {
-            reportResultId: reportResultId
+          let undergraduateMajorInfomationId = row.id;
+          await axios.$post("/undergraduateMajorInfomation/delete", {
+            undergraduateMajorInfomationId: undergraduateMajorInfomationId
           });
           this.list();
           this.$message({
@@ -692,9 +712,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let reportResultId = element.id;
-            await axios.$post("/reportResult/delete", {
-              reportResultId: reportResultId
+            let undergraduateMajorInfomationId = element.id;
+            await axios.$post("/undergraduateMajorInfomation/delete", {
+              undergraduateMajorInfomationId: undergraduateMajorInfomationId
             });
           }
           this.tableData = [];
@@ -732,7 +752,10 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/reportResult/update", this.examineForm);
+        await axios.$post(
+          "/undergraduateMajorInfomation/update",
+          this.examineForm
+        );
       }
       this.list();
       this.examineDialog = false;

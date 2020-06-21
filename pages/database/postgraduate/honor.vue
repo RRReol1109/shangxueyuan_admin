@@ -2,17 +2,11 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
+        <el-form-item label="专业代码:">
+          <el-input v-model="query.majorCode" placeholder="请输入专业代码" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="专业:">
-          <el-input v-model="query.major" placeholder="请输入专业" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="毕业专业:">
-          <el-input v-model="query.graduationMajor" placeholder="请输入毕业专业" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="毕业学校:">
-          <el-input v-model="query.graduatedSchool" placeholder="请输入毕业学校" size="normal"></el-input>
+        <el-form-item label="学生姓名:">
+          <el-input v-model="query.studentName" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -35,7 +29,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -43,7 +37,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/master/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/graduatePersonalHonorary/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -60,53 +54,32 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="年级"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="education"
+        prop="departmentName"
         align="center"
-        label="第一学历毕业学校"
-      ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="scholarshipName"
-        align="center"
-        label="奖学金名称"
+        label="院系名称"
       ></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
-        prop="financialAidName"
+        prop="departmentCode"
         align="center"
-        label="助学金名称"
+        label="院系代码"
       ></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="majorName" align="center" label="专业名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="学生姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="荣誉称号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="获得时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="获奖级别"></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
-        prop="graduatedSchool"
+        prop="auditFlag"
         align="center"
-        label="毕业学校"
-      ></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="graduationMajor"
-        align="center"
-        label="毕业专业"
-      ></el-table-column>
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="admissionMethod"
-        align="center"
-        label="录取方式"
-      ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -165,6 +138,7 @@
     </el-dialog>
     <el-drawer
       style="min-height:500px"
+      title
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
       size="60%"
@@ -185,130 +159,77 @@
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="姓名" prop="name">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            <el-form-item label="院系名称" prop="departmentName">
+              <el-input size="normal" v-model="form.departmentName" style="width:99%"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="学号" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
-          </el-col>
-            </el-form-item>-->
           </el-col>
           <el-col :span="12">
-            <el-form-item label="性别" prop="gender">
-              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
-                <el-option label="男" value="男"></el-option>
-                <el-option label="女" value="女"></el-option>
-              </el-select>
+            <el-form-item label="院系代码" prop="departmentCode">
+              <el-input size="normal" v-model="form.departmentCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一学历毕业学校" prop="education">
-              <el-input size="normal" v-model="form.education" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="专业名称" prop="major">
-              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="手机号" prop="phone">
-              <el-input size="normal" v-model="form.phone" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input size="normal" v-model="form.email" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="导师" prop="tutor">
-              <el-select v-model="form.tutor" placeholder="请选择老师" filterable style="width:99%">
-                <el-option
-                  v-for="item in teacherList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.id"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="奖学金名称" prop="scholarshipName">
-              <el-input
-                size="normal"
-                v-model="form.scholarshipName"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="助学金名称" prop="financialAidName">
-              <el-input
-                size="normal"
-                v-model="form.financialAidName"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
+            <el-form-item label="专业名称" prop="majorName">
+              <el-input size="normal" v-model="form.majorName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="专业代码" prop="majorCode">
-              <el-input size="normal" v-model="form.majorCode" autocomplete="off" style="width:99%"></el-input>
+              <el-input size="normal" v-model="form.majorCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="年级" prop="grade">
-              <el-input size="normal" v-model="form.grade" autocomplete="off" style="width:99%"></el-input>
+            <el-form-item label="学号" prop="studentNumber">
+              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="毕业学校" prop="graduatedSchool">
-              <el-input
-                size="normal"
-                v-model="form.graduatedSchool"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
+            <el-form-item label="学生姓名" prop="studentName">
+              <el-input size="normal" v-model="form.studentName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="毕业专业" prop="graduationMajor">
-              <el-input
-                size="normal"
-                v-model="form.graduationMajor"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
+            <el-form-item label="荣誉称号" prop="title">
+              <el-input size="normal" v-model="form.title" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="录取方式" prop="admissionMethod">
-              <el-input
+            <el-form-item label="获得时间" prop="awardDate">
+              <el-date-picker
                 size="normal"
-                v-model="form.admissionMethod"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
+                v-model="form.awardDate"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="选择年份"
+                style="width:98%"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item size="normal" label="备注" prop="remark">
-          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="获奖级别:" prop="level">
+              <el-select v-model="form.level" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="国家级" value="国家级"></el-option>
+                <el-option label="省部级" value="省部级"></el-option>
+                <el-option label="校级" value="校级"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+          <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+            <el-option label="未审核" value="0"></el-option>
+            <el-option label="审核通过" value="1"></el-option>
+            <el-option label="审核未通过" value="2"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
     </el-drawer>
@@ -317,110 +238,147 @@
 
 <script>
 import axios from "~/plugins/axios2";
+import moment from "moment";
 export default {
   layout: "normal",
   components: {},
   data() {
     return {
-      total: 0,
-      page: 1,
       operate: "",
       dialogFormVisible: false,
+      total: 0,
+      page: 1,
+      fileList: [],
       query: {
         limit: 14,
         offset: 0,
-        order: "remark",
+        order: "desc",
         condition: ""
       },
+      teacherList: [],
       roleId: 0,
       examineDialog: false,
       examineForm: {},
-      fileList: [],
       header: {},
-      teacherList: [],
+      rules: {},
       form: {
-        id: "",
-        name: "",
-        gender: "",
-        education: "",
-        major: "",
-        phone: "",
-        email: "",
-        tutor: "",
+        college: "",
         majorCode: "",
-        scholarshipName: "",
-        financialAidName: "",
-        grade: "",
-        graduatedSchool: "",
-        graduationMajor: "",
-        admissionMethod: "",
-        remark: ""
-      },
-      rules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
-        education: [
-          { required: true, message: "请输入第一学历毕业学校", trigger: "blur" }
-        ],
-        phone: [{ required: true, message: "请输入电话", trigger: "blur" }],
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
-        tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
-        majorCode: [
-          { required: true, message: "请输入专业代码", trigger: "blur" }
-        ],
-        scholarshipName: [
-          { required: true, message: "请输入奖学金名称", trigger: "blur" }
-        ],
-        financialAidName: [
-          { required: true, message: "请输入助学金名称", trigger: "blur" }
-        ],
-        grade: [{ required: true, message: "请输入年份", trigger: "blur" }],
-        graduatedSchool: [
-          { required: true, message: "请输入毕业学校", trigger: "blur" }
-        ],
-        graduationMajor: [
-          { required: true, message: "请输入毕业专业", trigger: "blur" }
-        ],
-        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
-        admissionMethod: [
-          { required: true, message: "请输入录取方式", trigger: "blur" }
-        ]
+        nativePlace: "",
+        nation: "",
+        political: "",
+        awardDate: "",
+        startDate: "",
+        address: "",
+        state: "",
+        editorDeptName: "",
+        title: "",
+        titleDate: "",
+        level: "",
+        tutor: "",
+        personType: "",
+        postDate: "",
+        highEducation: "",
+        highDegree: "",
+        school: "",
+        college: "",
+        startDate: "",
+        qq: "",
+        phone: "",
+        homePhone: "",
+        email: ""
       },
       tableData: []
     };
   },
-
   filters: {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "已审核",
+        "1": "通过",
         "2": "未通过"
       }[value.toString()];
     }
   },
   methods: {
+    handleClick(row) {
+      console.log(row);
+    },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
+    async changeFlag(row) {
+      row.pick = !row.pick;
+    },
     async list() {
+      this.tableData = [];
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
+          if (key == "entryTime" || key == "graduationTime") {
+            if (element) {
+              this.query[key] = moment(element).format("YYYY-MM-DD");
+            } else {
+              delete this.query[key];
+            }
+          }
           if (element == "" && key != "condition" && key != "offset") {
             delete this.query[key];
           }
         }
       }
-      let user = localStorage.getItem("userInfo");
-      if (user.roleid == 7) {
+      let user = localStorage.getItem("roles");
+      if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/master/list", this.query);
+      let res = await axios.$post("/graduatePersonalHonorary/list", this.query);
+      if (res) {
+        for (let i = 0; i < res.rows.length; i++) {
+          const element = res.rows[i];
+          for (const key in element) {
+            if (element.hasOwnProperty(key)) {
+              const item = element[key];
+              if (key == "entryTime" || key == "graduationTime") {
+                element[key] = moment(item).format("YYYY-MM-DD");
+                console.log(element[key]);
+              }
+            }
+          }
+        }
+      }
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
+    },
+    uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
+      this.list();
+    },
+    async examineData() {
+      let examineList = [];
+      for (let i = 0; i < this.tableData.length; i++) {
+        const element = this.tableData[i];
+        console.log(element);
+        if (element.pick) {
+          examineList.push(element);
+        }
+      }
+      for (let i = 0; i < examineList.length; i++) {
+        const element = examineList[i];
+        console.log(element.auditFlag);
+        this.examineForm.id = element.id;
+        await axios.$post("/graduatePersonalHonorary/update", this.examineForm);
+      }
+      this.list();
+      this.examineDialog = false;
+      this.$message({
+        type: "success",
+        message: "审核成功!"
+      });
     },
     async submitForm(formName) {
       let verification = false;
@@ -445,10 +403,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/master/add", this.form);
+          await axios.$post("/graduatePersonalHonorary/add", this.form);
           break;
         case "edit":
-          await axios.$post("/master/update", this.form);
+          await axios.$post("/graduatePersonalHonorary/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -459,24 +417,34 @@ export default {
       this.formDisabled = false;
       if (this.operate === "add") {
         this.form = {
-          id: "",
-          name: "",
-          gender: "",
-          education: "",
-          major: "",
-          phone: "",
-          email: "",
-          tutor: "",
+          college: "",
           majorCode: "",
-          scholarshipName: "",
-          financialAidName: "",
-          grade: "",
-          graduatedSchool: "",
-          graduationMajor: "",
-          admissionMethod: "",
-          remark: ""
+          nativePlace: "",
+          nation: "",
+          political: "",
+          awardDate: "",
+          startDate: "",
+          address: "",
+          state: "",
+          editorDeptName: "",
+          title: "",
+          titleDate: "",
+          level: "",
+          tutor: "",
+          personType: "",
+          postDate: "",
+          highEducation: "",
+          highDegree: "",
+          school: "",
+          college: "",
+          startDate: "",
+          qq: "",
+          phone: "",
+          homePhone: "",
+          email: ""
         };
       } else {
+        row.auditFlag = row.auditFlag.toString();
         this.form = row;
       }
     },
@@ -484,36 +452,12 @@ export default {
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
     },
-    async changeFlag(row) {
-      row.pick = !row.pick;
-    },
-
-    async examineData() {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag);
-        this.examineForm.id = element.id;
-        await axios.$post("/master/update", this.examineForm);
-      }
-      this.list();
-      this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
-    },
-
     async handleCommand(command) {
       console.log(command);
       switch (command) {
+        case "download":
+          this.exportData(command);
+          break;
         case "examine":
           let deleteList = [];
           for (let i = 0; i < this.tableData.length; i++) {
@@ -533,31 +477,21 @@ export default {
           }
           this.examineDialog = true;
           break;
+
         case "delCount":
           this.delCount();
           break;
         case "temp":
           this.exportData(command);
           break;
-        case "download":
-          this.exportData(command);
-          break;
       }
     },
-    uploadSuccess() {
-      this.$message({
-        type: "success",
-        message: "上传成功"
-      });
-      this.list();
-    },
-
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/master/export?id=-1", {});
+        data = await axios.$download("/graduatePersonalHonorary/export?id=-1", {});
       } else {
-        data = await axios.$download("/master/export", {
+        data = await axios.$download("/graduatePersonalHonorary/export", {
           params: this.query
         });
       }
@@ -566,7 +500,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "数据库-专硕名单.xls");
+        link.setAttribute("download", "数据库-学生个人荣誉称号.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -596,9 +530,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let masterId = element.id;
-            await axios.$post("/master/delete", {
-              masterId: masterId
+            let internationalStudentId = element.id;
+            await axios.$post("/graduatePersonalHonorary/delete", {
+              internationalStudentId: internationalStudentId
             });
           }
           this.tableData = [];
@@ -615,6 +549,7 @@ export default {
           });
         });
     },
+
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -623,9 +558,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let masterId = row.id;
-          await axios.$post("/master/delete", {
-            masterId: masterId
+          let internationalStudentId = row.id;
+          await axios.$post("/graduatePersonalHonorary/delete", {
+            internationalStudentId: internationalStudentId
           });
           this.list();
           this.$message({
@@ -647,11 +582,8 @@ export default {
       offset: 0,
       limit: 999999
     });
-    this.header = {
-      Authorization: localStorage.getItem("message")
-    };
-    this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
+    this.roleId = localStorage.getItem("roleId");
     this.list();
   }
 };

@@ -203,6 +203,13 @@ export default {
       this.list();
     },
     async list() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
       this.loading = true;
       // 查询接口
       let user = localStorage.getItem("roles");
@@ -211,6 +218,7 @@ export default {
         this.query.userId = localStorage.getItem("userId");
         this.role = false;
       }
+
       let res = await axios.$post("workload/list", this.query);
       for (let i = 0; i < res.records.length; i++) {
         res.records[i].scores = 0;

@@ -3,12 +3,12 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="工号:">
-          <el-input v-model="query.persons" placeholder="请输入项目名称" size="normal"></el-input>
+          <el-input v-model="query.account" placeholder="请输入项目名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==31||roleId==1">
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -16,7 +16,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==31||roleId==1">
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -34,7 +34,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/reportResult/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduatePatentAuthorization/upload?token='AuthenticationToken'"
                 >
                   <el-button size="normal" class type="text">批量上传数据</el-button>
                 </el-upload>
@@ -57,26 +57,33 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="工号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="resultName" align="center" label="教师姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="专利名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="授权号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="获批时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="是否应用"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="是否行业联合专利"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="account" align="center" label="工号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="patentName" align="center" label="专利名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="authId" align="center" label="授权号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="获批时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="applyFlag" align="center" label="是否应用">
+        <template slot-scope="scope">
+          <span>{{scope.row.applyFlag | flagFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="unionFlag"
+        align="center"
+        label="是否行业联合专利"
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.unionFlag | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        v-if="deptid==31||roleId==1"
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -108,7 +115,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -148,13 +155,13 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工号" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="工号" prop="account">
+              <el-input v-model="ruleForm.account" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="教师姓名" prop="resultName">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="教师姓名" prop="name">
+              <el-input v-model="ruleForm.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -167,16 +174,16 @@
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="专利名称" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="专利名称" prop="patentName">
+              <el-input v-model="ruleForm.patentName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="获批时间" prop="score">
+            <el-form-item label="获批时间" prop="date">
               <el-date-picker
                 size="normal"
                 style="width:99%"
-                v-model="ruleForm.awardDate"
+                v-model="ruleForm.date"
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
@@ -187,16 +194,16 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="类型" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="类型" prop="type">
+              <el-input v-model="ruleForm.type" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="授权号" prop="resultName">
+            <el-form-item label="授权号" prop="authId">
               <el-autocomplete
                 style="width:99%"
                 clearable
-                v-model="ruleForm.resultName"
+                v-model="ruleForm.authId"
                 placeholder="请输入内容"
               ></el-autocomplete>
             </el-form-item>
@@ -204,9 +211,9 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="是否应用" prop="awardDate">
+            <el-form-item label="是否应用" prop="applyFlag">
               <el-select
-                v-model="ruleForm.auditFlag"
+                v-model="ruleForm.applyFlag"
                 size="normal"
                 placeholder="请选择"
                 style="width:99%"
@@ -217,13 +224,16 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否行业联合专利" prop="resultName">
-              <el-autocomplete
+            <el-form-item label="是否行业联合专利" prop="unionFlag">
+              <el-select
+                v-model="ruleForm.unionFlag"
+                size="normal"
+                placeholder="请选择"
                 style="width:99%"
-                clearable
-                v-model="ruleForm.resultName"
-                placeholder="请输入内容"
-              ></el-autocomplete>
+              >
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -294,20 +304,8 @@ export default {
           num: ""
         }
       ],
-      ruleForm: {
-        type: "1",
-        // level: "1",
-        resultName: "",
-        persons: "",
-        score: "",
-        awardDate: moment().format("YYYY-MM-DD")
-      },
+      ruleForm: {},
       rules: {
-        persons: [{ required: true, message: "请输入作者", trigger: "blur" }],
-        resultName: [
-          { required: true, message: "请输入项目类别", trigger: "blur" }
-        ],
-        score: [{ required: true, message: "请输入分数", trigger: "blur" }],
         type: [{ required: true, message: "请输选择类型", trigger: "blur" }]
       },
       rewardNames: []
@@ -325,6 +323,14 @@ export default {
         "1": "已审核",
         "2": "未通过"
       }[value.toString()];
+    },
+    flagFilter: function(value) {
+      if (value != undefined) {
+        return {
+          true: "是",
+          false: "否"
+        }[value.toString()];
+      }
     }
   },
   methods: {
@@ -388,13 +394,6 @@ export default {
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
-          if (key == "awardDate") {
-            if (element) {
-              this.query[key] = moment(element).format("YYYY-MM-DD");
-            } else {
-              delete this.query[key];
-            }
-          }
           if (element == "" && key != "condition" && key != "offset") {
             delete this.query[key];
           }
@@ -404,15 +403,21 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = localStorage.getItem("userId");
       }
-      let res = await axios.$post("/reportResult/list", this.query);
+      let res = await axios.$post(
+        "/undergraduatePatentAuthorization/list",
+        this.query
+      );
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
     async exportData() {
-      let data = await axios.$download("/reportResult/export", {
-        params: this.query
-      });
+      let data = await axios.$download(
+        "/undergraduatePatentAuthorization/export",
+        {
+          params: this.query
+        }
+      );
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
@@ -440,27 +445,6 @@ export default {
       this.ruleForm.persons = "";
       for (let i = 0; i < this.teacherArr.length; i++) {
         let element = this.teacherArr[i];
-        for (const key in element) {
-          if (element.hasOwnProperty(key)) {
-            let info = element[key];
-            console.log(info);
-            if (key == "name") {
-              let names = "";
-              for (let j = 0; j < this.teacherList.length; j++) {
-                const item = this.teacherList[j];
-                if (item.id == info) {
-                  console.log(item);
-                  names = item.name;
-                }
-              }
-              if (names) this.ruleForm.persons += names;
-              else this.ruleForm.persons += info;
-            }
-            if (key == "num") {
-              this.ruleForm.persons += "|" + info + ",";
-            }
-          }
-        }
         if (i == this.teacherArr.length - 1) {
           this.ruleForm.persons = this.ruleForm.persons.substr(
             0,
@@ -491,10 +475,16 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/reportResult/add", this.ruleForm);
+          await axios.$post(
+            "/undergraduatePatentAuthorization/add",
+            this.ruleForm
+          );
           break;
         case "edit":
-          await axios.$post("/reportResult/update", this.ruleForm);
+          await axios.$post(
+            "/undergraduatePatentAuthorization/update",
+            this.ruleForm
+          );
           break;
       }
       this.dialogFormVisible = false;
@@ -505,13 +495,6 @@ export default {
       this.formDisabled = false;
       if (this.operate === "add") {
         this.ruleForm = {
-          id: "",
-          type: "",
-          // level: "",
-          resultName: "",
-          persons: "",
-          score: "",
-          awardDate: moment().format("YYYY-MM-DD"),
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
         this.teacherArr = [
@@ -523,24 +506,8 @@ export default {
       } else {
         this.ruleForm = row;
         this.teacherArr = [];
-        let teacherInfo = row.persons.split(",");
-        for (let i = 0; i < teacherInfo.length; i++) {
-          const element = teacherInfo[i];
-          this.teacherArr.push({
-            name: "",
-            num: ""
-          });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item" + j);
-            if (j % 2 == 1) {
-              this.teacherArr[i].num = item;
-            } else if (j % 2 == 0) {
-              this.teacherArr[i].name = item;
-            }
-          }
-        }
+        this.ruleForm.applyFlag = this.ruleForm.applyFlag.toString();
+        this.ruleForm.unionFlag = this.ruleForm.unionFlag.toString();
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
@@ -552,9 +519,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let reportResultId = row.id;
-          await axios.$post("/reportResult/delete", {
-            reportResultId: reportResultId
+          let undergraduatePatentAuthorizationId = row.id;
+          await axios.$post("/undergraduatePatentAuthorization/delete", {
+            undergraduatePatentAuthorizationId: undergraduatePatentAuthorizationId
           });
           this.list();
           this.$message({
@@ -632,9 +599,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let reportResultId = element.id;
-            await axios.$post("/reportResult/delete", {
-              reportResultId: reportResultId
+            let undergraduatePatentAuthorizationId = element.id;
+            await axios.$post("/undergraduatePatentAuthorization/delete", {
+              undergraduatePatentAuthorizationId: undergraduatePatentAuthorizationId
             });
           }
           this.tableData = [];
@@ -672,7 +639,10 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/reportResult/update", this.examineForm);
+        await axios.$post(
+          "/undergraduatePatentAuthorization/update",
+          this.examineForm
+        );
       }
       this.list();
       this.examineDialog = false;

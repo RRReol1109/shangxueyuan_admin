@@ -173,7 +173,11 @@
         align="center"
         label="教材类型"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否为全英文授课"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否为全英文授课">
+        <template slot-scope="scope">
+          <span>{{scope.row.english | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="target" align="center" label="授课对象"></el-table-column> -->
       <!-- <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时"></el-table-column>
@@ -591,6 +595,14 @@ export default {
         "1": "已审核",
         "2": "未通过"
       }[value.toString()];
+    },
+    flagFilter: function(value) {
+      if (value != undefined) {
+        return {
+          true: "是",
+          false: "否"
+        }[value.toString()];
+      }
     }
   },
 
@@ -629,10 +641,6 @@ export default {
       //   }
       // }
       let res = await axios.$post("/teaching/list", query);
-      for (let i = 0; i < res.rows.length; i++) {
-        const element = res.rows[i];
-        element.english = element.english == true ? "是" : "否";
-      }
       this.tableData = res.rows;
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];

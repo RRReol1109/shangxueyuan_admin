@@ -200,6 +200,13 @@ export default {
       this.list();
     },
     async list() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
       this.loading = true;
       // 查询接口
       let user = localStorage.getItem("roles");

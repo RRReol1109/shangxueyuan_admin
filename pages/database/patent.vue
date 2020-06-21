@@ -40,7 +40,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/graduatePatent/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduatePatent/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -140,7 +140,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:" >
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -375,7 +375,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/graduatePatent/list", this.query);
+      let res = await axios.$post("/undergraduatePatent/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -414,7 +414,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/graduatePatent/update", this.examineForm);
+        await axios.$post("/undergraduatePatent/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -446,10 +446,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/graduatePatent/add", this.form);
+          await axios.$post("/undergraduatePatent/add", this.form);
           break;
         case "edit":
-          await axios.$post("/graduatePatent/update", this.form);
+          await axios.$post("/undergraduatePatent/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -532,9 +532,9 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/graduatePatent/export?id=-1", {});
+        data = await axios.$download("/undergraduatePatent/export?id=-1", {});
       } else {
-        data = await axios.$download("/graduatePatent/export", {
+        data = await axios.$download("/undergraduatePatent/export", {
           params: this.query
         });
       }
@@ -573,9 +573,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let internationalStudentId = element.id;
-            await axios.$post("/graduatePatent/delete", {
-              internationalStudentId: internationalStudentId
+            let undergraduatePatentId = element.id;
+            await axios.$post("/undergraduatePatent/delete", {
+              undergraduatePatentId: undergraduatePatentId
             });
           }
           this.tableData = [];
@@ -601,9 +601,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let internationalStudentId = row.id;
-          await axios.$post("/graduatePatent/delete", {
-            internationalStudentId: internationalStudentId
+          let undergraduatePatentId = row.id;
+          await axios.$post("/undergraduatePatent/delete", {
+            undergraduatePatentId: undergraduatePatentId
           });
           this.list();
           this.$message({

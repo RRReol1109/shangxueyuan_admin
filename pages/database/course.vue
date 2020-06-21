@@ -40,7 +40,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/graduateSubjectInformation/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduateSubjectInformation/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -128,7 +128,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:" >
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -361,7 +361,7 @@ export default {
         this.query.editor = user.id;
       }
       let res = await axios.$post(
-        "/graduateSubjectInformation/list",
+        "/undergraduateSubjectInformation/list",
         this.query
       );
       if (res) {
@@ -403,7 +403,7 @@ export default {
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
         await axios.$post(
-          "/graduateSubjectInformation/update",
+          "/undergraduateSubjectInformation/update",
           this.examineForm
         );
       }
@@ -437,10 +437,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/graduateSubjectInformation/add", this.form);
+          await axios.$post("/undergraduateSubjectInformation/add", this.form);
           break;
         case "edit":
-          await axios.$post("/graduateSubjectInformation/update", this.form);
+          await axios.$post("/undergraduateSubjectInformation/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -523,9 +523,9 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/graduateSubjectInformation/export?id=-1", {});
+        data = await axios.$download("/undergraduateSubjectInformation/export?id=-1", {});
       } else {
-        data = await axios.$download("/graduateSubjectInformation/export", {
+        data = await axios.$download("/undergraduateSubjectInformation/export", {
           params: this.query
         });
       }
@@ -564,9 +564,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let internationalStudentId = element.id;
-            await axios.$post("/graduateSubjectInformation/delete", {
-              internationalStudentId: internationalStudentId
+            let undergraduateSubjectInformationId = element.id;
+            await axios.$post("/undergraduateSubjectInformation/delete", {
+              undergraduateSubjectInformationId: undergraduateSubjectInformationId
             });
           }
           this.tableData = [];
@@ -592,9 +592,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let internationalStudentId = row.id;
-          await axios.$post("/graduateSubjectInformation/delete", {
-            internationalStudentId: internationalStudentId
+          let undergraduateSubjectInformationId = row.id;
+          await axios.$post("/undergraduateSubjectInformation/delete", {
+            undergraduateSubjectInformationId: undergraduateSubjectInformationId
           });
           this.list();
           this.$message({

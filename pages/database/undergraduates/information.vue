@@ -3,12 +3,12 @@
     <div class="search-form">
       <el-form :inline="true" :model="query">
         <el-form-item label="课程名称:">
-          <el-input v-model="query.persons" placeholder="请输入课程名称" size="normal"></el-input>
+          <el-input v-model="query.courseName" placeholder="请输入课程名称" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==31||roleId==1">
+        <el-form-item label >
           <el-button
             size="normal"
             type="primary"
@@ -16,7 +16,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==31||roleId==1">
+        <el-form-item >
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -34,7 +34,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/reportResult/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduateCourseInfomation/upload?token='AuthenticationToken'"
                 >
                   <el-button size="normal" class type="text">批量上传数据</el-button>
                 </el-upload>
@@ -57,11 +57,16 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="课程名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="课程号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="resultName" align="center" label="项目类别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="项目级别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="建设方式"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="courseName" align="center" label="课程名称"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="courseCode" align="center" label="课程号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="项目类别"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="courseMethod"
+        align="center"
+        label="建设方式"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -72,7 +77,7 @@
         align="center"
         label="操作"
         width="150"
-        v-if="deptid==31||roleId==1"
+        
       >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -105,7 +110,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -145,13 +150,13 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="课程名称" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="课程名称" prop="courseName">
+              <el-input v-model="ruleForm.courseName" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="课程号" prop="awardDate">
-              <el-input v-model="ruleForm.score" style="width:99%"></el-input>
+            <el-form-item label="课程号" prop="courseCode">
+              <el-input v-model="ruleForm.courseCode" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -164,13 +169,8 @@
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目级别" prop="awardDate">
-              <el-select
-                v-model="ruleForm.auditFlag"
-                size="normal"
-                placeholder="请选择"
-                style="width:99%"
-              >
+            <el-form-item label="项目级别" prop="level">
+              <el-select v-model="ruleForm.level" size="normal" placeholder="请选择" style="width:99%">
                 <el-option label="国家级" value="国家级"></el-option>
                 <el-option label="省部级" value="省部级"></el-option>
                 <el-option label="其他级(含校级)" value="其他级(含校级)"></el-option>
@@ -178,13 +178,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="项目类别" prop="resultName">
-              <el-select
-                v-model="ruleForm.auditFlag"
-                size="normal"
-                placeholder="请选择"
-                style="width:99%"
-              >
+            <el-form-item label="项目类别" prop="type">
+              <el-select v-model="ruleForm.type" size="normal" placeholder="请选择" style="width:99%">
                 <el-option label="精品在线开放课程" value="精品在线开放课程"></el-option>
                 <el-option label="产学合作协同育人项目" value="产学合作协同育人项目"></el-option>
               </el-select>
@@ -193,9 +188,9 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="建设方式" prop="resultName">
+            <el-form-item label="建设方式" prop="courseMethod">
               <el-select
-                v-model="ruleForm.auditFlag"
+                v-model="ruleForm.courseMethod"
                 size="normal"
                 placeholder="请选择"
                 style="width:99%"
@@ -276,27 +271,21 @@ export default {
       ruleForm: {
         type: "1",
         // level: "1",
-        resultName: "",
+        type: "",
         persons: "",
         score: "",
-        awardDate: moment().format("YYYY-MM-DD")
+        courseName: ""
       },
       rules: {
         persons: [{ required: true, message: "请输入作者", trigger: "blur" }],
-        resultName: [
-          { required: true, message: "请输入项目类别", trigger: "blur" }
-        ],
+        type: [{ required: true, message: "请输入项目类别", trigger: "blur" }],
         score: [{ required: true, message: "请输入分数", trigger: "blur" }],
         type: [{ required: true, message: "请输选择类型", trigger: "blur" }]
       },
       rewardNames: []
     };
   },
-  mounted() {
-    this.resultName = localStorage.getItem("resultName")
-      ? JSON.parse(localStorage.getItem("resultName"))
-      : [];
-  },
+  mounted() {},
   filters: {
     statusFilter: function(value) {
       return {
@@ -312,7 +301,7 @@ export default {
     },
     updataCache() {
       this.rewardNames.push({
-        value: this.ruleForm.resultName
+        value: this.ruleForm.type
       });
       this.rewardNames = _.uniqWith(this.rewardNames, _.isEqual);
       localStorage.setItem("rewardNames", JSON.stringify(this.rewardNames));
@@ -367,13 +356,6 @@ export default {
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
-          if (key == "awardDate") {
-            if (element) {
-              this.query[key] = moment(element).format("YYYY-MM-DD");
-            } else {
-              delete this.query[key];
-            }
-          }
           if (element == "" && key != "condition" && key != "offset") {
             delete this.query[key];
           }
@@ -383,13 +365,13 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = localStorage.getItem("userId");
       }
-      let res = await axios.$post("/reportResult/list", this.query);
+      let res = await axios.$post("/undergraduateCourseInfomation/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
     async exportData() {
-      let data = await axios.$download("/reportResult/export", {
+      let data = await axios.$download("/undergraduateCourseInfomation/export", {
         params: this.query
       });
       if (data) {
@@ -470,10 +452,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/reportResult/add", this.ruleForm);
+          await axios.$post("/undergraduateCourseInfomation/add", this.ruleForm);
           break;
         case "edit":
-          await axios.$post("/reportResult/update", this.ruleForm);
+          await axios.$post("/undergraduateCourseInfomation/update", this.ruleForm);
           break;
       }
       this.dialogFormVisible = false;
@@ -487,10 +469,10 @@ export default {
           id: "",
           type: "",
           // level: "",
-          resultName: "",
+          type: "",
           persons: "",
           score: "",
-          awardDate: moment().format("YYYY-MM-DD"),
+          courseName: "",
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
         this.teacherArr = [
@@ -531,9 +513,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let reportResultId = row.id;
-          await axios.$post("/reportResult/delete", {
-            reportResultId: reportResultId
+          let undergraduateCourseInfomationId = row.id;
+          await axios.$post("/undergraduateCourseInfomation/delete", {
+            undergraduateCourseInfomationId: undergraduateCourseInfomationId
           });
           this.list();
           this.$message({
@@ -611,9 +593,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let reportResultId = element.id;
-            await axios.$post("/reportResult/delete", {
-              reportResultId: reportResultId
+            let undergraduateCourseInfomationId = element.id;
+            await axios.$post("/undergraduateCourseInfomation/delete", {
+              undergraduateCourseInfomationId: undergraduateCourseInfomationId
             });
           }
           this.tableData = [];
@@ -651,7 +633,7 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/reportResult/update", this.examineForm);
+        await axios.$post("/undergraduateCourseInfomation/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;

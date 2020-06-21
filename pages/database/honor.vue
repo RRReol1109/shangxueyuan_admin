@@ -37,7 +37,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/graduatePersonalHonorary/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/undergraduatePersonalHonorary/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -116,7 +116,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" v-if="role">
+            <el-form-item label="审核状态:" >
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -332,7 +332,10 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/graduatePersonalHonorary/list", this.query);
+      let res = await axios.$post(
+        "/undergraduatePersonalHonorary/list",
+        this.query
+      );
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -371,7 +374,10 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/graduatePersonalHonorary/update", this.examineForm);
+        await axios.$post(
+          "/undergraduatePersonalHonorary/update",
+          this.examineForm
+        );
       }
       this.list();
       this.examineDialog = false;
@@ -403,10 +409,10 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/graduatePersonalHonorary/add", this.form);
+          await axios.$post("/undergraduatePersonalHonorary/add", this.form);
           break;
         case "edit":
-          await axios.$post("/graduatePersonalHonorary/update", this.form);
+          await axios.$post("/undergraduatePersonalHonorary/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
@@ -489,9 +495,12 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/graduatePersonalHonorary/export?id=-1", {});
+        data = await axios.$download(
+          "/undergraduatePersonalHonorary/export?id=-1",
+          {}
+        );
       } else {
-        data = await axios.$download("/graduatePersonalHonorary/export", {
+        data = await axios.$download("/undergraduatePersonalHonorary/export", {
           params: this.query
         });
       }
@@ -530,9 +539,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let internationalStudentId = element.id;
-            await axios.$post("/graduatePersonalHonorary/delete", {
-              internationalStudentId: internationalStudentId
+            let undergraduatePersonalHonoraryId = element.id;
+            await axios.$post("/undergraduatePersonalHonorary/delete", {
+              undergraduatePersonalHonoraryId: undergraduatePersonalHonoraryId
             });
           }
           this.tableData = [];
@@ -558,9 +567,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let internationalStudentId = row.id;
-          await axios.$post("/graduatePersonalHonorary/delete", {
-            internationalStudentId: internationalStudentId
+          let iundergraduatePersonalHonoraryId = row.id;
+          await axios.$post("/undergraduatePersonalHonorary/delete", {
+            iundergraduatePersonalHonoraryId: iundergraduatePersonalHonoraryId
           });
           this.list();
           this.$message({
