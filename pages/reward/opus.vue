@@ -795,8 +795,8 @@ export default {
           const element = teacherInfo[i];
           this.teacherArr.push({
             name: "",
-            title: "",
-            flag: false
+            point: "",
+            num: ""
           });
           let teacher = element.split("|");
           for (let j = 0; j < teacher.length; j++) {
