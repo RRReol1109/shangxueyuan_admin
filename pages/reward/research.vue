@@ -9,12 +9,13 @@
           <el-select v-model="query.type" size="normal" placeholder="请选择类别">
             <el-option label="全部" value></el-option>
             <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
-            <el-option label="国家社科基金" value="国家自然科学基金"></el-option>
-            <el-option label="教育部人文社科基金" value="教育部人文社科基金"></el-option>
-            <el-option label="湖南省自然科学基金" value="湖南省自然科学基金"></el-option>
-            <el-option label="湖南省社科基金" value="湖南省社科基金"></el-option>
-            <el-option label="省教育厅教改项目（普通高校教学改革研究项目）" value="省教育厅教改项目（普通高校教学改革研究项目）"></el-option>
-            <el-option label="省教育厅教改项目（学位与研究生教育教学改革研究课题）" value="省教育厅教改项目（学位与研究生教育教学改革研究课题）"></el-option>
+            <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
+            <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
+            <el-option label="国家 973 项目" value="国家 973 项目"></el-option>
+            <el-option label="国家科技支撑计划项目" value="国家科技支撑计划项目"></el-option>
+            <el-option label="教育部立项的各类纵向项目" value="教育部立项的各类纵向项目"></el-option>
+            <el-option label="部委项目" value="部委项目"></el-option>
+            <el-option label="省级立项的纵向项目" value="省级立项的纵向项目"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="项目名称:">
@@ -206,13 +207,22 @@
             @change="typeChage"
             style="width:99%"
           >
-            <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
+            <!-- <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
             <el-option label="国家社科基金" value="国家社科基金"></el-option>
             <el-option label="教育部人文社科基金" value="教育部人文社科基金"></el-option>
             <el-option label="湖南省自然科学基金" value="湖南省自然科学基金"></el-option>
             <el-option label="湖南省社科基金" value="湖南省社科基金"></el-option>
             <el-option label="省教育厅教改项目（普通高校教学改革研究项目）" value="省教育厅教改项目（普通高校教学改革研究项目）"></el-option>
             <el-option label="省教育厅教改项目（学位与研究生教育教学改革研究课题）" value="省教育厅教改项目（学位与研究生教育教学改革研究课题）"></el-option>
+            <el-option label="其他" value="其他"></el-option> -->
+            <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
+            <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
+            <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
+            <el-option label="国家 973 项目" value="国家 973 项目"></el-option>
+            <el-option label="国家科技支撑计划项目" value="国家科技支撑计划项目"></el-option>
+            <el-option label="教育部立项的各类纵向项目" value="教育部立项的各类纵向项目"></el-option>
+            <el-option label="部委项目" value="部委项目"></el-option>
+            <el-option label="省级立项的纵向项目" value="省级立项的纵向项目"></el-option>
             <el-option label="其他" value="其他"></el-option>
           </el-select>
         </el-form-item>
@@ -223,12 +233,16 @@
           <el-col :span="12">
             <el-form-item label="项目级别" prop="level">
               <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:99%">
-                <el-option label="重大项目" value="重大项目"></el-option>
+                <!-- <el-option label="重大项目" value="重大项目"></el-option>
                 <el-option label="面上项目" value="面上项目"></el-option>
                 <el-option label="重点项目" value="重点项目"></el-option>
                 <el-option label="青年项目" value="青年项目"></el-option>
                 <el-option label="一般项目" value="一般项目"></el-option>
-                <el-option label="基地项目" value="基地项目"></el-option>
+                <el-option label="基地项目" value="基地项目"></el-option> -->
+                <el-option label="重点项目" value="重点项目"></el-option>
+                <el-option label="中国家自科重点项目" value="中国家自科重点项目"></el-option>
+                <el-option label="重大项目" value="重大项目"></el-option>
+                <el-option label="中国家自科重大项目" value="中国家自科重大项目"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
