@@ -12,11 +12,23 @@
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="项目类型:">
+        <el-form-item label="获奖类型:">
           <el-select v-model="query.type" size="normal" placeholder="请选择类型">
             <el-option label="全部" value></el-option>
-            <el-option label="国家课题结题评优" value="1"></el-option>
-            <el-option label="湖南省自然科学奖" value="2"></el-option>
+            <el-option label="国家级“三大奖”" value="国家级“三大奖”"></el-option>
+            <el-option label="教育部人文社科奖" value="教育部人文社科奖"></el-option>
+            <el-option label="省部级" value="省部级"></el-option>
+            <el-option label="国家自科基金和国家社科基金结题评估" value="国家自科基金和国家社科基金结题评估"></el-option>
+            <el-option label="入选 CTTI 智库" value="入选 CTTI 智库"></el-option>
+            <el-option label="科睿唯安高被引" value="科睿唯安高被引"></el-option>
+            <el-option label="成果入选《高校智库专刊》" value="成果入选《高校智库专刊》"></el-option>
+            <el-option label="成果入选教育部社科委 《专家建议》" value="成果入选教育部社科委 《专家建议》"></el-option>
+            <el-option label="成果入选中宣部社科规划办《成果要报》" value="成果入选中宣部社科规划办《成果要报》"></el-option>
+            <el-option label="成果入选人民日报(理论版)" value="成果入选人民日报(理论版)"></el-option>
+            <el-option label="成果入选光明日报(理论版)" value="成果入选光明日报(理论版)"></el-option>
+            <el-option label="成果入选经济日报(理论版)" value="成果入选经济日报(理论版)"></el-option>
+            <el-option label="成果获得领导批示" value="成果获得领导批示"></el-option>
+            <el-option label="专利(含软件著作权)" value="专利(含软件著作权)"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="第一完成单位：">
@@ -146,7 +158,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" >
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -205,7 +217,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="奖项类型" prop="type">
+            <el-form-item label="获奖类型" prop="type">
               <el-select v-model="ruleForm.type" placeholder="请选择类型" style="width:99%">
                 <el-option label="国家级“三大奖”" value="国家级“三大奖”"></el-option>
                 <el-option label="教育部人文社科奖" value="教育部人文社科奖"></el-option>
