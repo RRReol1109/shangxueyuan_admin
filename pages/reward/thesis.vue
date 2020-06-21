@@ -237,14 +237,18 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="获奖类别" prop="type">
-              <el-autocomplete
+            <el-form-item label="获奖论文类别" prop="type">
+              <!-- <el-autocomplete
                 clearable
                 v-model="ruleForm.type"
                 :fetch-suggestions="queryStudent"
                 placeholder="请输入内容"
                 style="width:99%"
-              ></el-autocomplete>
+              ></el-autocomplete> -->
+              <el-select v-model="ruleForm.type" placeholder="请输入内容" style="width:98%">
+                <el-option label="湖南省优秀博士论文" value="湖南省优秀博士论文"></el-option>
+                <el-option label="湖南省优秀硕士论文" value="湖南省优秀硕士论文"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -304,13 +308,13 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="本人计分" prop="score">
               <el-input clearable v-model="ruleForm.score" placeholder="请输入内容" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
