@@ -17,30 +17,28 @@
         </el-form-item>
         <el-form-item label="授课类别" prop="type">
           <el-select v-model="query.type" size="normal" placeholder="请选择授课类别">
-            <el-option label="本科教学" value="本科教学"></el-option>
-            <el-option label="研管安排" value="研管安排"></el-option>
-            <el-option label="MBA安排" value="MBA安排"></el-option>
-            <el-option label="专业硕士安排" value="专业硕士安排"></el-option>
-            <el-option label="EMBA、EDP其他" value="EMBA、EDP其他"></el-option>
-            <el-option label="文化素质课" value="文化素质课"></el-option>
+            <el-option label="本科生" value="本科生"></el-option>
+                <el-option label="博士生" value="博士生"></el-option>
+                <el-option label="MBA、工程硕士" value="MBA、工程硕士"></el-option>
+                <el-option label="非全日制会计专硕" value="非全日制会计专硕"></el-option>
+                <el-option label="统招硕士、会计硕士、金融硕士" value="统招硕士、会计硕士、金融硕士"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="是否为全英文" prop="type">
           <el-select v-model="query.english" size="normal" placeholder="请选择状态">
-            <el-option label="全部状态" value></el-option>
+            <el-option label="全部" value></el-option>
             <el-option label="是" value="true"></el-option>
             <el-option label="否" value="false"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="授课对象:">
-          <!-- <el-input id="nameBox" v-model="query.target" placeholder="请输入授课对象" size="normal"></el-input> -->
+        <!-- <el-form-item label="授课对象:">
           <el-select v-model="query.target" size="normal" placeholder="请输选择授课对象">
             <el-option label="全部" value></el-option>
             <el-option label="本科生" value="本科生"></el-option>
             <el-option label="研究生" value="研究生"></el-option>
             <el-option label="博士生" value="博士生"></el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="教师:" :v-if="role">
           <el-select size="normal" v-model="query.teacher" filterable placeholder="请选择老师">
             <el-option label="全部" value></el-option>
@@ -294,7 +292,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="类别" prop="type">
+            <el-form-item label="授课类别" prop="type">
               <el-select v-model="ruleForm.type" placeholder="请选择授课类别" style="width:99%">
                 <!-- <el-option label="本科教学" value="本科教学"></el-option>
                 <el-option label="研管安排" value="研管安排"></el-option>
