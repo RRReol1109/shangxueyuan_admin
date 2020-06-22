@@ -403,7 +403,7 @@ export default {
       });
       this.list();
     },
-    async examineData() {
+    async examineData(flag) {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];
@@ -414,8 +414,13 @@ export default {
       }
       for (let i = 0; i < examineList.length; i++) {
         const element = examineList[i];
-        console.log(element.auditFlag);
+        console.log(element.auditFlag, "=======" + flag);
         this.examineForm.id = element.id;
+        if (flag == "success") {
+          this.examineForm.auditFlag = 1;
+        } else {
+          this.examineForm.auditFlag = 2;
+        }
         await axios.$post("/verticalResearch/update", this.examineForm);
       }
       this.list();

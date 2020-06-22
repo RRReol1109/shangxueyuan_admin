@@ -142,35 +142,28 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form
-        :model="examineForm"
-        :rules="rules"
-        ref="examineForm"
-        label-width="100px"
-        class="demo-examineForm"
-      >
-        <el-row>
-          <el-form-item>
-            <el-form-item label="审核状态:" >
-              <el-select
-                v-model="examineForm.auditFlag"
-                style="width:99%;"
-                size="normal"
-                placeholder="请选择状态"
-              >
-                <el-option label="未审核" value="0"></el-option>
-                <el-option label="审核通过" value="1"></el-option>
-                <el-option label="未通过" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form-item>
-        </el-row>
-      </el-form>
-      <div class="dialog-footer">
-        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-      </div>
+    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+      <el-row>
+        <el-col :span="8">
+          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="primary"
+            @click="examineData('success')"
+            size="normal"
+            style="width:97%;"
+          >通过</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="danger"
+            @click="examineData('failed')"
+            size="normal"
+            style="width:97%;"
+          >不通过</el-button>
+        </el-col>
+      </el-row>
     </el-dialog>
     <el-drawer
       style="min-height:500px"
@@ -608,7 +601,7 @@ export default {
       });
       this.list();
     },
-    async examineData() {
+    async examineData(flag) {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];
@@ -619,8 +612,13 @@ export default {
       }
       for (let i = 0; i < examineList.length; i++) {
         const element = examineList[i];
-        console.log(element.auditFlag);
+        console.log(element.auditFlag, "=======" + flag);
         this.examineForm.id = element.id;
+        if (flag == "success") {
+          this.examineForm.auditFlag = 1;
+        } else {
+          this.examineForm.auditFlag = 2;
+        }
         await axios.$post("/teacherInfo/update", this.examineForm);
       }
       this.list();
