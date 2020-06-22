@@ -40,7 +40,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==31||roleId==1">
+        <el-form-item label >
           <el-button
             size="normal"
             type="primary"
@@ -48,7 +48,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==31||roleId==1">
+        <el-form-item >
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -58,7 +58,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -113,7 +113,7 @@
         align="center"
         label="操作"
         width="200"
-        v-if="deptid==31||roleId==1"
+        
       >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -214,7 +214,7 @@
             <el-option label="湖南省社科基金" value="湖南省社科基金"></el-option>
             <el-option label="省教育厅教改项目（普通高校教学改革研究项目）" value="省教育厅教改项目（普通高校教学改革研究项目）"></el-option>
             <el-option label="省教育厅教改项目（学位与研究生教育教学改革研究课题）" value="省教育厅教改项目（学位与研究生教育教学改革研究课题）"></el-option>
-            <el-option label="其他" value="其他"></el-option> -->
+            <el-option label="其他" value="其他"></el-option>-->
             <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
             <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
             <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
@@ -238,7 +238,7 @@
                 <el-option label="重点项目" value="重点项目"></el-option>
                 <el-option label="青年项目" value="青年项目"></el-option>
                 <el-option label="一般项目" value="一般项目"></el-option>
-                <el-option label="基地项目" value="基地项目"></el-option> -->
+                <el-option label="基地项目" value="基地项目"></el-option>-->
                 <el-option label="重点项目" value="重点项目"></el-option>
                 <el-option label="中国家自科重点项目" value="中国家自科重点项目"></el-option>
                 <el-option label="重大项目" value="重大项目"></el-option>
@@ -656,6 +656,7 @@ export default {
           endDate: moment().format("YYYY-MM-DD"),
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.additionFiles = [];
       } else {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);

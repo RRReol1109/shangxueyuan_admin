@@ -40,7 +40,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==31||roleId==1">
+        <el-form-item label >
           <el-button
             size="normal"
             type="primary"
@@ -48,7 +48,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==31||roleId==1">
+        <el-form-item >
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -58,7 +58,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -347,7 +347,7 @@
         align="center"
         label="操作"
         width="300"
-        v-if="deptid==31||roleId==1"
+        
       >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text">查看</el-button>
@@ -1153,7 +1153,8 @@ export default {
       //     );
       //   }
       // }
-      this.ruleForm.files = JSON.stringify(this.additionFiles);
+      if (this.ruleForm.files)
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -1216,12 +1217,13 @@ export default {
           ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.additionFiles = [];
       } else {
         row.cooPaper = row.cooPaper.toString();
         this.ruleForm = row;
         this.ruleForm.teacherArr = [];
         console.log(row);
-        this.additionFiles = JSON.parse(row.files);
+        if (row.files) this.additionFiles = JSON.parse(row.files);
         // this.fileItems = JSON.parse(row.files);
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {

@@ -17,7 +17,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==25||roleId==1">
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -25,7 +25,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==25||roleId==1">
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -35,7 +35,7 @@
               <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <!-- <el-dropdown-item>
                 <el-upload
                   class
@@ -66,7 +66,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="授予硕士学位专业"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="category" align="center" label="专业"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="导师"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="课程学习情况（总学分/学位课学分/平均绩点）"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="score"
+        align="center"
+        label="课程学习情况（总学分/学位课学分/平均绩点）"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="paper" align="center" label="在读期间发表论文"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="pleaDate" align="center" label="答辩日期"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="毕业时间"></el-table-column>
@@ -79,13 +84,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        v-if="deptid==25||roleId==1"
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -117,7 +116,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" >
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -140,9 +139,17 @@
     <el-drawer
       style="min-height:500px"
       title="学硕毕业情况"
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -150,88 +157,112 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
-          </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="学号" label-width="320px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" label-width="150px" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="学号" label-width="150px">
           <el-col :span="6">
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item>-->
-        <el-form-item label="出生日期" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期时间"></el-date-picker>
+            </el-form-item>-->
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别" label-width="320px" prop="name">
-          <el-select v-model="form.gender" size="normal">
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="授予硕士学位专业" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="出生日期" label-width="150px" prop="name">
+              <el-date-picker
+                v-model="form.birthday"
+                type="date"
+                placeholder="选择日期时间"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="导师" label-width="320px" prop="name">
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="性别" label-width="150px" prop="name">
+              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="授予硕士学位专业" label-width="150px" prop="name">
+              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- <el-form-item label="导师" label-width="150px" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.teacher" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="专业" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.category" autocomplete="off"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="专业" label-width="150px" prop="name">
+              <el-input size="normal" v-model="form.category" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.score" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" label-width="150px" prop="name">
+              <el-input size="normal" v-model="form.score" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="在读期间发表论文" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="在读期间发表论文" label-width="150px" prop="name">
+              <el-input size="normal" v-model="form.paper" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="答辩日期" label-width="320px" prop="name">
-          <el-col :span="6">
-            <el-date-picker v-model="form.pleaDate" type="date" placeholder="选择日期时间"></el-date-picker>
+          <el-col :span="12">
+            <el-form-item label="答辩日期" label-width="150px" prop="name">
+              <el-date-picker
+                v-model="form.pleaDate"
+                type="date"
+                placeholder="选择日期时间"
+                style="width:99%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <!-- <el-form-item label="毕业时间" label-width="320px" prop="name">
+        </el-row>
+        <!-- <el-form-item label="毕业时间" label-width="150px" prop="name">
           <el-col :span="6">
             <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期时间"></el-date-picker>
           </el-col>
         </el-form-item>-->
-        <!-- <el-form-item label="毕业去向" label-width="320px" prop="name">
+        <!-- <el-form-item label="毕业去向" label-width="150px" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="电话" label-width="320px" prop="name">
+        <el-form-item label="电话" label-width="150px" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="邮箱" label-width="320px" prop="paper">
+        <el-form-item label="邮箱" label-width="150px" prop="paper">
           <el-col :span="6">
             <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="备注" label-width="320px" prop="remark">
-          <el-col :span="6">
-            <el-input v-model="form.remark" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
+        <el-row>
+          <el-form-item label="备注" label-width="150px" prop="remark">
+            <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+            <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+              <el-option label="未审核" value="0"></el-option>
+              <el-option label="审核通过" value="1"></el-option>
+              <el-option label="审核未通过" value="2"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-row>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -379,6 +410,7 @@ export default {
           remark: ""
         };
       } else {
+        row.auditFlag = row.auditFlag.toString();
         this.form = row;
       }
     },

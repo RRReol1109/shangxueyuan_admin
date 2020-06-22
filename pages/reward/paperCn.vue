@@ -28,7 +28,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==31||roleId==1">
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -37,7 +37,7 @@
           >新增</el-button>
         </el-form-item>
         <el-form-item>
-          <el-dropdown @command="handleCommand" style="float:right;" v-if="deptid==31||roleId==1">
+          <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -46,7 +46,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -209,13 +209,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="300"
-        v-if="deptid==31||roleId==1"
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -784,9 +778,7 @@ export default {
       if (flag == "temp") {
         data = await axios.$download("/articleCn/export?id=-1", {});
       } else {
-        data = await axios.$download("/articleCn/export", {
-         
-        });
+        data = await axios.$download("/articleCn/export", {});
       }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
@@ -907,6 +899,7 @@ export default {
           cateNumber: "",
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.additionFiles = [];
       } else {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);

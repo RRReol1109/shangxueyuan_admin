@@ -23,7 +23,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-select v-model="query.tutor" placeholder="请选择老师" filterable prop="name">
+          <el-select v-model="query.tutor" filterable placeholder="请选择老师" prop="name">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -41,7 +41,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
-        <el-form-item label v-if="deptid==37||roleId==1">
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -49,7 +49,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==37||roleId==1">
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -59,7 +59,7 @@
               <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
               <!-- <el-dropdown-item>
                 <el-upload
                   class
@@ -127,13 +127,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        v-if="deptid==37||roleId==1"
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -165,7 +159,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" >
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -187,9 +181,17 @@
     </el-dialog>
     <el-drawer
       style="min-height:500px"
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
+      <div slot="title" class="header-title">
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+          <el-button size="normal" @click="resetForm('form')">重置</el-button>
+        </div>
+      </div>
       <el-form
         :model="form"
         :rules="rules"
@@ -197,27 +199,33 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="姓名" prop="name">
+              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="学号" prop="num">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.num" autocomplete="off"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学号" prop="num">
+              <el-input size="normal" v-model="form.num" style="width:99%" autocomplete="off"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="性别" prop="gender">
-          <el-select v-model="form.gender" size="normal" placeholder="请选择">
-            <el-option label="男" value="男"></el-option>
-            <el-option label="女" value="女"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="录取专业" prop="major">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="性别" prop="gender">
+              <el-select v-model="form.gender" size="normal" style="width:99%" placeholder="请选择">
+                <el-option label="男" value="男"></el-option>
+                <el-option label="女" value="女"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+          <el-col :span="12">
+            <el-form-item label="录取专业" prop="major">
+              <el-input size="normal" v-model="form.major" style="width:99%" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- <el-form-item label="学校类别" prop="name">
           <el-select v-model="form.gender" size="normal">
             <el-option label="211工程高校" value="1"></el-option>
@@ -261,54 +269,90 @@
             <el-input size="normal" v-model="form.tell" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="年级" prop="grade">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.grade" autocomplete="off"></el-input>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年级" prop="grade">
+              <el-input size="normal" v-model="form.grade" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="导师" prop="tutor">
-          <el-col :span="6">
-            <el-select v-model="form.tutor" placeholder="请选择老师" filterable prop="name">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
+          <el-col :span="12">
+            <el-form-item label="导师" prop="tutor">
+              <el-select
+                v-model="form.tutor"
+                filterable
+                placeholder="请选择老师"
+                style="width:99%"
+                prop="name"
+              >
+                <el-option
+                  v-for="item in teacherList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="奖学金名称" prop="scholarshipName">
+              <el-input
+                size="normal"
+                v-model="form.scholarshipName"
+                style="width:99%"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="助学金名称" prop="financialAidName">
+              <el-input
+                size="normal"
+                v-model="form.financialAidName"
+                style="width:99%"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="毕业学校" prop="graduatedSchool">
+              <el-input
+                size="normal"
+                v-model="form.graduatedSchool"
+                style="width:99%"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="毕业专业" prop="graduationMajor">
+              <el-input
+                size="normal"
+                v-model="form.graduationMajor"
+                style="width:99%"
+                autocomplete="off"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-form-item size="normal" label="备注">
+            <el-input v-model="form.remarks" autocomplete="off" style="width:99%"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
+            <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+              <el-option label="未审核" value="0"></el-option>
+              <el-option label="审核通过" value="1"></el-option>
+              <el-option label="审核未通过" value="2"></el-option>
             </el-select>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="奖学金名称" prop="scholarshipName">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.scholarshipName" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="助学金名称" prop="financialAidName">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.financialAidName" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="毕业学校" prop="graduatedSchool">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduatedSchool" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="毕业专业" prop="graduationMajor">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduationMajor" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item size="normal" label="备注">
-          <el-col :span="6">
-            <el-input v-model="form.remarks" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
+          </el-form-item>
+        </el-row>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
-        <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
     </el-drawer>
   </div>
 </template>
@@ -329,7 +373,6 @@ export default {
         condition: ""
       },
       roleId: 0,
-      deptid: "",
       examineDialog: false,
       examineForm: {},
       teacherList: [],
@@ -465,6 +508,7 @@ export default {
         };
       } else {
         this.flag = false;
+        row.auditFlag = row.auditFlag.toString();
         this.form = row;
       }
     },
@@ -599,7 +643,6 @@ export default {
       offset: 0,
       limit: 999999
     });
-    this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
     this.list();
