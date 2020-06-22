@@ -440,7 +440,6 @@
                 ></el-option>
               </el-select>-->
               <el-input
-                type="textarea"
                 clearable
                 v-model="ruleForm.firstAuthor"
                 placeholder
