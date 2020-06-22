@@ -28,7 +28,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label >
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -36,7 +36,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item >
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -46,7 +46,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -87,13 +87,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -125,7 +119,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" >
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -214,7 +208,8 @@
               :label="item.name"
               :value="item.id"
             ></el-option>
-          </el-select>单位:
+          </el-select>分数:
+          <el-input clearable style="width:120px" v-model="teacherArr.point" placeholder="请输入单位"></el-input>单位:
           <el-input clearable style="width:120px" v-model="teacherArr.num" placeholder="请输入单位"></el-input>
           <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
         </el-form-item>
@@ -288,6 +283,7 @@ export default {
       teacherArr: [
         {
           name: "",
+          point: "",
           num: ""
         }
       ],
@@ -436,6 +432,7 @@ export default {
     addTeacher() {
       this.teacherArr.push({
         name: "",
+        point: "",
         num: ""
       });
     },
@@ -458,6 +455,9 @@ export default {
               }
               if (names) this.ruleForm.persons += names;
               else this.ruleForm.persons += info;
+            }
+            if (key == "point") {
+              this.ruleForm.persons += "|" + info;
             }
             if (key == "num") {
               this.ruleForm.persons += "|" + info + ",";
@@ -520,6 +520,7 @@ export default {
         this.teacherArr = [
           {
             name: "",
+            point: "",
             num: ""
           }
         ];
@@ -531,16 +532,19 @@ export default {
           const element = teacherInfo[i];
           this.teacherArr.push({
             name: "",
+            point: "",
             num: ""
           });
           let teacher = element.split("|");
           for (let j = 0; j < teacher.length; j++) {
             const item = teacher[j];
             console.log(item, "======item" + j);
-            if (j % 2 == 1) {
-              this.teacherArr[i].num = item;
-            } else if (j % 2 == 0) {
+            if (j % 3 == 1) {
+              this.teacherArr[i].point = item;
+            } else if (j % 3 == 0) {
               this.teacherArr[i].name = item;
+            } else if (j % 3 == 2) {
+              this.teacherArr[i].num = item;
             }
           }
         }

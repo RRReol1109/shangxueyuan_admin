@@ -8,7 +8,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label >
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -16,7 +16,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item >
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -26,7 +26,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -72,13 +72,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -365,15 +359,21 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = localStorage.getItem("userId");
       }
-      let res = await axios.$post("/undergraduateCourseInfomation/list", this.query);
+      let res = await axios.$post(
+        "/undergraduateCourseInfomation/list",
+        this.query
+      );
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
     },
     async exportData() {
-      let data = await axios.$download("/undergraduateCourseInfomation/export", {
-        params: this.query
-      });
+      let data = await axios.$download(
+        "/undergraduateCourseInfomation/export",
+        {
+          params: this.query
+        }
+      );
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
         let link = document.createElement("a");
@@ -452,10 +452,16 @@ export default {
       }
       switch (this.operate) {
         case "add":
-          await axios.$post("/undergraduateCourseInfomation/add", this.ruleForm);
+          await axios.$post(
+            "/undergraduateCourseInfomation/add",
+            this.ruleForm
+          );
           break;
         case "edit":
-          await axios.$post("/undergraduateCourseInfomation/update", this.ruleForm);
+          await axios.$post(
+            "/undergraduateCourseInfomation/update",
+            this.ruleForm
+          );
           break;
       }
       this.dialogFormVisible = false;
@@ -484,24 +490,6 @@ export default {
       } else {
         this.ruleForm = row;
         this.teacherArr = [];
-        let teacherInfo = row.persons.split(",");
-        for (let i = 0; i < teacherInfo.length; i++) {
-          const element = teacherInfo[i];
-          this.teacherArr.push({
-            name: "",
-            num: ""
-          });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item" + j);
-            if (j % 2 == 1) {
-              this.teacherArr[i].num = item;
-            } else if (j % 2 == 0) {
-              this.teacherArr[i].name = item;
-            }
-          }
-        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
@@ -633,7 +621,10 @@ export default {
         const element = examineList[i];
         console.log(element.auditFlag);
         this.examineForm.id = element.id;
-        await axios.$post("/undergraduateCourseInfomation/update", this.examineForm);
+        await axios.$post(
+          "/undergraduateCourseInfomation/update",
+          this.examineForm
+        );
       }
       this.list();
       this.examineDialog = false;
@@ -662,7 +653,7 @@ export default {
 </script>
 
 <style>
-.el-autocomplete {
+.el-input {
   width: 100%;
 }
 .el-drawer__body {

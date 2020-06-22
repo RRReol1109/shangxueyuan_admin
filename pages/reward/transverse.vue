@@ -18,7 +18,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label 150px>
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -26,7 +26,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item 150px>
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表

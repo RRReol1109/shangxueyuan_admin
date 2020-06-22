@@ -26,7 +26,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -208,12 +208,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="主持人姓名" prop="managerName">
-              <el-autocomplete
+              <el-input
                 style="width:99%"
                 clearable
                 v-model="ruleForm.managerName"
                 placeholder="请输入内容"
-              ></el-autocomplete>
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -487,24 +487,6 @@ export default {
       } else {
         this.ruleForm = row;
         this.teacherArr = [];
-        let teacherInfo = row.persons.split(",");
-        for (let i = 0; i < teacherInfo.length; i++) {
-          const element = teacherInfo[i];
-          this.teacherArr.push({
-            name: "",
-            num: ""
-          });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item" + j);
-            if (j % 2 == 1) {
-              this.teacherArr[i].num = item;
-            } else if (j % 2 == 0) {
-              this.teacherArr[i].name = item;
-            }
-          }
-        }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
     },
@@ -668,7 +650,7 @@ export default {
 </script>
 
 <style>
-.el-autocomplete {
+.el-input {
   width: 100%;
 }
 .el-drawer__body {

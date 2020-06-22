@@ -11,9 +11,9 @@
             placeholder="年份"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="学号:">
+        <!-- <el-form-item label="学号:">
           <el-input v-model="query.num" placeholder="请输入学号" size="normal"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
@@ -211,11 +211,11 @@
               <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="学号" prop="num">
               <el-input size="normal" v-model="form.num" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -396,7 +396,7 @@ export default {
       fileList: [],
       header: {},
       rules: {
-        num: [{ required: true, message: "请输入学号", trigger: "blur" }],
+        // num: [{ required: true, message: "请输入学号", trigger: "blur" }],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
         education: [

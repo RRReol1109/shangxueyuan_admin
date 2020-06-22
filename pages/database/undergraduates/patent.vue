@@ -200,12 +200,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="授权号" prop="authId">
-              <el-autocomplete
+              <el-input
                 style="width:99%"
                 clearable
                 v-model="ruleForm.authId"
                 placeholder="请输入内容"
-              ></el-autocomplete>
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -671,7 +671,7 @@ export default {
 </script>
 
 <style>
-.el-autocomplete {
+.el-input {
   width: 100%;
 }
 .el-drawer__body {

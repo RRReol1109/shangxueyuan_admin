@@ -36,6 +36,9 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
+        <el-form-item label>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="downLoad">计算规则</el-button>
+        </el-form-item>
         <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
@@ -773,6 +776,9 @@ export default {
       }
       this.total = parseInt(res.total);
       this.loading = false;
+    },
+    downLoad() {
+      window.open("http://bsoa.csu.edu.cn/files/中文论文分级标准.zip");
     },
     async exportData(flag) {
       let data = "";

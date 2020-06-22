@@ -513,7 +513,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "科研奖励-要报.xls");
+        link.el-input("download", "科研奖励-要报.xls");
         document.body.appendChild(link);
         link.click();
       }

@@ -40,7 +40,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label >
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -48,7 +48,10 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item >
+        <el-form-item label>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="downLoad">计算规则</el-button>
+        </el-form-item>
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -58,7 +61,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -342,13 +345,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="300"
-        
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text">编辑</el-button>
@@ -1009,6 +1006,9 @@ export default {
         this.ruleForm.files = JSON.stringify(this.additionFiles);
         await axios.$post("/articleEn/update", this.ruleForm);
       }
+    },
+    downLoad() {
+      window.open("http://bsoa.csu.edu.cn/files/英文论文分级标准.zip");
     },
     removeAuthor(item) {
       var index = this.ruleForm.author.indexOf(item);

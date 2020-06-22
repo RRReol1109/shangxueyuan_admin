@@ -40,7 +40,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item v-if="deptid==32||roleId==1">
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -50,7 +50,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -165,7 +165,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" >
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
