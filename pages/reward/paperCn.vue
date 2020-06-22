@@ -785,9 +785,7 @@ export default {
       if (flag == "temp") {
         data = await axios.$download("/articleCn/export?id=-1", {});
       } else {
-        data = await axios.$download("/articleCn/export", {
-         
-        });
+        data = await axios.$download("/articleCn/export", {});
       }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
@@ -908,6 +906,7 @@ export default {
           cateNumber: "",
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.additionFiles = [];
       } else {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);

@@ -214,7 +214,7 @@
             <el-option label="湖南省社科基金" value="湖南省社科基金"></el-option>
             <el-option label="省教育厅教改项目（普通高校教学改革研究项目）" value="省教育厅教改项目（普通高校教学改革研究项目）"></el-option>
             <el-option label="省教育厅教改项目（学位与研究生教育教学改革研究课题）" value="省教育厅教改项目（学位与研究生教育教学改革研究课题）"></el-option>
-            <el-option label="其他" value="其他"></el-option> -->
+            <el-option label="其他" value="其他"></el-option>-->
             <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
             <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
             <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
@@ -238,7 +238,7 @@
                 <el-option label="重点项目" value="重点项目"></el-option>
                 <el-option label="青年项目" value="青年项目"></el-option>
                 <el-option label="一般项目" value="一般项目"></el-option>
-                <el-option label="基地项目" value="基地项目"></el-option> -->
+                <el-option label="基地项目" value="基地项目"></el-option>-->
                 <el-option label="重点项目" value="重点项目"></el-option>
                 <el-option label="中国家自科重点项目" value="中国家自科重点项目"></el-option>
                 <el-option label="重大项目" value="重大项目"></el-option>
@@ -656,6 +656,7 @@ export default {
           endDate: moment().format("YYYY-MM-DD"),
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.additionFiles = [];
       } else {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);

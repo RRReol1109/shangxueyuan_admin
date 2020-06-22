@@ -787,6 +787,7 @@ export default {
             num: ""
           }
         ];
+        this.additionFiles = [];
       } else {
         this.ruleForm = row;
         this.teacherArr = [];

@@ -736,6 +736,7 @@ export default {
             num: ""
           }
         ];
+        this.additionFiles = [];
       } else {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);

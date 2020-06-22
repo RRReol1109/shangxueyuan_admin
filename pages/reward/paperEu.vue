@@ -1153,7 +1153,8 @@ export default {
       //     );
       //   }
       // }
-      this.ruleForm.files = JSON.stringify(this.additionFiles);
+      if (this.ruleForm.files)
+        this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -1216,12 +1217,13 @@ export default {
           ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.additionFiles = [];
       } else {
         row.cooPaper = row.cooPaper.toString();
         this.ruleForm = row;
         this.ruleForm.teacherArr = [];
         console.log(row);
-        this.additionFiles = JSON.parse(row.files);
+        if (row.files) this.additionFiles = JSON.parse(row.files);
         // this.fileItems = JSON.parse(row.files);
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {

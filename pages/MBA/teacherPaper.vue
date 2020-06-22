@@ -170,7 +170,7 @@
       >
         <el-row>
           <el-form-item>
-            <el-form-item label="审核状态:" >
+            <el-form-item label="审核状态:">
               <el-select
                 v-model="examineForm.auditFlag"
                 style="width:99%;"
@@ -740,6 +740,7 @@ export default {
           point: "",
           score: ""
         };
+        this.additionFiles = [];
       } else {
         row.esi = row.esi.toString();
         if (row.pdfUrl) this.additionFiles = JSON.parse(row.pdfUrl);
