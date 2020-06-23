@@ -483,7 +483,7 @@
             v-model="ruleForm.authors"
             style="width:99%"
           ></el-input>
-          <span style="color:#F56C6C">注：以上示例中王五是张三的学生</span>
+          <span style="color:#F56C6C">例子：张三，李四_外单位，王五_张三（以上示例中王五是张三的学生）</span>
         </el-form-item>
         <!-- <el-form-item label="计分" prop="score">
           <el-col :span="12">

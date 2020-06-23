@@ -27,11 +27,9 @@ axios.interceptors.request.use(
         return config;
     },
     error => {
-        if (error.response.status === 500) {
-            Message.error({
-                message: error.response.data.message
-            });
-        }
+        Message.error({
+            message: '服务器繁忙'
+        });
     }
 );
 
@@ -49,15 +47,15 @@ axios.interceptors.response.use(
         return response;
     },
     error => {
-        if (error.response.status == 401) {
-            Message.error({
-                message: error.response.data.message
-            }); 
-        } else {
-            Message.error({
-                message: error.response.statusText
-            });
-        }
+        // if (error.response.status == 401) {
+        //     Message.error({
+        //         message: error.response.data.message
+        //     }); 
+        // } else {
+        //     Message.error({
+        //         message: error.response.statusText
+        //     });
+        // }
     }
 )
 
