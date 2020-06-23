@@ -27,9 +27,15 @@ axios.interceptors.request.use(
         return config;
     },
     error => {
-        Message.error({
-            message: '服务器繁忙'
-        });
+        if(error.response && error.response.data && error.response.data.message) {
+            Message.error({
+                message: error.response.data.message
+            });
+        } else {
+            Message.error({
+                message: '服务器请求异常'
+            });
+        }
     }
 );
 
@@ -38,24 +44,20 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         if (response.data.code == 401) {
-            // router.push({
-            //     path: "/login",
-            //     querry: { redirect: router.currentRoute.fullPath }//从哪个页面跳转
-            // })
             location.href = 'Login'
         }
         return response;
     },
     error => {
-        // if (error.response.status == 401) {
-        //     Message.error({
-        //         message: error.response.data.message
-        //     }); 
-        // } else {
-        //     Message.error({
-        //         message: error.response.statusText
-        //     });
-        // }
+        if(error.response && error.response.data && error.response.data.message) {
+            Message.error({
+                message: error.response.data.message
+            });
+        } else {
+            Message.error({
+                message: '服务器响应异常'
+            });
+        }
     }
 )
 
