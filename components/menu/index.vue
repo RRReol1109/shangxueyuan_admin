@@ -618,15 +618,15 @@ export default {
                 value: "/database/academicExchange"
               }
             },
-            {
-              entity: {
-                id: 32,
-                name: "disciplineBrief",
-                alias: "学科点简况",
-                state: "ENABLE",
-                value: "/database/disciplineBrief"
-              }
-            },
+            // {
+            //   entity: {
+            //     id: 32,
+            //     name: "disciplineBrief",
+            //     alias: "学科点简况",
+            //     state: "ENABLE",
+            //     value: "/database/disciplineBrief"
+            //   }
+            // },
             {
               entity: {
                 id: 33,

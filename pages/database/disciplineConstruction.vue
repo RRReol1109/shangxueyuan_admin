@@ -43,7 +43,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -73,8 +73,8 @@
       <!-- <el-table-column :show-overflow-tooltip="true" prop="charge" align="center" label="负责人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="subject" align="center" label="学科名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>-->
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="文件名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="file" align="center" label="文件路径"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="文件名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="file" align="center" label="文件路径"></el-table-column>-->
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -103,35 +103,28 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form
-        :model="examineForm"
-        :rules="rules"
-        ref="examineForm"
-        label-width="100px"
-        class="demo-examineForm"
-      >
-        <el-row>
-          <el-form-item>
-            <el-form-item label="审核状态:" >
-              <el-select
-                v-model="examineForm.auditFlag"
-                style="width:99%;"
-                size="normal"
-                placeholder="请选择状态"
-              >
-                <el-option label="未审核" value="0"></el-option>
-                <el-option label="审核通过" value="1"></el-option>
-                <el-option label="未通过" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form-item>
-        </el-row>
-      </el-form>
-      <div class="dialog-footer">
-        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-      </div>
+    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+      <el-row>
+        <el-col :span="8">
+          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="primary"
+            @click="examineData('success')"
+            size="normal"
+            style="width:97%;"
+          >通过</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="danger"
+            @click="examineData('failed')"
+            size="normal"
+            style="width:97%;"
+          >不通过</el-button>
+        </el-col>
+      </el-row>
     </el-dialog>
     <el-drawer
       style="min-height:500px"
@@ -171,21 +164,55 @@
             placeholder="年份"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="文件上传">
-          <el-upload
-            class="upload-demo"
-            :show-file-list="false"
-            :file-list="fileList"
-            :headers="header"
-            action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken"
-            :on-success="success"
-          >
-            <el-button size="normal" type="primary">点击上传</el-button>
-          </el-upload>
-        </el-form-item>
         <el-form-item size="normal" label="备注" prop="remark">
           <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
         </el-form-item>
+        <div>
+          <el-divider content-position="left">附件</el-divider>
+          <el-table
+            :data="additionFiles"
+            border
+            style="width: 100%"
+            size="normal"
+            header-row-class-name="h30"
+            header-cell-class-name="tc-g2 bc-g"
+          >
+            <el-table-column
+              :show-overflow-tooltip="true"
+              type="index"
+              label="#"
+              align="center"
+              width="50"
+            ></el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+              <template slot-scope="scope">
+                <span>{{ scope.row.name.split('/').pop() }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
+              <template slot-scope="scope">
+                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
+                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <el-upload
+            class="dragger"
+            :show-file-list="false"
+            :on-success="uploadAdditionSuccess"
+            drag
+            :headers="header"
+            action="http://bs.hk.darkal.cn/mgr/upload"
+            multiple
+          >
+            <div class="el-upload__tip" slot="tip"></div>
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">
+              将文件拖到此处，或
+              <em>点击上传</em>
+            </div>
+          </el-upload>
+        </div>
       </el-form>
     </el-drawer>
   </div>
@@ -217,6 +244,7 @@ export default {
         name: "",
         year: ""
       },
+      additionFiles: [],
       header: {},
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
@@ -234,6 +262,30 @@ export default {
     }
   },
   methods: {
+    async uploadAdditionSuccess(response) {
+      console.log("this.form:::", this.form);
+      if (response && response.indexOf("http") != -1) {
+        this.additionFiles.push({
+          name: response
+        });
+        if (this.operate == "edit") {
+          this.form.file = JSON.stringify(this.additionFiles);
+          await axios.$post("/articleCn/update", this.form);
+        }
+      }
+    },
+    downloadAdditionFile(row) {
+      window.open(row.name);
+    },
+    async deleteAdditionFile(row) {
+      this.additionFiles = this.additionFiles.filter(
+        it => it.name !== row.name
+      );
+      if (this.operate == "edit") {
+        this.form.file = JSON.stringify(this.additionFiles);
+        await axios.$post("/articleCn/update", this.form);
+      }
+    },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
@@ -259,7 +311,8 @@ export default {
     async submitForm(formName) {
       this.form.user = localStorage.getItem("userId");
       this.form.userName = JSON.parse(localStorage.getItem("userInfo")).name;
-
+      if (this.additionFiles)
+        this.form.file = JSON.stringify(this.additionFiles);
       switch (this.operate) {
         case "add":
           await axios.$post("/subjectInfo/add", this.form);
@@ -276,7 +329,9 @@ export default {
       this.formDisabled = false;
       if (this.operate === "add") {
         this.form = {};
+        this.additionFiles = [];
       } else {
+        if (row.file) this.additionFiles = JSON.parse(row.file);
         this.form = row;
       }
     },
@@ -317,7 +372,7 @@ export default {
       row.pick = !row.pick;
     },
 
-    async examineData() {
+    async examineData(flag) {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];
@@ -328,8 +383,13 @@ export default {
       }
       for (let i = 0; i < examineList.length; i++) {
         const element = examineList[i];
-        console.log(element.auditFlag);
+        console.log(element.auditFlag, "=======" + flag);
         this.examineForm.id = element.id;
+        if (flag == "success") {
+          this.examineForm.auditFlag = 1;
+        } else {
+          this.examineForm.auditFlag = 2;
+        }
         await axios.$post("/subjectInfo/update", this.examineForm);
       }
       this.list();

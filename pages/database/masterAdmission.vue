@@ -11,9 +11,9 @@
             placeholder="年份"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="学号:">
+        <!-- <el-form-item label="学号:">
           <el-input v-model="query.num" placeholder="请输入学号" size="normal"></el-input>
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
@@ -41,7 +41,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
         </el-form-item>
-        <el-form-item label >
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -49,7 +49,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item >
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -59,7 +59,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -84,6 +84,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentCode" align="center" label="学号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="录取专业"></el-table-column>
@@ -92,9 +93,9 @@
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="工作单位/行业"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="职位"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="年薪"></el-table-column>-->
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="出生年月"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="出生年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
@@ -127,13 +128,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -155,35 +150,28 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form
-        :model="examineForm"
-        :rules="rules"
-        ref="examineForm"
-        label-width="100px"
-        class="demo-examineForm"
-      >
-        <el-row>
-          <el-form-item>
-            <el-form-item label="审核状态:" >
-              <el-select
-                v-model="examineForm.auditFlag"
-                style="width:99%;"
-                size="normal"
-                placeholder="请选择状态"
-              >
-                <el-option label="未审核" value="0"></el-option>
-                <el-option label="审核通过" value="1"></el-option>
-                <el-option label="未通过" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form-item>
-        </el-row>
-      </el-form>
-      <div class="dialog-footer">
-        <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-      </div>
+    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+      <el-row>
+        <el-col :span="8">
+          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="primary"
+            @click="examineData('success')"
+            size="normal"
+            style="width:97%;"
+          >通过</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="danger"
+            @click="examineData('failed')"
+            size="normal"
+            style="width:97%;"
+          >不通过</el-button>
+        </el-col>
+      </el-row>
     </el-dialog>
     <el-drawer
       style="min-height:500px"
@@ -211,11 +199,11 @@
               <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="学号" prop="num">
               <el-input size="normal" v-model="form.num" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
-          </el-col>
+          </el-col>-->
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -396,7 +384,7 @@ export default {
       fileList: [],
       header: {},
       rules: {
-        num: [{ required: true, message: "请输入学号", trigger: "blur" }],
+        // num: [{ required: true, message: "请输入学号", trigger: "blur" }],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
         education: [
@@ -538,7 +526,7 @@ export default {
       row.pick = !row.pick;
     },
 
-    async examineData() {
+    async examineData(flag) {
       let examineList = [];
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];
@@ -549,8 +537,13 @@ export default {
       }
       for (let i = 0; i < examineList.length; i++) {
         const element = examineList[i];
-        console.log(element.auditFlag);
+        console.log(element.auditFlag, "=======" + flag);
         this.examineForm.id = element.id;
+        if (flag == "success") {
+          this.examineForm.auditFlag = 1;
+        } else {
+          this.examineForm.auditFlag = 2;
+        }
         await axios.$post("/masterEnroll/update", this.examineForm);
       }
       this.list();

@@ -38,7 +38,7 @@
   animation: goright 0.5s linear forwards 3.5s;
   border-left: 87.5px solid transparent;
   border-right: 87.5px solid transparent;
-  border-bottom: 150px solid #3b8070;
+  border-bottom: solid #3b8070;
 }
 
 .Triangle--three {
