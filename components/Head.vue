@@ -45,7 +45,7 @@
             <el-menu-item class="item" index="38">MBA中心</el-menu-item>
             <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
             <el-menu-item class="item" index="40">EDP中心</el-menu-item>
-            <el-menu-item class="item" index="12">教师个人</el-menu-item>
+            <el-menu-item class="item" index="41">教师个人</el-menu-item>
           </el-menu>
         </div>
       </el-collapse-item>
@@ -189,8 +189,8 @@ export default {
         60,
         26,
         27,
-        61,
-        62,
+        // 61,
+        // 62,
         28,
         29,
         46,
@@ -264,18 +264,20 @@ export default {
       let flag = window.sessionStorage.getItem("flag");
       if (this.roleId == 1) {
         this.activeIndex = 1;
+        menuSelect(activeIndex);
         return;
       }
       // if (!flag) {
       // this.menuSelect(deptid.toString(), "");
       this.activeIndex = deptid.toString();
+      menuSelect(activeIndex);
       // } else {
       //   let selectId = window.sessionStorage.getItem("select");
       //   this.activeIndex = selectId.toString();
       //   // this.menuSelect(selectId.toString(), "");
       // }
     },
-    menuSelect(key, keyPath) {
+    menuSelect(key) {
       // if (this.roleId != 1) {
       switch (key) {
         case "31":
@@ -666,8 +668,6 @@ export default {
             60,
             26,
             27,
-            61,
-            62,
             28,
             29,
             46,
@@ -717,22 +717,10 @@ export default {
             94
           ];
           break;
-        case "12":
+        case "41":
           this.ids = [
             777,
             888,
-            999,
-            1,
-            2,
-            4,
-            5,
-            7,
-            8,
-            9,
-            10,
-            6,
-            11,
-            12,
             13,
             14,
             15,
@@ -740,7 +728,6 @@ export default {
             17,
             18,
             19,
-            20,
             21,
             22,
             23,
@@ -749,9 +736,6 @@ export default {
             60,
             26,
             27,
-            61,
-            62,
-            28,
             29,
             46,
             47,
