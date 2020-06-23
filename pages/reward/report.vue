@@ -446,7 +446,7 @@ export default {
                   names = item.name;
                 }
               }
-              if (names) this.ruleForm.persons += names;
+              if (names&&this.operate!="add") this.ruleForm.persons += names;
               else this.ruleForm.persons += info;
             }
             if (key == "point") {

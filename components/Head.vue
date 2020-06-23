@@ -266,14 +266,14 @@ export default {
         this.activeIndex = 1;
         return;
       }
-      if (!flag) {
-        // this.menuSelect(deptid.toString(), "");
-        this.activeIndex = deptid.toString();
-      } else {
-        let selectId = window.sessionStorage.getItem("select");
-        this.activeIndex = selectId.toString();
-        // this.menuSelect(selectId.toString(), "");
-      }
+      // if (!flag) {
+      // this.menuSelect(deptid.toString(), "");
+      this.activeIndex = deptid.toString();
+      // } else {
+      //   let selectId = window.sessionStorage.getItem("select");
+      //   this.activeIndex = selectId.toString();
+      //   // this.menuSelect(selectId.toString(), "");
+      // }
     },
     menuSelect(key, keyPath) {
       // if (this.roleId != 1) {

@@ -415,9 +415,9 @@
                 size="normal"
                 style="width:98%"
                 v-model="ruleForm.year"
-                type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
                 placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>

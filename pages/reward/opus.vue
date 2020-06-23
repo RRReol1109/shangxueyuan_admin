@@ -707,9 +707,9 @@ export default {
                 if (key == "name") {
                   this.ruleForm.authors += info;
                 }
-                if (key == "point") {
-                  this.ruleForm.authors += "|" + info;
-                }
+                // if (key == "point") {
+                //   this.ruleForm.authors += "|" + info;
+                // }
                 if (key == "num") {
                   this.ruleForm.authors += "|" + info + ",";
                 }
@@ -743,9 +743,9 @@ export default {
                   if (tid) this.ruleForm.authors += tid;
                   else this.ruleForm.authors += info;
                 }
-                if (key == "point") {
-                  this.ruleForm.authors += "|" + info;
-                }
+                // if (key == "point") {
+                //   this.ruleForm.authors += "|" + info;
+                // }
                 if (key == "num") {
                   this.ruleForm.authors += "|" + info + ",";
                 }

@@ -85,7 +85,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" >批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -121,6 +121,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实习地点"></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实习时长"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="days" align="center" label="实习天数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="实习人数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="ratio" align="center" label="核定系数"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
@@ -163,7 +164,7 @@
         class="demo-examineForm"
       >
         <el-form-item>
-          <el-form-item label="审核状态:" >
+          <el-form-item label="审核状态:">
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
