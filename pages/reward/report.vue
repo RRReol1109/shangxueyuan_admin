@@ -80,8 +80,8 @@
       <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="发表时间"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="要报类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="resultName" align="center" label="成果名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="作者及单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="获得分数"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="作者|分数|单位"></el-table-column>
+      <!-- <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="获得分数"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -209,9 +209,9 @@
         <el-form-item v-if="!['show'].includes(operate)">
           <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
         </el-form-item>
-        <el-form-item label="获得分数" prop="score">
+        <!-- <el-form-item label="获得分数" prop="score">
           <el-input v-model="ruleForm.score" style="width:99%"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <!-- <el-form-item label="证书" prop="file">
           <el-upload class :headers="header" :on-success="uploadSuccess" action>
             <el-button size="normal" class type="primary">附件上传</el-button>

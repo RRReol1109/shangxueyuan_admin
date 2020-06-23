@@ -54,19 +54,19 @@
       <div>
         <el-row>
           <el-col :span="6">
-            <span>账号:</span>
+            <span style="color:#555">账号/工号:</span>
             <span v-text="form.account"></span>
           </el-col>
           <el-col :span="6">
-            <span>姓名:</span>
+            <span style="color:#555">姓名:</span>
             <span v-text="form.name"></span>
           </el-col>
           <el-col :span="6">
-            <span>人才类别:</span>
+            <span style="color:#555">人才类别:</span>
             <span v-text="form.talentCategory"></span>
           </el-col>
           <el-col :span="6">
-            <span>职称:</span>
+            <span style="color:#555">职称:</span>
             <span v-text="form.title"></span>
           </el-col>
         </el-row>
@@ -74,19 +74,19 @@
       <div>
         <el-row>
           <el-col :span="6">
-            <span>生日:</span>
+            <span style="color:#555">生日:</span>
             <span v-text="form.birthday"></span>
           </el-col>
           <el-col :span="6">
-            <span>民族:</span>
+            <span style="color:#555">民族:</span>
             <span v-text="form.nation"></span>
           </el-col>
           <el-col :span="6">
-            <span>政治面貌:</span>
+            <span style="color:#555">政治面貌:</span>
             <span v-text="form.politic"></span>
           </el-col>
           <el-col :span="6">
-            <span>获得现职称年月:</span>
+            <span style="color:#555">获得现职称年月:</span>
             <span v-text="form.titleDate"></span>
           </el-col>
         </el-row>
@@ -94,19 +94,19 @@
       <div>
         <el-row>
           <el-col :span="6">
-            <span>导师:</span>
+            <span style="color:#555">导师:</span>
             <span v-text="form.tutor"></span>
           </el-col>
           <el-col :span="6">
-            <span>导师资格:</span>
+            <span style="color:#555">导师资格:</span>
             <span v-text="form.tutorState"></span>
           </el-col>
           <el-col :span="6">
-            <span>职级:</span>
+            <span style="color:#555">职级:</span>
             <span v-text="form.level"></span>
           </el-col>
           <el-col :span="6">
-            <span>职务:</span>
+            <span style="color:#555">职务:</span>
             <span v-text="form.job"></span>
           </el-col>
         </el-row>
@@ -114,15 +114,15 @@
       <div>
         <el-row>
           <el-col :span="6">
-            <span>邮箱:</span>
+            <span style="color:#555">邮箱:</span>
             <span v-text="form.email"></span>
           </el-col>
           <el-col :span="6">
-            <span>参加工作年月:</span>
+            <span style="color:#555">参加工作年月:</span>
             <span v-text="form.workDate"></span>
           </el-col>
           <el-col :span="6">
-            <span>所在系:</span>
+            <span style="color:#555">所在系:</span>
             <span v-text="form.department"></span>
           </el-col>
         </el-row>
@@ -130,15 +130,15 @@
       <div>
         <el-row>
           <el-col :span="6">
-            <span>电话:</span>
+            <span style="color:#555" >电话:</span>
             <span v-text="form.phone"></span>
           </el-col>
           <el-col :span="6">
-            <span>毕业专业:</span>
+            <span style="color:#555">毕业专业:</span>
             <span v-text="form.major"></span>
           </el-col>
           <el-col :span="6">
-            <span>毕业学校:</span>
+            <span style="color:#555">毕业学校:</span>
             <span v-text="form.school"></span>
           </el-col>
         </el-row>
@@ -146,24 +146,24 @@
       <div>
         <el-row>
           <el-col :span="6">
-            <span>状态:</span>
+            <span style="color:#555">状态:</span>
             <span v-text="form.state"></span>
           </el-col>
         </el-row>
         <div>
-          <span>研究方向:</span>
+          <span style="color:#555">研究方向:</span>
           <span v-text="form.researchDirection"></span>
         </div>
         <div>
-          <span>省级奖项:</span>
+          <span style="color:#555">省级奖项:</span>
           <span v-text="form.provincialAward"></span>
         </div>
         <div>
-          <span>国家级奖项:</span>
+          <span style="color:#555">国家级奖项:</span>
           <span v-text="form.nationalAward"></span>
         </div>
         <div>
-          <span>海外研修经历:</span>
+          <span style="color:#555">海外研修经历:</span>
           <span v-text="form.overseasExperience"></span>
         </div>
       </div>

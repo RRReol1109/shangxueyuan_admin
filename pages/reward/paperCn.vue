@@ -475,11 +475,11 @@
           <el-input
             type="textarea"
             clearable
-            placeholder="张三，李四_外单位，王五_张三"
+            placeholder=""
             v-model="ruleForm.authors"
             style="width:99%"
           ></el-input>
-          <span style="color:#F56C6C">注：以上示例中王五是张三的学生</span>
+          <span style="color:#F56C6C">例子：张三|1,李四_外单位|1,王五_张三|3（以上示例中王五是张三的学生，","为英文逗号，数字标注第几作者）</span>
         </el-form-item>
         <!-- <el-form-item label="计分" prop="score">
           <el-col :span="12">
