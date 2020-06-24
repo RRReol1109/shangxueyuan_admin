@@ -158,14 +158,22 @@
         prop="excellentCourse"
         align="center"
         label="精品示范课程"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.excellentCourse | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="tagType" align="center" label="标签类别"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="statistics"
         align="center"
         label="是否参与部门统计"
-      ></el-table-column>
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.statistics | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="material" align="center" label="使用教材"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
@@ -409,7 +417,11 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="精品示范课程" prop="excellentCourse">
-              <el-input v-model="ruleForm.excellentCourse" style="width:99%"></el-input>
+              <!-- <el-input v-model="ruleForm.excellentCourse" style="width:99%"></el-input> -->
+              <el-select v-model="ruleForm.excellentCourse" placeholder="请选择授课类别" style="width:99%">
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -426,12 +438,15 @@
                 <el-option label="研究生" value="研究生"></el-option>
                 <el-option label="博士生" value="博士生"></el-option>
               </el-select>-->
-              <el-input v-model="ruleForm.statistics" style="width:99%"></el-input>
+              <el-input v-model="ruleForm.tagType" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="是否参与部门统计" prop="statistics">
-              <el-input v-model="ruleForm.statistics" style="width:99%"></el-input>
+              <el-select v-model="ruleForm.statistics" placeholder="请选择授课类别" style="width:99%">
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -790,6 +805,8 @@ export default {
         }
       } else {
         this.ruleForm = row;
+        this.ruleForm.excellentCourse = this.ruleForm.excellentCourse.toString();
+        this.ruleForm.statistics = this.ruleForm.statistics.toString();
         this.ruleForm.english = this.ruleForm.english.toString();
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }

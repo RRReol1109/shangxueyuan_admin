@@ -126,7 +126,7 @@ export default {
           }
         },
         tooltip: {
-          valueSuffix: " 课时"
+          valueSuffix: " 计分"
         },
         plotOptions: {
           bar: {
