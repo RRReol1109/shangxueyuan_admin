@@ -45,7 +45,7 @@
             <el-menu-item class="item" index="38" v-if="deptid!=41">MBA中心</el-menu-item>
             <el-menu-item class="item" index="39" v-if="deptid!=41">EMBA中心</el-menu-item>
             <el-menu-item class="item" index="40" v-if="deptid!=41">EDP中心</el-menu-item>
-            <el-menu-item class="item" index="41">教师个人</el-menu-item>
+            <!-- <el-menu-item class="item" index="41">教师个人</el-menu-item> -->
           </el-menu>
         </div>
       </el-collapse-item>

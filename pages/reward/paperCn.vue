@@ -91,7 +91,7 @@
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
-        prop="year"
+        prop="publishDate"
         align="center"
         label="发表日期"
       ></el-table-column>
@@ -275,14 +275,14 @@
         <el-divider content-position="left">基本信息</el-divider>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发表日期:" prop="contractno">
+            <el-form-item label="发表日期:" prop="">
               <el-date-picker
                 size="normal"
                 style="width:98%"
-                v-model="ruleForm.year"
-                type="year"
-                format="yyyy"
-                value-format="yyyy"
+                v-model="ruleForm.publishDate"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 placeholder="选择日期"
               ></el-date-picker>
             </el-form-item>
@@ -851,6 +851,7 @@ export default {
         });
         return;
       }
+      this.year = this.publishDate ? this.publishDate.substr(0, 4) : ''
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;

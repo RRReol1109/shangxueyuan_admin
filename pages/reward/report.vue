@@ -77,7 +77,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="发表时间"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="要报类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="resultName" align="center" label="成果名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="作者|分数|单位"></el-table-column>
@@ -152,15 +152,15 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发表时间" prop="year">
+            <el-form-item label="发表时间" prop="award_date">
               <el-date-picker
                 size="normal"
                 style="width:99%"
-                v-model="ruleForm.year"
-                type="year"
-                format="yyyy"
-                value-format="yyyy"
-                placeholder="选择年份"
+                v-model="ruleForm.awardDate"
+                type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+                placeholder="请选择"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -485,6 +485,7 @@ export default {
         });
         return;
       }
+      this.ruleForm.year = this.ruleForm.awardDate ? this.ruleForm.awardDate.substr(0, 4) : ""
       switch (this.operate) {
         case "add":
           await axios.$post("/reportResult/add", this.ruleForm);
