@@ -398,8 +398,8 @@
               <el-date-picker
                 v-model="form.workDate"
                 type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
+                format="yyyy-MM"
+                value-format="yyyy-MM"
                 placeholder="选择日期时间"
                 style="width: 98%"
               ></el-date-picker>
@@ -746,6 +746,24 @@ export default {
       let res = await axios.$post("/mgr/list", this.query);
       let now = moment(new Date());
       console.log(res);
+      for (let i = 0; i < res.rows.length; i++) {
+        let element = res.rows[i];
+        if (element.graduation_date) {
+          element.graduation_date = moment(element.graduation_date).format(
+            "YYYY-MM"
+          );
+        }
+        if (element.work_date) {
+          element.work_date = moment(element.work_date).format(
+            "YYYY-MM"
+          );
+        }
+         if (element.school_date) {
+          element.school_date = moment(element.school_date).format(
+            "YYYY-MM"
+          );
+        }
+      }
       this.tableData = res.rows;
       for (let i = 0; i < this.tableData.length; i++) {
         const element = this.tableData[i];
@@ -1025,9 +1043,9 @@ export default {
           graduationDate: row.graduation_date,
           highestDegree: row.highest_degree,
           highestEducation: row.highest_education,
-          industryBackground: row.industry_background.toString(),
-          engineeringBackground: row.engineering_background.toString(),
-          doubleTeacher: row.double_teacher.toString(),
+          // industryBackground: row.industry_background.toString(),
+          // engineeringBackground: row.engineering_background.toString(),
+          // doubleTeacher: row.double_teacher.toString(),
           idNum: row.id_num,
           job: row.job,
           level: row.level,
@@ -1042,7 +1060,7 @@ export default {
           researchDirection: row.research_direction,
           school: row.school,
           schoolDate: row.school_date,
-          sex: row.sex.toString(),
+          // sex: row.sex.toString(),
           state: row.state,
           subjectCategory: row.subject_category,
           talentCategory: row.talent_category,
@@ -1052,7 +1070,16 @@ export default {
           tutorState: row.tutor_state,
           workDate: row.work_date
         };
-        console.log("AAAA", this.form);
+        // industryBackground: row.industry_background.toString(),
+        // engineeringBackground: row.engineering_background.toString(),
+        // doubleTeacher: row.double_teacher.toString(),
+        if (row.sex) this.sex = row.sex.toString();
+        if (row.engineeringBackground)
+          this.engineeringBackground = row.engineeringBackground.toString();
+        if (row.industryBackground)
+          this.industryBackground = row.industryBackground.toString();
+        if (row.doubleTeacher)
+          this.doubleTeacher = row.doubleTeacher.toString();
       }
     },
     async del(row) {

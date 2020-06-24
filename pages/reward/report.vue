@@ -77,7 +77,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="发表时间"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="发表时间"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="要报类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="resultName" align="center" label="成果名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="作者|分数|单位"></el-table-column>
@@ -152,11 +152,11 @@
 
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发表时间" prop="year">
+            <el-form-item label="发表时间" prop="awardDate">
               <el-date-picker
                 size="normal"
                 style="width:99%"
-                v-model="ruleForm.year"
+                v-model="ruleForm.awardDate"
                 type="year"
                 format="yyyy"
                 value-format="yyyy"
@@ -286,7 +286,7 @@ export default {
         resultName: "",
         persons: "",
         score: "",
-        year: moment().format("YYYY-MM-DD")
+        awardDate: moment().format("YYYY-MM-DD")
       },
       rules: {
         persons: [{ required: true, message: "请输入作者", trigger: "blur" }],
@@ -374,7 +374,7 @@ export default {
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
-          if (key == "year") {
+          if (key == "awardDate") {
             if (element) {
               this.query[key] = moment(element).format("YYYY-MM-DD");
             } else {
@@ -507,7 +507,7 @@ export default {
           resultName: "",
           persons: "",
           score: "",
-          year: moment().format("YYYY-MM-DD"),
+          awardDate: moment().format("YYYY-MM-DD"),
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
         this.teacherArr = [
