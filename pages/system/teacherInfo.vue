@@ -323,6 +323,7 @@
                 placeholder="请选择"
                 style="width:99%"
               >
+                <el-option label="无" value="无"></el-option>
                 <el-option label="管理科学与信息管理系" value="管理科学与信息管理系"></el-option>
                 <el-option label="企业管理系" value="企业管理系"></el-option>
                 <el-option label="金融学系" value="金融学系"></el-option>
