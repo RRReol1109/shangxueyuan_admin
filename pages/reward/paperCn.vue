@@ -49,7 +49,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -76,11 +76,9 @@
         label="选择"
         width="50"
       >
-        <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
+        <!-- <el-checkbox @change="changeFlag(scope.row)"></el-checkbox> -->
         <template slot-scope="scope">
-          <el-checkbox-group>
-            <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-          </el-checkbox-group>
+          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
       <el-table-column
@@ -432,12 +430,7 @@
                   :value="item.name"
                 ></el-option>
               </el-select>-->
-              <el-input
-                clearable
-                v-model="ruleForm.firstAuthor"
-                placeholder
-                style="width:99%"
-              ></el-input>
+              <el-input clearable v-model="ruleForm.firstAuthor" placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -475,7 +468,7 @@
           <el-input
             type="textarea"
             clearable
-            placeholder=""
+            placeholder
             v-model="ruleForm.authors"
             style="width:99%"
           ></el-input>
