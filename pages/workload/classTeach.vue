@@ -24,7 +24,7 @@
             <el-option label="统招硕士、会计硕士、金融硕士" value="统招硕士、会计硕士、金融硕士"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="是否为全英文" prop="type">
+        <el-form-item label="全英文" prop="type">
           <el-select v-model="query.english" size="normal" placeholder="请选择状态">
             <el-option label="全部" value></el-option>
             <el-option label="是" value="true"></el-option>

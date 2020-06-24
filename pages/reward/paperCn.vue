@@ -473,6 +473,7 @@
         </el-form-item>
         <el-form-item label="全体作者" prop>
           <el-input
+            @input="authorsChanged"
             type="textarea"
             clearable
             placeholder=""
@@ -481,6 +482,14 @@
           ></el-input>
           <span style="color:#F56C6C">例子：张三|1,李四_外单位|1,王五_张三|3（以上示例中王五是张三的学生，","为英文逗号，数字标注第几作者）</span>
         </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="作者人数" prop="">
+              <el-input v-model="ruleForm.authorCnt" placeholder style="width:98%"></el-input>
+              <span style="color:#F56C6C">作者人数自动计算，可自行修改</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <!-- <el-form-item label="计分" prop="score">
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.score" placeholder="请输入内容"></el-input>
@@ -651,6 +660,15 @@ export default {
     }
   },
   methods: {
+    authorsChanged(value) {
+      this.ruleForm.authorCnt = 0;
+      const arrays = value.split(',');
+      arrays.forEach(row => {
+        if(row) {
+          this.ruleForm.authorCnt++;
+        }
+      });
+    },
     async uploadAdditionSuccess(response) {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
@@ -843,8 +861,8 @@ export default {
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
-          this.ruleForm.authorCnt =
-            this.ruleForm.authors.split("，").length || 0;
+          // this.ruleForm.authorCnt =
+          //   this.ruleForm.authors.split("，").length || 0;
           // for (const key in this.ruleForm) {
           //   if (this.ruleForm.hasOwnProperty(key)) {
           //     const element = this.ruleForm[key];

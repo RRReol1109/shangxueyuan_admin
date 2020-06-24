@@ -25,10 +25,7 @@
           <el-select v-model="query.level" size="normal" placeholder="请选择级别">
             <el-option label="全部" value></el-option>
             <el-option label="重大项目" value="重大项目"></el-option>
-            <el-option label="面上项目" value="面上项目"></el-option>
-            <el-option label="青年项目" value="青年项目"></el-option>
-            <el-option label="一般项目" value="一般项目"></el-option>
-            <el-option label="基地项目" value="基地项目"></el-option>
+            <el-option label="重点项目" value="重点项目"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="开始时间">
@@ -233,9 +230,7 @@
                 <el-option label="一般项目" value="一般项目"></el-option>
                 <el-option label="基地项目" value="基地项目"></el-option>-->
                 <el-option label="重点项目" value="重点项目"></el-option>
-                <el-option label="中国家自科重点项目" value="中国家自科重点项目"></el-option>
                 <el-option label="重大项目" value="重大项目"></el-option>
-                <el-option label="中国家自科重大项目" value="中国家自科重大项目"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
