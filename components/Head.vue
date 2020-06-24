@@ -33,18 +33,18 @@
             :default-active="activeIndex"
           >
             <el-menu-item class="item" index="1" v-if="roleId==1">全部</el-menu-item>
-            <el-menu-item class="item" index="2">行政办公室</el-menu-item>
-            <el-menu-item class="item" index="31">科研学科办公室</el-menu-item>
-            <el-menu-item class="item" index="33">本科生工作办公室</el-menu-item>
-            <el-menu-item class="item" index="34">研究生工作办公室</el-menu-item>
-            <el-menu-item class="item" index="35">本科生教学管理中心</el-menu-item>
-            <el-menu-item class="item" index="37">研究生教学管理中心</el-menu-item>
-            <el-menu-item class="item" index="32">对外交流国际认证中心</el-menu-item>
-            <el-menu-item class="item" index="25">校友事务中心</el-menu-item>
-            <el-menu-item class="item" index="36">专业学位硕士办公室</el-menu-item>
-            <el-menu-item class="item" index="38">MBA中心</el-menu-item>
-            <el-menu-item class="item" index="39">EMBA中心</el-menu-item>
-            <el-menu-item class="item" index="40">EDP中心</el-menu-item>
+            <el-menu-item class="item" index="2" v-if="deptid!=41">行政办公室</el-menu-item>
+            <el-menu-item class="item" index="31" v-if="deptid!=41">科研学科办公室</el-menu-item>
+            <el-menu-item class="item" index="33" v-if="deptid!=41">本科生工作办公室</el-menu-item>
+            <el-menu-item class="item" index="34" v-if="deptid!=41">研究生工作办公室</el-menu-item>
+            <el-menu-item class="item" index="35" v-if="deptid!=41">本科生教学管理中心</el-menu-item>
+            <el-menu-item class="item" index="37" v-if="deptid!=41">研究生教学管理中心</el-menu-item>
+            <el-menu-item class="item" index="32" v-if="deptid!=41">对外交流国际认证中心</el-menu-item>
+            <el-menu-item class="item" index="25" v-if="deptid!=41">校友事务中心</el-menu-item>
+            <el-menu-item class="item" index="36" v-if="deptid!=41">专业学位硕士办公室</el-menu-item>
+            <el-menu-item class="item" index="38" v-if="deptid!=41">MBA中心</el-menu-item>
+            <el-menu-item class="item" index="39" v-if="deptid!=41">EMBA中心</el-menu-item>
+            <el-menu-item class="item" index="40" v-if="deptid!=41">EDP中心</el-menu-item>
             <el-menu-item class="item" index="41">教师个人</el-menu-item>
           </el-menu>
         </div>
@@ -149,7 +149,8 @@ export default {
       roleId: "",
       userInfo: "",
       activeIndex: "",
-      ids: []
+      ids: [],
+      deptid: ""
     };
   },
   mounted() {
@@ -260,7 +261,8 @@ export default {
       }
     },
     selectDep() {
-      let deptid = JSON.parse(this.userInfo).deptid;
+      this.deptid = JSON.parse(this.userInfo).deptid;
+      let deptid = this.deptid;
       let flag = window.sessionStorage.getItem("flag");
       if (this.roleId == 1) {
         this.activeIndex = 1;
