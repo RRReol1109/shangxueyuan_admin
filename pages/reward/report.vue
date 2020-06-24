@@ -152,26 +152,15 @@
 
         <el-row>
           <el-col :span="12">
-<<<<<<< HEAD
             <el-form-item label="发表时间" prop="award_date">
-=======
-            <el-form-item label="发表时间" prop="awardDate">
->>>>>>> af870ca3ee9a62018056ae5245507fb268e4c043
               <el-date-picker
                 size="normal"
                 style="width:99%"
                 v-model="ruleForm.awardDate"
-<<<<<<< HEAD
                 type="date"
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
                 placeholder="请选择"
-=======
-                type="year"
-                format="yyyy"
-                value-format="yyyy"
-                placeholder="选择年份"
->>>>>>> af870ca3ee9a62018056ae5245507fb268e4c043
               ></el-date-picker>
             </el-form-item>
           </el-col>
