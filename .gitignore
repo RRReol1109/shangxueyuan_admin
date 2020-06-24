@@ -96,3 +96,4 @@ sw.*
 # DynamoDB Local files
 .dynamodb/
 shangxueyuan_admin/
+shangxueyuan_admin.zip
