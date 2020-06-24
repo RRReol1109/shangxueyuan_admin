@@ -1073,13 +1073,13 @@ export default {
         // industryBackground: row.industry_background.toString(),
         // engineeringBackground: row.engineering_background.toString(),
         // doubleTeacher: row.double_teacher.toString(),
-        if (row.sex) this.sex = row.sex.toString();
+        if (row.sex) this.form.sex = row.sex.toString();
         if (row.engineeringBackground)
-          this.engineeringBackground = row.engineeringBackground.toString();
+          this.form.engineeringBackground = row.engineeringBackground.toString();
         if (row.industryBackground)
-          this.industryBackground = row.industryBackground.toString();
+          this.form.industryBackground = row.industryBackground.toString();
         if (row.doubleTeacher)
-          this.doubleTeacher = row.doubleTeacher.toString();
+          this.form.doubleTeacher = row.doubleTeacher.toString();
       }
     },
     async del(row) {
