@@ -851,7 +851,7 @@ export default {
         });
         return;
       }
-      this.year = this.publishDate ? this.publishDate.substr(0, 4) : ''
+      this.ruleForm.year = this.publishDate ? this.publishDate.substr(0, 4) : ''
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
