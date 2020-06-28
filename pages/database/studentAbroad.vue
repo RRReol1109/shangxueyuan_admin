@@ -50,7 +50,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -122,6 +122,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="fundingType" align="center" label="资助类型"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="备注"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -340,13 +341,32 @@
             <el-input v-model="form.remark" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
-        <el-form-item label="资助类型" prop="fundingType">
-          <el-select v-model="form.fundingType" size="normal" placeholder="请选择">
-            <el-option label="基金委申报" value="基金委申报"></el-option>
-            <el-option label="合作项目" value="合作项目"></el-option>
-            <el-option label="学校资助" value="学校资助"></el-option>
-          </el-select>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="资助类型" prop="fundingType">
+              <el-select
+                v-model="form.fundingType"
+                size="normal"
+                placeholder="请选择"
+                style="width:99%;"
+              >
+                <el-option label="基金委申报" value="基金委申报"></el-option>
+                <el-option label="合作项目" value="合作项目"></el-option>
+                <el-option label="学校资助" value="学校资助"></el-option>
+                <el-option label="自费" value="自费"></el-option>
+                <el-option label="学院资助" value="学院资助"></el-option>
+                <el-option label="留纪委资助" value="留纪委资助"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="备注" prop="overseasTutor">
+              <el-input size="normal" v-model="form.overseasTutor" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
@@ -419,12 +439,6 @@ export default {
         email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
         profession: [
           { required: true, message: "请输入专业", trigger: "blur" }
-        ],
-        overseasTutor: [
-          { required: true, message: "请输入海外导师", trigger: "blur" }
-        ],
-        internalTutor: [
-          { required: true, message: "请输入海外导师", trigger: "blur" }
         ],
         studyTime: [
           { required: true, message: "请输入学习期限", trigger: "blur" }

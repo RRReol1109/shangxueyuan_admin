@@ -48,7 +48,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -82,8 +82,10 @@
       <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="学历"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="employer" align="center" label="工作单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="家庭住址"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="employer" align="center" label="工作地点"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="通讯地址"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
@@ -232,7 +234,19 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="家庭地址" prop="address">
+            <el-form-item label="邮箱" prop="address">
+              <el-input size="normal" v-model="form.address" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="工作地点" prop="education">
+              <el-input size="normal" v-model="form.education" autocomplete="off" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="通讯地址" prop="address">
               <el-input size="normal" v-model="form.address" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
@@ -285,14 +299,10 @@ export default {
       teacherList: [],
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        gender: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        phone: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        grade: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        major: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        tutor: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        classes: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        employer: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        address: [{ required: true, message: "请输入姓名", trigger: "blur" }]
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        phone: [{ required: true, message: "请输入电话", trigger: "blur" }],
+        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        address: [{ required: true, message: "请输入地址", trigger: "blur" }]
       },
       tableData: []
     };

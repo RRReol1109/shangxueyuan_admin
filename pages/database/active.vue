@@ -125,7 +125,6 @@
 
     <el-drawer
       style="min-height:500px"
-      title="通讯录"
       size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
