@@ -61,7 +61,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -676,14 +676,14 @@
             type="textarea"
             clearable
             v-model="ruleForm.authors"
-            placeholder=""
+            placeholder
             style="width:99%"
           ></el-input>
           <span style="color:#F56C6C">例子：张三|1,李四_外单位|1,王五_张三|3（以上示例中王五是张三的学生，","为英文逗号，数字标注第几作者）</span>
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="作者人数" prop="">
+            <el-form-item label="作者人数" prop>
               <el-input v-model="ruleForm.authorCnt" placeholder style="width:98%"></el-input>
               <span style="color:#F56C6C">作者人数自动计算，可自行修改</span>
             </el-form-item>
@@ -936,7 +936,7 @@ export default {
         ],
         half: [{ required: true, message: "请选择是否半价", trigger: "blur" }],
         level: [{ required: true, message: "请选择分级", trigger: "blur" }],
-        year: [{ required: true, message: "请输入年份", trigger: "blur" }],
+        // year: [{ required: true, message: "请输入年份", trigger: "blur" }],
         title: [{ required: true, message: "请输入论文名称", trigger: "blur" }]
         // files:[{ required: true, message: "请上传附件", trigger: "blur" }]
       }
@@ -966,9 +966,9 @@ export default {
   methods: {
     authorsChanged(value) {
       this.ruleForm.authorCnt = 0;
-      const arrays = value.split(',');
+      const arrays = value.split(",");
       arrays.forEach(row => {
-        if(row) {
+        if (row) {
           this.ruleForm.authorCnt++;
         }
       });
@@ -1187,6 +1187,9 @@ export default {
         });
         return;
       }
+      this.ruleForm.year = this.ruleForm.publishDate
+        ? this.ruleForm.publishDate.substr(0, 4)
+        : "";
       switch (this.operate) {
         case "add":
           if (this.filesInfo != [])
