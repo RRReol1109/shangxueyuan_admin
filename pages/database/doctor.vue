@@ -13,13 +13,13 @@
           ></el-date-picker>
         </el-form-item>-->
         <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号" size="normal"></el-input>
+          <el-input v-model="query.studentNumber" placeholder="请输入学号" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="专业:">
-          <el-input v-model="query.major" placeholder="请输入学号" size="normal"></el-input>
+          <el-input v-model="query.major" placeholder="请输入专业" size="normal"></el-input>
         </el-form-item>
         <el-form-item label="导师:">
           <el-select v-model="form.tutor" filterable placeholder="请选择老师" prop="name">
@@ -57,7 +57,7 @@
                 <el-dropdown-item command="temp">模板下载</el-dropdown-item>
                 <el-dropdown-item command="download">导出数据</el-dropdown-item>
                 <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-                 <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+                <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
                 <el-dropdown-item>
                   <el-upload
                     class
@@ -83,7 +83,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentCode" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="录取专业"></el-table-column>
@@ -181,16 +181,14 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="180px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="年级:" prop="grade">
-              <el-input size="normal" v-model="form.grade" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
+          <el-form-item label="年级:" prop="grade">
+            <el-input size="normal" v-model="form.grade" autocomplete="off" style="width:99%"></el-input>
+          </el-form-item>
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -199,10 +197,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学号">
+            <el-form-item label="学号" prop="studentNumber">
               <el-input
                 size="normal"
-                v-model="form.studentCode"
+                v-model="form.studentNumber"
                 autocomplete="off"
                 tyle="width:99%"
               ></el-input>
@@ -329,12 +327,6 @@ export default {
         tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
         majorCode: [
           { required: true, message: "请输入专业代码", trigger: "blur" }
-        ],
-        scholarshipName: [
-          { required: true, message: "请输入奖学金名称", trigger: "blur" }
-        ],
-        financialAidName: [
-          { required: true, message: "请输入助学金名称", trigger: "blur" }
         ],
         grade: [{ required: true, message: "请输入年份", trigger: "blur" }],
         graduatedSchool: [

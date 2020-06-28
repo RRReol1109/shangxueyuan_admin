@@ -73,7 +73,7 @@
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
-      <el-form :model="form" label-width="150px">
+      <el-form :model="form" label-width="180px">
         <el-form-item label="姓名">
           <el-col :span="6">
             <el-input size="normal" v-model="form.name"></el-input>

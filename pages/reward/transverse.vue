@@ -36,7 +36,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -135,7 +135,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="130px"
+        label-width="180px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >

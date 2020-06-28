@@ -160,7 +160,7 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="180px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >

@@ -37,7 +37,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -89,6 +89,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="author" align="center" label="负责人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="系所"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="college" align="center" label="系别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="项目名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
@@ -157,7 +158,7 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="180px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -231,6 +232,22 @@
           <el-col :span="12">
             <el-form-item label="项目名称" prop="title">
               <el-input size="normal" v-model="form.title" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="系别" prop="college">
+              <el-select v-model="form.gender" size="normal" placeholder="系别" style="width:99%">
+                <el-option label="无" value="无"></el-option>
+                <el-option label="管理科学与信息管理系" value="管理科学与信息管理系"></el-option>
+                <el-option label="企业管理系" value="企业管理系"></el-option>
+                <el-option label="金融学系" value="金融学系"></el-option>
+                <el-option label="财务与投资管理系" value="财务与投资管理系"></el-option>
+                <el-option label="经济与贸易系" value="经济与贸易系"></el-option>
+                <el-option label="会计学系" value="会计学系"></el-option>
+                <el-option label="市场营销系" value="市场营销系"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -369,7 +386,7 @@ export default {
       examineForm: {},
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        // gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
         year: [{ required: true, message: "请输入年度", trigger: "blur" }],
         college: [{ required: true, message: "请输入学院", trigger: "blur" }],
         trainingLevel: [

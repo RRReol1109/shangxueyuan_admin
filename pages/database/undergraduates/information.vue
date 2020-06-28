@@ -26,7 +26,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -129,7 +129,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="120px"
+        label-width="180px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -169,6 +169,14 @@
               <el-select v-model="ruleForm.type" size="normal" placeholder="请选择" style="width:99%">
                 <el-option label="精品在线开放课程" value="精品在线开放课程"></el-option>
                 <el-option label="产学合作协同育人项目" value="产学合作协同育人项目"></el-option>
+                <el-option label="特色专业" value="特色专业"></el-option>
+                <el-option label="双语示范课程" value="双语示范课程"></el-option>
+                <el-option label="综合改革试点专业" value="综合改革试点专业"></el-option>
+                <el-option label="大学生校外实践教育基地" value="大学生校外实践教育基地"></el-option>
+                <el-option label="精品资源共享课" value="精品资源共享课"></el-option>
+                <el-option label="精品视频公开课" value="精品视频公开课"></el-option>
+                <el-option label="立体化教材" value="立体化教材"></el-option>
+                <el-option label="精品教材" value="精品教材"></el-option>
               </el-select>
             </el-form-item>
           </el-col>

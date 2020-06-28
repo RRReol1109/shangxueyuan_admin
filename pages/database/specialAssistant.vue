@@ -60,7 +60,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="年级"></el-table-column>
@@ -173,14 +173,14 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="190px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学号" prop="studentCode">
-              <el-input size="normal" v-model="form.studentCode" style="width:99%"></el-input>
+            <el-form-item label="学号" prop="studentNumber">
+              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

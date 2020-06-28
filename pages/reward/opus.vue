@@ -181,7 +181,7 @@
         :model="examineForm"
         :rules="rules"
         ref="examineForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-examineForm"
       >
         <el-form-item>
@@ -212,7 +212,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
       >
         <el-divider content-position="left">基本信息</el-divider>

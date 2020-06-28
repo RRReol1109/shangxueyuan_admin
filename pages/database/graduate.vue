@@ -67,7 +67,7 @@
         label="用人单位评价"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentCode" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         prop="degreeObtained"
@@ -171,7 +171,7 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="180px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -189,8 +189,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="学号" prop="studentCode">
-              <el-input size="normal" v-model="form.studentCode" style="width:99%"></el-input>
+            <el-form-item label="学号" prop="studentNumber">
+              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -245,8 +245,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位性质:" prop="startDate">
-              <el-input size="normal" v-model="form.nation" style="width:99%"></el-input>
+            <el-form-item label="单位性质:" prop="companyType">
+              <el-input size="normal" v-model="form.companyType" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>

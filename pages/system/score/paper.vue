@@ -43,7 +43,7 @@
       title="分数规则（论文）"
       :visible.sync="dialogFormVisible"
     >
-      <el-form :disabled="formDisabled" :model="form" label-width="150px">
+      <el-form :disabled="formDisabled" :model="form" label-width="180px">
         <el-form-item label="年度">
           <el-date-picker
             v-model="form.year"

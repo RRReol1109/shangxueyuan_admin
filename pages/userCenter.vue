@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <el-form
-      label-width="120px"
+      label-width="180px"
       :model="formLabelAlign"
     >
       <el-form-item label="输入原密码">

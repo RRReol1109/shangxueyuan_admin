@@ -55,7 +55,7 @@
     </nav>
 
     <el-drawer size="60%" style="min-height:500px" title="分数规则（著作&教材）" :visible.sync="dialogFormVisible">
-      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="150px">
+      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="180px">
         <el-form-item label="年度:">
           <el-date-picker
             size="normal"

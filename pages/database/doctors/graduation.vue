@@ -152,23 +152,23 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="180px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item label="姓名" label-width="150px" prop="name">
+            <el-form-item label="姓名" label-width="180px" prop="name">
               <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="学号" label-width="150px">
+            <!-- <el-form-item label="学号" label-width="180px">
           <el-col :span="6">
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
             </el-form-item>-->
           </el-col>
           <el-col :span="12">
-            <el-form-item label="出生日期" label-width="150px" prop="name">
+            <el-form-item label="出生日期" label-width="180px" prop="name">
               <el-date-picker
                 v-model="form.birthday"
                 type="date"
@@ -180,7 +180,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="性别" label-width="150px" prop="name">
+            <el-form-item label="性别" label-width="180px" prop="name">
               <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
                 <el-option label="男" value="男"></el-option>
                 <el-option label="女" value="女"></el-option>
@@ -188,36 +188,36 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="授予硕士学位专业" label-width="150px" prop="name">
+            <el-form-item label="授予硕士学位专业" label-width="180px" prop="name">
               <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="导师" label-width="150px" prop="name">
+        <!-- <el-form-item label="导师" label-width="180px" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.teacher" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
         <el-row>
           <el-col :span="12">
-            <el-form-item label="专业" label-width="150px" prop="name">
+            <el-form-item label="专业" label-width="180px" prop="name">
               <el-input size="normal" v-model="form.category" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" label-width="150px" prop="name">
+            <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" label-width="180px" prop="name">
               <el-input size="normal" v-model="form.score" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="在读期间发表论文" label-width="150px" prop="name">
+            <el-form-item label="在读期间发表论文" label-width="180px" prop="name">
               <el-input size="normal" v-model="form.paper" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="答辩日期" label-width="150px" prop="name">
+            <el-form-item label="答辩日期" label-width="180px" prop="name">
               <el-date-picker
                 v-model="form.pleaDate"
                 type="date"
@@ -227,28 +227,28 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="毕业时间" label-width="150px" prop="name">
+        <!-- <el-form-item label="毕业时间" label-width="180px" prop="name">
           <el-col :span="6">
             <el-date-picker v-model="form.birthday" type="date" placeholder="选择日期时间"></el-date-picker>
           </el-col>
         </el-form-item>-->
-        <!-- <el-form-item label="毕业去向" label-width="150px" prop="name">
+        <!-- <el-form-item label="毕业去向" label-width="180px" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="电话" label-width="150px" prop="name">
+        <el-form-item label="电话" label-width="180px" prop="name">
           <el-col :span="6">
             <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item label="邮箱" label-width="150px" prop="paper">
+        <el-form-item label="邮箱" label-width="180px" prop="paper">
           <el-col :span="6">
             <el-input size="normal" v-model="form.paper" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>-->
         <el-row>
-          <el-form-item label="备注" label-width="150px" prop="remark">
+          <el-form-item label="备注" label-width="180px" prop="remark">
             <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
           </el-form-item>
         </el-row>

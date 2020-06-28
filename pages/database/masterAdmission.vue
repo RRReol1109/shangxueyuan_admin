@@ -12,7 +12,7 @@
           ></el-date-picker>
         </el-form-item>
         <!-- <el-form-item label="学号:">
-          <el-input v-model="query.num" placeholder="请输入学号" size="normal"></el-input>
+          <el-input v-model="query.studentNumber" placeholder="请输入学号" size="normal"></el-input>
         </el-form-item>-->
         <el-form-item label="姓名:">
           <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
@@ -84,7 +84,7 @@
         </template>
       </el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentCode" align="center" label="学号"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="录取专业"></el-table-column>
@@ -189,7 +189,7 @@
       <el-form
         :model="form"
         :rules="rules"
-        label-width="150px"
+        label-width="180px"
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -199,11 +199,11 @@
               <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-          <!-- <el-col :span="12">
-            <el-form-item label="学号" prop="num">
-              <el-input size="normal" v-model="form.num" autocomplete="off" style="width:99%"></el-input>
+          <el-col :span="12">
+            <el-form-item label="学号" prop="studentNumber">
+              <el-input size="normal" v-model="form.studentNumber" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
-          </el-col>-->
+          </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
@@ -363,7 +363,7 @@ export default {
       total: 0,
       page: 1,
       form: {
-        num: "",
+        studentNumber: "",
         name: "",
         gender: "",
         education: "",
@@ -384,7 +384,7 @@ export default {
       fileList: [],
       header: {},
       rules: {
-        // num: [{ required: true, message: "请输入学号", trigger: "blur" }],
+        // studentNumber: [{ required: true, message: "请输入学号", trigger: "blur" }],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
         education: [

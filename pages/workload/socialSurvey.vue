@@ -127,7 +127,7 @@
         :model="examineForm"
         :rules="rules"
         ref="examineForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-examineForm"
       >
         <el-form-item>
@@ -158,7 +158,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >

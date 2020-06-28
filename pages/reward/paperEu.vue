@@ -410,7 +410,7 @@
         <el-divider content-position="left">基本信息</el-divider>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="发表日期:" prop="">
+            <el-form-item label="发表日期:" prop="publishDate">
               <el-date-picker
                 size="normal"
                 style="width:98%"

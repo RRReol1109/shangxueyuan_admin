@@ -144,7 +144,7 @@
         style="min-height:500px"
         title="通讯录"
         :visible.sync="dialogFormVisible"
-        label-width="150px"
+        label-width="180px"
         :disabled="!['edit', 'add'].includes(operate)"
       >
         <!-- <el-form-item label="ID" label-width="320px">

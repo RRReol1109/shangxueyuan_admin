@@ -243,7 +243,7 @@
     </nav>
     <!-- 学时查看窗口 -->
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form :model="examineForm" ref="examineForm" label-width="150px" class="demo-examineForm">
+      <el-form :model="examineForm" ref="examineForm" label-width="180px" class="demo-examineForm">
         <el-form-item>
           <el-form-item label="选择角色:">
             <el-select v-model="examineForm.roleIds" size="normal" placeholder="请选择状态">
@@ -422,7 +422,11 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="状态" prop="state">
-              <el-input v-model="form.state" style="width:99%"></el-input>
+              <el-select v-model="query.state" size="normal" style="width:99%" placeholder="请选择">
+                <el-option label="在职" value="在职"></el-option>
+                <el-option label="离职" value="离职"></el-option>
+                <el-option label="调离" value="调离"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -755,14 +759,10 @@ export default {
           );
         }
         if (element.work_date) {
-          element.work_date = moment(element.work_date).format(
-            "YYYY-MM"
-          );
+          element.work_date = moment(element.work_date).format("YYYY-MM");
         }
-         if (element.school_date) {
-          element.school_date = moment(element.school_date).format(
-            "YYYY-MM"
-          );
+        if (element.school_date) {
+          element.school_date = moment(element.school_date).format("YYYY-MM");
         }
       }
       this.tableData = res.rows;

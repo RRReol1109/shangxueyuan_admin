@@ -134,7 +134,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="120px"
+        label-width="170px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >

@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="150px">
+      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="180px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="部门简称">

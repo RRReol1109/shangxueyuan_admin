@@ -85,7 +85,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -160,7 +160,7 @@
         :model="examineForm"
         :rules="rules"
         ref="examineForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-examineForm"
       >
         <el-form-item>
@@ -197,7 +197,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
         :disabled="!['edit', 'add'].includes(operate)"
       >
@@ -239,6 +239,7 @@
                 <el-option label="校内" value="校内"></el-option>
                 <el-option label="市内" value="市内"></el-option>
                 <el-option label="市外" value="市外"></el-option>
+                <el-option label="省外" value="省外"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -361,6 +362,7 @@
           <el-select v-model="teacherArr.title" placeholder="职称" style="width:120px">
             <el-option label="教授" value="0"></el-option>
             <el-option label="副教授" value="1"></el-option>
+            <el-option label="讲师" value="讲师"></el-option>
           </el-select>
           <el-checkbox v-model="teacherArr.flag">是否是队长</el-checkbox>
           <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>

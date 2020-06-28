@@ -269,7 +269,7 @@
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="150px"
+        label-width="180px"
         class="demo-ruleForm"
       >
         <el-divider content-position="left">基本信息</el-divider>

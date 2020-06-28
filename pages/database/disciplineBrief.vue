@@ -94,7 +94,7 @@
       ></el-pagination>
     </nav>
     <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form :model="examineForm" ref="examineForm" label-width="150px" class="demo-examineForm">
+      <el-form :model="examineForm" ref="examineForm" label-width="180px" class="demo-examineForm">
         <el-form-item>
           <el-form-item label="审核状态:">
             <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
@@ -126,7 +126,7 @@
           <el-button size="normal" @click="resetForm('form')">重置</el-button>
         </div>
       </div>
-      <el-form :model="form" label-width="150px">
+      <el-form :model="form" label-width="180px">
         <el-form-item label="年份">
           <el-date-picker
             v-model="form.year"
