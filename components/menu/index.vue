@@ -237,6 +237,15 @@ export default {
                 state: "ENABLE",
                 value: "/workload/statistics"
               }
+            },
+            {
+              entity: {
+                id: 104,
+                name: "reportForm",
+                alias: "数据报表",
+                state: "ENABLE",
+                value: "/workload/reportForm"
+              }
             }
           ]
         },
@@ -346,6 +355,15 @@ export default {
                 alias: "统计",
                 state: "ENABLE",
                 value: "/reward/statistics"
+              }
+            },
+            {
+              entity: {
+                id: 105,
+                name: "rewardReportForm",
+                alias: "数据报表",
+                state: "ENABLE",
+                value: "/reward/reportForm"
               }
             }
           ]

@@ -238,7 +238,9 @@ export default {
         91,
         92,
         93,
-        94
+        94,
+        104,
+        105
       ];
       this.saveRoles();
       this.activeIndex = 1;
@@ -695,7 +697,18 @@ export default {
             91,
             92,
             93,
-            94
+            94,
+            95,
+            96,
+            97,
+            98,
+            99,
+            100,
+            101,
+            102,
+            103,
+            104,
+            105
           ];
           break;
         case "41":
