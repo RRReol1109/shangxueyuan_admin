@@ -12,33 +12,19 @@
             placeholder="选择年份"
           ></el-date-picker>
         </el-form-item>
-        <!-- <el-form-item label="类型:">
-          <el-select v-model="query.type" size="normal">
-            <el-option label="全部" value="1"></el-option>
-            <el-option label="研究生指导" value="2"></el-option>
-            <el-option label="课堂教学" value="3"></el-option>
-            <el-option label="实习" value="4"></el-option>
-            <el-option label="沙盘模拟" value="5"></el-option>
-            <el-option label="社会调查" value="6"></el-option>
-            <el-option label="论文指导" value="7"></el-option>
-          </el-select>
-        </el-form-item>-->
-        <!-- <el-form-item label="教师:">
-          <el-input id="nameBox" v-model="query.condition" placeholder="姓名或工号" size="normal"></el-input>
-        </el-form-item>-->
         <el-form-item label="教师:">
-          <el-select v-model="query.userName" filterable placeholder="请选择老师" prop style="width:98%">
+          <el-select v-model="query.userId" filterable placeholder="请选择老师" prop style="width:98%">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
               :label="item.name"
-              :value="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="系别" prop="department">
           <el-select v-model="query.department" size="normal" placeholder="请选择" style="width:99%">
-            <el-option label="全部" value="全部"></el-option>
+            <el-option label="全部" value=""></el-option>
             <el-option label="管理科学与信息管理系" value="管理科学与信息管理系"></el-option>
             <el-option label="企业管理系" value="企业管理系"></el-option>
             <el-option label="金融学系" value="金融学系"></el-option>
@@ -54,6 +40,9 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="show()">查看图表</el-button>
         </el-form-item>
+        <el-form-item label>
+          <el-button size="normal" type="primary" icon="el-icon-search" @click="exportData()">数据导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -65,14 +54,19 @@
         width="50"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="教师姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="论文指导"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="研究生指导"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="课堂教学"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="实习"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="沙盘模拟"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="社会调查"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="指导论文" align="center" label="论文指导"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="指导研究生" align="center" label="研究生指导"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="课堂教学" align="center" label="课堂教学"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="实习" align="center" label="实习"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="沙盘模拟" align="center" label="沙盘模拟"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="社会调查" align="center" label="社会调查"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="个人数据">
+        <template slot-scope="scope">
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
       <Highcharts id="teacherStatistic" :option="option" />
@@ -247,13 +241,18 @@ export default {
         limit: 10,
         offset: 0,
         type: "",
-        userId: "",
-        userName: "",
         year: moment().format("YYYY")
       },
       teacherList: [],
       tableData: []
     };
+  },
+  filters: {
+    statusFilter: function(value) {
+      return {
+        "": 0
+      }[value.toString()];
+    }
   },
   async mounted() {
     this.teacherList = await axios.$post("/mgr/list", {
@@ -265,10 +264,72 @@ export default {
     this.list();
   },
   methods: {
-    show() {
+    async show() {
       this.dialogDetailVisible = true;
+      let res = {
+        data: await axios.$get("workload/charts/department", {
+          param: this.query
+        })
+      };
+      console.log(typeof res.data);
+      for (const key in res) {
+        if (res.hasOwnProperty(key)) {
+          const element = res[key];
+          console.log(element + "======element");
+        }
+      }
+    },
+    async exportData() {
+      let data = "";
+      let param = {
+        year: this.query.year,
+        userId: this.query.userId,
+        department: this.query.department
+      };
+      data = await axios.$download("/workload/export", param);
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "工作量-数据报表.xls");
+        document.body.appendChild(link);
+        link.click();
+      }
+    },
+    async showDialog(row) {
+      let data = "";
+      let param = { year: this.query.year, userId: row.userId };
+      data = await axios.$download("/workload/info/export", param);
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "工作量-数据报表个人详细.xls");
+        document.body.appendChild(link);
+        link.click();
+      }
     },
     async list() {
+      let res = await axios.$post("workload/list", this.query);
+      console.log(typeof res);
+      for (let i = 0; i < res.records.length; i++) {
+        res.records[i].scores = 0;
+        res.records[i].year = this.query.year;
+        for (const key in res.records[i].score) {
+          if (res.records[i].score.hasOwnProperty(key)) {
+            const element = res.records[i].score[key];
+            res.records[i].scores += element[this.query.year];
+            res.records[i][key] = res.records[i].score[key][this.query.year];
+            console.log(res.records[i][key] + "======" + key);
+          }
+        }
+        res.records[i].scores = res.records[i].scores.toFixed(2);
+      }
+      this.total = parseInt(res.total);
+      this.tableData = res.records;
+      console.log(this.tableData);
       this.loading = false;
     }
   }

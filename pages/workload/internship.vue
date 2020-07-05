@@ -360,8 +360,8 @@
             ></el-option>
           </el-select>
           <el-select v-model="teacherArr.title" placeholder="职称" style="width:120px">
-            <el-option label="教授" value="0"></el-option>
-            <el-option label="副教授" value="1"></el-option>
+            <el-option label="教授" value="教授"></el-option>
+            <el-option label="副教授" value="副教授"></el-option>
             <el-option label="讲师" value="讲师"></el-option>
           </el-select>
           <el-checkbox v-model="teacherArr.flag">是否是队长</el-checkbox>
