@@ -24,7 +24,7 @@
         </el-form-item>
         <el-form-item label="系别" prop="department">
           <el-select v-model="query.department" size="normal" placeholder="请选择" style="width:99%">
-            <el-option label="全部" value=""></el-option>
+            <el-option label="全部" value></el-option>
             <el-option label="管理科学与信息管理系" value="管理科学与信息管理系"></el-option>
             <el-option label="企业管理系" value="企业管理系"></el-option>
             <el-option label="金融学系" value="金融学系"></el-option>
@@ -41,7 +41,7 @@
           <el-button size="normal" type="primary" icon="el-icon-search" @click="show()">查看图表</el-button>
         </el-form-item>
         <el-form-item label>
-          <el-button size="normal" type="primary" icon="el-icon-search" @click="exportData()">数据导出</el-button>
+          <el-button size="normal" type="primary" @click="exportData()">数据导出</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -266,12 +266,12 @@ export default {
   methods: {
     async show() {
       this.dialogDetailVisible = true;
-      let res = {
-        data: await axios.$get("workload/charts/department", {
-          param: this.query
-        })
-      };
-      console.log(typeof res.data);
+      let res = await axios.$get("workload/charts/department", {
+        param: this.query
+      });
+      console.log(JSON.parse(res));
+      console.log(res + "======res");
+      console.log(res.data + "======data");
       for (const key in res) {
         if (res.hasOwnProperty(key)) {
           const element = res[key];
