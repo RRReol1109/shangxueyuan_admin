@@ -33,7 +33,7 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
-        <el-form-item label >
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -41,7 +41,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item >
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button type="primary" size="normal">
               功能列表
@@ -51,7 +51,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -107,13 +107,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-        
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -237,7 +231,7 @@
                 :fetch-suggestions="queryStudent"
                 placeholder="请输入内容"
                 style="width:99%"
-              ></el-autocomplete> -->
+              ></el-autocomplete>-->
               <el-select v-model="ruleForm.type" placeholder="请输入内容" style="width:98%">
                 <el-option label="湖南省优秀博士论文" value="湖南省优秀博士论文"></el-option>
                 <el-option label="湖南省优秀硕士论文" value="湖南省优秀硕士论文"></el-option>
@@ -307,7 +301,7 @@
               <el-input clearable v-model="ruleForm.score" placeholder="请输入内容" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-        </el-row> -->
+        </el-row>-->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
@@ -528,23 +522,26 @@ export default {
       });
       switch (this.operate) {
         case "add":
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (
-                !element &&
-                key != "auditFlag" &&
-                key != "id" &&
-                key != "finalScore"
-              ) {
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
+          let verification = false;
+          this.$refs[formName].validate(valid => {
+            if (valid) {
+              verification = true;
+              console.log("success");
+              return true;
+            } else {
+              verification = false;
+              this.ruleForm.authors = "";
+              console.log("error submit!!");
+              return false;
             }
+          });
+          if (verification) {
+          } else {
+            this.$message({
+              type: "info",
+              message: "请填写正确数据"
+            });
+            return;
           }
           let teacherName = this.ruleForm.teacher;
           await axios.$post("/excellentPapers/add", this.ruleForm);

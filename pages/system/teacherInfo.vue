@@ -242,22 +242,29 @@
       ></el-pagination>
     </nav>
     <!-- 学时查看窗口 -->
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <el-form :model="examineForm" ref="examineForm" label-width="180px" class="demo-examineForm">
-        <el-form-item>
-          <el-form-item label="选择角色:">
-            <el-select v-model="examineForm.roleIds" size="normal" placeholder="请选择状态">
-              <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
-            </el-select>
-          </el-form-item>
-          <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
-          </div>
-        </el-form-item>
-      </el-form>
-    </el-drawer>
+  <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+      <el-row>
+        <el-col :span="8">
+          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="primary"
+            @click="examineData('success')"
+            size="normal"
+            style="width:97%;"
+          >通过</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="danger"
+            @click="examineData('failed')"
+            size="normal"
+            style="width:97%;"
+          >不通过</el-button>
+        </el-col>
+      </el-row>
+    </el-dialog>
 
     <el-drawer
       style="min-height:500px"
