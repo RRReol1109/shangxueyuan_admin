@@ -92,8 +92,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <nav style="text-align: center; margin-top: 10px;">
+      <!-- 分页居中放置-->
+      <el-pagination
+        background
+        :page-size="14"
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        @next-click="handleCurrentChange"
+        @prev-click="handleCurrentChange"
+        @size-change="handleCurrentChange"
+        :current-page.sync="page"
+        :total="total"
+      ></el-pagination>
+    </nav>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
-      <!-- <Highcharts id="teacherStatistic" :option="option" /> -->
+      <Highcharts id="teacherStatistic" :option="option" />
       <Highcharts id="departmentStatistic" :option="statisticOption" />
     </el-drawer>
   </div>
@@ -132,7 +146,7 @@ export default {
           enabled: true
         },
         xAxis: {
-          categories: ["吴平", "王舞", "张三", "赵刚", "施文"],
+          categories: [],
           gridLineWidth: 2,
           min: 0,
           max: 4
@@ -156,32 +170,7 @@ export default {
             pointWidth: 10 //柱子宽bai度du
           }
         },
-        series: [
-          {
-            name: "论文指导",
-            data: [107, 131, 135, 203, 152]
-          },
-          {
-            name: "研究生指导",
-            data: [133, 156, 147, 208, 196]
-          },
-          {
-            name: "课堂教学",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "实习",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "沙盘模拟",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "社会调查",
-            data: [173, 114, 154, 132, 134]
-          }
-        ]
+        series: []
       },
       statisticOption: {
         credits: {
@@ -202,15 +191,7 @@ export default {
           enabled: true
         },
         xAxis: {
-          categories: [
-            // "管理科学与信息管理系",
-            // "企业管理系",
-            // "金融学系",
-            // "财务与投资管理系",
-            // "经济与贸易系",
-            // "会计学系",
-            // "市场营销系"
-          ],
+          categories: [],
           gridLineWidth: 2,
           min: 0,
           max: 4
@@ -232,15 +213,7 @@ export default {
         plotOptions: {
           column: {
             pointWidth: 10 //柱子宽bai度du
-          },
-        //   series: {
-        //     cursor: "column",
-        //     events: {
-        //       click: function(e) {
-        //         alert(e.point.category);
-        //       }
-        //     }
-    //   }
+          }
         },
         series: []
       },
@@ -274,7 +247,18 @@ export default {
   },
   methods: {
     async show() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
       this.dialogDetailVisible = true;
+      this.showDepartment();
+      this.showTeacherData();
+    },
+    async showDepartment() {
       let param = {
         year: this.query.year,
         department: this.query.department
@@ -290,7 +274,6 @@ export default {
           items.push(element);
         }
       }
-      console.log(items);
       let names = {
         internshipScore: "实习",
         paperScore: "论文指导",
@@ -313,6 +296,56 @@ export default {
             data: data
           });
         }
+      }
+    },
+    async showTeacherData() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
+      let param = {
+        year: this.query.year,
+        department: this.query.department,
+        offset: 0,
+        limit: 99999999
+      };
+      this.option.xAxis.categories = [];
+      this.option.series = [];
+      let res = await axios.$post("workload/list", param);
+      let items = [];
+      console.log(typeof res.records);
+      for (let i = 0; i < res.records.length; i++) {
+        const element = res.records[i];
+        this.option.xAxis.categories.push(element.userName);
+        items.push(element.score);
+      }
+      let names = [
+        "指导研究生",
+        "沙盘模拟",
+        "实习",
+        "社会调查",
+        "课堂教学",
+        "指导论文"
+      ];
+      let data = [];
+      for (let i = 0; i < names.length; i++) {
+        const name = names[i];
+        let data = [];
+        for (let j = 0; j < items.length; j++) {
+          const item = items[j];
+          if (item[name]) {
+            data.push(item[name][this.query.year]);
+          } else {
+            data.push(0);
+          }
+        }
+        this.option.series.push({
+          name: name,
+          data: data
+        });
       }
     },
     async exportData() {
@@ -348,6 +381,13 @@ export default {
       }
     },
     async list() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
       let res = await axios.$post("workload/list", this.query);
       for (let i = 0; i < res.records.length; i++) {
         res.records[i].scores = 0;
@@ -364,6 +404,10 @@ export default {
       this.total = parseInt(res.total);
       this.tableData = res.records;
       this.loading = false;
+    },
+    handleCurrentChange(val) {
+      this.query.offset = this.query.limit * (this.page - 1);
+      this.list();
     }
   }
 };

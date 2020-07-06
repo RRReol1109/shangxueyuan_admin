@@ -75,6 +75,20 @@
       <el-table-column :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
     </el-table>
+    <nav style="text-align: center; margin-top: 10px;">
+      <!-- 分页居中放置-->
+      <el-pagination
+        background
+        :page-size="14"
+        layout="prev, pager, next"
+        @current-change="handleCurrentChange"
+        @next-click="handleCurrentChange"
+        @prev-click="handleCurrentChange"
+        @size-change="handleCurrentChange"
+        :current-page.sync="page"
+        :total="total"
+      ></el-pagination>
+    </nav>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
       <Highcharts id="teacherStatistic" :option="option" />
       <Highcharts id="departmentStatistic" :option="statisticOption" />
