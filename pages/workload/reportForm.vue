@@ -214,7 +214,15 @@ export default {
         plotOptions: {
           column: {
             pointWidth: 10 //柱子宽bai度du
-          }
+          },
+        //   series: {
+        //     cursor: "column",
+        //     events: {
+        //       click: function(e) {
+        //         alert(e.point.category);
+        //       }
+        //     }
+    //   }
         },
         series: [
           {
