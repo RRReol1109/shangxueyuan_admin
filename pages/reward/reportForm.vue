@@ -65,14 +65,14 @@
         width="50"
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="教师姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="著作教材"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="中文论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="英文论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="获奖"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="要报"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="优秀硕博论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="科研项目"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="著作教材" align="center" label="著作教材"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="中文论文" align="center" label="中文论文"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="英文论文" align="center" label="英文论文"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="获奖" align="center" label="获奖"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="要报" align="center" label="要报"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="优秀硕博论文" align="center" label="优秀硕博论文"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
     </el-table>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
@@ -278,6 +278,21 @@ export default {
       this.dialogDetailVisible = true;
     },
     async list() {
+      let res = await axios.$post("award/list", this.query);
+      for (let i = 0; i < res.records.length; i++) {
+        res.records[i].scores = 0;
+        res.records[i].year = this.query.year;
+        for (const key in res.records[i].score) {
+          if (res.records[i].score.hasOwnProperty(key)) {
+            const element = res.records[i].score[key];
+            res.records[i].scores += element[this.query.year];
+            res.records[i][key] = res.records[i].score[key][this.query.year];
+          }
+        }
+        res.records[i].scores = res.records[i].scores.toFixed(2);
+      }
+      this.total = parseInt(res.total);
+      this.tableData = res.records;
       this.loading = false;
     }
   }

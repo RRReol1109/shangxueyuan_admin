@@ -135,37 +135,29 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="examineDialog">
-      <div slot="title" class="header-title">
-        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
-          <el-button size="normal" @click="resetForm('form')">重置</el-button>
-        </div>
-      </div>
-      <el-form
-        :model="examineForm"
-        :rules="rules"
-        ref="examineForm"
-        label-width="180px"
-        class="demo-examineForm"
-      >
-        <el-form-item>
-          <el-form-item label="审核状态:">
-            <el-select v-model="examineForm.auditFlag" size="normal" placeholder="请选择状态">
-              <el-option label="未审核" value="0"></el-option>
-              <el-option label="审核通过" value="1"></el-option>
-              <el-option label="未通过" value="2"></el-option>
-            </el-select>
-          </el-form-item>
-          <div class="dialog-footer">
-            <el-button @click="examineDialog = false" size="normal">取 消</el-button>
-            <el-button type="primary" @click="examineData('examineForm')" size="normal">确定</el-button>
-            <el-button size="normal" @click="resetForm('examineForm')">重置</el-button>
-          </div>
-        </el-form-item>
-      </el-form>
-    </el-drawer>
+    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+      <el-row>
+        <el-col :span="8">
+          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="primary"
+            @click="examineData('success')"
+            size="normal"
+            style="width:97%;"
+          >通过</el-button>
+        </el-col>
+        <el-col :span="8">
+          <el-button
+            type="danger"
+            @click="examineData('failed')"
+            size="normal"
+            style="width:97%;"
+          >不通过</el-button>
+        </el-col>
+      </el-row>
+    </el-dialog>
     <el-drawer
       size="60%"
       style="min-height:500px"

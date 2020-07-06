@@ -46,7 +46,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -199,7 +199,7 @@
               v-for="item in teacherList"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             ></el-option>
           </el-select>分数:
           <el-input clearable style="width:120px" v-model="teacherArr.point" placeholder="请输入单位"></el-input>单位:
@@ -211,7 +211,7 @@
         </el-form-item>
         <!-- <el-form-item label="获得分数" prop="score">
           <el-input v-model="ruleForm.score" style="width:99%"></el-input>
-        </el-form-item> -->
+        </el-form-item>-->
         <!-- <el-form-item label="证书" prop="file">
           <el-upload class :headers="header" :on-success="uploadSuccess" action>
             <el-button size="normal" class type="primary">附件上传</el-button>
@@ -438,16 +438,7 @@ export default {
             let info = element[key];
             console.log(info);
             if (key == "name") {
-              let names = "";
-              for (let j = 0; j < this.teacherList.length; j++) {
-                const item = this.teacherList[j];
-                if (item.id == info) {
-                  console.log(item);
-                  names = item.name;
-                }
-              }
-              if (names&&this.operate!="add") this.ruleForm.persons += names;
-              else this.ruleForm.persons += info;
+              this.ruleForm.persons += info;
             }
             if (key == "point") {
               this.ruleForm.persons += "|" + info;
@@ -485,7 +476,9 @@ export default {
         });
         return;
       }
-      this.ruleForm.year = this.ruleForm.awardDate ? this.ruleForm.awardDate.substr(0, 4) : ""
+      this.ruleForm.year = this.ruleForm.awardDate
+        ? this.ruleForm.awardDate.substr(0, 4)
+        : "";
       switch (this.operate) {
         case "add":
           await axios.$post("/reportResult/add", this.ruleForm);

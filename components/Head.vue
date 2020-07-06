@@ -268,13 +268,13 @@ export default {
       let flag = window.sessionStorage.getItem("flag");
       if (this.roleId == 1) {
         this.activeIndex = 1;
-        menuSelect(activeIndex);
+        this.menuSelect(activeIndex);
         return;
       }
       // if (!flag) {
       // this.menuSelect(deptid.toString(), "");
       this.activeIndex = deptid.toString();
-      menuSelect(activeIndex);
+      this.menuSelect(activeIndex);
       // } else {
       //   let selectId = window.sessionStorage.getItem("select");
       //   this.activeIndex = selectId.toString();

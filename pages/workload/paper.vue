@@ -592,14 +592,6 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          // let deleteList = [];
-          // for (let i = 0; i < this.tableData.length; i++) {
-          //   const element = this.tableData[i];
-          //   console.log(element);
-          //   if (element.pick) {
-          //     deleteList.push(element);
-          //   }
-          // }
           if (this.checkedList.length <= 0) {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
@@ -623,15 +615,6 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      // let deleteList = [];
-      // let test;
-      // for (let i = 0; i < this.tableData.length; i++) {
-      //   const element = this.tableData[i];
-      //   console.log(element);
-      //   if (element.pick) {
-      //     deleteList.push(element);
-      //   }
-      // }
       let vm = this;
       if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
@@ -647,13 +630,6 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          // for (let i = 0; i < deleteList.length; i++) {
-          //   const element = deleteList[i];
-          //   let paperId = element.id;
-          //   await axios.$post("/paper/delete", {
-          //     paperId: paperId
-          //   });
-          // }
           for(let i=0; i<vm.checkedList.length; i++) {
             await axios.$post("/paper/delete", {
                 paperId: vm.checkedList[i].id
@@ -674,25 +650,6 @@ export default {
         });
     },
     async examineData(flag) {
-      // let examineList = [];
-      // for (let i = 0; i < this.tableData.length; i++) {
-      //   const element = this.tableData[i];
-      //   console.log(element);
-      //   if (element.pick) {
-      //     examineList.push(element);
-      //   }
-      // }
-      // for (let i = 0; i < examineList.length; i++) {
-      //   const element = examineList[i];
-      //   console.log(element.auditFlag, "=======" + flag);
-      //   this.examineForm.id = element.id;
-      //   if (flag == "success") {
-      //     this.examineForm.auditFlag = 1;
-      //   } else {
-      //     this.examineForm.auditFlag = 2;
-      //   }
-      //   await axios.$post("/paper/update", this.examineForm);
-      // }
       for (let i = 0; i < this.checkedList.length; i++) {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
