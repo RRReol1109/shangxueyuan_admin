@@ -552,7 +552,6 @@ export default {
       }
     };
   },
-  mounted() {},
   filters: {
     statusFilter: function(value) {
       return {
@@ -908,24 +907,24 @@ export default {
         type: "success",
         message: "审核成功!"
       });
-    },
-    async mounted() {
-      this.header = {
-        Authorization: localStorage.getItem("message")
-      };
-      let self = this;
-      let year = moment(new Date()).format("YYYY");
-      for (let i = year; i > 1900; i--) {
-        self.yearsOptions.push({
-          value: i,
-          label: i
-        });
-      }
-      this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
-      await this.queryTeacher();
-      await this.list();
-      this.roleId = localStorage.getItem("roleId");
     }
+  },
+  async mounted() {
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
+    let self = this;
+    let year = moment(new Date()).format("YYYY");
+    for (let i = year; i > 1900; i--) {
+      self.yearsOptions.push({
+        value: i,
+        label: i
+      });
+    }
+    this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
+    await this.queryTeacher();
+    await this.list();
+    this.roleId = localStorage.getItem("roleId");
   }
 };
 </script>

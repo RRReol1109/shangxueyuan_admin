@@ -12,20 +12,6 @@
             placeholder="选择年份"
           ></el-date-picker>
         </el-form-item>
-        <!-- <el-form-item label="类型:">
-          <el-select v-model="query.type" size="normal">
-            <el-option label="全部" value="1"></el-option>
-            <el-option label="中文论文" value="2"></el-option>
-            <el-option label="英文论文" value="3"></el-option>
-            <el-option label="获奖" value="4"></el-option>
-            <el-option label="要报" value="5"></el-option>
-            <el-option label="优秀硕博论文" value="6"></el-option>
-            <el-option label="著作教材" value="7"></el-option>
-          </el-select>
-        </el-form-item>-->
-        <!-- <el-form-item label="教师:">
-          <el-input id="nameBox" v-model="query.condition" placeholder="姓名或工号" size="normal"></el-input>
-        </el-form-item>-->
         <el-form-item label="教师:">
           <el-select v-model="query.userName" filterable placeholder="请选择老师" prop style="width:98%">
             <el-option
@@ -54,6 +40,9 @@
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="show()">查看图表</el-button>
         </el-form-item>
+        <el-form-item label>
+          <el-button size="normal" type="primary" @click="exportData()">数据导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
@@ -66,14 +55,47 @@
       ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="著作教材" align="center" label="著作教材"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="中文论文" align="center" label="中文论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="英文论文" align="center" label="英文论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="获奖" align="center" label="获奖"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="要报" align="center" label="要报"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="优秀硕博论文" align="center" label="优秀硕博论文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="著作教材" align="center" label="著作教材">
+        <template slot-scope="scope">
+          <span>{{scope.row.著作教材 | statusFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="中文论文" align="center" label="中文论文">
+        <template slot-scope="scope">
+          <span>{{scope.row.中文论文 | statusFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="英文论文" align="center" label="英文论文">
+        <template slot-scope="scope">
+          <span>{{scope.row.英文论文 | statusFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="获奖" align="center" label="获奖">
+        <template slot-scope="scope">
+          <span>{{scope.row.获奖 | statusFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="要报" align="center" label="要报">
+        <template slot-scope="scope">
+          <span>{{scope.row.要报 | statusFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="优秀硕博论文" align="center" label="优秀硕博论文">
+        <template slot-scope="scope">
+          <span>{{scope.row.优秀硕博论文 | statusFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目">
+        <template slot-scope="scope">
+          <span>{{scope.row.科研项目 | statusFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" align="center" label="个人数据">
+        <template slot-scope="scope">
+          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <nav style="text-align: center; margin-top: 10px;">
       <!-- 分页居中放置-->
@@ -278,6 +300,15 @@ export default {
       tableData: []
     };
   },
+  filters: {
+    statusFilter: function(value) {
+      if (value == undefined) {
+        return 0;
+      } else {
+        return value;
+      }
+    }
+  },
   async mounted() {
     this.teacherList = await axios.$post("/mgr/list", {
       order: "desc",
@@ -288,8 +319,141 @@ export default {
     this.list();
   },
   methods: {
-    show() {
+    async show() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
       this.dialogDetailVisible = true;
+      this.showDepartment();
+      this.showTeacherData();
+    },
+    async showDepartment() {
+      let param = {
+        year: this.query.year,
+        department: this.query.department
+      };
+      let res = await axios.$get("award/charts/department", param);
+      let items = [];
+      this.statisticOption.series = [];
+      this.statisticOption.xAxis.categories = [];
+      for (const key in res.data) {
+        if (res.data.hasOwnProperty(key)) {
+          const element = res.data[key];
+          this.statisticOption.xAxis.categories.push(key);
+          items.push(element);
+        }
+      }
+      let names = {
+        articleCnScore: "中文论文",
+        articleEnScore: "英文论文",
+        awardResultScore: "获奖",
+        excellentPapersScore: "优秀论文",
+        projectScore: "科研项目",
+        reportResultScore: "要报",
+        textBookScore: "著作教材"
+      };
+      for (const key in names) {
+        if (names.hasOwnProperty(key)) {
+          const element = names[key];
+          let data = [];
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            data.push(item[key]);
+            console.log(data[i] + "=====" + key);
+          }
+          this.statisticOption.series.push({
+            name: element,
+            data: data
+          });
+        }
+      }
+    },
+    async showTeacherData() {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
+      let param = {
+        year: this.query.year,
+        department: this.query.department,
+        offset: 0,
+        limit: 99999999
+      };
+      this.option.xAxis.categories = [];
+      this.option.series = [];
+      let res = await axios.$post("award/list", param);
+      let items = [];
+      console.log(typeof res.records);
+      for (let i = 0; i < res.records.length; i++) {
+        const element = res.records[i];
+        this.option.xAxis.categories.push(element.userName);
+        items.push(element.score);
+      }
+      let names = [
+        "中文论文",
+        "英文论文",
+        "获奖",
+        "优秀论文",
+        "科研项目",
+        "要报",
+        "著作教材"
+      ];
+      let data = [];
+      for (let i = 0; i < names.length; i++) {
+        const name = names[i];
+        let data = [];
+        for (let j = 0; j < items.length; j++) {
+          const item = items[j];
+          if (item[name]) {
+            data.push(item[name][this.query.year]);
+          } else {
+            data.push(0);
+          }
+        }
+        this.option.series.push({
+          name: name,
+          data: data
+        });
+      }
+    },
+    async exportData() {
+      let data = "";
+      let param = {
+        year: this.query.year,
+        userId: this.query.userId,
+        department: this.query.department
+      };
+      data = await axios.$download("/award/export", param);
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "科研奖励-数据报表.xls");
+        document.body.appendChild(link);
+        link.click();
+      }
+    },
+    async showDialog(row) {
+      let data = "";
+      let param = { year: this.query.year, userId: row.userId };
+      data = await axios.$download("/award/info/export", param);
+      if (data) {
+        let url = window.URL.createObjectURL(new Blob([data]));
+        let link = document.createElement("a");
+        link.style.display = "none";
+        link.href = url;
+        link.setAttribute("download", "科研奖励-数据报表个人详细.xls");
+        document.body.appendChild(link);
+        link.click();
+      }
     },
     async list() {
       let res = await axios.$post("award/list", this.query);
@@ -308,6 +472,10 @@ export default {
       this.total = parseInt(res.total);
       this.tableData = res.records;
       this.loading = false;
+    },
+    handleCurrentChange(val) {
+      this.query.offset = this.query.limit * (this.page - 1);
+      this.list();
     }
   }
 };
