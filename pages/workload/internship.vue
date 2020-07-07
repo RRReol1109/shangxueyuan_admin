@@ -103,18 +103,14 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="pick"
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      v-loading="loading"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column align="center" type="selection" width="50"></el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="地址"></el-table-column>
@@ -423,6 +419,7 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
+      checkedList: [],
       ruleForm: {
         id: "",
         year: "2019",
@@ -484,6 +481,10 @@ export default {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     async handleCommand(command) {
       console.log(command);
       switch (command) {
@@ -491,15 +492,7 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          let deleteList = [];
-          for (let i = 0; i < this.tableData.length; i++) {
-            const element = this.tableData[i];
-            console.log(element);
-            if (element.pick) {
-              deleteList.push(element);
-            }
-          }
-          if (deleteList.length <= 0) {
+          if (this.checkedList.length <= 0) {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
@@ -567,15 +560,8 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -589,11 +575,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let internshipId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/internship/delete", {
-              internshipId: internshipId
+              internshipId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -611,18 +595,8 @@ export default {
         });
     },
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -709,20 +683,6 @@ export default {
             }
           }
           console.log(this.ruleForm.teachers);
-          for (const key in this.ruleForm) {
-            if (this.ruleForm.hasOwnProperty(key)) {
-              const element = this.ruleForm[key];
-              if (!element && key != "id") {
-                this.ruleForm.teachers = "";
-                console.log(element, "==========element===" + key);
-                this.$message({
-                  type: "info",
-                  message: "请填写正确数据"
-                });
-                return;
-              }
-            }
-          }
           if (this.roleId == 1 || this.roleId == 19) {
             this.ruleForm.auditFlag = 1;
           }

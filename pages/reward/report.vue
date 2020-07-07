@@ -64,18 +64,14 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="pick"
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      v-loading="loading"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column align="center" type="selection" width="50"></el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="发表时间"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="要报类型"></el-table-column>
@@ -273,6 +269,7 @@ export default {
       teacherList: [],
       header: {},
       tableData: [],
+      checkedList: [],
       teacherArr: [
         {
           name: "",
@@ -563,6 +560,10 @@ export default {
           });
         });
     },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     async handleCommand(command) {
       console.log(command);
       switch (command) {
@@ -570,15 +571,7 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          let deleteList = [];
-          for (let i = 0; i < this.tableData.length; i++) {
-            const element = this.tableData[i];
-            console.log(element);
-            if (element.pick) {
-              deleteList.push(element);
-            }
-          }
-          if (deleteList.length <= 0) {
+          if (this.checkedList.length <= 0) {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
@@ -601,15 +594,8 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -623,11 +609,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let reportResultId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/reportResult/delete", {
-              reportResultId: reportResultId
+              reportResultId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -653,18 +637,8 @@ export default {
       this.teacherList = this.teacherList.rows;
     },
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {

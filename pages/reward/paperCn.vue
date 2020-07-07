@@ -67,20 +67,14 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="pick"
-        fixed
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <!-- <el-checkbox @change="changeFlag(scope.row)"></el-checkbox> -->
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      v-loading="loading"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column align="center" type="selection" width="50"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         type="index"
@@ -134,8 +128,6 @@
         align="center"
         label="学院期刊分级"
       ></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="half" align="center" label="原价/半价"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="计分"></el-table-column>-->
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
@@ -312,13 +304,6 @@
           <el-col :span="12">
             <el-form-item label="学校期刊分级" prop="schoolLevel">
               <el-input v-model="ruleForm.schoolLevel" placeholder style="width:98%"></el-input>
-              <!-- <el-select v-model="ruleForm.schoolLevel" placeholder="请选择级别" style="width:98%">
-                <el-option label="中文A+" value="A+"></el-option>
-                <el-option label="中文A" value="A"></el-option>
-                <el-option label="中文A-" value="A-"></el-option>
-                <el-option label="中文B" value="B"></el-option>
-                <el-option label="中文C" value="C"></el-option>
-              </el-select>-->
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -357,79 +342,9 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="论文研究领域" prop="collegeLevel">
-          <el-col :span="12">
-            <el-select v-model="ruleForm.collegeLevel" placeholder="论文研究领域">
-              <el-option label="基础理论研究" value="基础理论研究"></el-option>
-              <el-option label="应用研究" value="应用研究"></el-option>
-              <el-option label="教学研究" value="教学研究"></el-option>
-            </el-select>
-          </el-col>
-        </el-form-item>-->
-        <!-- <el-form-item label="原/半价" prop="half">
-          <el-col :span="12">
-            <el-select v-model="ruleForm.half" placeholder="请选择类型">
-              <el-option label="原价" value="0"></el-option>
-              <el-option label="半价" value="1"></el-option>
-            </el-select>
-          </el-col>
-        </el-form-item>-->
-        <!-- <el-form-item label="全体作者" prop="authors">
-          <el-input v-model="ruleForm.authors" style="width:200px;"></el-input>
-        </el-form-item>-->
-        <!-- <el-form-item label="作者信息" prop="authors" v-if="['show'].includes(operate)">
-          <el-col :span="12">
-            <label>姓名-单位-是否是国际学籍-是否是通讯作者</label>
-            <el-input v-model="ruleForm.authors" rows="5" type="textarea"></el-input>
-          </el-col>
-        </el-form-item>-->
-        <!-- <el-form-item
-          v-for="(teacherArr, index) in ruleForm.teacherArr"
-          :label="'作者信息' + (index+1)"
-          :key="teacherArr.key"
-          :prop="'teacherArr.' + index + '.value'"
-        >
-          <el-col :span="12">
-            <el-select v-model="teacherArr.name" placeholder="请选择老师" prop="persons">
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-            <el-input
-              clearable
-              v-model="teacherArr.num"
-              placeholder="请输入单位"
-              label="字数"
-              type="textarea"
-            ></el-input>
-            <el-checkbox v-model="teacherArr.stu">是否国际学籍【不含港澳台】</el-checkbox>
-            <el-checkbox v-model="teacherArr.tx">是否是通讯作者</el-checkbox>
-            <el-button style="width:200px;" @click="removeTeacher(teacherArr)">删除</el-button>
-          </el-col>
-        </el-form-item>
-        <el-form-item v-if="!['show'].includes(operate)">
-          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
-        </el-form-item>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="第一作者" prop="firstAuthor">
-              <!-- <el-select
-                v-model="ruleForm.firstAuthor"
-                filterable
-                placeholder="请选择老师"
-                prop
-                style="width:98%"
-              >
-                <el-option
-                  v-for="item in teacherList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.name"
-                ></el-option>
-              </el-select>-->
               <el-input clearable v-model="ruleForm.firstAuthor" placeholder style="width:99%"></el-input>
             </el-form-item>
           </el-col>
@@ -566,6 +481,7 @@ export default {
       fileLoading: false,
       fileData: "",
       action: "",
+      checkedList: [],
       dialogFormVisible: false,
       total: 0,
       fileLists: [],
@@ -653,6 +569,10 @@ export default {
     }
   },
   methods: {
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     authorsChanged(value) {
       this.ruleForm.authorCnt = 0;
       const arrays = value.split(",");
@@ -801,33 +721,6 @@ export default {
       }
     },
     async submitForm(formName) {
-      // for (let i = 0; i < this.ruleForm.teacherArr.length; i++) {
-      //   let element = this.ruleForm.teacherArr[i];
-      //   for (const key in element) {
-      //     if (element.hasOwnProperty(key)) {
-      //       let info = element[key];
-      //       console.log(info);
-      //       if (key == "name") {
-      //         this.ruleForm.authors += parseInt(info);
-      //       }
-      //       if (key == "num") {
-      //         this.ruleForm.authors += "|" + info;
-      //       }
-      //       if (key == "stu") {
-      //         this.ruleForm.authors += "|" + info;
-      //       }
-      //       if (key == "tx") {
-      //         this.ruleForm.authors += "|" + info + ",";
-      //       }
-      //     }
-      //   }
-      //   if (i == this.ruleForm.teacherArr.length - 1) {
-      //     this.ruleForm.authors = this.ruleForm.authors.substr(
-      //       0,
-      //       this.ruleForm.authors.length - 1
-      //     );
-      //   }
-      // }
       if (this.additionFiles)
         this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
@@ -857,28 +750,6 @@ export default {
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
-          // this.ruleForm.authorCnt =
-          //   this.ruleForm.authors.split("，").length || 0;
-          // for (const key in this.ruleForm) {
-          //   if (this.ruleForm.hasOwnProperty(key)) {
-          //     const element = this.ruleForm[key];
-          //     if (
-          //       !element &&
-          //       key != "auditFlag" &&
-          //       key != "id" &&
-          //       key != "finalScore" &&
-          //       key != "files"
-          //     ) {
-          //       console.log(element, "==========element===" + key);
-          //       this.$message({
-          //         type: "info",
-          //         message: "请填写正确数据"
-          //       });
-          //       return;
-          //     }
-          //   }
-          // }
-
           await axios.$post("/articleCn/add", this.ruleForm);
           this.fileurl = "";
           break;
@@ -963,15 +834,7 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          let deleteList = [];
-          for (let i = 0; i < this.tableData.length; i++) {
-            const element = this.tableData[i];
-            console.log(element);
-            if (element.pick) {
-              deleteList.push(element);
-            }
-          }
-          if (deleteList.length <= 0) {
+          if (this.checkedList.length <= 0) {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
@@ -994,15 +857,8 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -1016,11 +872,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let articleCnId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/articleCn/delete", {
-              articleCnId: articleCnId
+              articleCnId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -1039,18 +893,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -1064,24 +908,24 @@ export default {
         type: "success",
         message: "审核成功!"
       });
+    },
+    async mounted() {
+      this.header = {
+        Authorization: localStorage.getItem("message")
+      };
+      let self = this;
+      let year = moment(new Date()).format("YYYY");
+      for (let i = year; i > 1900; i--) {
+        self.yearsOptions.push({
+          value: i,
+          label: i
+        });
+      }
+      this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
+      await this.queryTeacher();
+      await this.list();
+      this.roleId = localStorage.getItem("roleId");
     }
-  },
-  async mounted() {
-    this.header = {
-      Authorization: localStorage.getItem("message")
-    };
-    let self = this;
-    let year = moment(new Date()).format("YYYY");
-    for (let i = year; i > 1900; i--) {
-      self.yearsOptions.push({
-        value: i,
-        label: i
-      });
-    }
-    this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
-    await this.queryTeacher();
-    await this.list();
-    this.roleId = localStorage.getItem("roleId");
   }
 };
 </script>

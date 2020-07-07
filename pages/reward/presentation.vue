@@ -51,7 +51,7 @@
             <el-button size="normal" class type="primary">附件上传</el-button>
           </el-upload>
         </el-form-item>-->
-        <el-form-item label >
+        <el-form-item label>
           <el-button
             size="normal"
             type="primary"
@@ -59,7 +59,7 @@
             @click="operate = 'add';showDialog();"
           >新增</el-button>
         </el-form-item>
-        <el-form-item >
+        <el-form-item>
           <el-dropdown @command="handleCommand" style="float:right;">
             <el-button size="normal" type="primary">
               功能列表
@@ -69,7 +69,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -87,19 +87,14 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="pick"
-        fixed
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      v-loading="loading"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column align="center" type="selection" width="50"></el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
@@ -120,13 +115,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="300"
-        
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -263,23 +252,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="附件" prop="file">
-          <el-upload
-            class
-            :headers="header"
-            :file-list="fileLists"
-            :on-success="fileUploadSuccess"
-            action="http://bs.hk.darkal.cn/mgr/upload?token='AuthenticationToken'"
-          >
-            <el-button size="normal" class type="primary">附件上传</el-button>
-          </el-upload>
-        </el-form-item>-->
-        <!-- <el-form-item :label="'获奖人及分数:'" prop="persons">
-          <el-col :span="12">
-            <label>获奖人姓名-分数</label>
-            <el-input v-model="ruleForm.persons" rows="5" type="textarea"></el-input>
-          </el-col>
-        </el-form-item>-->
         <el-form-item
           v-for="(teacherArr, index) in teacherArr"
           :label="'作者信息' + (index+1)"
@@ -421,6 +393,7 @@ export default {
       fileurl: "",
       page: 1,
       fileLists: [],
+      checkedList: [],
       query: {
         limit: 14,
         offset: 0,
@@ -485,6 +458,10 @@ export default {
     }
   },
   methods: {
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     downLoadFile(rows) {
       alert(rows);
       if (rows.files) {
@@ -801,15 +778,7 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          let deleteList = [];
-          for (let i = 0; i < this.tableData.length; i++) {
-            const element = this.tableData[i];
-            console.log(element);
-            if (element.pick) {
-              deleteList.push(element);
-            }
-          }
-          if (deleteList.length <= 0) {
+          if (this.checkedList.length <= 0) {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
@@ -832,15 +801,8 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -854,11 +816,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let awardResultId = element.id;
-            await axios.$post("/awardResult/delete", {
-              awardResultId: awardResultId
+          for (let i = 0; i < vm.checkedList.length; i++) {
+            await axios.$post("/teawardResult/delete", {
+              teawardResultId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -884,24 +844,14 @@ export default {
       this.teacherList = this.teacherList.rows;
     },
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
           this.examineForm.auditFlag = 2;
         }
-        await axios.$post("/awardResult/update", this.examineForm);
+        await axios.$post("/teawardResult/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;

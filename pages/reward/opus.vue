@@ -65,18 +65,15 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading" id="table1">
-      <el-table-column
-        :show-overflow-tooltip="true"
-        prop="pick"
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)" name="checks" :checked="cFlag"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      v-loading="loading"
+      id="table1"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column align="center" type="selection" width="50"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
         type="index"
@@ -409,6 +406,7 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
+      checkedList: [],
       deptid: "",
       teacherList: [],
       roleId: 0,
@@ -481,6 +479,10 @@ export default {
   },
 
   methods: {
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     async uploadAdditionSuccess(response) {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
@@ -853,15 +855,7 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          let deleteList = [];
-          for (let i = 0; i < this.tableData.length; i++) {
-            const element = this.tableData[i];
-            console.log(element);
-            if (element.pick) {
-              deleteList.push(element);
-            }
-          }
-          if (deleteList.length <= 0) {
+          if (this.checkedList.length <= 0) {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
@@ -884,15 +878,8 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -906,15 +893,11 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let textbookId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/textbook/delete", {
-              textbookId: textbookId
+              textbookId: vm.checkedList[i].id
             });
           }
-          //   this.tableData = [];
-          await this.list();
           this.tableData = [];
           await this.list();
           this.$message({
@@ -931,18 +914,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -950,8 +923,7 @@ export default {
         }
         await axios.$post("/textbook/update", this.examineForm);
       }
-      this.tableData = [];
-      await this.list();
+      this.list();
       this.examineDialog = false;
       this.$message({
         type: "success",
