@@ -26,6 +26,7 @@
             <el-option label="全部" value></el-option>
             <el-option label="重大项目" value="重大项目"></el-option>
             <el-option label="重点项目" value="重点项目"></el-option>
+            <el-option label="面上项目" value="面上项目"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="开始时间">
@@ -182,8 +183,8 @@
             @change="typeChage"
             style="width:99%"
           >
-            <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
-            <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
+            <el-option label="国家自然科学基金项目" value="国家自然科学基金项目"></el-option>
+            <el-option label="国家社会科学基金项目" value="国家社会科学基金项目"></el-option>
             <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
             <el-option label="国家 973 项目" value="国家 973 项目"></el-option>
             <el-option label="国家科技支撑计划项目" value="国家科技支撑计划项目"></el-option>
@@ -202,6 +203,7 @@
               <el-select v-model="ruleForm.level" placeholder="请选择级别" style="width:99%">
                 <el-option label="重点项目" value="重点项目"></el-option>
                 <el-option label="重大项目" value="重大项目"></el-option>
+                <el-option label="面上项目" value="面上项目"></el-option>
               </el-select>
             </el-form-item>
           </el-col>

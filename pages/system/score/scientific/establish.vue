@@ -80,8 +80,8 @@
         </el-form-item>
         <el-form-item label="项目类型">
           <el-select v-if="form.level=='1级'"  v-model="form.type" size="normal" placeholder="选择项目类型">
-            <el-option v-show="form.level='1级'" label="国家自然科学基金" value="国家自然科学基金"></el-option>
-            <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
+            <el-option v-show="form.level='1级'" label="国家自然科学基金项目" value="国家自然科学基金项目"></el-option>
+            <el-option label="国家社会科学基金项目" value="国家社会科学基金项目"></el-option>
             <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
             <el-option label="国家973 项目" value="国家973 项目"></el-option>
             <el-option label="国家科技支撑计划项目等其他国家级项目" value="国家科技支撑计划项目等其他国家级项目"></el-option>
