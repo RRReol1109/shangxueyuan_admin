@@ -8,8 +8,8 @@
         <el-form-item label="项目类别:">
           <el-select v-model="query.type" size="normal" placeholder="请选择类别">
             <el-option label="全部" value></el-option>
-            <el-option label="国家自然科学基金" value="国家自然科学基金"></el-option>
-            <el-option label="国家社会科学基金" value="国家社会科学基金"></el-option>
+            <el-option label="国家自然科学基金项目" value="国家自然科学基金项目"></el-option>
+            <el-option label="国家社会科学基金项目" value="国家社会科学基金项目"></el-option>
             <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
             <el-option label="国家 973 项目" value="国家 973 项目"></el-option>
             <el-option label="国家科技支撑计划项目" value="国家科技支撑计划项目"></el-option>

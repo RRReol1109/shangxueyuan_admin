@@ -817,8 +817,8 @@ export default {
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
-            await axios.$post("/teawardResult/delete", {
-              teawardResultId: vm.checkedList[i].id
+            await axios.$post("/awardResult/delete", {
+              awardResultId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -851,7 +851,7 @@ export default {
         } else {
           this.examineForm.auditFlag = 2;
         }
-        await axios.$post("/teawardResult/update", this.examineForm);
+        await axios.$post("/awardResult/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
