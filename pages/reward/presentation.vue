@@ -108,7 +108,7 @@
         align="center"
         label="第一获奖人"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="全体获奖人"></el-table-column>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="全体获奖人"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="获奖时间"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">

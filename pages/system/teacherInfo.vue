@@ -242,7 +242,7 @@
       ></el-pagination>
     </nav>
     <!-- 学时查看窗口 -->
-  <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
       <el-row>
         <el-col :span="8">
           <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
@@ -1038,13 +1038,11 @@ export default {
         this.form = {
           account: row.account,
           id: row.id,
-          deptid: row.deptid.toString(),
           birthday: row.birthday,
           avatar: row.avatar,
           email: row.email,
           phone: row.phone,
           name: row.name,
-          roleid: row.roleid.toString(),
           password: "",
           rePassword: "",
           department: row.department,
@@ -1081,6 +1079,12 @@ export default {
         // industryBackground: row.industry_background.toString(),
         // engineeringBackground: row.engineering_background.toString(),
         // doubleTeacher: row.double_teacher.toString(),
+        if (row.deptid) {
+          this.form.deptid = row.deptid.toString();
+        }
+        if (row.roleid) {
+          this.form.roleid = row.roleid.toString();
+        }
         if (row.sex) this.form.sex = row.sex.toString();
         if (row.engineeringBackground)
           this.form.engineeringBackground = row.engineeringBackground.toString();
