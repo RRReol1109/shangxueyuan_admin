@@ -115,6 +115,13 @@
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="年度"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
         prop="reformPaper"
         align="center"
         label="是否为教改论文"

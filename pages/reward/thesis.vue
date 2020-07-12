@@ -230,7 +230,7 @@
               ></el-autocomplete>-->
               <el-select v-model="ruleForm.type" placeholder="请输入内容" style="width:98%">
                 <el-option label="湖南省优秀博士论文" value="湖南省优秀博士论文"></el-option>
-                <el-option label="湖南省优秀硕士论文" value="湖南省优秀硕士论文"></el-option>
+                <el-option label="湖南省优秀硕博论文" value="湖南省优秀硕博论文"></el-option>
               </el-select>
             </el-form-item>
           </el-col>

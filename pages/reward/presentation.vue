@@ -424,18 +424,18 @@ export default {
       rules: {
         year: [{ required: true, message: "请输入年份", trigger: "blur" }],
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        awardName: [
-          { required: true, message: "请输入成果名称", trigger: "blur" }
-        ],
-        firstUnit: [
-          { required: true, message: "请输入第一完成单位", trigger: "blur" }
-        ],
-        level: [{ required: true, message: "请选择项目级别", trigger: "blur" }],
-        type: [{ required: true, message: "请选择项目类型", trigger: "blur" }],
-        firstPerson: [
-          { required: true, message: "请输入第一获奖人", trigger: "blur" }
-        ],
-        persons: [{ required: true, message: "请输入获奖人", trigger: "blur" }],
+        // awardName: [
+        //   { required: true, message: "请输入成果名称", trigger: "blur" }
+        // ],
+        // firstUnit: [
+        //   { required: true, message: "请输入第一完成单位", trigger: "blur" }
+        // ],
+        // level: [{ required: true, message: "请选择项目级别", trigger: "blur" }],
+        // type: [{ required: true, message: "请选择项目类型", trigger: "blur" }],
+        // firstPerson: [
+        //   { required: true, message: "请输入第一获奖人", trigger: "blur" }
+        // ],
+        // persons: [{ required: true, message: "请输入获奖人", trigger: "blur" }],
         awardDate: [
           { required: true, message: "请输入获奖时间", trigger: "blur" }
         ]

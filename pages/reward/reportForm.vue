@@ -375,7 +375,7 @@ export default {
         for (let j = 0; j < items.length; j++) {
           const item = items[j];
           if (item[name]) {
-            data.push(item[name][this.query.year]);
+            data.push(item[name][this.query.year].toFixed(4));
           } else {
             data.push(0);
           }
@@ -427,10 +427,10 @@ export default {
           if (res.records[i].score.hasOwnProperty(key)) {
             const element = res.records[i].score[key];
             res.records[i].scores += element[this.query.year];
-            res.records[i][key] = res.records[i].score[key][this.query.year];
+            res.records[i][key] = res.records[i].score[key][this.query.year].toFixed(4);
           }
         }
-        res.records[i].scores = res.records[i].scores.toFixed(2);
+        res.records[i].scores = res.records[i].scores.toFixed(4);
       }
       this.total = parseInt(res.total);
       this.tableData = res.records;
