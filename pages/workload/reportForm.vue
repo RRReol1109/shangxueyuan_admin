@@ -399,7 +399,7 @@ export default {
             res.records[i][key] = res.records[i].score[key][this.query.year];
           }
         }
-        res.records[i].scores = res.records[i].scores.toFixed(2);
+        res.records[i].scores = res.records[i].scores.toFixed(4);
       }
       this.total = parseInt(res.total);
       this.tableData = res.records;
