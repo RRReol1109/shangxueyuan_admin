@@ -49,7 +49,7 @@
       <el-table-column
         :show-overflow-tooltip="true"
         prop="userId"
-        label="ID"
+        label="工号"
         align="center"
         width="50"
       ></el-table-column>
@@ -291,8 +291,8 @@ export default {
         return;
       }
       this.dialogDetailVisible = true;
-      this.showDepartment();
-      this.showTeacherData();
+      await this.showDepartment();
+      await this.showTeacherData();
     },
     async showDepartment() {
       let param = {
@@ -427,7 +427,9 @@ export default {
           if (res.records[i].score.hasOwnProperty(key)) {
             const element = res.records[i].score[key];
             res.records[i].scores += element[this.query.year];
-            res.records[i][key] = res.records[i].score[key][this.query.year].toFixed(4);
+            res.records[i][key] = res.records[i].score[key][
+              this.query.year
+            ].toFixed(4);
           }
         }
         res.records[i].scores = res.records[i].scores.toFixed(4);

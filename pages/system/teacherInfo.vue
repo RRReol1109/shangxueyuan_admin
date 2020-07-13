@@ -79,7 +79,7 @@
         :show-overflow-tooltip="true"
         prop="id"
         align="center"
-        label="ID"
+        label="工号"
       ></el-table-column>
       <el-table-column
         width="150"

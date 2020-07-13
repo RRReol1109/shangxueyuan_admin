@@ -48,7 +48,7 @@
       <el-table-column
         :show-overflow-tooltip="true"
         prop="userId"
-        label="ID"
+        label="工号"
         align="center"
         width="50"
       ></el-table-column>
