@@ -65,7 +65,7 @@ export default {
       page: 1,
       query: {
         logtype: "1",
-        limit: 14,
+        limit: 10,
         offset: 0,
         order: "desc",
         condition: ""

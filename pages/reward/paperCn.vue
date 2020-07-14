@@ -332,9 +332,10 @@
           <el-col :span="12">
             <el-form-item label="核心收录" prop="included">
               <el-select placeholder="请选择" style="width:98%" v-model="ruleForm.included">
-                <el-option label="CSTPCD" value="CSTPCD"></el-option>
+                <el-option label="CSCD" value="CSCD"></el-option>
+                <el-option label="CSSCI" value="CSSCI"></el-option>
                 <el-option label="CSCD扩展" value="CSCD扩展"></el-option>
-                <el-option label="CSSCI核心" value="CSSCI核心"></el-option>
+                <el-option label="CSSCI扩展" value="CSSCI扩展"></el-option>
                 <el-option label="北大核心" value="北大核心"></el-option>
               </el-select>
             </el-form-item>
@@ -491,7 +492,7 @@ export default {
       page: 1,
       yearsOptions: [],
       query: {
-        limit: 14,
+        limit: 10,
         offset: 0,
         order: "desc",
         condition: ""

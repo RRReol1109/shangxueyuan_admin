@@ -221,7 +221,7 @@ export default {
       fileList: [],
       page: 1,
       query: {
-        limit: 14,
+        limit: 10,
         offset: 0,
         order: "desc",
         condition: ""

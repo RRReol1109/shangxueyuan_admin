@@ -67,7 +67,14 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" v-loading="loading" border style="width: 100%">
+    <el-table
+      :data="tableData"
+      v-loading="loading"
+      border
+      :row-class-name="tableRowClassName"
+      style="width: 100%"
+      height="650"
+    >
       <el-table-column :show-overflow-tooltip="true" prop="pick" label align="center" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
@@ -77,15 +84,9 @@
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
-        prop="id"
-        align="center"
-        label="工号"
-      ></el-table-column>
-      <el-table-column
-        width="150"
-        :show-overflow-tooltip="true"
         prop="account"
         align="center"
+        sortable
         label="工号/账号"
       ></el-table-column>
       <el-table-column
@@ -94,6 +95,7 @@
         prop="name"
         align="center"
         label="姓名"
+        sortable
       ></el-table-column>
       <el-table-column
         width="150"
@@ -101,18 +103,47 @@
         prop="department"
         align="center"
         label="所在系"
+        sortable
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="sexName" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="age" align="center" label="年龄"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="nation" align="center" label="民族"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="sexName"
+        align="center"
+        sortable
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="age"
+        align="center"
+        sortable
+        label="年龄"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="nation"
+        align="center"
+        sortable
+        label="民族"
+      ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="最高学历"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="politic" align="center" label="政治面貌"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        width="150"
+        prop="politic"
+        align="center"
+        sortable
+        label="政治面貌"
+      ></el-table-column>
       <el-table-column
         width="150"
         :show-overflow-tooltip="true"
         prop="work_date"
         align="center"
         label="参加工作年月"
+        sortable
       ></el-table-column>
       <el-table-column
         width="150"
@@ -120,74 +151,173 @@
         prop="school_date"
         align="center"
         label="进校年月"
+        sortable
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="post" align="center" label="岗位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="现职称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="现职级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tutor_state" align="center" label="导师资格"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="job" align="center" label="现职务"></el-table-column>
       <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="state"
+        align="center"
+        sortable
+        label="状态"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="post"
+        sortable
+        align="center"
+        label="岗位"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="title"
+        sortable
+        align="center"
+        label="现职称"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="level"
+        sortable
+        align="center"
+        label="现职级"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="tutor_state"
+        sortable
+        align="center"
+        label="导师资格"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="job"
+        sortable
+        align="center"
+        label="现职务"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="highest_education"
         align="center"
+        sortable
         label="最高学历"
       ></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="highest_degree"
         align="center"
+        sortable
         label="最高学位"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="school" align="center" label="毕业学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="毕业专业"></el-table-column>
       <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="school"
+        sortable
+        align="center"
+        label="毕业学校"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="major"
+        sortable
+        align="center"
+        label="毕业专业"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="graduation_date"
         align="center"
         label="毕业年月"
+        sortable
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
       <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="tutor"
+        sortable
+        align="center"
+        label="导师"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="subject_category"
         align="center"
+        sortable
         label="学科类别"
       ></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="research_direction"
         align="center"
+        sortable
         label="研究方向"
       ></el-table-column>
       <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="research_direction"
+        align="center"
+        sortable
+        label="学术组织任职"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="talent_category"
         align="center"
+        sortable
         label="人才类别"
       ></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="overseas_experience"
         align="center"
+        sortable
         label="海外研修经历"
       ></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="national_award"
         align="center"
+        sortable
         label="国家级奖项"
       ></el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="provincial_award"
         align="center"
+        sortable
         label="省级奖项"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
       <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="type"
+        sortable
+        align="center"
+        label="类型"
+      ></el-table-column>
+      <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="double_teacher"
+        sortable
         align="center"
         label="是否双师型"
       >
@@ -196,9 +326,11 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="engineering_background"
         align="center"
+        sortable
         label="是否工程背景"
       >
         <template slot-scope="scope">
@@ -206,19 +338,49 @@
         </template>
       </el-table-column>
       <el-table-column
+        width="150"
         :show-overflow-tooltip="true"
         prop="industry_background"
         align="center"
+        sortable
         label="是否行业背景"
       >
         <template slot-scope="scope">
           <span>{{scope.row.industry_background | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="移动电话"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="statusName" align="center" label="状态"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        sortable
+        prop="phone"
+        align="center"
+        label="移动电话"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        sortable
+        prop="email"
+        align="center"
+        label="邮箱"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        sortable
+        prop="statusName"
+        align="center"
+        label="状态"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        sortable
+        prop="remark"
+        align="center"
+        label="备注"
+      ></el-table-column>
       <el-table-column fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -231,12 +393,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -525,8 +686,12 @@
           <el-col :span="12">
             <el-form-item label="类型">
               <el-select v-model="query.type" size="normal" style="width:99%" placeholder="请选择">
-                <el-option label="教学部门" value="教学部门"></el-option>
-                <el-option label="行政部门" value="行政部门"></el-option>
+                <el-option label="教学（院内）" value="教学（院内）"></el-option>
+                <el-option label="教学（校内）" value="教学（校内）"></el-option>
+                <el-option label="教学（兼职）" value="教学（兼职）"></el-option>
+                <el-option label="教学（短期人才项目）" value="教学（短期人才项目）"></el-option>
+                <el-option label="行政（事业编）" value="行政（事业编）"></el-option>
+                <el-option label="行政（非事业编）" value="行政（非事业编）"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -544,6 +709,9 @@
           </el-col>
         </el-row>
         <el-form-item label="研究方向" prop="researchDirection">
+          <el-input type="textarea" v-model="form.researchDirection" style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="学术组织任职" prop="researchDirection">
           <el-input type="textarea" v-model="form.researchDirection" style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="海外研修经历" porp="overseasExperience">
@@ -641,7 +809,7 @@ export default {
       dialogFormVisible: false,
       fileList: [],
       query: {
-        limit: 12,
+        limit: 10,
         offset: 0,
         order: "desc",
         deptid: 0,
@@ -729,15 +897,15 @@ export default {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     uploadSuccess() {
       this.$message({
         type: "success",
         message: "上传成功"
       });
-      this.list();
-    },
-    handleCurrentChange(val) {
-      this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
     changeFlag(row) {
@@ -1043,8 +1211,6 @@ export default {
           email: row.email,
           phone: row.phone,
           name: row.name,
-          password: "",
-          rePassword: "",
           department: row.department,
           graduationDate: row.graduation_date,
           highestDegree: row.highest_degree,
@@ -1094,6 +1260,7 @@ export default {
           this.form.doubleTeacher = row.doubleTeacher.toString();
       }
     },
+
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -1140,6 +1307,14 @@ export default {
         return value;
       });
       console.log("this.departments::", this.departments);
+    },
+    tableRowClassName({ row, rowIndex }) {
+      //   if (rowIndex % 2 == 0) {
+      //     return "warning-row";
+      //   } else {
+      //     return "success-row";
+      //   }
+      //   return "";
     }
   },
   mounted() {
@@ -1161,6 +1336,13 @@ export default {
 }
 #nameBox {
   width: 200px;
+}
+.el-table .warning-row {
+  background: oldlace;
+}
+
+.el-table .success-row {
+  background: #f0f9eb;
 }
 .el-drawer__body {
   overflow: auto;

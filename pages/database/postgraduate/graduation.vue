@@ -279,7 +279,7 @@ export default {
       deptid: "",
       dialogFormVisible: false,
       query: {
-        limit: 14,
+        limit: 10,
         offset: 0,
         order: "desc",
         condition: ""

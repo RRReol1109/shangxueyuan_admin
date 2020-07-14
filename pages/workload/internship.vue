@@ -413,7 +413,7 @@ export default {
       page: 1,
       roleId: 0,
       role: false,
-      query: { limit: 14, offset: 0, order: "desc", condition: "" },
+      query: { limit: 10, offset: 0, order: "desc", condition: "" },
       tableData: [],
       operate: "",
       examineForm: {
@@ -459,7 +459,7 @@ export default {
       companyArr: [],
       userList: [],
       query: {
-        limit: 14,
+        limit: 10,
         offset: 0,
         order: "desc",
         condition: ""

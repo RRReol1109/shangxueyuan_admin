@@ -321,7 +321,7 @@ export default {
       fileList: [],
       operate: "",
       page: 1,
-      query: { limit: 14, offset: 0, order: "desc", condition: "" },
+      query: { limit: 10, offset: 0, order: "desc", condition: "" },
       yearsOptions: [],
       tableData: [{}],
       ruleForm: {

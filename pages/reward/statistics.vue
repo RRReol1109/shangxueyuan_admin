@@ -139,7 +139,7 @@ export default {
         series: []
       },
       query: {
-        limit: 14,
+        limit: 10,
         offset: 0,
         type: "",
         userId: "",
