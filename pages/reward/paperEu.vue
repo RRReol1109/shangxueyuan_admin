@@ -793,7 +793,7 @@ export default {
         authors: [
           { required: true, message: "请输入作者信息", trigger: "blur" }
         ],
-        doi: [{ required: true, message: "请输入DOI号", trigger: "blur" }],
+
         author: [{ required: true, message: "请输入作者", trigger: "blur" }],
         point: [
           { required: true, message: "请输入本人计分", trigger: "blur" },
@@ -807,10 +807,6 @@ export default {
           { required: true, message: "请输入分类编号", trigger: "blur" }
         ],
         score: [{ required: true, message: "请输入分数", trigger: "blur" }],
-        subsidizeSource: [
-          { required: true, message: "请输入资助来源", trigger: "blur" }
-        ],
-        wos: [{ required: true, message: "请输入WoS号", trigger: "blur" }],
         highlyCited: [
           {
             required: true,

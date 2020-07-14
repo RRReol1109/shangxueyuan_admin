@@ -80,9 +80,9 @@
           <span>{{scope.row.要报 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="优秀硕博论文" align="center" label="优秀硕博论文">
+      <el-table-column :show-overflow-tooltip="true" prop="优秀论文" align="center" label="优秀论文">
         <template slot-scope="scope">
-          <span>{{scope.row.优秀硕博论文 | statusFilter}}</span>
+          <span>{{scope.row.优秀论文 | statusFilter}}</span>
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目">
@@ -197,7 +197,7 @@ export default {
             data: [173, 114, 154, 132, 134]
           },
           {
-            name: "优秀硕博论文",
+            name: "优秀论文",
             data: [173, 114, 154, 132, 134]
           },
           {
@@ -279,7 +279,7 @@ export default {
             data: [173, 114, 154, 132, 134, 114, 154]
           },
           {
-            name: "优秀硕博论文",
+            name: "优秀论文",
             data: [173, 114, 154, 132, 134, 114, 154]
           },
           {

@@ -18,13 +18,6 @@
         <el-form-item label="期刊名称:">
           <el-input v-model="query.journal" style="width:250px" placeholder="请输入期刊名称" size="normal"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="半价/原价:">
-          <el-select v-model="query.half" size="normal" placeholder="请选择类型">
-            <el-option label="全部" value></el-option>
-            <el-option label="半价" :value="1"></el-option>
-            <el-option label="原价" :value="0"></el-option>
-          </el-select>
-        </el-form-item>-->
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
