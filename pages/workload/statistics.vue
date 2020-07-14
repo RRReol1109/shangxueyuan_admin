@@ -48,7 +48,7 @@
       <el-table-column
         :show-overflow-tooltip="true"
         prop="userId"
-        label="ID"
+        label="工号"
         align="center"
         width="50"
       ></el-table-column>
@@ -232,7 +232,7 @@ export default {
         for (let j in res.records[i].score) {
           res.records[i].scores += res.records[i].score[j][this.query.year];
         }
-        res.records[i].scores = res.records[i].scores.toFixed(2);
+        res.records[i].scores = res.records[i].scores.toFixed(4);
       }
       this.total = parseInt(res.total);
       this.tableData = res.records;
@@ -254,7 +254,7 @@ export default {
         let data = [];
         for (let key in res) {
           if (res[key][i]) {
-            data.push(parseFloat(res[key][i].toFixed(2)));
+            data.push(parseFloat(res[key][i].toFixed(4)));
           } else {
             data.push(0);
           }

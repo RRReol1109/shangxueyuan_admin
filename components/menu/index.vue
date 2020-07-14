@@ -260,6 +260,15 @@ export default {
           childs: [
             {
               entity: {
+                id: 27,
+                name: "research",
+                alias: "科研项目",
+                state: "ENABLE",
+                value: "/reward/research"
+              }
+            },
+            {
+              entity: {
                 id: 22,
                 name: "opus",
                 alias: "著作&教材",
@@ -312,15 +321,7 @@ export default {
                 value: "/reward/thesis"
               }
             },
-            {
-              entity: {
-                id: 27,
-                name: "research",
-                alias: "科研项目",
-                state: "ENABLE",
-                value: "/reward/research"
-              }
-            },
+
             {
               entity: {
                 id: 61,

@@ -49,7 +49,7 @@
       <el-table-column
         :show-overflow-tooltip="true"
         prop="userId"
-        label="ID"
+        label="工号"
         align="center"
         width="50"
       ></el-table-column>
@@ -225,15 +225,7 @@ export default {
           enabled: true
         },
         xAxis: {
-          categories: [
-            "管理科学与信息管理系",
-            "企业管理系",
-            "金融学系",
-            "财务与投资管理系",
-            "经济与贸易系",
-            "会计学系",
-            "市场营销系"
-          ],
+          categories: [],
           gridLineWidth: 2,
           min: 0,
           max: 4
@@ -257,36 +249,7 @@ export default {
             pointWidth: 10 //柱子宽bai度du
           }
         },
-        series: [
-          {
-            name: "著作教材",
-            data: [107, 131, 135, 203, 152, 114, 154]
-          },
-          {
-            name: "中文论文",
-            data: [133, 156, 147, 208, 196, 114, 154]
-          },
-          {
-            name: "英文论文",
-            data: [173, 114, 154, 132, 134, 114, 154]
-          },
-          {
-            name: "获奖",
-            data: [173, 114, 154, 132, 134, 114, 154]
-          },
-          {
-            name: "要报",
-            data: [173, 114, 154, 132, 134, 114, 154]
-          },
-          {
-            name: "优秀论文",
-            data: [173, 114, 154, 132, 134, 114, 154]
-          },
-          {
-            name: "科研项目",
-            data: [173, 114, 154, 132, 134, 173, 114]
-          }
-        ]
+        series: []
       },
       query: {
         limit: 10,
@@ -328,8 +291,8 @@ export default {
         return;
       }
       this.dialogDetailVisible = true;
-      this.showDepartment();
-      this.showTeacherData();
+      await this.showDepartment();
+      await this.showTeacherData();
     },
     async showDepartment() {
       let param = {
@@ -412,7 +375,7 @@ export default {
         for (let j = 0; j < items.length; j++) {
           const item = items[j];
           if (item[name]) {
-            data.push(item[name][this.query.year]);
+            data.push(item[name][this.query.year].toFixed(4));
           } else {
             data.push(0);
           }
@@ -464,10 +427,12 @@ export default {
           if (res.records[i].score.hasOwnProperty(key)) {
             const element = res.records[i].score[key];
             res.records[i].scores += element[this.query.year];
-            res.records[i][key] = res.records[i].score[key][this.query.year];
+            res.records[i][key] = res.records[i].score[key][
+              this.query.year
+            ].toFixed(4);
           }
         }
-        res.records[i].scores = res.records[i].scores.toFixed(2);
+        res.records[i].scores = res.records[i].scores.toFixed(4);
       }
       this.total = parseInt(res.total);
       this.tableData = res.records;

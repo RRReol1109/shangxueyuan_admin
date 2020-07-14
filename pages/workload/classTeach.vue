@@ -571,12 +571,12 @@ export default {
       roleId: 0,
       rules: {
         name: [
-          { required: true, message: "请输入课程名称", trigger: "blur" },
-          { min: 2, max: 20, message: "长度在 2 到 20 个字符", trigger: "blur" }
+          { required: true, message: "请输入课程名称", trigger: "blur" }
+          // { min: 2, max: 20, message: "长度在 2 到 20 个字符", trigger: "blur" }
         ],
-        type: [
-          { required: true, message: "请选择授课类型", trigger: "change" }
-        ],
+        // type: [
+        //   { required: true, message: "请选择授课类型", trigger: "change" }
+        // ],
         // target: [
         //   { required: true, message: "请输入授课对象", trigger: "blur" }
         // ],
@@ -584,10 +584,10 @@ export default {
           { required: true, message: "请输入课时", trigger: "blur" },
           { validator: validateNumber, trigger: "blur" }
         ],
-        count: [
-          { required: true, message: "请输入人数", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
-        ],
+        // count: [
+        //   { required: true, message: "请输入人数", trigger: "blur" },
+        //   { validator: validateNumber, trigger: "blur" }
+        // ],
         teacher: [{ required: true, message: "请输入教师", trigger: "blur" }]
       }
     };

@@ -49,7 +49,7 @@
       <el-table-column
         :show-overflow-tooltip="true"
         prop="userId"
-        label="ID"
+        label="工号"
         align="center"
         width="50"
       ></el-table-column>
@@ -255,8 +255,8 @@ export default {
         return;
       }
       this.dialogDetailVisible = true;
-      this.showDepartment();
-      this.showTeacherData();
+      await this.showDepartment();
+      await this.showTeacherData();
     },
     async showDepartment() {
       let param = {
@@ -399,7 +399,7 @@ export default {
             res.records[i][key] = res.records[i].score[key][this.query.year];
           }
         }
-        res.records[i].scores = res.records[i].scores.toFixed(2);
+        res.records[i].scores = res.records[i].scores.toFixed(4);
       }
       this.total = parseInt(res.total);
       this.tableData = res.records;

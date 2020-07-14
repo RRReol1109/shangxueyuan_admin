@@ -8,6 +8,9 @@
         <el-form-item label="DOI号:">
           <el-input v-model="query.doi" placeholder size="normal"></el-input>
         </el-form-item>
+        <el-form-item label="第一作者:">
+          <el-input v-model="query.firstAuthor" style="width:250px" placeholder size="normal"></el-input>
+        </el-form-item>
         <!-- <el-form-item label="期刊分级:">
           <el-select v-model="query.level" size="normal" placeholder="请选择分级">
             <el-option label="全部" value></el-option>
@@ -111,6 +114,13 @@
         prop="publishDate"
         align="center"
         label="发表日期"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="年度"
       ></el-table-column>
       <el-table-column
         width="150"
