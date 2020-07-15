@@ -71,19 +71,19 @@
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column align="center" type="selection" width="50"></el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="awardDate" align="center" label="发表时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="要报类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="resultName" align="center" label="成果名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="persons" align="center" label="作者|分数|单位"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="获得分数"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="awardDate" align="center" label="发表时间"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="要报类型"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="resultName" align="center" label="成果名称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="persons" align="center" label="作者|分数|单位"></el-table-column>
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="获得分数"></el-table-column> -->
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

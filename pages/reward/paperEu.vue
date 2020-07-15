@@ -100,29 +100,29 @@
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column align="center" type="selection" width="50"></el-table-column>
-      <el-table-column
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         type="index"
         label="序号"
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="publishDate"
         align="center"
         label="发表日期"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="year"
         align="center"
         label="年度"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="reformPaper"
@@ -133,105 +133,105 @@
           <span>{{scope.row.reformPaper | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="title"
         align="center"
         label="论文名称"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="journal"
         align="center"
         label="期刊名称"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="doi"
         align="center"
         label="DOI号"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="wos"
         align="center"
         label="WoS号"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="subsidizeSource"
         align="center"
         label="资助来源"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="collegeLevel"
         align="center"
         label="学院期刊分级"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="issn"
         align="center"
         label="期刊ISSN号"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="included"
         align="center"
         label="核心收录"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="subject"
         align="center"
         label="期刊所属学科"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="schoolLevel"
         align="center"
         label="学校期刊分级"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstAuthor"
         align="center"
         label="第一作者"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstAuthorDept"
         align="center"
         label="第一作者单位"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstCorrespondent"
         align="center"
         label="第一通讯作者"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstCorrespondentDept"
         align="center"
         label="第一通讯作者单位"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="180"
         :show-overflow-tooltip="true"
         prop="esiEconomics"
@@ -242,70 +242,70 @@
           <span>{{scope.row.esiEconomics | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="180"
         :show-overflow-tooltip="true"
         prop="esi1Date"
         align="center"
         label="进入1%(百分之一)时间"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="180"
         :show-overflow-tooltip="true"
         prop="esi01Date"
         align="center"
         label="进入0.1%(千分之一)时间"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="yearDate"
         align="center"
         label="年代卷期"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="timesCited"
         align="center"
         label="被引用次数"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="jcrLevel1"
         align="center"
         label="汤森路透JCR分区"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="jcrLevel2"
         align="center"
         label="中科院JCR分区"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="ft50"
         align="center"
         label="金融时报FT50"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="abs"
         align="center"
         label="ABS"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="utd24"
         align="center"
         label="UTD24"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="cooPaper"
@@ -316,13 +316,13 @@
           <span>{{scope.row.cooPaper | flagFilter}}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="cateNumber" align="center" label="分类编号"></el-table-column> -->
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="300">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text">编辑</el-button>
@@ -677,19 +677,19 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column
+            <el-table-column sortable
               :show-overflow-tooltip="true"
               type="index"
               label="#"
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+            <el-table-column sortable :show-overflow-tooltip="true" prop label="文件名" align="center">
               <template slot-scope="scope">
                 <span>{{ scope.row.name.split('/').pop() }}</span>
               </template>
             </el-table-column>
-            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
+            <el-table-column sortable :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
                 <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>

@@ -45,7 +45,7 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="pick"
         align="center"
@@ -56,19 +56,19 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="account" align="center" label="工号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="patentName" align="center" label="专利名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="authId" align="center" label="授权号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="获批时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="applyFlag" align="center" label="是否应用">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="account" align="center" label="工号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="patentName" align="center" label="专利名称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="authId" align="center" label="授权号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="date" align="center" label="获批时间"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="applyFlag" align="center" label="是否应用">
         <template slot-scope="scope">
           <span>{{scope.row.applyFlag | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="unionFlag"
         align="center"
@@ -78,12 +78,12 @@
           <span>{{scope.row.unionFlag | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

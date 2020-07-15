@@ -45,17 +45,17 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="userId"
         label="工号"
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="总分"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="scores" align="center" label="总分"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="showDialog(scope.row)" type="text" size="normal">详情</el-button>
         </template>

@@ -56,34 +56,34 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="工作单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="职称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="student" align="center" label="职务"></el-table-column>
-      <el-table-column
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="工作单位"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="entrance" align="center" label="职称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="student" align="center" label="职务"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="graduationStudent"
         align="center"
         label="学历"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="学位"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="admission" align="center" label="学位"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="admission"
         align="center"
         label="专业学位类别/领域"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="联系电话"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="admission" align="center" label="校内导师"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="admission" align="center" label="联系电话"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="admission" align="center" label="邮箱"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="admission" align="center" label="校内导师"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

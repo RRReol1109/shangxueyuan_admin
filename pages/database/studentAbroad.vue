@@ -69,66 +69,66 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <!-- <el-table-column fixed prop="studentId" align="center" label="学号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="identity" align="center" label="身份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studyPlan" align="center" label="留学身份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="profession" align="center" label="专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="undergraduateSchool" align="center" label="本科学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studySchool" align="center" label="学习学校"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startTime" align="center" label="开始时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="endTime" align="center" label="结束时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="learningWay" align="center" label="学习形式"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="applicationStatus" align="center" label="申请状态"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>-->
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <!-- <el-table-column sortable fixed prop="studentId" align="center" label="学号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="phone" align="center" label="手机"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="identity" align="center" label="身份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studyPlan" align="center" label="留学身份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="profession" align="center" label="专业"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="undergraduateSchool" align="center" label="本科学校"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studySchool" align="center" label="学习学校"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="startTime" align="center" label="开始时间"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="endTime" align="center" label="结束时间"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="learningWay" align="center" label="学习形式"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="applicationStatus" align="center" label="申请状态"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>-->
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="学生姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentId" align="center" label="学号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="degree" align="center" label="在读学位类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="profession" align="center" label="专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="学生姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studentId" align="center" label="学号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="degree" align="center" label="在读学位类型"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="profession" align="center" label="专业"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="internalTutor"
         align="center"
         label="国内导师"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studyPlan" align="center" label="拟留学身份"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studyPlan" align="center" label="拟留学身份"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="studySchool"
         align="center"
         label="留学单位（英文）"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="overseasTutor"
         align="center"
         label="海外导师"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studyTime" align="center" label="学习期限"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="fundingType" align="center" label="资助类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="手机号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="备注"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studyTime" align="center" label="学习期限"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="fundingType" align="center" label="资助类型"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="phone" align="center" label="手机号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="email" align="center" label="备注"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         fixed="right"
         align="center"
         label="操作"

@@ -64,56 +64,56 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="interviewTime"
         align="center"
         label="来访时间"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="accessType" align="center" label="访问类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="visitor" align="center" label="专家姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="passport" align="center" label="护照号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="jobTitle" align="center" label="职称"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="accessType" align="center" label="访问类型"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="visitor" align="center" label="专家姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="passport" align="center" label="护照号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="jobTitle" align="center" label="职称"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="citizenshipCountry"
         align="center"
         label="国籍"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="unit" align="center" label="工作单位"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="unit" align="center" label="工作单位"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="expertCategory"
         align="center"
         label="专家类别"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="researchAreas"
         align="center"
         label="研究领域"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="discipline" align="center" label="所属学科"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="discipline" align="center" label="所属学科"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="communicationContent"
         align="center"
         label="交流内容"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="inviter" align="center" label="邀请人"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="inviter" align="center" label="邀请人"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

@@ -56,39 +56,39 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="teacherId" align="center" label="教职工工号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教职工姓名"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="序号"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="projectId" align="center" label="项目编号"></el-table-column>
-      <el-table-column
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="teacherId" align="center" label="教职工工号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="教职工姓名"></el-table-column>
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="entrance" align="center" label="序号"></el-table-column> -->
+      <el-table-column sortable :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="projectId" align="center" label="项目编号"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="projectOrigin"
         align="center"
         label="项目来源"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="projectOrganizer"
         align="center"
         label="立项机构"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="projectLevel"
         align="center"
         label="项目级别"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="date" align="center" label="立项年月"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="起始年月日"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="endDate" align="center" label="终止年月日"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="funds" align="center" label="合同经费(万元"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="approvals" align="center" label="上传批文"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="date" align="center" label="立项年月"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="startDate" align="center" label="起始年月日"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="endDate" align="center" label="终止年月日"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="funds" align="center" label="合同经费(万元"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="approvals" align="center" label="上传批文"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

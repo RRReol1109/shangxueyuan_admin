@@ -68,21 +68,21 @@
       </el-form>
     </div>
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
-      <el-table-column prop="pick" label align="center" width="50">
+      <el-table-column sortable prop="pick" label align="center" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <!-- <el-table-column prop="id" align="center" label="工号"></el-table-column> -->
-      <el-table-column prop="account" align="center" label="用户名"></el-table-column>
-      <el-table-column prop="name" align="center" label="教师名"></el-table-column>
-      <el-table-column prop="phone" align="center" label="手机号"></el-table-column>
-      <el-table-column prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column prop="deptName" align="center" label="部门"></el-table-column>
-      <el-table-column prop="roleName" align="center" label="角色"></el-table-column>
-      <el-table-column prop="statusName" align="center" label="状态"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <!-- <el-table-column sortable prop="id" align="center" label="工号"></el-table-column> -->
+      <el-table-column sortable prop="account" align="center" label="用户名"></el-table-column>
+      <el-table-column sortable prop="name" align="center" label="教师名"></el-table-column>
+      <el-table-column sortable prop="phone" align="center" label="手机号"></el-table-column>
+      <el-table-column sortable prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column sortable prop="deptName" align="center" label="部门"></el-table-column>
+      <el-table-column sortable prop="roleName" align="center" label="角色"></el-table-column>
+      <el-table-column sortable prop="statusName" align="center" label="状态"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

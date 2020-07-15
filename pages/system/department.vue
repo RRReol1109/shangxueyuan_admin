@@ -29,11 +29,11 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="simplename" align="center" label="部门简称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="fullname" align="center" label="部门全称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tips" align="center" label="备注"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="simplename" align="center" label="部门简称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="fullname" align="center" label="部门全称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="tips" align="center" label="备注"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button
             @click="operate='show';operate='show';showDialog(scope.row)"

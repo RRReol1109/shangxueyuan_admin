@@ -77,7 +77,7 @@
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >
-      <!-- <el-table-column
+      <!-- <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="pick"
         align="center"
@@ -88,32 +88,32 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>-->
-      <el-table-column align="center" type="selection" width="50"></el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="指导人数"></el-table-column>
-      <el-table-column
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="count" align="center" label="指导人数"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="graduationCount"
         align="center"
         label="毕业人数"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="secretaryCount"
         align="center"
         label="答辩秘书班级数"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentType" align="center" label="学生类型"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studentType" align="center" label="学生类型"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

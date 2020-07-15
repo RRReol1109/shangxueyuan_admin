@@ -26,15 +26,15 @@
       </el-form>
     </div>
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度" width="100"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="项目级别" width="100"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="项目类型" min-width="100"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="基础计分" width="100"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="national" align="center" label="重点项目加分" min-width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="province" align="center" label="重大项目加分" min-width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remake" align="center" label="备注"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度" width="100"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="项目级别" width="100"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="项目类型" min-width="100"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="基础计分" width="100"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="national" align="center" label="重点项目加分" min-width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="province" align="center" label="重大项目加分" min-width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="remake" align="center" label="备注"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

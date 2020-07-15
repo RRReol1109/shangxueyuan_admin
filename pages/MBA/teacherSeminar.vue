@@ -56,85 +56,85 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="teacherId" align="center" label="教职工工号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教职工姓名"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="entrance" align="center" label="序号"></el-table-column> -->
-      <el-table-column
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="teacherId" align="center" label="教职工工号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="教职工姓名"></el-table-column>
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="entrance" align="center" label="序号"></el-table-column> -->
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="studentType"
         align="center"
         label="研究生类别"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="studentGrade"
         align="center"
         label="研究生年级"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="studentMajor"
         align="center"
         label="研究生专业"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="author" align="center" label="全部作者列表"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="title" align="center" label="论文题目"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="author" align="center" label="全部作者列表"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="title" align="center" label="论文题目"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="conferenceName"
         align="center"
         label="学术会议名称"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="conferenceAddress"
         align="center"
         label="学术会议举办地点"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="conferenceOrganizer"
         align="center"
         label="学术会议组织者"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="conferenceDate"
         align="center"
         label="会议年月"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="papersName"
         align="center"
         label="学术会议论文集名称"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tutorIndex" align="center" label="本人排名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="level" align="center" label="院定级别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="authorCnt" align="center" label="作者总数"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="tutorIndex" align="center" label="本人排名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="院定级别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="authorCnt" align="center" label="作者总数"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="timesCited"
         align="center"
         label="论文他引次数"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="role" align="center" label="参会角色"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="role" align="center" label="参会角色"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="pdfUrl"
         align="center"
         label="上传全文PDF电子版"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="point" align="center" label="业绩点"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="考核分"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

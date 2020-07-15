@@ -26,12 +26,12 @@
       </el-form>
     </div>
     <el-table v-loading="loading" :data="tableData" border style="width: 100%">
-      <el-table-column :show-overflow-tooltip="true" prop="id" label="ID" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="基础分数/万字" ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="national" align="center" label="国家规划" ></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="id" label="ID" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="类别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="基础分数/万字" ></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="national" align="center" label="国家规划" ></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

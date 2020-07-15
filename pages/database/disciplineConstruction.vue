@@ -62,26 +62,26 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <!-- <el-table-column fixed prop="id" align="center" label="id"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="上传用户"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="charge" align="center" label="负责人"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="subject" align="center" label="学科名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>-->
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="文件名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="file" align="center" label="文件路径"></el-table-column>-->
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <!-- <el-table-column sortable fixed prop="id" align="center" label="id"></el-table-column> -->
+      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="上传用户"></el-table-column>
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="charge" align="center" label="负责人"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="subject" align="center" label="学科名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>-->
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="文件名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="file" align="center" label="文件路径"></el-table-column>-->
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -176,19 +176,19 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column
+            <el-table-column sortable
               :show-overflow-tooltip="true"
               type="index"
               label="#"
               align="center"
               width="50"
             ></el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop label="文件名" align="center">
+            <el-table-column sortable :show-overflow-tooltip="true" prop label="文件名" align="center">
               <template slot-scope="scope">
                 <span>{{ scope.row.name.split('/').pop() }}</span>
               </template>
             </el-table-column>
-            <el-table-column :show-overflow-tooltip="true" label="操作" align="center">
+            <el-table-column sortable :show-overflow-tooltip="true" label="操作" align="center">
               <template slot-scope="scope">
                 <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
                 <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>

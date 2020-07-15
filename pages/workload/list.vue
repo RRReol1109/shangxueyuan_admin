@@ -60,53 +60,53 @@
       :data="tableData"
       border
       style="width: 100%">
-      <el-table-column
+      <el-table-column sortable
         fixed
         prop="id"
         align="center"
         label="教师ID">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="name"
         align="center"
         label="姓名">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="department"
         align="center"
         label="部门">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="faculty"
         align="center"
         label="系">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="type"
         align="center"
         label="类别">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="tell"
         align="center"
         label="手机号码">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="createTime"
         align="center"
         label="申请时间">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="examineTime"
         align="center"
         label="审核时间">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         prop="status"
         align="center"
         label="状态">
       </el-table-column>
-      <el-table-column
+      <el-table-column sortable
         fixed="right"
         align="center"
         label="操作"

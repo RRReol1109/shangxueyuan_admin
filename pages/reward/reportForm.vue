@@ -46,52 +46,52 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="userId"
         label="工号"
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="著作教材" align="center" label="著作教材">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="著作教材" align="center" label="著作教材">
         <template slot-scope="scope">
           <span>{{scope.row.著作教材 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="中文论文" align="center" label="中文论文">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="中文论文" align="center" label="中文论文">
         <template slot-scope="scope">
           <span>{{scope.row.中文论文 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="英文论文" align="center" label="英文论文">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="英文论文" align="center" label="英文论文">
         <template slot-scope="scope">
           <span>{{scope.row.英文论文 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="获奖" align="center" label="获奖">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="获奖" align="center" label="获奖">
         <template slot-scope="scope">
           <span>{{scope.row.获奖 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="要报" align="center" label="要报">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="要报" align="center" label="要报">
         <template slot-scope="scope">
           <span>{{scope.row.要报 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="优秀论文" align="center" label="优秀论文">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="优秀论文" align="center" label="优秀论文">
         <template slot-scope="scope">
           <span>{{scope.row.优秀论文 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目">
         <template slot-scope="scope">
           <span>{{scope.row.科研项目 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" align="center" label="个人数据">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" align="center" label="个人数据">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
         </template>

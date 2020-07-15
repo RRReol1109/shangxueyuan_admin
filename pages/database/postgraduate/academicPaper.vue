@@ -45,43 +45,43 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="departmentName"
         align="center"
         label="院系名称"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="departmentCode"
         align="center"
         label="院系代码"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="majorName" align="center" label="专业名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentName" align="center" label="学生姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="paperTitle" align="center" label="论文名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="journal" align="center" label="发表期刊"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="majorName" align="center" label="专业名称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="majorCode" align="center" label="专业代码"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studentName" align="center" label="学生姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="paperTitle" align="center" label="论文名称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="journal" align="center" label="发表期刊"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="publicationDate"
         align="center"
         label="发表时间"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="collectionSituation"
         align="center"
         label="收录情况"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="auditFlag"
@@ -92,7 +92,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

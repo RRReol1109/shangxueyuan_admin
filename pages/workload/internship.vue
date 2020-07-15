@@ -110,26 +110,26 @@
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column align="center" type="selection" width="50"></el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="地址"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="实习地点"></el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="hours" align="center" label="实习时长"></el-table-column> -->
-      <el-table-column :show-overflow-tooltip="true" prop="days" align="center" label="实习天数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="count" align="center" label="实习人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="ratio" align="center" label="核定系数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="company" align="center" label="实习单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="address" align="center" label="地址"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="实习地点"></el-table-column>
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="hours" align="center" label="实习时长"></el-table-column> -->
+      <el-table-column sortable :show-overflow-tooltip="true" prop="days" align="center" label="实习天数"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="count" align="center" label="实习人数"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="ratio" align="center" label="核定系数"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="company" align="center" label="实习单位"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column> -->
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column> -->
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

@@ -73,48 +73,48 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="index" align="center" label="序号"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="startDate" align="center" label="入学年月"></el-table-column>
-      <el-table-column
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="index" align="center" label="序号"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="startDate" align="center" label="入学年月"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="graduateDate"
         align="center"
         label="毕业年月"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="studentCnt" align="center" label="学员人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="graduateCnt" align="center" label="毕业人数"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="studentCnt" align="center" label="学员人数"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="graduateCnt" align="center" label="毕业人数"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="fulltimeCnt"
         align="center"
         label="全日制人数"
       ></el-table-column>
-      <el-table-column
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="parttimeCnt"
         align="center"
         label="非全日制人数"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="origin" align="center" label="学员来源"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="requestCnt" align="center" label="申请人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="acceptedCnt" align="center" label="录取人数"></el-table-column>
-      <el-table-column
+      <el-table-column sortable :show-overflow-tooltip="true" prop="origin" align="center" label="学员来源"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="requestCnt" align="center" label="申请人数"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="acceptedCnt" align="center" label="录取人数"></el-table-column>
+      <el-table-column sortable
         :show-overflow-tooltip="true"
         prop="acceptedRate"
         align="center"
         label="录取比例"
       ></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="degreeCnt" align="center" label="授予学位人数"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="leaveCnt" align="center" label="分流淘汰人员"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="degreeCnt" align="center" label="授予学位人数"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="leaveCnt" align="center" label="分流淘汰人员"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

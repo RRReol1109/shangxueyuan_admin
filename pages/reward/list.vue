@@ -52,14 +52,14 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column :show-overflow-tooltip="true" prop="department" align="center" label="部门"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="类别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="教师名称"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tell" align="center" label="手机号码"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="createTime" align="center" label="申请时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="examineTime" align="center" label="审核时间"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="status" align="center" label="状态"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="100">
+      <el-table-column sortable :show-overflow-tooltip="true" prop="department" align="center" label="部门"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="类别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="教师名称"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="tell" align="center" label="手机号码"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="createTime" align="center" label="申请时间"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="examineTime" align="center" label="审核时间"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="status" align="center" label="状态"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="100">
         <template slot-scope="scope">
           <el-button @click="handleClick(scope.row)" type="text" size="normal">查看</el-button>
           <el-button type="text" size="normal">审核</el-button>

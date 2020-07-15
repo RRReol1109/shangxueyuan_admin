@@ -28,11 +28,11 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="id" align="center" label="id"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="上传用户"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="table" align="center" label="简况表名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed prop="id" align="center" label="id"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="上传用户"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="table" align="center" label="简况表名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>

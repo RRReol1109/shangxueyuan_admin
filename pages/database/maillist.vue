@@ -67,31 +67,31 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="classes" align="center" label="班级"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="education" align="center" label="学历"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="employer" align="center" label="工作单位"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="employer" align="center" label="工作地点"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="address" align="center" label="通讯地址"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="classes" align="center" label="班级"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="state" align="center" label="状态"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="education" align="center" label="学历"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="employer" align="center" label="工作单位"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="employer" align="center" label="工作地点"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="address" align="center" label="通讯地址"></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" align="center" label="操作" width="150">
+      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
