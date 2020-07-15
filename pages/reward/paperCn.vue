@@ -208,21 +208,25 @@
       <el-table-column fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
+            type="text"
+            size="normal"
+            v-if="scope.row.auditFlag!=1"
+          >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <nav style="text-align: center; margin-top: 10px;">
       <!-- 分页居中放置-->
-      <el-pagination
+     <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -572,6 +576,10 @@ export default {
     }
   },
   methods: {
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     handleSelectionChange(val) {
       this.checkedList = val;
       console.log("handleSelectionChange:::", val);

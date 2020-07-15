@@ -157,14 +157,13 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        layout="prev, pager, next"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
     <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
@@ -576,7 +575,10 @@ export default {
         key: Date.now() + "word"
       });
     },
-
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();

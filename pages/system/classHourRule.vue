@@ -32,9 +32,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="规则名称"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="type" align="center" label="教学类别"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="english" align="center" label="是否是全英文授课">
-        <template slot-scope="scope">
-            {{ scope.row.english | formatEnglishText }}
-        </template>
+        <template slot-scope="scope">{{ scope.row.english | formatEnglishText }}</template>
       </el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="rules" align="center" label="规则内容"></el-table-column> -->
       <el-table-column :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
@@ -50,24 +48,18 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        layout="prev, pager, next"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
 
     <!-- 学时查看窗口 -->
-    <el-drawer
-      size="60%"
-      style="min-height:500px"
-      title="学时规则"
-      :visible.sync="dialogFormVisible"
-    >
+    <el-drawer size="60%" style="min-height:500px" title="学时规则" :visible.sync="dialogFormVisible">
       <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="180px">
         <el-form-item label="年度:">
           <el-date-picker
@@ -99,38 +91,38 @@
         <el-form-item>
           <el-checkbox v-model="form.english">研究生全英文授课</el-checkbox>
         </el-form-item>
-        <el-form-item
-          v-for="(rule, index) in rulesList"
-          :label="'规则' + index"
-          :key="rule.key"
-        >
+        <el-form-item v-for="(rule, index) in rulesList" :label="'规则' + index" :key="rule.key">
           <el-col :span="3">
             <el-input size="normal" v-model="rule.min" placeholder="最小人数"></el-input>
           </el-col>
-          <el-col :span="0.5">
-            -
-          </el-col>
+          <el-col :span="0.5">-</el-col>
           <el-col :span="3">
             <el-input size="normal" v-model="rule.max" placeholder="最大人数"></el-input>
           </el-col>
-          <el-col :span="1">
-            :
-          </el-col>
+          <el-col :span="1">:</el-col>
           <el-col :span="3">
             <el-input size="normal" v-model="rule.ratio" placeholder="系数"></el-input>
-          </el-col>
+          </el-col>&#12288;
           &#12288;
-          &#12288;
-          <el-button v-if="['edit', 'add'].includes(operate)" size="normal" @click.prevent="removeRule(rule)">删除</el-button>
+          <el-button
+            v-if="['edit', 'add'].includes(operate)"
+            size="normal"
+            @click.prevent="removeRule(rule)"
+          >删除</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button v-if="['edit', 'add'].includes(operate)" size="normal" @click="addRule" type="primary">新增规则</el-button>
+          <el-button
+            v-if="['edit', 'add'].includes(operate)"
+            size="normal"
+            @click="addRule"
+            type="primary"
+          >新增规则</el-button>
         </el-form-item>
         <!-- <el-form-item label="规则内容">
           <el-col :span="9">
             <el-input size="normal" v-model="form.rules" autocomplete="off"></el-input>
           </el-col>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item label="备注">
           <el-col :span="9">
             <el-input size="normal" v-model="form.remark" autocomplete="off"></el-input>
@@ -164,11 +156,13 @@ export default {
         order: "remark",
         condition: ""
       },
-      rulesList:[{
-        min: "",
-        max: "",
-        ratio: ""
-      }],
+      rulesList: [
+        {
+          min: "",
+          max: "",
+          ratio: ""
+        }
+      ],
       form: {},
       tableData: []
     };
@@ -176,6 +170,10 @@ export default {
   methods: {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
+      this.list();
+    },
+    changeSize(val) {
+      this.query.limit = val;
       this.list();
     },
     async list() {
@@ -198,10 +196,10 @@ export default {
       this.loading = false;
     },
     async submitForm(formName) {
-      console.log('this.rulesList', this.rulesList);
-      this.form.rules = '';
-      if(this.rulesList.length > 0) {
-        for(let i=0; i< this.rulesList.length; i++) {
+      console.log("this.rulesList", this.rulesList);
+      this.form.rules = "";
+      if (this.rulesList.length > 0) {
+        for (let i = 0; i < this.rulesList.length; i++) {
           this.form.rules += `${this.rulesList[i].min}-${this.rulesList[i].max}:${this.rulesList[i].ratio}|`;
         }
       }
@@ -218,7 +216,7 @@ export default {
       await this.list();
     },
     showDialog(row) {
-      console.log('row', row);
+      console.log("row", row);
       this.dialogFormVisible = true;
       if (this.operate === "add") {
         this.rulesList = [];
@@ -229,12 +227,12 @@ export default {
         this.rulesList = [];
         let tempRules = [];
         let unitRules;
-        if(row.rules) {
-          tempRules = row.rules.split('|');
-          for(let i=0; i<tempRules.length; i++) {
-              unitRules = tempRules[i].split(':');
-            if(unitRules[0] && unitRules[1]) {
-              let nums = unitRules[0].split('-');
+        if (row.rules) {
+          tempRules = row.rules.split("|");
+          for (let i = 0; i < tempRules.length; i++) {
+            unitRules = tempRules[i].split(":");
+            if (unitRules[0] && unitRules[1]) {
+              let nums = unitRules[0].split("-");
               this.rulesList.push({
                 min: nums[0],
                 max: nums[1],
@@ -272,16 +270,16 @@ export default {
         });
     },
     removeRule(item) {
-      var index = this.rulesList.indexOf(item)
+      var index = this.rulesList.indexOf(item);
       if (index !== -1) {
-        this.rulesList.splice(index, 1)
+        this.rulesList.splice(index, 1);
       }
     },
     addRule() {
       this.rulesList.push({
-        min: '',
-        max: '',
-        ratio: '',
+        min: "",
+        max: "",
+        ratio: "",
         key: Date.now()
       });
     }
@@ -305,12 +303,12 @@ export default {
   color: #606266;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

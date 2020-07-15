@@ -146,12 +146,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -695,6 +694,10 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {

@@ -41,7 +41,12 @@
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="授予硕士学位专业"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="category" align="center" label="专业"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="导师"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="score" align="center" label="课程学习情况（总学分/学位课学分/平均绩点）"></el-table-column>
+      <el-table-column
+        :show-overflow-tooltip="true"
+        prop="score"
+        align="center"
+        label="课程学习情况（总学分/学位课学分/平均绩点）"
+      ></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="paper" align="center" label="在读期间发表论文"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="pleaDate" align="center" label="答辩日期"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="teacher" align="center" label="毕业时间"></el-table-column>
@@ -61,12 +66,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -227,6 +231,10 @@ export default {
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     async submitForm(formName) {
       switch (this.operate) {

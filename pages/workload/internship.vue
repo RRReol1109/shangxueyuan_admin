@@ -141,14 +141,13 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        :page-size="14"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
     <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
@@ -593,6 +592,10 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     async examineData(flag) {
       for (let i = 0; i < this.checkedList.length; i++) {

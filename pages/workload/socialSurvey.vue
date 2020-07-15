@@ -108,14 +108,13 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        layout="prev, pager, next"
-        :page-size="14"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
-        :current-page.sync="query.page"
-        :total="this.total"
+        :current-page.sync="page"
+        :total="total"
       ></el-pagination>
     </nav>
     <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
@@ -565,6 +564,10 @@ export default {
           this.exportData(command);
           break;
       }
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
 
     async changeFlag(row) {

@@ -114,12 +114,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -444,6 +443,10 @@ export default {
           await axios.$post("/project/update", this.ruleForm);
         }
       }
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     downloadAdditionFile(row) {
       window.open(row.name);

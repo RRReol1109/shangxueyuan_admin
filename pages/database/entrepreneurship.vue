@@ -32,7 +32,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -116,12 +116,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -315,6 +314,10 @@ export default {
     async changeFlag(row) {
       row.pick = !row.pick;
     },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     async list() {
       this.tableData = [];
       for (const key in this.query) {
@@ -336,7 +339,10 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/undergraduateTrainingProgram/list", this.query);
+      let res = await axios.$post(
+        "/undergraduateTrainingProgram/list",
+        this.query
+      );
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -380,7 +386,10 @@ export default {
         } else {
           this.examineForm.auditFlag = 2;
         }
-        await axios.$post("/undergraduateTrainingProgram/update", this.examineForm);
+        await axios.$post(
+          "/undergraduateTrainingProgram/update",
+          this.examineForm
+        );
       }
       this.list();
       this.examineDialog = false;
@@ -472,7 +481,10 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/undergraduateTrainingProgram/export?id=-1", {});
+        data = await axios.$download(
+          "/undergraduateTrainingProgram/export?id=-1",
+          {}
+        );
       } else {
         data = await axios.$download("/undergraduateTrainingProgram/export", {
           params: this.query

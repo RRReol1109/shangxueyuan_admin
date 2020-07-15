@@ -59,7 +59,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -95,7 +95,7 @@
       <el-table-column :show-overflow-tooltip="true" prop="major" align="center" label="年薪"></el-table-column>-->
       <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="出生年月"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="邮箱"></el-table-column>
-      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column> -->
+      <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column>-->
       <el-table-column :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
@@ -140,12 +140,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -201,7 +200,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="学号" prop="studentNumber">
-              <el-input size="normal" v-model="form.studentNumber" autocomplete="off" style="width:99%"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.studentNumber"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -425,6 +429,10 @@ export default {
     },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
+      this.list();
+    },
+    changeSize(val) {
+      this.query.limit = val;
       this.list();
     },
     resetForm(formName) {

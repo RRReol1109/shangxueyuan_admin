@@ -26,7 +26,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -71,13 +71,7 @@
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        fixed="right"
-        align="center"
-        label="操作"
-        width="150"
-       account
-      >
+      <el-table-column fixed="right" align="center" label="操作" width="150" account>
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
@@ -89,12 +83,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -554,6 +547,12 @@ export default {
     async changeFlag(row) {
       row.pick = !row.pick;
     },
+
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
+
     async delCount() {
       let deleteList = [];
       for (let i = 0; i < this.tableData.length; i++) {

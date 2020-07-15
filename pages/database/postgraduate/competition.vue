@@ -26,7 +26,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -105,12 +105,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -328,6 +327,12 @@ export default {
     handleClick(row) {
       console.log(row);
     },
+
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
+
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
@@ -356,10 +361,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post(
-        "/graduateCompetitionAward/list",
-        this.query
-      );
+      let res = await axios.$post("/graduateCompetitionAward/list", this.query);
       if (res) {
         for (let i = 0; i < res.rows.length; i++) {
           const element = res.rows[i];
@@ -403,10 +405,7 @@ export default {
         } else {
           this.examineForm.auditFlag = 2;
         }
-        await axios.$post(
-          "/graduateCompetitionAward/update",
-          this.examineForm
-        );
+        await axios.$post("/graduateCompetitionAward/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;

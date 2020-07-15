@@ -32,7 +32,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -108,12 +108,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -438,7 +437,10 @@ export default {
           await axios.$post("/undergraduateSubjectInformation/add", this.form);
           break;
         case "edit":
-          await axios.$post("/undergraduateSubjectInformation/update", this.form);
+          await axios.$post(
+            "/undergraduateSubjectInformation/update",
+            this.form
+          );
           break;
       }
       this.dialogFormVisible = false;
@@ -521,11 +523,17 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/undergraduateSubjectInformation/export?id=-1", {});
+        data = await axios.$download(
+          "/undergraduateSubjectInformation/export?id=-1",
+          {}
+        );
       } else {
-        data = await axios.$download("/undergraduateSubjectInformation/export", {
-          params: this.query
-        });
+        data = await axios.$download(
+          "/undergraduateSubjectInformation/export",
+          {
+            params: this.query
+          }
+        );
       }
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
@@ -581,7 +589,10 @@ export default {
           });
         });
     },
-
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",

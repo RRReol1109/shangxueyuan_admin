@@ -18,7 +18,7 @@
             <el-option label="中文论文" value="中文论文"></el-option>
             <el-option label="英文" value="英文论文"></el-option>
           </el-select>
-        </el-form-item> -->
+        </el-form-item>-->
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
@@ -53,14 +53,13 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        layout="prev, pager, next"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
 
@@ -71,7 +70,12 @@
       title="分数规则（论文）"
       :visible.sync="dialogFormVisible"
     >
-      <el-form :disabled="!['edit', 'add'].includes(operate)" ref="form" :model="form" label-width="180px">
+      <el-form
+        :disabled="!['edit', 'add'].includes(operate)"
+        ref="form"
+        :model="form"
+        label-width="180px"
+      >
         <el-form-item label="年度:" prop="year">
           <el-date-picker
             size="normal"
@@ -103,26 +107,28 @@
             <el-input clearable size="normal" v-model="form.score" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item
-          v-for="(cates, index) in catesList"
-          :label="'类目' + index"
-          :key="cates.key"
-        >
+        <el-form-item v-for="(cates, index) in catesList" :label="'类目' + index" :key="cates.key">
           <el-col :span="5">
             <el-input size="normal" v-model="cates.ssn" placeholder="SSN号"></el-input>
           </el-col>
-          <el-col :span="1">
-            :
-          </el-col>
+          <el-col :span="1">:</el-col>
           <el-col :span="8">
             <el-input size="normal" v-model="cates.name" placeholder="期刊名"></el-input>
-          </el-col>
+          </el-col>&#12288;
           &#12288;
-          &#12288;
-          <el-button v-if="['edit', 'add'].includes(operate)" size="normal" @click.prevent="removeCates(cates)">删除</el-button>
+          <el-button
+            v-if="['edit', 'add'].includes(operate)"
+            size="normal"
+            @click.prevent="removeCates(cates)"
+          >删除</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button v-if="['edit', 'add'].includes(operate)" size="normal" @click="addCates" type="primary">新增类目</el-button>
+          <el-button
+            v-if="['edit', 'add'].includes(operate)"
+            size="normal"
+            @click="addCates"
+            type="primary"
+          >新增类目</el-button>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-col :span="9">
@@ -164,10 +170,12 @@ export default {
         cates: "",
         remark: ""
       },
-      catesList:[{
-        ssn: "",
-        name: ""
-      }],
+      catesList: [
+        {
+          ssn: "",
+          name: ""
+        }
+      ],
       tableData: []
     };
   },
@@ -195,11 +203,15 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     async submitForm(formName) {
-      console.log('this.catesList', this.catesList);
-      this.form.cates = '';
-      if(this.catesList.length > 0) {
-        for(let i=0; i< this.catesList.length; i++) {
+      console.log("this.catesList", this.catesList);
+      this.form.cates = "";
+      if (this.catesList.length > 0) {
+        for (let i = 0; i < this.catesList.length; i++) {
           this.form.cates += `${this.catesList[i].ssn}:${this.catesList[i].name}|`;
         }
       }
@@ -215,7 +227,7 @@ export default {
       await this.list();
     },
     showDialog(row) {
-      console.log('row:::', row);
+      console.log("row:::", row);
       if (this.operate === "add") {
         this.catesList = [];
         this.form = {
@@ -230,11 +242,11 @@ export default {
         this.catesList = [];
         let tempCates = [];
         let unitCates;
-        if(row.cates) {
-          tempCates = row.cates.split('|');
-          for(let i=0; i<tempCates.length; i++) {
-              unitCates = tempCates[i].split(':');
-            if(unitCates[0] && unitCates[1]) {
+        if (row.cates) {
+          tempCates = row.cates.split("|");
+          for (let i = 0; i < tempCates.length; i++) {
+            unitCates = tempCates[i].split(":");
+            if (unitCates[0] && unitCates[1]) {
               this.catesList.push({
                 ssn: unitCates[0],
                 name: unitCates[1]
@@ -273,24 +285,24 @@ export default {
     },
     resetForm() {
       this.form = {
-          id: "",
-          year: "",
-          type: "",
-          level: "",
-          cates: "",
-          remark: ""
+        id: "",
+        year: "",
+        type: "",
+        level: "",
+        cates: "",
+        remark: ""
       };
     },
     removeCates(item) {
-      var index = this.catesList.indexOf(item)
+      var index = this.catesList.indexOf(item);
       if (index !== -1) {
-        this.catesList.splice(index, 1)
+        this.catesList.splice(index, 1);
       }
     },
     addCates() {
       this.catesList.push({
-        ssn: '',
-        name: '',
+        ssn: "",
+        name: "",
         key: Date.now()
       });
     }
@@ -309,12 +321,12 @@ export default {
   color: #606266;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

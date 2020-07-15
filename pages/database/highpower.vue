@@ -52,7 +52,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -133,14 +133,13 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        :page-size="14"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
     <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
@@ -695,6 +694,10 @@ export default {
         type: "success",
         message: "审核成功!"
       });
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     checkCanUse() {
       this.roles = window.localStorage.getItem("roles")

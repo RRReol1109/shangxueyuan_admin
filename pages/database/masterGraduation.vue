@@ -97,12 +97,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -208,7 +207,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" prop="score" >
+          <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" prop="score">
             <el-input size="normal" v-model="form.score" autocomplete="off" style="width:99%"></el-input>
           </el-form-item>
         </el-row>
@@ -332,6 +331,10 @@ export default {
         type: "success",
         message: "上传成功"
       });
+      this.list();
+    },
+    changeSize(val) {
+      this.query.limit = val;
       this.list();
     },
     async list() {

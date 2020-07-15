@@ -52,7 +52,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -70,7 +70,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading" @selection-change="handleSelectionChange">
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      v-loading="loading"
+      @selection-change="handleSelectionChange"
+    >
       <!-- <el-table-column
         :show-overflow-tooltip="true"
         prop="pick"
@@ -81,12 +87,8 @@
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
-      </el-table-column> -->
-      <el-table-column
-        align="center"
-        type="selection"
-        width="50">
-      </el-table-column>
+      </el-table-column>-->
+      <el-table-column align="center" type="selection" width="50"></el-table-column>
       <el-table-column type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
@@ -123,14 +125,13 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>
     <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
@@ -272,7 +273,7 @@
             type="textarea"
             clearable
             v-model="ruleForm.cateNumber"
-            placeholder=""
+            placeholder
             style="width:99%"
           ></el-input>
           <span style="color:#F56C6C">例子：201301020225-张三-经管2班；201301020221-李四-经管1班；</span>
@@ -377,7 +378,7 @@ export default {
   methods: {
     handleSelectionChange(val) {
       this.checkedList = val;
-      console.log('handleSelectionChange:::', val);
+      console.log("handleSelectionChange:::", val);
     },
     async list() {
       this.loading = true;
@@ -432,6 +433,12 @@ export default {
         link.click();
       }
     },
+
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
+
     uploadSuccess() {
       this.$message({
         type: "success",
@@ -630,9 +637,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for(let i=0; i<vm.checkedList.length; i++) {
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/paper/delete", {
-                paperId: vm.checkedList[i].id
+              paperId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -648,6 +655,10 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     async examineData(flag) {
       for (let i = 0; i < this.checkedList.length; i++) {

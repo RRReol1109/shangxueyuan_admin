@@ -44,12 +44,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -73,8 +72,13 @@
           </el-col>
         </el-form-item>
         <el-form-item label="备注" label-width="320px">
-          <el-upload class="upload-demo" action :on-change="handleChange" :show-file-list="false"
-:file-list="fileList">
+          <el-upload
+            class="upload-demo"
+            action
+            :on-change="handleChange"
+            :show-file-list="false"
+            :file-list="fileList"
+          >
             <el-button size="normal" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -155,6 +159,10 @@ export default {
       }
       this.dialogFormVisible = false;
       await this.list();
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     showDialog(row) {
       this.dialogFormVisible = true;

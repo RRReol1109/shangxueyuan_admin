@@ -52,14 +52,13 @@
     <!-- <nav style="text-align: center; margin-top: 10px;">
       <el-pagination
         background
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
-        :page-size="14"
-        :total="this.total"
+        :total="total"
       ></el-pagination>
     </nav>-->
 

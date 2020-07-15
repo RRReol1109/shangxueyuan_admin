@@ -27,7 +27,7 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
               <el-dropdown-item>
                 <el-upload
                   class
@@ -123,12 +123,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -506,7 +505,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.el-input("download", "科研奖励-要报.xls");
+        link.el - input("download", "科研奖励-要报.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -675,6 +674,11 @@ export default {
             "http://bsoa.csu.edu.cn/excel-model/科研奖励-要报.xls";
           break;
       }
+    },
+
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
 
     async changeFlag(row) {

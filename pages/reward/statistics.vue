@@ -65,12 +65,11 @@
       <!-- 分页居中放置-->
       <el-pagination
         background
-        :page-size="14"
-        layout="prev, pager, next"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="changeSize"
         @current-change="handleCurrentChange"
         @next-click="handleCurrentChange"
         @prev-click="handleCurrentChange"
-        @size-change="handleCurrentChange"
         :current-page.sync="page"
         :total="total"
       ></el-pagination>
@@ -179,6 +178,10 @@ export default {
       window.open(
         "http://bsoa.csu.edu.cn/files/中商办字[2019]02号中南大学商学院科研奖励(计分)方案(2019年12月修订).pdf"
       );
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     async queryTeacher(queryString, cb) {
       console.log(queryString);
