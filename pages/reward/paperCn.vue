@@ -71,28 +71,32 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         type="index"
         label="序号"
         align="center"
         width="50"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="publishDate"
         align="center"
         label="发表日期"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="year"
         align="center"
         label="年度"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="reformPaper"
@@ -103,98 +107,112 @@
           <span>{{scope.row.reformPaper | reformPaperFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="200"
         :show-overflow-tooltip="true"
         prop="title"
         align="center"
         label="论文名称"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="200"
         :show-overflow-tooltip="true"
         prop="journal"
         align="center"
         label="期刊名称"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="schoolLevel"
         align="center"
         label="学校期刊分级"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="collegeLevel"
         align="center"
         label="学院期刊分级"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="issn"
         align="center"
         label="期刊ISSN号"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="included"
         align="center"
         label="核心收录"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="subject"
         align="center"
         label="期刊所属学科"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="yearDate"
         align="center"
         label="年代卷期"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstAuthor"
         align="center"
         label="第一作者"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstAuthorDept"
         align="center"
         label="第一作者单位"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstCorrespondent"
         align="center"
         label="第一通讯作者"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="firstCorrespondentDept"
         align="center"
         label="第一通讯作者单位"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="300"
         :show-overflow-tooltip="true"
         prop="authors"
         align="center"
         label="全体作者"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="auditFlag"
@@ -220,7 +238,7 @@
     </el-table>
     <nav style="text-align: center; margin-top: 10px;">
       <!-- 分页居中放置-->
-     <el-pagination
+      <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="changeSize"
@@ -396,7 +414,7 @@
             v-model="ruleForm.authors"
             style="width:99%"
           ></el-input>
-          <span style="color:#F56C6C">例子：张三|1,李四_外单位|1,王五_张三|3（以上示例中王五是张三的学生，","为英文逗号，数字标注第几作者）</span>
+          <span style="color:#F56C6C">例子：学生1（老师甲），老师乙2（外单位），老师甲1 注:老师甲为通讯作者</span>
         </el-form-item>
         <el-row>
           <el-col :span="12">
@@ -428,7 +446,8 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column sortable
+            <el-table-column
+              sortable
               :show-overflow-tooltip="true"
               type="index"
               label="#"
