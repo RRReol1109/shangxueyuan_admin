@@ -405,7 +405,7 @@
             style="width:99%"
           ></el-input>
         </el-form-item>
-        <el-form-item label="全体作者" prop>
+        <!-- <el-form-item label="全体作者" prop>
           <el-input
             @input="authorsChanged"
             type="textarea"
@@ -415,20 +415,48 @@
             style="width:99%"
           ></el-input>
           <span style="color:#F56C6C">例子：学生1（老师甲），老师乙2（外单位），老师甲1 注:老师甲为通讯作者</span>
-        </el-form-item>
-        <el-row>
+        </el-form-item>-->
+        <!--<el-row>
           <el-col :span="12">
             <el-form-item label="作者人数" prop>
               <el-input v-model="ruleForm.authorCnt" placeholder style="width:98%"></el-input>
               <span style="color:#F56C6C">作者人数自动计算，可自行修改</span>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row>-->
         <!-- <el-form-item label="计分" prop="score">
           <el-col :span="12">
             <el-input clearable v-model="ruleForm.score" placeholder="请输入内容"></el-input>
           </el-col>
         </el-form-item>-->
+        <el-row>
+          <el-form-item
+            v-for="(teacherArr, index) in teacherArr"
+            :label="'作者信息' + (index+1)"
+            :key="teacherArr.key"
+            :prop="'teacherArr' + index"
+          >
+            <el-autocomplete
+              v-model="teacherArr.name"
+              style="width:15%;"
+              placeholder="请输入教师"
+              :fetch-suggestions="queryTeachers"
+            ></el-autocomplete>学生姓名:
+            <el-input clearable style="width:120px" v-model="teacherArr.stu" placeholder="请输入姓名"></el-input>是否是外单位:
+            <el-select clearable v-model="teacherArr.company" placeholder="请选择" style="width:15%;">
+              <el-option label="是" value="true"></el-option>
+              <el-option label="否" value="false"></el-option>
+            </el-select>是否是通讯作者:
+            <el-select clearable v-model="teacherArr.flag" placeholder="请选择" style="width:15%;">
+              <el-option label="是" value="true"></el-option>
+              <el-option label="否" value="false"></el-option>
+            </el-select>
+            <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
+          </el-form-item>
+          <el-form-item v-if="!['show'].includes(operate)">
+            <el-button type="primary" @click="addTeacher('ruleForm')">继续添加作者</el-button>
+          </el-form-item>
+        </el-row>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select v-model="ruleForm.auditFlag" size="normal" placeholder="请选择状态">
             <el-option label="未审核" value="0"></el-option>
@@ -534,16 +562,16 @@ export default {
         half: 0,
         score: "",
         finalScore: "",
-        cateNumber: "",
-        teacherArr: [
-          {
-            name: "",
-            num: "",
-            stu: false,
-            tx: false
-          }
-        ]
+        cateNumber: ""
       },
+      teacherArr: [
+        {
+          name: "",
+          stu: "",
+          company: "false",
+          flag: "false"
+        }
+      ],
       loading: true,
       roleId: 0,
       pick: false,
@@ -654,17 +682,17 @@ export default {
     },
     removeTeacher(item) {
       console.log(item);
-      var index = this.ruleForm.teacherArr.indexOf(item);
+      var index = this.teacherArr.indexOf(item);
       if (index !== -1 && index != 0) {
-        this.ruleForm.teacherArr.splice(index, 1);
+        this.teacherArr.splice(index, 1);
       }
     },
     addTeacher() {
-      this.ruleForm.teacherArr.push({
+      this.teacherArr.push({
         name: "",
-        num: "",
-        stu: false,
-        tx: false
+        stu: "",
+        company: "false",
+        flag: "false"
       });
     },
     fileUploadSuccess(res, file, files) {
@@ -730,6 +758,27 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    async queryTeachers(queryString, cb) {
+      let teacher = await axios.$get("/mgr/quicklist", {
+        name: queryString
+      });
+      var teachers = [];
+      for (let i = 0; i < teacher.length; i++) {
+        const element = teacher[i];
+        teachers.push({ value: element.name, id: element.id });
+      }
+      var results = queryString
+        ? teachers.filter(this.createFilter(queryString))
+        : teachers;
+      cb(results);
+    },
+    createFilter(queryString) {
+      return teacher => {
+        return (
+          teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        );
+      };
+    },
     downLoad() {
       window.open("http://bsoa.csu.edu.cn/files/中文论文分级标准.zip");
     },
@@ -774,9 +823,36 @@ export default {
         });
         return;
       }
+      this.ruleForm.authors = "";
       this.ruleForm.year = this.ruleForm.publishDate
         ? this.ruleForm.publishDate.substr(0, 4)
         : "";
+      for (let i = 0; i < this.teacherArr.length; i++) {
+        const element = this.teacherArr[i];
+        let author = "";
+        if (element.stu != "") {
+          if (element.flag == "true") {
+            author += element.stu + 1;
+          } else {
+            author += element.stu + (i + 1);
+          }
+          author += "（" + element.name + "）";
+        } else {
+          author += element.name;
+        }
+        if (element.flag == "true" && element.stu == "") {
+          author += 1;
+        } else if (element.flag == "false" && element.stu == "") {
+          author += i + 1;
+        }
+        if (element.company == "true") {
+          author += "（外单位）";
+        }
+        this.ruleForm.authors += author;
+        if (i != this.teacherArr.length - 1) {
+          this.ruleForm.authors += "，";
+        }
+      }
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
@@ -802,23 +878,68 @@ export default {
           half: "",
           score: "",
           authors: "",
-          teacherArr: [
-            {
-              name: "",
-              num: "",
-              stu: false,
-              tx: false
-            }
-          ],
           finalScore: "",
           cateNumber: "",
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.teacherArr = [
+          {
+            name: "",
+            stu: "",
+            company: "false",
+            flag: "false"
+          }
+        ];
         this.additionFiles = [];
       } else {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);
-        this.ruleForm.teacherArr = [];
+        this.teacherArr = [];
+        let teacherInfo = row.authors.split("，");
+        console.log(teacherInfo.length);
+        for (let i = 0; i < teacherInfo.length; i++) {
+          let author = "";
+          let name = "";
+          let flag = "";
+          let stu = "";
+          let company = "";
+          const element = teacherInfo[i];
+          if (element.indexOf("（") == -1) {
+            name = element.substr(0, element.length - 1);
+            if (element.substr(element.length - 1, 1) == "1" && i != 0) {
+              flag = "true";
+            } else {
+              flag = "false";
+            }
+            company = "false";
+          } else {
+            let info = element.substr(
+              element.indexOf("（") + 1,
+              element.indexOf("）") - element.indexOf("（") - 1
+            );
+            if (info != "外单位") {
+              name = info;
+              company = "false";
+              stu = element.substr(0, element.indexOf("（") - 1);
+            } else {
+              name = element.substr(0, element.indexOf("（") - 1);
+              company = "true";
+            }
+            if (element.substr(element.indexOf("（") - 1, 1) == 1 && i != 0) {
+              flag = "true";
+            } else {
+              flag = "false";
+            }
+          }
+          author = {
+            name: name,
+            stu: stu,
+            company: company,
+            flag: flag
+          };
+          this.teacherArr.push(author);
+        }
+
         this.ruleForm.auditFlag = row.auditFlag.toString();
         this.ruleForm.reformPaper = row.reformPaper.toString();
       }

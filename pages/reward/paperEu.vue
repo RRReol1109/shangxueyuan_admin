@@ -681,7 +681,7 @@
             style="width:99%"
           ></el-input>
         </el-form-item>
-
+        <!-- 
         <el-form-item label="全体作者" prop="authors">
           <el-input
             @input="authorsChanged"
@@ -692,7 +692,7 @@
             style="width:99%"
           ></el-input>
           <span style="color:#F56C6C">例子：学生1（老师甲），老师乙2（外单位），老师甲1 注:老师甲为通讯作者</span>
-        </el-form-item>
+        </el-form-item>-->
         <el-row>
           <el-form-item
             v-for="(teacherArr, index) in teacherArr"
@@ -700,24 +700,25 @@
             :key="teacherArr.key"
             :prop="'teacherArr' + index"
           >
-            <el-select
-              clearable
+            <el-autocomplete
               v-model="teacherArr.name"
-              placeholder="请选择老师"
-              filterable　prop="name"
-            >
-              <el-option
-                v-for="item in teacherList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-              ></el-option>
-            </el-select>分数:
-            <el-input clearable style="width:120px" v-model="teacherArr.num" placeholder="请输入分数"></el-input>
+              style="width:15%;"
+              placeholder="请输入教师"
+              :fetch-suggestions="queryTeachers"
+            ></el-autocomplete>学生姓名:
+            <el-input clearable style="width:120px" v-model="teacherArr.stu" placeholder="请输入姓名"></el-input>是否是外单位:
+            <el-select clearable v-model="teacherArr.company" placeholder="请选择" style="width:15%;">
+              <el-option label="是" value="true"></el-option>
+              <el-option label="否" value="false"></el-option>
+            </el-select>是否是通讯作者:
+            <el-select clearable v-model="teacherArr.flag" placeholder="请选择" style="width:15%;">
+              <el-option label="是" value="true"></el-option>
+              <el-option label="否" value="false"></el-option>
+            </el-select>
             <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
           </el-form-item>
           <el-form-item v-if="!['show'].includes(operate)">
-            <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
+            <el-button type="primary" @click="addTeacher('ruleForm')">继续添加作者</el-button>
           </el-form-item>
         </el-row>
         <el-row>
@@ -844,16 +845,16 @@ export default {
         cateNumber: "",
         companys: [],
         subsidizeSource: "",
-        wos: "",
-        teacherArr: [
-          {
-            name: "",
-            num: "",
-            stu: false,
-            tx: false
-          }
-        ]
+        wos: ""
       },
+      teacherArr: [
+        {
+          name: "",
+          stu: "",
+          company: "false",
+          flag: "false"
+        }
+      ],
       teacherList: [],
       loading: true,
       companyArr: [],
@@ -863,11 +864,6 @@ export default {
         journal: [
           { required: true, message: "请输入期刊名称", trigger: "blur" }
         ],
-        authors: [
-          { required: true, message: "请输入作者信息", trigger: "blur" }
-        ],
-
-        author: [{ required: true, message: "请输入作者", trigger: "blur" }],
         point: [
           { required: true, message: "请输入本人计分", trigger: "blur" },
           { validator: validateNumber, trigger: "blur" }
@@ -982,29 +978,6 @@ export default {
     downLoad() {
       window.open("http://bsoa.csu.edu.cn/files/英文论文分级标准.zip");
     },
-    removeAuthor(item) {
-      var index = this.ruleForm.author.indexOf(item);
-      if (index !== -1 && index != 0) {
-        this.ruleForm.author.splice(index, 1);
-      }
-    },
-    removePoint(item) {
-      var index = this.ruleForm.point.indexOf(item);
-      if (index !== -1 && index != 0) {
-        this.ruleForm.point.splice(index, 1);
-      }
-    },
-    addAuthor() {
-      this.ruleForm.author.push({
-        value: "",
-        key: Date.now() + "author"
-      });
-      this.ruleForm.point.push({
-        value: "",
-        key: Date.now() + "point"
-      });
-    },
-
     fileUploadSuccess(res, file, files) {
       for (let i = 0; i < files.length; i++) {
         const element = files[i];
@@ -1065,17 +1038,17 @@ export default {
     },
     removeTeacher(item) {
       console.log(item);
-      var index = this.ruleForm.teacherArr.indexOf(item);
+      var index = this.teacherArr.indexOf(item);
       if (index !== -1 && index != 0) {
-        this.ruleForm.teacherArr.splice(index, 1);
+        this.teacherArr.splice(index, 1);
       }
     },
     addTeacher() {
-      this.ruleForm.teacherArr.push({
+      this.teacherArr.push({
         name: "",
-        num: "",
-        stu: false,
-        tx: false
+        stu: "",
+        company: "false",
+        flag: "false"
       });
     },
     async exportData(flag) {
@@ -1124,6 +1097,34 @@ export default {
       this.ruleForm.year = this.ruleForm.publishDate
         ? this.ruleForm.publishDate.substr(0, 4)
         : "";
+      console.log(this.teacherArr);
+      for (let i = 0; i < this.teacherArr.length; i++) {
+        const element = this.teacherArr[i];
+        let author = "";
+        if (element.stu != "") {
+          if (element.flag == "true") {
+            author += element.stu + 1;
+          } else {
+            author += element.stu + (i + 1);
+          }
+          author += "（" + element.name + "）";
+        } else {
+          author += element.name;
+        }
+        if (element.flag == "true" && element.stu == "") {
+          author += 1;
+        } else if (element.flag == "false" && element.stu == "") {
+          author += i + 1;
+        }
+        if (element.company == "true") {
+          author += "（外单位）";
+        }
+        this.ruleForm.authors += author;
+        if (i != this.teacherArr.length - 1) {
+          this.ruleForm.authors += "，";
+        }
+      }
+      console.log(this.ruleForm.authors);
       switch (this.operate) {
         case "add":
           if (this.filesInfo != [])
@@ -1155,34 +1156,67 @@ export default {
           authors: "",
           highlyCited: "",
           cateNumber: "",
-          teacherArr: [
-            {
-              name: "",
-              num: "",
-              stu: false,
-              tx: false
-            }
-          ],
           editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
+        this.teacherArr = [
+          {
+            name: "",
+            stu: "",
+            company: "false",
+            flag: "false"
+          }
+        ];
         this.additionFiles = [];
       } else {
         row.cooPaper = row.cooPaper.toString();
         this.ruleForm = row;
-        this.ruleForm.teacherArr = [];
+        this.teacherArr = [];
         console.log(row);
         if (row.files) this.additionFiles = JSON.parse(row.files);
         // this.fileItems = JSON.parse(row.files);
-        let teacherInfo = row.authors.split(",");
+        let teacherInfo = row.authors.split("，");
+        console.log(teacherInfo.length);
         for (let i = 0; i < teacherInfo.length; i++) {
+          let author = "";
+          let name = "";
+          let flag = "";
+          let stu = "";
+          let company = "";
           const element = teacherInfo[i];
-          this.ruleForm.teacherArr.push({
-            name: "",
-            num: "",
-            stu: false,
-            tx: false
-          });
-          let teacher = element.split("|");
+          if (element.indexOf("（") == -1) {
+            name = element.substr(0, element.length - 1);
+            if (element.substr(element.length - 1, 1) == "1" && i != 0) {
+              flag = "true";
+            } else {
+              flag = "false";
+            }
+            company = "false";
+          } else {
+            let info = element.substr(
+              element.indexOf("（") + 1,
+              element.indexOf("）") - element.indexOf("（") - 1
+            );
+            if (info != "外单位") {
+              name = info;
+              company = "false";
+              stu = element.substr(0, element.indexOf("（") - 1);
+            } else {
+              name = element.substr(0, element.indexOf("（") - 1);
+              company = "true";
+            }
+            if (element.substr(element.indexOf("（") - 1, 1) == 1 && i != 0) {
+              flag = "true";
+            } else {
+              flag = "false";
+            }
+          }
+          author = {
+            name: name,
+            stu: stu,
+            company: company,
+            flag: flag
+          };
+          this.teacherArr.push(author);
         }
         this.ruleForm.reformPaper = row.reformPaper.toString();
         this.ruleForm.auditFlag = row.auditFlag.toString();
@@ -1293,6 +1327,27 @@ export default {
             message: "已取消删除"
           });
         });
+    },
+    async queryTeachers(queryString, cb) {
+      let teacher = await axios.$get("/mgr/quicklist", {
+        name: queryString
+      });
+      var teachers = [];
+      for (let i = 0; i < teacher.length; i++) {
+        const element = teacher[i];
+        teachers.push({ value: element.name, id: element.id });
+      }
+      var results = queryString
+        ? teachers.filter(this.createFilter(queryString))
+        : teachers;
+      cb(results);
+    },
+    createFilter(queryString) {
+      return teacher => {
+        return (
+          teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        );
+      };
     },
     async queryTeacher() {
       this.teacherList = await axios.$post("/mgr/list", {

@@ -419,8 +419,6 @@ export default {
       localStorage.setItem("stuNames", JSON.stringify(this.stuNames));
     },
     async queryTeacher(queryString, cb) {
-      console.log(123);
-      console.log(queryString);
       let teacher = await axios.$get("/mgr/quicklist", {
         name: queryString
       });
@@ -429,7 +427,6 @@ export default {
         const element = teacher[i];
         teachers.push({ value: element.name, id: element.id });
       }
-      console.log(teachers);
       var results = queryString
         ? teachers.filter(this.createFilter(queryString))
         : teachers;

@@ -98,19 +98,62 @@
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="获奖类型"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="awardName" align="center" label="成果名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="firstUnit" align="center" label="第一完成单位"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="获奖类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="level"
+        align="center"
+        label="项目级别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="awardName"
+        align="center"
+        label="成果名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="firstUnit"
+        align="center"
+        label="第一完成单位"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="firstPerson"
         align="center"
         label="第一获奖人"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="全体获奖人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="awardDate" align="center" label="获奖时间"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="全体获奖人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="awardDate"
+        align="center"
+        label="获奖时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -257,14 +300,13 @@
           :key="teacherArr.key"
           :prop="'teacherArr' + index"
         >
-          <el-select v-model="teacherArr.name" placeholder="请选择老师" filterable　prop="name">
-            <el-option
-              v-for="item in teacherList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>分数:
+          <el-autocomplete
+            v-model="teacherArr.name"
+            style="width:15%;"
+            placeholder="请输入教师"
+            :fetch-suggestions="queryTeachers"
+          ></el-autocomplete>单位:
+          <el-input clearable style="width:120px" v-model="teacherArr.company" placeholder="请输入分数"></el-input>分数:
           <el-input clearable style="width:120px" v-model="teacherArr.num" placeholder="请输入分数"></el-input>
           <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
         </el-form-item>
@@ -305,7 +347,8 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column sortable
+            <el-table-column
+              sortable
               :show-overflow-tooltip="true"
               type="index"
               label="#"
@@ -417,6 +460,7 @@ export default {
       teacherArr: [
         {
           name: "",
+          company: "",
           num: ""
         }
       ],
@@ -483,6 +527,27 @@ export default {
           await axios.$post("/awardResult/update", this.ruleForm);
         }
       }
+    },
+    async queryTeachers(queryString, cb) {
+      let teacher = await axios.$get("/mgr/quicklist", {
+        name: queryString
+      });
+      var teachers = [];
+      for (let i = 0; i < teacher.length; i++) {
+        const element = teacher[i];
+        teachers.push({ value: element.name, id: element.id });
+      }
+      var results = queryString
+        ? teachers.filter(this.createFilter(queryString))
+        : teachers;
+      cb(results);
+    },
+    createFilter(queryString) {
+      return teacher => {
+        return (
+          teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+        );
+      };
     },
     downloadAdditionFile(row) {
       window.open(row.name);
@@ -615,6 +680,7 @@ export default {
     addTeacher() {
       this.teacherArr.push({
         name: "",
+        company: "",
         num: ""
       });
     },
@@ -622,33 +688,17 @@ export default {
       this.ruleForm.persons = "";
       for (let i = 0; i < this.teacherArr.length; i++) {
         let element = this.teacherArr[i];
-        for (const key in element) {
-          if (element.hasOwnProperty(key)) {
-            let info = element[key];
-            let tid = "";
-            console.log(info);
-            if (key == "name") {
-              for (let j = 0; j < this.teacherList.length; j++) {
-                const item = this.teacherList[j];
-                if (info == item.name) {
-                  tid = item.id;
-                }
-              }
-
-              if (tid) this.ruleForm.persons += tid;
-              else this.ruleForm.persons += info.toString();
-              // alert(info);
-            }
-            if (key == "num") {
-              this.ruleForm.persons += "|" + info + ",";
-            }
-          }
-        }
-        if (i == this.teacherArr.length - 1) {
-          this.ruleForm.persons = this.ruleForm.persons.substr(
-            0,
-            this.ruleForm.persons.length - 1
-          );
+        this.ruleForm.persons +=
+          element.name +
+          (i + 1) +
+          "（" +
+          element.company +
+          "）" +
+          "（" +
+          element.num +
+          "）";
+        if (i != this.teacherArr.length - 1) {
+          this.ruleForm.persons += "，";
         }
       }
       let verification = false;
@@ -706,6 +756,7 @@ export default {
         this.teacherArr = [
           {
             name: "",
+            company: "",
             num: ""
           }
         ];
@@ -714,30 +765,28 @@ export default {
         this.ruleForm = row;
         if (row.files) this.additionFiles = JSON.parse(row.files);
         this.teacherArr = [];
-        let teacherInfo = row.persons.split(",");
+        let teacherInfo = row.persons.split("，");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
-          this.teacherArr.push({
-            name: "",
-            num: ""
-          });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item");
-            if (j % 2 == 0) {
-              // this.teacherArr[i].name = item.toString();
-              // this.teacherArr[i].name = this.teacherArr[i].name + "";
-              for (let k = 0; k < this.teacherList.length; k++) {
-                const teachers = this.teacherList[k];
-                if (item == teachers.id) {
-                  this.teacherArr[i].name = teachers.name;
-                }
-              }
-            } else if (j % 2 == 1) {
-              this.teacherArr[i].num = item;
-            }
+          let name = "";
+          let company = "";
+          let num = "";
+          if (element.indexOf("（") != -1) {
+            name = element.substr(0, element.indexOf("（") - 1);
+            company = element.substr(
+              element.indexOf("（") + 1,
+              element.indexOf("）") - element.indexOf("（") - 1
+            );
+            num = element.substr(
+              element.indexOf("）") + 2,
+              element.length - element.indexOf("）") - 3
+            );
           }
+          this.teacherArr.push({
+            name: name,
+            company: company,
+            num: num
+          });
         }
         this.ruleForm.auditFlag = row.auditFlag.toString();
       }
