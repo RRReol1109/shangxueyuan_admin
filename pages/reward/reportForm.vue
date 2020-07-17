@@ -46,26 +46,51 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="userId"
         label="工号"
         align="center"
-        width="50"
+        width="150"
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="著作教材" align="center" label="著作教材">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="教师姓名"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="著作教材"
+        align="center"
+        label="著作教材"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.著作教材 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="中文论文" align="center" label="中文论文">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="中文论文"
+        align="center"
+        label="中文论文"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.中文论文 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="英文论文" align="center" label="英文论文">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="英文论文"
+        align="center"
+        label="英文论文"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.英文论文 | statusFilter}}</span>
         </template>
@@ -80,20 +105,39 @@
           <span>{{scope.row.要报 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="优秀论文" align="center" label="优秀论文">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="优秀博硕论文"
+        align="center"
+        label="优秀博硕论文"
+      >
         <template slot-scope="scope">
-          <span>{{scope.row.优秀论文 | statusFilter}}</span>
+          <span>{{scope.row.优秀博硕论文 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="科研项目" align="center" label="科研项目">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="科研项目"
+        align="center"
+        label="科研项目"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.科研项目 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="scores"
+        align="center"
+        label="合计"
+      ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" align="center" label="个人数据">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='show';download(scope.row)" type="text" size="normal">下载</el-button>
+          <el-button @click="operate='show';showData(scope.row)" type="text" size="normal">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -111,8 +155,10 @@
       ></el-pagination>
     </nav>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
-      <Highcharts id="teacherStatistic" :option="option" />
       <Highcharts id="departmentStatistic" :option="statisticOption" />
+    </el-drawer>
+    <el-drawer size="60%" style="min-height:500px" title="个人数据详情" :visible.sync="teacherVisible">
+      <Highcharts id="teacherStatistic" :option="option" />
     </el-drawer>
   </div>
 </template>
@@ -131,77 +177,55 @@ export default {
       page: 0,
       loading: true,
       dialogDetailVisible: false,
+      teacherVisible: false,
       option: {
-        credits: {
-          enabled: false
-        },
         chart: {
-          panning: true,
-          type: "column"
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: "pie"
         },
         title: {
-          text: "科研奖励统计教师个人对比"
-        },
-
-        subtitle: {
-          text: ""
-        },
-        scrollbar: {
-          enabled: true
-        },
-        xAxis: {
-          categories: ["吴平", "王舞", "张三", "赵刚", "施文"],
-          gridLineWidth: 2,
-          min: 0,
-          max: 4
-        },
-        yAxis: {
-          tickPixelInterval: 1,
-          min: 0,
-          title: {
-            text: "计分",
-            align: "high"
-          },
-          labels: {
-            overflow: "justify"
-          }
+          text: "教师个人科研奖励情况统计"
         },
         tooltip: {
-          valueSuffix: " 计分"
+          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
         },
         plotOptions: {
-          column: {
-            pointWidth: 10 //柱子宽bai度du
+          pie: {
+            allowPointSelect: true,
+            cursor: "pointer",
+            dataLabels: {
+              enabled: true,
+              format: "<b>{point.name}</b>: {point.percentage:.1f} %",
+              style: {
+                color:
+                  (Highcharts.theme && Highcharts.theme.contrastTextColor) ||
+                  "black"
+              }
+            }
           }
         },
         series: [
           {
-            name: "著作教材",
-            data: [107, 131, 135, 203, 152]
-          },
-          {
-            name: "中文论文",
-            data: [133, 156, 147, 208, 196]
-          },
-          {
-            name: "英文论文",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "获奖",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "要报",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "优秀论文",
-            data: [173, 114, 154, 132, 134]
-          },
-          {
-            name: "科研项目",
-            data: [173, 114, 154, 132, 134]
+            name: "Brands",
+            colorByPoint: true,
+            data: [
+              {
+                name: "Chrome",
+                y: 61.41,
+                sliced: true,
+                selected: true
+              },
+              {
+                name: "Internet Explorer",
+                y: 11.84
+              },
+              {
+                name: "Firefox",
+                y: 0.9236326109391125
+              }
+            ]
           }
         ]
       },
@@ -291,7 +315,8 @@ export default {
       }
       this.dialogDetailVisible = true;
       await this.showDepartment();
-      await this.showTeacherData();
+      this.showData();
+      // await this.showTeacherData();
     },
     async showDepartment() {
       let param = {
@@ -313,7 +338,7 @@ export default {
         articleCnScore: "中文论文",
         articleEnScore: "英文论文",
         awardResultScore: "获奖",
-        excellentPapersScore: "优秀论文",
+        excellentPapersScore: "优秀博硕论文",
         projectScore: "科研项目",
         reportResultScore: "要报",
         textBookScore: "著作教材"
@@ -362,7 +387,7 @@ export default {
         "中文论文",
         "英文论文",
         "获奖",
-        "优秀论文",
+        "优秀博硕论文",
         "科研项目",
         "要报",
         "著作教材"
@@ -403,7 +428,7 @@ export default {
         link.click();
       }
     },
-    async showDialog(row) {
+    async download(row) {
       let data = "";
       let param = { year: this.query.year, userId: row.userId };
       data = await axios.$download("/award/info/export", param);
@@ -421,6 +446,35 @@ export default {
       this.query.limit = val;
       this.list();
     },
+    async showData(row) {
+      this.teacherVisible = true;
+      console.log(JSON.stringify(this.option.series[0]));
+      let res = await axios.$get("award/statistics", { userId: row.userId });
+      let currentYear = row.year;
+      let data = { name: "Brands", colorByPoint: true, data: [] };
+      for (const key in res) {
+        if (res.hasOwnProperty(key)) {
+          const element = res[key];
+          let point = "";
+          if (element[currentYear] != undefined) {
+            point = element[currentYear];
+          } else {
+            point = 0;
+          }
+          data.data.push({ name: key, y: point });
+        }
+      }
+      this.option.series = [
+        {
+          data: [
+            { name: 123, y: 22 },
+            { name: 233, y: 56 }
+          ]
+        }
+      ];
+      console.log(JSON.stringify(this.option.series[0]));
+    },
+
     async list() {
       let res = await axios.$post("award/list", this.query);
       for (let i = 0; i < res.records.length; i++) {

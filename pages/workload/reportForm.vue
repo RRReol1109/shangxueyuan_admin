@@ -51,7 +51,7 @@
         prop="userId"
         label="工号"
         align="center"
-        width="50"
+        width="150"
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
