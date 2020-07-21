@@ -72,7 +72,7 @@
     </div>
     <el-table :data="tableData" border style="width: 100%">
       <!-- <el-table-column sortable fixed prop="year" align="center" label="教职工工号"></el-table-column> -->
-      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -123,7 +123,11 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button            @click="operate='edit';showDialog(scope.row)"
+            type="text"
+            size="normal"
+            v-if="scope.row.auditFlag!=1"
+          >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>

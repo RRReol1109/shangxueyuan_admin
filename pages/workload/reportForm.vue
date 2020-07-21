@@ -46,7 +46,8 @@
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="userId"
         label="工号"
@@ -54,18 +55,42 @@
         width="150"
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="指导论文" align="center" label="论文指导">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="教师姓名"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="指导论文"
+        align="center"
+        label="论文指导"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.指导论文 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="指导研究生" align="center" label="研究生指导">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="指导研究生"
+        align="center"
+        label="研究生指导"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.指导研究生 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="课堂教学" align="center" label="课堂教学">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="课堂教学"
+        align="center"
+        label="课堂教学"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.课堂教学 | statusFilter}}</span>
         </template>
@@ -75,17 +100,35 @@
           <span>{{scope.row.实习 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="沙盘模拟" align="center" label="沙盘模拟">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="沙盘模拟"
+        align="center"
+        label="沙盘模拟"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.沙盘模拟 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="社会调查" align="center" label="社会调查">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="社会调查"
+        align="center"
+        label="社会调查"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.社会调查 | statusFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="scores" align="center" label="合计"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="scores"
+        align="center"
+        label="合计"
+      ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" align="center" label="个人数据">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
@@ -94,7 +137,7 @@
     </el-table>
     <nav style="text-align: center; margin-top: 10px;">
       <!-- 分页居中放置-->
-     <el-pagination
+      <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="changeSize"
@@ -256,6 +299,10 @@ export default {
       this.dialogDetailVisible = true;
       await this.showDepartment();
       await this.showTeacherData();
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     async showDepartment() {
       let param = {

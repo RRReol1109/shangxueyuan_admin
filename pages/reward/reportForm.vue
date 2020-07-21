@@ -157,7 +157,14 @@
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
       <Highcharts id="departmentStatistic" :option="statisticOption" />
     </el-drawer>
-    <el-drawer size="60%" style="min-height:500px" title="个人数据详情" :visible.sync="teacherVisible">
+    <el-drawer
+      size="60%"
+      style="min-height:500px"
+      title="个人数据详情"
+      :visible.sync="teacherVisible"
+      id="teacherDrawer"
+      @closed="closedForm();"
+    >
       <Highcharts id="teacherStatistic" :option="option" />
     </el-drawer>
   </div>
@@ -186,7 +193,7 @@ export default {
           type: "pie"
         },
         title: {
-          text: "教师个人科研奖励情况统计"
+          text: "个人数据详情"
         },
         tooltip: {
           pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
@@ -196,38 +203,12 @@ export default {
             allowPointSelect: true,
             cursor: "pointer",
             dataLabels: {
-              enabled: true,
-              format: "<b>{point.name}</b>: {point.percentage:.1f} %",
-              style: {
-                color:
-                  (Highcharts.theme && Highcharts.theme.contrastTextColor) ||
-                  "black"
-              }
-            }
+              enabled: false
+            },
+            showInLegend: true
           }
         },
-        series: [
-          {
-            name: "Brands",
-            colorByPoint: true,
-            data: [
-              {
-                name: "Chrome",
-                y: 61.41,
-                sliced: true,
-                selected: true
-              },
-              {
-                name: "Internet Explorer",
-                y: 11.84
-              },
-              {
-                name: "Firefox",
-                y: 0.9236326109391125
-              }
-            ]
-          }
-        ]
+        series: []
       },
       statisticOption: {
         credits: {
@@ -315,7 +296,6 @@ export default {
       }
       this.dialogDetailVisible = true;
       await this.showDepartment();
-      this.showData();
       // await this.showTeacherData();
     },
     async showDepartment() {
@@ -447,11 +427,11 @@ export default {
       this.list();
     },
     async showData(row) {
-      this.teacherVisible = true;
-      console.log(JSON.stringify(this.option.series[0]));
+      this.option.series = [];
+      console.log(this.option.series);
       let res = await axios.$get("award/statistics", { userId: row.userId });
       let currentYear = row.year;
-      let data = { name: "Brands", colorByPoint: true, data: [] };
+      let data = [];
       for (const key in res) {
         if (res.hasOwnProperty(key)) {
           const element = res[key];
@@ -459,20 +439,23 @@ export default {
           if (element[currentYear] != undefined) {
             point = element[currentYear];
           } else {
-            point = 0;
+            point = 0.0;
           }
-          data.data.push({ name: key, y: point });
+          data.push({ name: key, y: point });
         }
       }
       this.option.series = [
         {
-          data: [
-            { name: 123, y: 22 },
-            { name: 233, y: 56 }
-          ]
+          name: "Brands",
+          colorByPoint: true,
+          data: data
         }
       ];
       console.log(JSON.stringify(this.option.series[0]));
+      this.teacherVisible = true;
+    },
+    closedForm() {
+      this.option.series = [];
     },
 
     async list() {

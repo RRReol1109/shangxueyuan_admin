@@ -86,7 +86,7 @@
       <el-table-column sortable :show-overflow-tooltip="true" prop="learningWay" align="center" label="学习形式"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="applicationStatus" align="center" label="申请状态"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>-->
-      <el-table-column sortable fixed prop="pick" align="center" label="选择" width="50">
+      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
@@ -137,7 +137,11 @@
       >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button            @click="operate='edit';showDialog(scope.row)"
+            type="text"
+            size="normal"
+            v-if="scope.row.auditFlag!=1"
+          >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>

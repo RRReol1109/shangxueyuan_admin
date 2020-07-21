@@ -79,7 +79,7 @@
       </el-dropdown-menu>
     </el-dropdown>-->
     <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column sortable
+      <el-table-column 
         :show-overflow-tooltip="true"
         prop="pick"
         align="center"
@@ -124,7 +124,11 @@
       >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
+          <el-button            @click="operate='edit';showDialog(scope.row)"
+            type="text"
+            size="normal"
+            v-if="scope.row.auditFlag!=1"
+          >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
