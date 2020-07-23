@@ -338,8 +338,6 @@ export default {
       fileList: [],
       tableData: [],
       rules: {
-        year: [{ required: true, message: "教师工号", trigger: "blur" }],
-        year: [{ required: true, message: "请输入教师姓名", trigger: "blur" }],
         studentName: [
           { required: true, message: "请输入学生姓名", trigger: "blur" }
         ],

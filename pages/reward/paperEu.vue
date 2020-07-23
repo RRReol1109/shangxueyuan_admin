@@ -1133,6 +1133,8 @@ export default {
         }
         if (element.company == "true") {
           author += "（外单位）";
+        } else {
+          author += "（中南大学）";
         }
         this.ruleForm.authors += author;
         if (i != this.teacherArr.length - 1) {
@@ -1207,17 +1209,14 @@ export default {
             }
             company = "false";
           } else {
-            let info = element.substr(
-              element.indexOf("（") + 1,
-              element.indexOf("）") - element.indexOf("（") - 1
-            );
-            if (info != "外单位") {
+            if (info != "外单位" && info != "中南大学") {
               name = info;
               company = "false";
               stu = element.substr(0, element.indexOf("（") - 1);
             } else {
               name = element.substr(0, element.indexOf("（") - 1);
-              company = "true";
+              if (info == "外单位") company = "true";
+              else company = "false";
             }
             if (element.substr(element.indexOf("（") - 1, 1) == 1 && i != 0) {
               flag = "true";

@@ -245,7 +245,7 @@
                   v-for="item in teacherList"
                   :key="item.id"
                   :label="item.name"
-                  :value="item.id"
+                  :value="item.name"
                 ></el-option>
               </el-select>
             </el-form-item>

@@ -341,16 +341,16 @@
           <el-col :span="12">
             <el-form-item label="是否为再版" prop="reprintFlag">
               <el-select placeholder="请选择" v-model="ruleForm.reprintFlag" style="width:98%">
-                <el-option label="是" value="是"></el-option>
-                <el-option label="否" value="否"></el-option>
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="是否国外教材译本" prop="translateFlag">
               <el-select placeholder="请选择" v-model="ruleForm.translateFlag" style="width:98%">
-                <el-option label="是" value="是"></el-option>
-                <el-option label="否" value="否"></el-option>
+                <el-option label="是" value="true"></el-option>
+                <el-option label="否" value="false"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -366,7 +366,7 @@
               v-for="item in teacherList"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             ></el-option>
           </el-select>
           <!--分数： <el-input

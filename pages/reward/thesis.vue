@@ -80,25 +80,63 @@
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="指导教师姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="获奖类别"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="指导教师姓名"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="获奖类别"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="studentName"
         align="center"
         label="获奖学生姓名"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentId" align="center" label="获奖学生学号"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentId"
+        align="center"
+        label="获奖学生学号"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="studentClass"
         align="center"
         label="获奖学生专业班级"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="title" align="center" label="获奖论文题目"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="date" align="center" label="获奖日期"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="title"
+        align="center"
+        label="获奖论文题目"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="date"
+        align="center"
+        label="获奖日期"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="本人计分"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -106,7 +144,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -208,7 +247,7 @@
                   v-for="item in teacherList"
                   :key="item.id"
                   :label="item.name"
-                  :value="item.id"
+                  :value="item.name"
                 ></el-option>
               </el-select>
               <!-- <el-autocomplete

@@ -171,6 +171,7 @@
 </template>
 <script>
 import moment from "moment";
+import echarts from "echarts";
 import Highcharts from "~/components/Highcharts.vue";
 import axios from "~/plugins/axios2";
 export default {

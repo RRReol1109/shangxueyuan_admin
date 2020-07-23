@@ -47,7 +47,7 @@
               :key="item.id"
               filterable
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -495,7 +495,7 @@
                   :key="item.id"
                   filterable
                   :label="item.name"
-                  :value="item.id"
+                  :value="item.name"
                 ></el-option>
               </el-select>
             </el-form-item>

@@ -25,7 +25,7 @@
               v-for="item in teacherList"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -354,7 +354,7 @@
               v-for="item in teacherList"
               :key="item.id"
               :label="item.name"
-              :value="item.id"
+              :value="item.name"
             ></el-option>
           </el-select>
           <el-select v-model="teacherArr.title" placeholder="职称" style="width:120px">
