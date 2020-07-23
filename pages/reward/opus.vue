@@ -74,7 +74,8 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         type="index"
         label="序号"
@@ -83,63 +84,101 @@
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="type" label="类型" align="center"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="publishDate"
         align="center"
         label="出版时间"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="name"
         align="center"
         label="著作教程名称"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="publishHouse"
         align="center"
         label="出版社名称"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="signature"
         align="center"
         label="署名单位"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="chiefEditor"
         align="center"
         label="主编信息"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="reprintFlag"
+        align="center"
+        label="是否为再版"
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.reprintFlag | flagFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        sortable
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="translateFlag"
+        align="center"
+        label="是否国外教材译本"
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.translateFlag | flagFilter}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="wordCount"
         align="center"
         label="总字数（万）"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="userName"
         align="center"
         label="作者"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="isbn"
         align="center"
         label="ISBN编号"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -147,7 +186,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -297,6 +337,24 @@
         <el-form-item label="主编信息" prop="chiefEditor">
           <el-input clearable v-model="ruleForm.chiefEditor" placeholder="请输入内容" style="width:99%"></el-input>
         </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="是否为再版" prop="reprintFlag">
+              <el-select placeholder="请选择" v-model="ruleForm.reprintFlag" style="width:98%">
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="是否国外教材译本" prop="translateFlag">
+              <el-select placeholder="请选择" v-model="ruleForm.translateFlag" style="width:98%">
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item
           v-for="(teacherArr, index) in teacherArr"
           :label="'作者信息' + (index+1)"
@@ -341,7 +399,8 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column sortable
+            <el-table-column
+              sortable
               :show-overflow-tooltip="true"
               type="index"
               label="#"
@@ -472,6 +531,12 @@ export default {
         "0": "未审核",
         "1": "已审核",
         "2": "未通过"
+      }[value.toString()];
+    },
+    flagFilter: function(value) {
+      return {
+        true: "是",
+        false: "否"
       }[value.toString()];
     }
   },

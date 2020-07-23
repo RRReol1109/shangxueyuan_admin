@@ -24,13 +24,43 @@
     </div>
 
     <el-table v-loading="loading" :data="tableData" border style="width: 100%">
-      <el-table-column sortable :show-overflow-tooltip="true" prop="logtype" align="center" label="日志类型"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="logname" align="center" label="日志名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="用户名称"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="logtype"
+        align="center"
+        label="日志类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="logname"
+        align="center"
+        label="日志名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="用户名称"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="classname" align="center" label="类名"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="createtime" align="center" label="时间"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="createtime"
+        align="center"
+        label="时间"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="method" align="center" label="方法名"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="message" align="center" label="具体消息"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="message"
+        align="center"
+        label="具体消息"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="ip" align="center" label="ip"></el-table-column> -->
     </el-table>
     <nav style="text-align: center; margin-top: 10px;">
@@ -115,6 +145,10 @@ export default {
     //   this.dialogFormVisible = false;
     //   await this.list();
     // },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     showDialog(row) {
       this.dialogFormVisible = true;
       this.formDisabled = false;
@@ -163,12 +197,12 @@ export default {
   width: 200px;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>

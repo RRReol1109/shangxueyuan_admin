@@ -573,7 +573,7 @@ export default {
                   entity: {
                     id: 103,
                     name: "overseas1",
-                    alias: "商学院出国学生",
+                    alias: "国内外交流学生",
                     state: "ENABLE",
                     value: "/database/postgraduate/overseas"
                   }
@@ -885,7 +885,7 @@ export default {
               entity: {
                 id: 89,
                 name: "overseas",
-                alias: "商学院出国学生",
+                alias: "国内外交流学生",
                 state: "ENABLE",
                 value: "/database/overseas"
               }

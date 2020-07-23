@@ -2,8 +2,19 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="学号:">
-          <el-input v-model="query.studentNumber" placeholder="请输入学号" size="normal"></el-input>
+        <el-form-item label="届别:">
+          <el-date-picker
+            v-model="query.year"
+            align="right"
+            size="normal"
+            type="year"
+            format="yyyy"
+            value-format="yyyy"
+            placeholder="年度"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="专业:">
+          <el-input v-model="query.major" placeholder="请输入专业" size="normal"></el-input>
         </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
@@ -34,7 +45,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/graduateOverseasStudent/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/graduateRate/upload?token='AuthenticationToken'"
                 >
                   <el-button class type="text">批量上传</el-button>
                 </el-upload>
@@ -51,101 +62,51 @@
         </template>
       </el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column sortable fixed prop="year" align="center" label="届别"></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="studentNumber"
-        align="center"
-        label="学号"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="studentName"
-        align="center"
-        label="姓名"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="gender"
-        align="center"
-        label="性别"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="majorName"
+        prop="major"
         align="center"
         label="专业"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="departmentName"
+        prop="graduateCnt"
         align="center"
-        label="学院"
+        label="毕业人数"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="grade"
+        prop="finishedCnt"
         align="center"
-        label="年级"
+        label="就业人数"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="school"
+        prop="degreeCnt"
         align="center"
-        label="学习学校"
+        label="有学位"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="learningDate"
+        prop="degreeRate"
         align="center"
-        label="学习时间"
+        label="就业单位"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="type"
+        prop="graduateRate"
         align="center"
-        label="学习形式"
+        label="就业率"
       ></el-table-column>
       <el-table-column
         sortable
-        :show-overflow-tooltip="true"
-        prop="country"
-        align="center"
-        label="国家"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="country"
-        align="center"
-        label="现就读学校"
-      ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="city" align="center" label="城市"></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="learningDate"
-        align="center"
-        label="学习时间"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="remark"
-        align="center"
-        label="备注"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        width="150"
         :show-overflow-tooltip="true"
         prop="auditFlag"
         align="center"
@@ -204,12 +165,13 @@
         </el-col>
       </el-row>
     </el-dialog>
+
     <el-drawer
       style="min-height:500px"
-      title
+      title="毕业率"
+      size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
-      size="60%"
     >
       <div slot="title" class="header-title">
         <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
@@ -225,110 +187,68 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
+        <div slot="title" class="header-title">
+          <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
+            <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
+            <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+            <el-button size="normal" @click="resetForm('form')">重置</el-button>
+          </div>
+        </div>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学号" prop="studentNumber">
-              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="姓名" prop="studentName">
-              <el-input size="normal" v-model="form.studentName" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="性别" prop="gender">
-              <el-select v-model="form.gender" size="normal" placeholder="请选择状态" style="width:99%">
-                <el-option label="男" value="男"></el-option>
-                <el-option label="女" value="女"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="专业" prop="majorName">
-              <el-input size="normal" v-model="form.majorName" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="学院" prop="departmentName">
-              <el-input size="normal" v-model="form.departmentName" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="年级" prop="grade">
-              <el-input size="normal" v-model="form.grade" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="学习学校" prop="school">
-              <el-input size="normal" v-model="form.school" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="学习时间" prop="learningDate">
+            <el-form-item label="届别" prop="year">
               <el-date-picker
+                v-model="form.year"
+                align="right"
                 size="normal"
-                v-model="form.learningDate"
-                type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
-                placeholder="选择年份"
-                style="width:98%"
+                type="year"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="年度"
+                style="width:99%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
-            <el-form-item label="学习形式:" prop="type">
-              <el-input size="normal" v-model="form.type" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="国家:" prop="country">
-              <el-input size="normal" v-model="form.country" style="width:99%"></el-input>
+            <el-form-item label="毕业生人数" prop="totalCnt">
+              <el-input size="normal" v-model="form.totalCnt" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="现就读学校:" prop>
-              <el-input size="normal" style="width:99%"></el-input>
+            <el-form-item label="专业" prop="major">
+              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="城市:" prop="city">
-              <el-input size="normal" v-model="form.city" style="width:99%"></el-input>
+            <el-form-item label="毕业人数" prop="graduateCnt">
+              <el-input
+                size="normal"
+                v-model="form.graduateCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="学习时间:" prop="learningDate">
-              <el-input size="normal" v-model="form.learningDate" style="width:99%"></el-input>
+            <el-form-item label="结业人数" prop="finishedCnt">
+              <el-input
+                size="normal"
+                v-model="form.finishedCnt"
+                autocomplete="off"
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
-            <el-form-item label="备注" prop="remark">
-              <el-input size="normal" v-model="form.remark" style="width:99%"></el-input>
+            <el-form-item label="有学位" prop="degreeCnt">
+              <el-input size="normal" v-model="form.degreeCnt" autocomplete="off" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-          <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
-            <el-option label="未审核" value="0"></el-option>
-            <el-option label="审核通过" value="1"></el-option>
-            <el-option label="审核未通过" value="2"></el-option>
-          </el-select>
-        </el-form-item>
       </el-form>
     </el-drawer>
   </div>
@@ -336,55 +256,50 @@
 
 <script>
 import axios from "~/plugins/axios2";
-import moment from "moment";
 export default {
   layout: "normal",
   components: {},
   data() {
     return {
-      operate: "",
-      dialogFormVisible: false,
       total: 0,
       page: 1,
-      fileList: [],
+      operate: "",
+      dialogFormVisible: false,
       query: {
         limit: 10,
         offset: 0,
         order: "desc",
         condition: ""
       },
-      teacherList: [],
       roleId: 0,
       examineDialog: false,
       examineForm: {},
-      header: {},
-      rules: {},
       form: {
-        college: "",
-        gender: "",
-        nativePlace: "",
-        nation: "",
-        political: "",
-        idNum: "",
-        startDate: "",
-        address: "",
-        state: "",
-        editorDeptName: "",
-        title: "",
-        titleDate: "",
-        level: "",
-        tutor: "",
-        personType: "",
-        postDate: "",
-        highEducation: "",
-        highDegree: "",
-        school: "",
-        college: "",
-        startDate: "",
-        qq: "",
-        phone: "",
-        homePhone: "",
-        email: ""
+        // year: "2019",
+        id: "",
+        major: "",
+        totalCnt: "",
+        graduateCnt: "",
+        finishedCnt: "",
+        degreeCnt: ""
+      },
+      fileList: [],
+      header: {},
+      rules: {
+        year: [{ required: true, message: "请输入界别", trigger: "blur" }],
+        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        totalCnt: [
+          { required: true, message: "请输入毕业生人数", trigger: "blur" }
+        ],
+        graduateCnt: [
+          { required: true, message: "请输入毕业人数", trigger: "blur" }
+        ],
+        finishedCnt: [
+          { required: true, message: "请输入结业人数", trigger: "blur" }
+        ],
+        degreeCnt: [
+          { required: true, message: "请输入有学位", trigger: "blur" }
+        ]
       },
       tableData: []
     };
@@ -393,95 +308,41 @@ export default {
     statusFilter: function(value) {
       return {
         "0": "未审核",
-        "1": "通过",
+        "1": "已审核",
         "2": "未通过"
       }[value.toString()];
     }
   },
+
   methods: {
     handleClick(row) {
       console.log(row);
+    },
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
     },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
     },
-    async changeFlag(row) {
-      row.pick = !row.pick;
-    },
     async list() {
-      this.tableData = [];
       for (const key in this.query) {
         if (this.query.hasOwnProperty(key)) {
           const element = this.query[key];
-          if (key == "entryTime" || key == "graduationTime") {
-            if (element) {
-              this.query[key] = moment(element).format("YYYY-MM-DD");
-            } else {
-              delete this.query[key];
-            }
-          }
           if (element == "" && key != "condition" && key != "offset") {
             delete this.query[key];
           }
         }
       }
-      let user = localStorage.getItem("roles");
-      if (!user.includes(888)) {
+      let user = localStorage.getItem("userInfo");
+      if (user.roleid == 7) {
         this.query.editor = user.id;
       }
-      let res = await axios.$post("/graduateOverseasStudent/list", this.query);
-      if (res) {
-        for (let i = 0; i < res.rows.length; i++) {
-          const element = res.rows[i];
-          for (const key in element) {
-            if (element.hasOwnProperty(key)) {
-              const item = element[key];
-              if (key == "entryTime" || key == "graduationTime") {
-                element[key] = moment(item).format("YYYY-MM-DD");
-                console.log(element[key]);
-              }
-            }
-          }
-        }
-      }
+      let res = await axios.$post("/graduateRate/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
-    },
-    uploadSuccess() {
-      this.$message({
-        type: "success",
-        message: "上传成功"
-      });
-      this.list();
-    },
-    async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
-        if (flag == "success") {
-          this.examineForm.auditFlag = 1;
-        } else {
-          this.examineForm.auditFlag = 2;
-        }
-        await axios.$post("/graduateOverseasStudent/update", this.examineForm);
-      }
-      this.list();
-      this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
     },
     async submitForm(formName) {
       let verification = false;
@@ -504,63 +365,56 @@ export default {
         });
         return;
       }
+      this.form.graduateRate =
+        ((this.form.graduateCnt / this.form.totalCnt) * 100).toFixed(2) + "%";
+      this.form.degreeRate =
+        ((this.form.degreeCnt / this.form.totalCnt) * 100).toFixed(2) + "%";
       switch (this.operate) {
         case "add":
-          await axios.$post("/graduateOverseasStudent/add", this.form);
+          await axios.$post("/graduateRate/add", this.form);
           break;
         case "edit":
-          await axios.$post("/graduateOverseasStudent/update", this.form);
+          await axios.$post("/graduateRate/update", this.form);
           break;
       }
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
-      this.dialogFormVisible = true;
-      this.formDisabled = false;
-      if (this.operate === "add") {
-        this.form = {
-          college: "",
-          gender: "",
-          nativePlace: "",
-          nation: "",
-          political: "",
-          idNum: "",
-          startDate: "",
-          address: "",
-          state: "",
-          editorDeptName: "",
-          title: "",
-          titleDate: "",
-          level: "",
-          tutor: "",
-          personType: "",
-          postDate: "",
-          highEducation: "",
-          highDegree: "",
-          school: "",
-          college: "",
-          startDate: "",
-          qq: "",
-          phone: "",
-          homePhone: "",
-          email: ""
-        };
-      } else {
-        row.auditFlag = row.auditFlag.toString();
-        this.form = row;
+    async changeFlag(row) {
+      row.pick = !row.pick;
+    },
+
+    async examineData(flag) {
+      let examineList = [];
+      for (let i = 0; i < this.tableData.length; i++) {
+        const element = this.tableData[i];
+        console.log(element);
+        if (element.pick) {
+          examineList.push(element);
+        }
       }
+      for (let i = 0; i < examineList.length; i++) {
+        const element = examineList[i];
+        console.log(element.auditFlag, "=======" + flag);
+        this.examineForm.id = element.id;
+        if (flag == "success") {
+          this.examineForm.auditFlag = 1;
+        } else {
+          this.examineForm.auditFlag = 2;
+        }
+        await axios.$post("/graduateRate/update", this.examineForm);
+      }
+      this.list();
+      this.examineDialog = false;
+      this.$message({
+        type: "success",
+        message: "审核成功!"
+      });
     },
-    resetForm(formName) {
-      console.log(this.$refs[formName]);
-      this.$refs[formName].resetFields();
-    },
+
     async handleCommand(command) {
       console.log(command);
       switch (command) {
-        case "download":
-          this.exportData(command);
-          break;
         case "examine":
           let deleteList = [];
           for (let i = 0; i < this.tableData.length; i++) {
@@ -580,30 +434,31 @@ export default {
           }
           this.examineDialog = true;
           break;
-
         case "delCount":
           this.delCount();
           break;
         case "temp":
           this.exportData(command);
           break;
+        case "download":
+          this.exportData(command);
+          break;
       }
     },
-
-    changeSize(val) {
-      this.query.limit = val;
+    uploadSuccess() {
+      this.$message({
+        type: "success",
+        message: "上传成功"
+      });
       this.list();
     },
 
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download(
-          "/graduateOverseasStudent/export?id=-1",
-          {}
-        );
+        data = await axios.$download("/graduateRate/export?id=-1", {});
       } else {
-        data = await axios.$download("/graduateOverseasStudent/export", {
+        data = await axios.$download("/graduateRate/export", {
           params: this.query
         });
       }
@@ -612,7 +467,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "数据库-国内外交流学生.xls");
+        link.setAttribute("download", "数据库-毕业率.xls");
         document.body.appendChild(link);
         link.click();
       }
@@ -642,9 +497,9 @@ export default {
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
-            let internationalStudentId = element.id;
-            await axios.$post("/graduateOverseasStudent/delete", {
-              internationalStudentId: internationalStudentId
+            let graduateRateId = element.id;
+            await axios.$post("/graduateRate/delete", {
+              graduateRateId: graduateRateId
             });
           }
           this.tableData = [];
@@ -661,7 +516,26 @@ export default {
           });
         });
     },
-
+    showDialog(row) {
+      this.dialogFormVisible = true;
+      this.formDisabled = false;
+      if (this.operate === "add") {
+        this.form = {
+          id: "",
+          major: "",
+          totalCnt: "",
+          graduateCnt: "",
+          finishedCnt: "",
+          degreeCnt: ""
+        };
+      } else {
+        this.form = row;
+      }
+    },
+    resetForm(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].resetFields();
+    },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -670,9 +544,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let internationalStudentId = row.id;
-          await axios.$post("/graduateOverseasStudent/delete", {
-            internationalStudentId: internationalStudentId
+          let graduateRateId = row.id;
+          await axios.$post("/graduateRate/delete", {
+            graduateRateId: graduateRateId
           });
           this.list();
           this.$message({
@@ -688,14 +562,11 @@ export default {
         });
     }
   },
-  async mounted() {
-    this.teacherList = await axios.$post("/mgr/list", {
-      order: "desc",
-      offset: 0,
-      limit: 999999
-    });
-    this.teacherList = this.teacherList.rows;
+  mounted() {
     this.roleId = localStorage.getItem("roleId");
+    this.header = {
+      Authorization: localStorage.getItem("message")
+    };
     this.list();
   }
 };

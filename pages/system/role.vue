@@ -507,7 +507,7 @@ export default {
             },
             {
               id: 89,
-              label: "商学院出国学生",
+              label: "国内外交流学生",
               date: ""
             }
           ]

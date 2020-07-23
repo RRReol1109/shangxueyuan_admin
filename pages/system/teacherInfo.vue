@@ -594,6 +594,8 @@
                 <el-option label="在职" value="在职"></el-option>
                 <el-option label="离职" value="离职"></el-option>
                 <el-option label="调离" value="调离"></el-option>
+                <el-option label="兼职教师" value="兼职教师"></el-option>
+                <el-option label="短期人才项目" value="短期人才项目"></el-option>
               </el-select>
             </el-form-item>
           </el-col>

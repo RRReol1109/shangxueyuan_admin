@@ -6,7 +6,7 @@
           <el-input v-model="query.title" style="width:250px" placeholder size="normal"></el-input>
         </el-form-item>
         <el-form-item label="第一作者:">
-          <el-input v-model="query.firstAuthor" style="width:250px" placeholder size="normal"></el-input>
+          <el-input v-model="query.authors" style="width:250px" placeholder size="normal"></el-input>
         </el-form-item>
         <el-form-item label="期刊学院分级:">
           <el-select v-model="query.collegeLevel" size="normal" placeholder="请选择分级">
@@ -167,6 +167,14 @@
         sortable
         width="150"
         :show-overflow-tooltip="true"
+        prop="source"
+        align="center"
+        label="资助来源"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        width="150"
+        :show-overflow-tooltip="true"
         prop="yearDate"
         align="center"
         label="年代卷期"
@@ -233,6 +241,7 @@
             v-if="scope.row.auditFlag!=1"
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button @click="goPaper(scope.row);" type="text">查看论文</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -316,6 +325,9 @@
         <el-form-item label="论文名称:" prop="title">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
         </el-form-item>
+        <el-form-item label="论文rul:" prop="url">
+          <el-input learable v-model="ruleForm.url" placeholder style="width:99%"></el-input>
+        </el-form-item>
         <el-form-item label="论文英文名称:" prop="titleEn">
           <el-input learable v-model="ruleForm.titleEn" placeholder style="width:99%"></el-input>
         </el-form-item>
@@ -369,6 +381,11 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <el-form-item label="资助来源" prop="source">
+              <el-input clearable v-model="ruleForm.source" placeholder style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="第一作者" prop="firstAuthor">
               <el-input clearable v-model="ruleForm.firstAuthor" placeholder style="width:99%"></el-input>
@@ -865,6 +882,17 @@ export default {
       }
       this.dialogFormVisible = false;
       await this.list();
+    },
+    goPaper(row) {
+      if (row.url != undefined && row.url != "") {
+        window.open(row.url);
+      } else {
+        this.$confirm("该条数据无论文url", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+      }
     },
     showDialog(row) {
       this.dialogFormVisible = true;

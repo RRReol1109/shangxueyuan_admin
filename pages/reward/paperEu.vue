@@ -362,6 +362,7 @@
           <el-button @click="operate='show';showDialog(scope.row)" type="text">查看</el-button>
           <el-button @click="operate='edit';showDialog(scope.row)" type="text">编辑</el-button>
           <el-button @click="del(scope.row)" type="text">删除</el-button>
+          <el-button @click="goPaper(scope.row);" type="text">查看论文</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -444,6 +445,9 @@
         </el-row>
         <el-form-item label="论文名称:" prop="contracttype">
           <el-input learable v-model="ruleForm.title" placeholder style="width:99%"></el-input>
+        </el-form-item>
+        <el-form-item label="论文rul:" prop="url">
+          <el-input learable v-model="ruleForm.url" placeholder style="width:99%"></el-input>
         </el-form-item>
         <el-form-item label="期刊名称" prop="journal">
           <el-input v-model="ruleForm.journal" placeholder style="width:99%"></el-input>
@@ -913,6 +917,17 @@ export default {
   },
 
   methods: {
+    goPaper(row) {
+      if (row.url != undefined && row.url != "") {
+        window.open(row.url);
+      } else {
+        this.$confirm("该条数据无论文url", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+      }
+    },
     handleSelectionChange(val) {
       this.checkedList = val;
       console.log("handleSelectionChange:::", val);

@@ -74,41 +74,128 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentNum" align="center" label="学号"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentNum"
+        align="center"
+        label="学号"
+      ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="englishName" align="center" label="英文名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="education" align="center" label="学历"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="birthday" align="center" label="生日"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="phone" align="center" label="联系电话"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="englishName"
+        align="center"
+        label="英文名"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="education"
+        align="center"
+        label="学历"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gender"
+        align="center"
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="birthday"
+        align="center"
+        label="生日"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="major"
+        align="center"
+        label="专业"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="tutor"
+        align="center"
+        label="导师"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="phone"
+        align="center"
+        label="联系电话"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="email"
+        align="center"
+        label="邮箱"
+      ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="wechat" align="center" label="微信"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="country" align="center" label="国籍"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="passport" align="center" label="护照"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="wechat"
+        align="center"
+        label="微信"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="country"
+        align="center"
+        label="国籍"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="passport"
+        align="center"
+        label="护照"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="registrationNumber"
         align="center"
         label="登记编号"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="entryTime" align="center" label="入专时间"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="entryTime"
+        align="center"
+        label="入专时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="graduationTime"
         align="center"
         label="预计毕业时间"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -116,7 +203,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -360,6 +448,7 @@ export default {
       examineDialog: false,
       fileList: [],
       header: {},
+      checkedList: [],
       examineForm: {},
       form: {
         id: "",
@@ -429,6 +518,12 @@ export default {
     async changeFlag(row) {
       row.pick = !row.pick;
     },
+
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
+
     async list() {
       this.tableData = [];
       for (const key in this.query) {
@@ -477,18 +572,8 @@ export default {
       this.list();
     },
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -573,22 +658,6 @@ export default {
           this.exportData(command);
           break;
         case "examine":
-          let deleteList = [];
-          for (let i = 0; i < this.tableData.length; i++) {
-            const element = this.tableData[i];
-            console.log(element);
-            if (element.pick) {
-              deleteList.push(element);
-            }
-          }
-          if (deleteList.length <= 0) {
-            await this.$confirm("未选中数据", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
-            }).then(async () => {});
-            return;
-          }
           this.examineDialog = true;
           break;
 
@@ -621,15 +690,8 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -643,11 +705,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let internationalStudentId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/internationalStudent/delete", {
-              internationalStudentId: internationalStudentId
+              internationalStudentId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -664,7 +724,6 @@ export default {
           });
         });
     },
-
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",

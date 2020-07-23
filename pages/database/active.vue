@@ -50,29 +50,56 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>6
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
-      <el-table-column sortable
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="activityTheme"
         align="center"
         label="活动主题"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="activityTime"
         align="center"
         label="活动时间"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="content" align="center" label="活动内容"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="department" align="center" label="负责部门"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="semester" align="center" label="学期"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="content"
+        align="center"
+        label="活动内容"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="department"
+        align="center"
+        label="负责部门"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="semester"
+        align="center"
+        label="学期"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -80,7 +107,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -228,6 +256,7 @@ export default {
       },
       fileList: [],
       header: {},
+      checkedList: [],
       rules: {
         namactivityThemee: [
           { required: true, message: "请输入姓名", trigger: "blur" }
@@ -307,6 +336,11 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
+
     async submitForm(formName) {
       let verification = false;
       this.$refs[formName].validate(valid => {
@@ -390,18 +424,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -480,15 +504,8 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -502,11 +519,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let eventId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/event/delete", {
-              eventId: eventId
+              eventId: vm.checkedList[i].id
             });
           }
           this.tableData = [];

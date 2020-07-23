@@ -51,28 +51,100 @@
         </template>
       </el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentName" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="majorName" align="center" label="专业"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentNumber"
+        align="center"
+        label="学号"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentName"
+        align="center"
+        label="姓名"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gender"
+        align="center"
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="majorName"
+        align="center"
+        label="专业"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="departmentName"
         align="center"
         label="学院"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="school" align="center" label="学习学校"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="grade"
+        align="center"
+        label="年级"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="school"
+        align="center"
+        label="学习学校"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="learningDate"
         align="center"
         label="学习时间"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="学习形式"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="country" align="center" label="国家"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="学习形式"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="country"
+        align="center"
+        label="国家"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="country"
+        align="center"
+        label="现就读学校"
+      ></el-table-column>
+      <el-table-column sortable :show-overflow-tooltip="true" prop="city" align="center" label="城市"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="learningDate"
+        align="center"
+        label="学习时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="remark"
+        align="center"
+        label="备注"
+      ></el-table-column>
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="auditFlag"
@@ -86,7 +158,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -220,6 +293,25 @@
           <el-col :span="12">
             <el-form-item label="国家:" prop="country">
               <el-input size="normal" v-model="form.country" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="现就读学校:" prop>
+              <el-input size="normal" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="城市:" prop="city">
+              <el-input size="normal" v-model="form.city" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="学习时间:" prop="learningDate">
+              <el-input size="normal" v-model="form.learningDate" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -525,7 +617,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "数据库-商学院出国学生.xls");
+        link.setAttribute("download", "数据库-国内外交流学生.xls");
         document.body.appendChild(link);
         link.click();
       }

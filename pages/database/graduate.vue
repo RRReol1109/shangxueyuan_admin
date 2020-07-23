@@ -60,45 +60,127 @@
         </template>
       </el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="employerEvaluation"
         align="center"
         label="用人单位评价"
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentNumber"
+        align="center"
+        label="学号"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="degreeObtained"
         align="center"
         label="获学位情况"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="outstandingGraduates"
         align="center"
         label="优秀毕业生"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="grade" align="center" label="届别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="专业"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="grade"
+        align="center"
+        label="届别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="major"
+        align="center"
+        label="专业"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="degreeGrantingRate"
         align="center"
         label="授予学位率"
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="companyName" align="center" label="单位名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="startDate" align="center" label="单位性质"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="industry" align="center" label="单位行业"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="station" align="center" label="岗位"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="workPlace" align="center" label="工作地点"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="companyName"
+        align="center"
+        label="单位名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="startDate"
+        align="center"
+        label="单位性质"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="industry"
+        align="center"
+        label="单位行业"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="station"
+        align="center"
+        label="岗位"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="workPlace"
+        align="center"
+        label="工作地点"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="hardFlag"
+        align="center"
+        label="是否为艰苦地区或基层"
+      >
+        <template slot-scope="scope">
+          <span>{{scope.row.hardFlag | flagFilter}}</span>
+        </template>
+      </el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="qq" align="center" label="QQ"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="wechat" align="center" label="微信"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="email" align="center" label="邮箱"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="agreementNo" align="center" label="协议书号"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="wechat"
+        align="center"
+        label="微信"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="email"
+        align="center"
+        label="邮箱"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="agreementNo"
+        align="center"
+        label="协议书号"
+      ></el-table-column>
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="auditFlag"
@@ -112,7 +194,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -272,24 +355,32 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="QQ:" prop="qq">
-              <el-input size="normal" v-model="form.qq" style="width:99%"></el-input>
+            <el-form-item label="是否为艰苦地区或基层:" prop="hardFlag">
+              <el-select placeholder="请选择" v-model="form.hardFlag" style="width:98%">
+                <el-option label="是" value="是"></el-option>
+                <el-option label="否" value="否"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
+          <el-col :span="12">
+            <el-form-item label="QQ:" prop="qq">
+              <el-input size="normal" v-model="form.qq" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
           <el-col :span="12">
             <el-form-item label="微信:" prop="wechat">
               <el-input size="normal" v-model="form.wechat" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="邮箱:" prop="email">
               <el-input size="normal" v-model="form.email" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="协议书号:" prop="agreementNo">
               <el-input size="normal" v-model="form.agreementNo" style="width:99%"></el-input>
@@ -343,6 +434,12 @@ export default {
         "0": "未审核",
         "1": "通过",
         "2": "未通过"
+      }[value.toString()];
+    },
+    flagFilter: function(value) {
+      return {
+        true: "是",
+        false: "否"
       }[value.toString()];
     }
   },
