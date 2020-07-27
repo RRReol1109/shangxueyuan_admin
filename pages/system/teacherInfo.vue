@@ -128,6 +128,22 @@
         sortable
         label="民族"
       ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="subject"
+        align="center"
+        sortable
+        label="学科"
+      ></el-table-column>
+      <el-table-column
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="subfield"
+        align="center"
+        sortable
+        label="副学科"
+      ></el-table-column>
       <!-- <el-table-column :show-overflow-tooltip="true" prop="name" align="center" label="最高学历"></el-table-column> -->
       <el-table-column
         :show-overflow-tooltip="true"
@@ -533,6 +549,18 @@
                   :value="item.id"
                 ></el-option>
               </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="学科">
+              <el-input v-model="form.subject" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="副学科">
+              <el-input v-model="form.subfield" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -1311,12 +1339,12 @@ export default {
       console.log("this.departments::", this.departments);
     },
     tableRowClassName({ row, rowIndex }) {
-      //   if (rowIndex % 2 == 0) {
-      //     return "warning-row";
-      //   } else {
-      //     return "success-row";
-      //   }
-      //   return "";
+      if (rowIndex % 2 == 0) {
+        return "warning-row";
+      } else {
+        return "success-row";
+      }
+      return "";
     }
   },
   mounted() {

@@ -131,7 +131,8 @@
       ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" align="center" label="个人数据">
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
+          <el-button @click="operate='show';download(scope.row)" type="text" size="normal">下载</el-button>
+          <el-button @click="operate='show';showData(scope.row)" type="text" size="normal">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -149,8 +150,17 @@
       ></el-pagination>
     </nav>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
-      <Highcharts id="teacherStatistic" :option="option" />
       <Highcharts id="departmentStatistic" :option="statisticOption" />
+      <Highcharts id="subjectStatistic" :option="subjectOption" />
+    </el-drawer>
+    <el-drawer
+      size="60%"
+      style="min-height:500px"
+      title="个人数据详情"
+      :visible.sync="teacherVisible"
+      id="teacherDrawer"
+    >
+      <Highcharts id="levelStatistic" :option="option" />
     </el-drawer>
   </div>
 </template>
@@ -169,51 +179,7 @@ export default {
       page: 0,
       loading: true,
       dialogDetailVisible: false,
-      option: {
-        credits: {
-          enabled: false
-        },
-        chart: {
-          panning: true,
-          type: "column"
-        },
-        title: {
-          text: "工作量分类统计教师个人对比"
-        },
-
-        subtitle: {
-          text: ""
-        },
-        scrollbar: {
-          enabled: true
-        },
-        xAxis: {
-          categories: [],
-          gridLineWidth: 2,
-          min: 0,
-          max: 4
-        },
-        yAxis: {
-          tickPixelInterval: 1,
-          min: 0,
-          title: {
-            text: "工作量",
-            align: "high"
-          },
-          labels: {
-            overflow: "justify"
-          }
-        },
-        tooltip: {
-          valueSuffix: " 工作量"
-        },
-        plotOptions: {
-          column: {
-            pointWidth: 10 //柱子宽bai度du
-          }
-        },
-        series: []
-      },
+      teacherVisible: false,
       statisticOption: {
         credits: {
           enabled: false
@@ -223,7 +189,7 @@ export default {
           type: "column"
         },
         title: {
-          text: "工作量分类统计系别对比"
+          text: "科研奖励统计系别对比"
         },
 
         subtitle: {
@@ -242,7 +208,7 @@ export default {
           tickPixelInterval: 1,
           min: 0,
           title: {
-            text: "工作量",
+            text: "计分",
             align: "high"
           },
           labels: {
@@ -250,7 +216,77 @@ export default {
           }
         },
         tooltip: {
-          valueSuffix: " 工作量"
+          valueSuffix: " 计分"
+        },
+        plotOptions: {
+          column: {
+            pointWidth: 10 //柱子宽bai度du
+          }
+        },
+        series: []
+      },
+      option: {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: "pie"
+        },
+        title: {
+          text: "个人数据详情"
+        },
+        tooltip: {
+          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: "pointer",
+            dataLabels: {
+              enabled: false
+            },
+            showInLegend: true
+          }
+        },
+        series: []
+      },
+      subjectOption: {
+        credits: {
+          enabled: false
+        },
+        chart: {
+          panning: true,
+          type: "column"
+        },
+        title: {
+          text: "科研奖励统计学科对比"
+        },
+
+        subtitle: {
+          text: ""
+        },
+        scrollbar: {
+          enabled: true
+        },
+        xAxis: {
+          categories: [],
+          gridLineWidth: 2,
+          min: 0,
+          max: 4
+        },
+        yAxis: {
+          tickPixelInterval: 1,
+          min: 0,
+          title: {
+            text: "计分",
+            align: "high"
+          },
+          labels: {
+            overflow: "justify"
+          }
+        },
+        tooltip: {
+          valueSuffix: " 计分"
         },
         plotOptions: {
           column: {
@@ -413,7 +449,7 @@ export default {
         link.click();
       }
     },
-    async showDialog(row) {
+    async download(row) {
       let data = "";
       let param = { year: this.query.year, userId: row.userId };
       data = await axios.$download("/workload/info/export", param);
@@ -426,6 +462,44 @@ export default {
         document.body.appendChild(link);
         link.click();
       }
+    },
+    async showData(row) {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
+      await this.showInfo(row);
+      this.teacherVisible = true;
+    },
+    async showInfo(row) {
+      this.option.series = [];
+      console.log(this.option.series);
+      let res = await axios.$get("workload/statistics", { userId: row.userId });
+      let currentYear = row.year;
+      let data = [];
+      for (const key in res) {
+        if (res.hasOwnProperty(key)) {
+          const element = res[key];
+          let point = "";
+          if (element[currentYear] != undefined) {
+            point = element[currentYear];
+          } else {
+            point = 0.0;
+          }
+          data.push({ name: key, y: point });
+        }
+      }
+      this.option.series = [
+        {
+          name: "Brands",
+          colorByPoint: true,
+          data: data
+        }
+      ];
+      console.log(JSON.stringify(this.option.series[0]));
     },
     async list() {
       if (!this.query.year) {

@@ -34,6 +34,9 @@
             <el-option label="市场营销系" value="市场营销系"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="学科:">
+          <el-input v-model="query.subjectOption" size="normal"></el-input>
+        </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list()">查询</el-button>
         </el-form-item>
@@ -156,6 +159,7 @@
     </nav>
     <el-drawer size="60%" style="min-height:500px" title="详情" :visible.sync="dialogDetailVisible">
       <Highcharts id="departmentStatistic" :option="statisticOption" />
+      <Highcharts id="subjectStatistic" :option="subjectOption" />
     </el-drawer>
     <el-drawer
       size="60%"
@@ -163,9 +167,9 @@
       title="个人数据详情"
       :visible.sync="teacherVisible"
       id="teacherDrawer"
-      @closed="closedForm();"
     >
       <Highcharts id="teacherStatistic" :option="option" />
+      <Highcharts id="levelStatistic" :option="paperOption" />
     </el-drawer>
   </div>
 </template>
@@ -256,6 +260,96 @@ export default {
         },
         series: []
       },
+      paperOption: {
+        credits: {
+          enabled: false
+        },
+        chart: {
+          panning: true,
+          type: "column"
+        },
+        title: {
+          text: "论文级别统计"
+        },
+
+        subtitle: {
+          text: ""
+        },
+        scrollbar: {
+          enabled: true
+        },
+        xAxis: {
+          categories: [],
+          gridLineWidth: 2,
+          min: 0,
+          max: 4
+        },
+        yAxis: {
+          tickPixelInterval: 1,
+          min: 0,
+          title: {
+            text: "论文篇数",
+            align: "high"
+          },
+          labels: {
+            overflow: "justify"
+          }
+        },
+        tooltip: {
+          valueSuffix: "论文篇数"
+        },
+        plotOptions: {
+          column: {
+            pointWidth: 10 //柱子宽bai度du
+          }
+        },
+        series: []
+      },
+      subjectOption: {
+        credits: {
+          enabled: false
+        },
+        chart: {
+          panning: true,
+          type: "column"
+        },
+        title: {
+          text: "科研奖励统计学科对比"
+        },
+
+        subtitle: {
+          text: ""
+        },
+        scrollbar: {
+          enabled: true
+        },
+        xAxis: {
+          categories: [],
+          gridLineWidth: 2,
+          min: 0,
+          max: 4
+        },
+        yAxis: {
+          tickPixelInterval: 1,
+          min: 0,
+          title: {
+            text: "计分",
+            align: "high"
+          },
+          labels: {
+            overflow: "justify"
+          }
+        },
+        tooltip: {
+          valueSuffix: " 计分"
+        },
+        plotOptions: {
+          column: {
+            pointWidth: 10 //柱子宽bai度du
+          }
+        },
+        series: []
+      },
       query: {
         limit: 10,
         offset: 0,
@@ -297,6 +391,7 @@ export default {
       }
       this.dialogDetailVisible = true;
       await this.showDepartment();
+      await this.showSubject();
       // await this.showTeacherData();
     },
     async showDepartment() {
@@ -334,6 +429,47 @@ export default {
             console.log(data[i] + "=====" + key);
           }
           this.statisticOption.series.push({
+            name: element,
+            data: data
+          });
+        }
+      }
+    },
+    async showSubject() {
+      let param = {
+        year: this.query.year,
+        subject: this.query.subject
+      };
+      let res = await axios.$get("award/charts/subjectCategory", param);
+      let items = [];
+      this.subjectOption.series = [];
+      this.subjectOption.xAxis.categories = [];
+      for (const key in res.data) {
+        if (res.data.hasOwnProperty(key)) {
+          const element = res.data[key];
+          this.subjectOption.xAxis.categories.push(key);
+          items.push(element);
+        }
+      }
+      let names = {
+        articleCnScore: "中文论文",
+        articleEnScore: "英文论文",
+        awardResultScore: "获奖",
+        excellentPapersScore: "优秀博硕论文",
+        projectScore: "科研项目",
+        reportResultScore: "要报",
+        textBookScore: "著作教材"
+      };
+      for (const key in names) {
+        if (names.hasOwnProperty(key)) {
+          const element = names[key];
+          let data = [];
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            data.push(item[key]);
+            console.log(data[i] + "=====" + key);
+          }
+          this.subjectOption.series.push({
             name: element,
             data: data
           });
@@ -428,6 +564,18 @@ export default {
       this.list();
     },
     async showData(row) {
+      if (!this.query.year) {
+        this.$message({
+          type: "info",
+          message: "请输入年份"
+        });
+        return;
+      }
+      await this.showInfo(row);
+      await this.showLevel(row);
+      this.teacherVisible = true;
+    },
+    async showInfo(row) {
       this.option.series = [];
       console.log(this.option.series);
       let res = await axios.$get("award/statistics", { userId: row.userId });
@@ -453,10 +601,35 @@ export default {
         }
       ];
       console.log(JSON.stringify(this.option.series[0]));
-      this.teacherVisible = true;
     },
-    closedForm() {
-      this.option.series = [];
+    async showLevel(row) {
+      this.paperOption.series = [];
+      this.paperOption.xAxis.categories = [];
+      let res = await axios.$get("award/articleLevel", { userId: row.userId });
+      let currentYear = row.year;
+      let data = [];
+      let name = [];
+      for (const key in res) {
+        if (res.hasOwnProperty(key)) {
+          const element = res[key];
+          for (const keys in element[currentYear]) {
+            if (element[currentYear].hasOwnProperty(keys)) {
+              const item = element[currentYear][keys];
+              if (keys != "") {
+                this.paperOption.xAxis.categories.push(key + keys);
+                data.push(item);
+              }
+            }
+          }
+        }
+      }
+      this.paperOption.series = [
+        {
+          data: data,
+          name: currentYear
+        }
+      ];
+      console.log(this.paperOption.series);
     },
 
     async list() {
