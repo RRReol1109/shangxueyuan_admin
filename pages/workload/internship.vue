@@ -113,17 +113,77 @@
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="address" align="center" label="地址"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="实习地点"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="address"
+        align="center"
+        label="地址"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="实习地点"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="hours" align="center" label="实习时长"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="days" align="center" label="实习天数"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="count" align="center" label="实习人数"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="ratio" align="center" label="核定系数"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="classes" align="center" label="指导班级"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="company" align="center" label="实习单位"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="days"
+        align="center"
+        label="实习天数"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="count"
+        align="center"
+        label="实习人数"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="ratio"
+        align="center"
+        label="核定系数"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacherName"
+        align="center"
+        label="教师"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="classes"
+        align="center"
+        label="指导班级"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="company"
+        align="center"
+        label="实习单位"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="录入人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -132,7 +192,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -534,28 +595,25 @@ export default {
       console.log(this.query.editor);
       let query = this.query;
       let res = await axios.$post("/internship/list", this.query);
+      let teacherName = "";
       for (let i = 0; i < res.rows.length; i++) {
         const element = res.rows[i];
-        element.pick = false;
+        let teacherInfo = element.teachers.split(",");
+        for (let y = 0; y < teacherInfo.length; y++) {
+          const item = teacherInfo[y];
+          let teacher = item.split("|");
+          for (let j = 0; j < teacher.length; j++) {
+            const info = teacher[j];
+            if (j == 0) {
+              teacherName += info + ",";
+            }
+          }
+        }
+        element.teacherName = teacherName;
       }
+
+      console.log(teacherName, "2126+196");
       this.tableData = res.rows;
-      // for (let i = 0; i < this.tableData.length; i++) {
-      //   const element = this.tableData[i].teachers.split("|");
-      //   for (let j = 0; j < element.length; j++) {
-      //     const item = element[j];
-      //     if (j == 0 || j % 2 == 0) {
-      //       console.log(item, "==========item");
-      //       for (let x = 0; x < this.teacherList.length; x++) {
-      //         const teacher = this.teacherList[x];
-      //         console.log(teacher.id + "TACHER====");
-      //         if (item.toString() === teacher.id.toString()) {
-      //           let flag = element[j + 1] == "0" ? "队长" : "队员";
-      //           this.tableData[i].teachers = teacher.name + "|" + flag;
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
       this.total = parseInt(res.total);
       this.loading = false;
     },
@@ -606,17 +664,36 @@ export default {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
+          this.$confirm(
+            "审核通过之后该条数据将不可修改,请确认是否通过审核?",
+            "提示",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(async () => {
+              await axios.$post("/internship/update", this.examineForm);
+              this.list();
+              this.$message({
+                type: "success",
+                message: "审核成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消"
+              });
+            });
         } else {
           this.examineForm.auditFlag = 2;
+          await axios.$post("/internship/update", this.examineForm);
+          this.list();
         }
-        await axios.$post("/internship/update", this.examineForm);
       }
-      this.list();
       this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
     },
     async exportData(flag) {
       let data = "";
@@ -659,85 +736,42 @@ export default {
         });
         return;
       }
-      switch (this.operate) {
-        case "add":
-          console.log(this.rules.count, "========count");
-          for (let i = 0; i < this.teacherArr.length; i++) {
-            let element = this.teacherArr[i];
-            for (const key in element) {
-              if (element.hasOwnProperty(key)) {
-                let info = element[key];
-                if (key == "name") {
-                  this.ruleForm.teachers += info;
-                }
-                if (key == "title") {
-                  this.ruleForm.teachers += "|" + info;
-                }
-                if (key == "flag") {
-                  if (info) {
-                    this.ruleForm.teachers += "|1,";
-                  } else {
-                    this.ruleForm.teachers += "|0,";
-                  }
-                }
+      this.ruleForm.teachers = "";
+      for (let i = 0; i < this.teacherArr.length; i++) {
+        let element = this.teacherArr[i];
+        for (const key in element) {
+          if (element.hasOwnProperty(key)) {
+            let info = element[key];
+            if (key == "name") {
+              this.ruleForm.teachers += info;
+            }
+            if (key == "title") {
+              this.ruleForm.teachers += "|" + info;
+            }
+            if (key == "flag") {
+              if (info) {
+                this.ruleForm.teachers += "|1,";
+              } else {
+                this.ruleForm.teachers += "|0,";
               }
             }
-            if (i == this.teacherArr.length - 1) {
-              this.ruleForm.teachers = this.ruleForm.teachers.substr(
-                0,
-                this.ruleForm.teachers.length - 1
-              );
-            }
           }
-          console.log(this.ruleForm.teachers);
+        }
+        if (i == this.teacherArr.length - 1) {
+          this.ruleForm.teachers = this.ruleForm.teachers.substr(
+            0,
+            this.ruleForm.teachers.length - 1
+          );
+        }
+      }
+      switch (this.operate) {
+        case "add":
           if (this.roleId == 1 || this.roleId == 19) {
             this.ruleForm.auditFlag = 1;
           }
           await axios.$post("/internship/add", this.ruleForm);
           break;
         case "edit":
-          for (let i = 0; i < this.teacherList.length; i++) {
-            const element = this.teacherList[i];
-            if (this.ruleForm.teachers == element.name) {
-              this.ruleForm.teachers = element.id.toString();
-            }
-          }
-          this.ruleForm.teachers = "";
-          for (let i = 0; i < this.teacherArr.length; i++) {
-            let element = this.teacherArr[i];
-            for (const key in element) {
-              if (element.hasOwnProperty(key)) {
-                let info = element[key];
-                let tid = "";
-                if (key == "name") {
-                  for (let j = 0; j < this.teacherList.length; j++) {
-                    const item = this.teacherList[j];
-                    if (info == item.name) {
-                      tid = item.id;
-                    }
-                  }
-                  if (tid) this.ruleForm.teachers += tid;
-                  else this.ruleForm.teachers += info;
-                }
-                if (key == "title") {
-                  this.ruleForm.teachers += "|" + info;
-                }
-                if (key == "flag") {
-                  if (info) {
-                    this.ruleForm.teachers += "|1,";
-                  } else {
-                    this.ruleForm.teachers += "|0,";
-                  }
-                }
-              }
-            }
-            if (i == this.teacherArr.length - 1) {
-              this.ruleForm.teachers = this.ruleForm.teachers.substr(
-                0,
-                this.ruleForm.teachers.length - 1
-              );
-            }
-          }
           await axios.$post("/internship/update", this.ruleForm);
           break;
       }
@@ -830,7 +864,7 @@ export default {
     removeTeacher(item) {
       console.log(item);
       var index = this.teacherArr.indexOf(item);
-      if (index !== -1 && index != 0) {
+      if (this.teacherArr.length > 1) {
         this.teacherArr.splice(index, 1);
       }
     },
@@ -870,7 +904,7 @@ export default {
             const item = teacher[j];
             console.log(item, "======item");
             if (j == 0) {
-              this.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
+              this.teacherArr[i].name = item;
               // this.teacherArr[i].name = this.ruleForm.teachers.split(",")[i];
               // this.teacherArr[i].name = this.teacherArr[i].name.split("|")[0];
               // this.teacherArr[i].name = this.teacherArr[i].name.toString();

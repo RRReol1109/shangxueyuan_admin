@@ -91,24 +91,56 @@
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="教师"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="count" align="center" label="指导人数"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="教师"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="count"
+        align="center"
+        label="指导人数"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="graduationCount"
         align="center"
         label="毕业人数"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         width="150"
         :show-overflow-tooltip="true"
         prop="secretaryCount"
         align="center"
         label="答辩秘书班级数"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentType" align="center" label="学生类型"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentType"
+        align="center"
+        label="学生类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="录入人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -116,7 +148,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -669,17 +702,36 @@ export default {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
+          this.$confirm(
+            "审核通过之后该条数据将不可修改,请确认是否通过审核?",
+            "提示",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(async () => {
+              await axios.$post("/paper/update", this.examineForm);
+              this.list();
+              this.$message({
+                type: "success",
+                message: "审核成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消"
+              });
+            });
         } else {
           this.examineForm.auditFlag = 2;
+          await axios.$post("/paper/update", this.examineForm);
+          this.list();
         }
-        await axios.$post("/paper/update", this.examineForm);
       }
-      this.list();
       this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
     },
     checkCanUse() {
       this.roles = window.localStorage.getItem("roles")

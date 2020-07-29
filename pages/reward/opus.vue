@@ -989,17 +989,36 @@ export default {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
+          this.$confirm(
+            "审核通过之后该条数据将不可修改,请确认是否通过审核?",
+            "提示",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(async () => {
+              await axios.$post("/textbook/update", this.examineForm);
+              this.list();
+              this.$message({
+                type: "success",
+                message: "审核成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消"
+              });
+            });
         } else {
           this.examineForm.auditFlag = 2;
+          await axios.$post("/textbook/update", this.examineForm);
+          this.list();
         }
-        await axios.$post("/textbook/update", this.examineForm);
       }
-      this.list();
       this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
     },
     async queryTeacher() {
       this.teacherList = await axios.$post("/mgr/list", {

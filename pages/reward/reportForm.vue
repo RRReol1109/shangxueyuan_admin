@@ -168,7 +168,7 @@
       :visible.sync="teacherVisible"
       id="teacherDrawer"
     >
-      <Highcharts id="teacherStatistic" :option="option" />
+      <div id="main" :style="{width:'1100px', height: '500px'}" style="float: left;"></div>
       <Highcharts id="levelStatistic" :option="paperOption" />
     </el-drawer>
   </div>
@@ -191,29 +191,65 @@ export default {
       dialogDetailVisible: false,
       teacherVisible: false,
       option: {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: "pie"
-        },
+        backgroundColor: "#FFFFFF",
         title: {
-          text: "个人数据详情"
-        },
-        tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: "pointer",
-            dataLabels: {
-              enabled: false
-            },
-            showInLegend: true
+          text: "教师个人工作量统计",
+          left: "center",
+          top: 20,
+          textStyle: {
+            color: "#ccc"
           }
         },
-        series: []
+
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+          show: false,
+          min: 80,
+          max: 600,
+          inRange: {
+            colorLightness: [0, 1]
+          }
+        },
+        series: [
+          {
+            name: "模块名称",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "50%"],
+            data: [
+              { value: 335, name: "直接访问" },
+              { value: 310, name: "邮件营销" },
+              { value: 274, name: "联盟广告" },
+              { value: 235, name: "视频广告" },
+              { value: 400, name: "搜索引擎" }
+            ],
+            roseType: "radius",
+            label: {
+              color: "rgba(255, 255, 255, 0.3)"
+            },
+            labelLine: {
+              lineStyle: {
+                color: "rgba(255, 255, 255, 0.3)"
+              },
+              smooth: 0.2,
+              length: 10,
+              length2: 20
+            },
+            itemStyle: {
+              color: "#c23531"
+            },
+
+            animationType: "scale",
+            animationEasing: "elasticOut",
+            animationDelay: function(idx) {
+              return Math.random() * 200;
+            }
+          }
+        ]
       },
       statisticOption: {
         credits: {
@@ -571,13 +607,12 @@ export default {
         });
         return;
       }
+      this.teacherVisible = true;
       await this.showInfo(row);
       await this.showLevel(row);
-      this.teacherVisible = true;
     },
     async showInfo(row) {
-      this.option.series = [];
-      console.log(this.option.series);
+      this.option.series[0].data = [];
       let res = await axios.$get("award/statistics", { userId: row.userId });
       let currentYear = row.year;
       let data = [];
@@ -590,17 +625,13 @@ export default {
           } else {
             point = 0.0;
           }
-          data.push({ name: key, y: point });
+          this.option.series[0].data.push({ value: point, name: key });
         }
       }
-      this.option.series = [
-        {
-          name: "Brands",
-          colorByPoint: true,
-          data: data
-        }
-      ];
-      console.log(JSON.stringify(this.option.series[0]));
+      // this.option.series.data = data;
+      console.log(this.option.series);
+      this.charts = echarts.init(document.getElementById("main"));
+      this.charts.setOption(this.option);
     },
     async showLevel(row) {
       this.paperOption.series = [];

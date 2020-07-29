@@ -108,48 +108,114 @@
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="课程名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="name"
+        align="center"
+        label="课程名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacher"
+        align="center"
+        label="教师"
+      ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="类型"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="courseType1"
         align="center"
         label="课程类型1"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="courseType2"
         align="center"
         label="课程类型2"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="score" align="center" label="学分"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="totalHours" align="center" label="总学时"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="theoryHours" align="center" label="理论学时"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="examHours" align="center" label="实验学时"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="score"
+        align="center"
+        label="学分"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="totalHours"
+        align="center"
+        label="总学时"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="theoryHours"
+        align="center"
+        label="理论学时"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="examHours"
+        align="center"
+        label="实验学时"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="computerHours"
         align="center"
         label="上机学时"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="practiceHours"
         align="center"
         label="实践学时"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="examWeek" align="center" label="集中实验周"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="classCnt" align="center" label="班级数"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="className" align="center" label="班级名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="choiceCnt" align="center" label="选课人数"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="examWeek"
+        align="center"
+        label="集中实验周"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="classCnt"
+        align="center"
+        label="班级数"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="className"
+        align="center"
+        label="班级名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="choiceCnt"
+        align="center"
+        label="选课人数"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="teachingUnit"
         align="center"
         label="承担单位"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="excellentCourse"
         align="center"
@@ -159,8 +225,15 @@
           <span>{{scope.row.excellentCourse | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="tagType" align="center" label="标签类别"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="tagType"
+        align="center"
+        label="标签类别"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="statistics"
         align="center"
@@ -170,24 +243,61 @@
           <span>{{scope.row.statistics | flagFilter}}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="material" align="center" label="使用教材"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="material"
+        align="center"
+        label="使用教材"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="materialType"
         align="center"
         label="教材类型"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="english" align="center" label="是否为全英文授课">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="english"
+        align="center"
+        label="是否为全英文授课"
+      >
         <template slot-scope="scope">
           <span>{{scope.row.english | flagFilter}}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="target" align="center" label="授课对象"></el-table-column> -->
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="教师"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="count" align="center" label="授课人数"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="hours"
+        align="center"
+        label="实际课时"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="count"
+        align="center"
+        label="授课人数"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="录入人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -195,7 +305,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -958,17 +1069,36 @@ export default {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
+          this.$confirm(
+            "审核通过之后该条数据将不可修改,请确认是否通过审核?",
+            "提示",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(async () => {
+              await axios.$post("/teaching/update", this.examineForm);
+              this.list();
+              this.$message({
+                type: "success",
+                message: "审核成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消"
+              });
+            });
         } else {
           this.examineForm.auditFlag = 2;
+          await axios.$post("/teaching/update", this.examineForm);
+          this.list();
         }
-        await axios.$post("/teaching/update", this.examineForm);
       }
-      this.list();
       this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
     },
     async queryTeacher(queryString, cb) {
       console.log(queryString);

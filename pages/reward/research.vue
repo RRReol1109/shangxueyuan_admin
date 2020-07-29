@@ -85,19 +85,62 @@
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="项目类型"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="项目类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="level"
+        align="center"
+        label="项目级别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="projectName"
+        align="center"
+        label="项目名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="projectFunds"
         align="center"
         label="直接经费"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="项目主持人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="startDate" align="center" label="开始时间"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="endDate" align="center" label="结束时间"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="项目主持人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="startDate"
+        align="center"
+        label="开始时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="endDate"
+        align="center"
+        label="结束时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -105,7 +148,8 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
             v-if="scope.row.auditFlag!=1"
@@ -294,7 +338,8 @@
             header-row-class-name="h30"
             header-cell-class-name="tc-g2 bc-g"
           >
-            <el-table-column sortable
+            <el-table-column
+              sortable
               :show-overflow-tooltip="true"
               type="index"
               label="#"
@@ -738,17 +783,36 @@ export default {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
+          this.$confirm(
+            "审核通过之后该条数据将不可修改,请确认是否通过审核?",
+            "提示",
+            {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning"
+            }
+          )
+            .then(async () => {
+              await axios.$post("/project/update", this.examineForm);
+              this.list();
+              this.$message({
+                type: "success",
+                message: "审核成功!"
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: "info",
+                message: "已取消"
+              });
+            });
         } else {
           this.examineForm.auditFlag = 2;
+          await axios.$post("/project/update", this.examineForm);
+          this.list();
         }
-        await axios.$post("/project/update", this.examineForm);
       }
-      this.list();
       this.examineDialog = false;
-      this.$message({
-        type: "success",
-        message: "审核成功!"
-      });
     }
   },
   async mounted() {
