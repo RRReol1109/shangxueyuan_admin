@@ -77,12 +77,14 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+  
+  <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
@@ -133,7 +135,7 @@
           <el-button            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -324,6 +326,7 @@ export default {
       teacherList: [],
       flag: true,
       total: 0,
+            checkedList: [],
       page: 1,
       fileList: [],
       header: {},
@@ -411,6 +414,11 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    
+  handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     downLoad(row) {
       window.open(row.file);
     },
@@ -447,7 +455,15 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
@@ -489,18 +505,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -588,15 +594,8 @@ export default {
       this.list();
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -610,11 +609,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let masterEnrollId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/masterEnroll/delete", {
-              masterEnrollId: masterEnrollId
+              masterEnrollId: vm.checkedList[i].id
             });
           }
           this.tableData = [];

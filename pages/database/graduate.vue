@@ -53,12 +53,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column
         sortable
@@ -85,7 +86,7 @@
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="outstandingGraduates"
+        prop="undergraduateGraduatess"
         align="center"
         label="优秀毕业生"
       ></el-table-column>
@@ -198,7 +199,7 @@
             @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -287,8 +288,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="优秀毕业生" prop="outstandingGraduates">
-              <el-input size="normal" v-model="form.outstandingGraduates" style="width:99%"></el-input>
+            <el-form-item label="优秀毕业生" prop="undergraduateGraduatess">
+              <el-input size="normal" v-model="form.undergraduateGraduatess" style="width:99%"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -412,6 +413,7 @@ export default {
       total: 0,
       page: 1,
       fileList: [],
+      checkedList: [],
       query: {
         limit: 10,
         offset: 0,
@@ -453,6 +455,10 @@ export default {
     },
     async changeFlag(row) {
       row.pick = !row.pick;
+    },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
     },
     async list() {
       this.tableData = [];
@@ -502,18 +508,8 @@ export default {
       this.list();
     },
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -560,7 +556,15 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
@@ -636,15 +640,8 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -658,11 +655,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let undergraduateGraduatesId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/undergraduateGraduates/delete", {
-              undergraduateGraduatesId: undergraduateGraduatesId
+              undergraduateGraduatesId: vm.checkedList[i].id
             });
           }
           this.tableData = [];

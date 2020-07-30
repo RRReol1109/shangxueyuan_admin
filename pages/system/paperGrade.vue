@@ -47,7 +47,7 @@
           <el-button            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -230,7 +230,15 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       console.log("row:::", row);
       if (this.operate === "add") {
         this.catesList = [];

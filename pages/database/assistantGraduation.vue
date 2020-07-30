@@ -32,34 +32,114 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="birthday" align="center" label="出生日期"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="授予硕士学位专业"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="category" align="center" label="专业"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="导师"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gender"
+        align="center"
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="birthday"
+        align="center"
+        label="出生日期"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="major"
+        align="center"
+        label="授予硕士学位专业"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="category"
+        align="center"
+        label="专业"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacher"
+        align="center"
+        label="导师"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="score"
         align="center"
         label="课程学习情况（总学分/学位课学分/平均绩点）"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="paper" align="center" label="在读期间发表论文"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="pleaDate" align="center" label="答辩日期"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="毕业时间"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="毕业去向"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="电话"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="teacher" align="center" label="邮箱"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="paper"
+        align="center"
+        label="在读期间发表论文"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="pleaDate"
+        align="center"
+        label="答辩日期"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacher"
+        align="center"
+        label="毕业时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacher"
+        align="center"
+        label="毕业去向"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacher"
+        align="center"
+        label="电话"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="teacher"
+        align="center"
+        label="邮箱"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="remark"
+        align="center"
+        label="备注"
+      ></el-table-column>
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -204,6 +284,7 @@ export default {
         pleaDate: "",
         remark: ""
       },
+      checkedList: [],
       tableData: []
     };
   },
@@ -215,6 +296,10 @@ export default {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
+    },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
     },
     async list() {
       for (const key in this.query) {
@@ -253,7 +338,15 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {

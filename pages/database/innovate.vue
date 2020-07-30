@@ -55,12 +55,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
@@ -83,15 +84,69 @@
       ID
       <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>-->
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="date" align="center" label="立项时间"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="项目类型"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="级别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="author" align="center" label="负责人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="college" align="center" label="系所"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="college" align="center" label="系别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="title" align="center" label="项目名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="date"
+        align="center"
+        label="立项时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="项目类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="level"
+        align="center"
+        label="级别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="author"
+        align="center"
+        label="负责人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gender"
+        align="center"
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="college"
+        align="center"
+        label="系所"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="college"
+        align="center"
+        label="系别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="title"
+        align="center"
+        label="项目名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -99,10 +154,11 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -254,99 +310,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-row>
-          <el-col :span="12">
-            <el-form-item label="姓名" prop="name">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
-            </el-form-item>
-             <el-form-item label="学号" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
-          </el-col>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="性别" prop="gender">
-              <el-select v-model="form.gender" size="normal" placeholder="性别" style="width:99%">
-                <el-option label="男" value="男"></el-option>
-                <el-option label="女" value="女"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="年度:" prop="year">
-              <el-date-picker
-                v-model="form.year"
-                align="right"
-                size="normal"
-                type="date"
-                format="yyyy"
-                value-format="yyyy"
-                style="width:99%"
-                placeholder="年度"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="学院" prop="college">
-              <el-input size="normal" v-model="form.college" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="一级学科" prop="firstLevelCategory">
-              <el-input
-                size="normal"
-                v-model="form.firstLevelCategory"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="培养层次" prop="trainingLevel">
-              <el-input
-                size="normal"
-                v-model="form.trainingLevel"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="项目名称" prop="projectName">
-              <el-input
-                size="normal"
-                v-model="form.projectName"
-                autocomplete="off"
-                style="width:99%"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="经费（万元）" prop="funding">
-              <el-input size="normal" v-model="form.funding" autocomplete="off" style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-         <el-form-item label="毕业学校">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.graduationSchool" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="毕业专业">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.funding" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item size="normal" label="备注" prop="remark">
-          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
-        </el-form-item>-->
       </el-form>
     </el-drawer>
   </div>
@@ -385,6 +348,7 @@ export default {
         remark: ""
       },
       roleId: 0,
+      checkedList: [],
       examineDialog: false,
       examineForm: {},
       rules: {
@@ -481,7 +445,15 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
@@ -500,6 +472,11 @@ export default {
       } else {
         this.form = row;
       }
+    },
+
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
     },
     async del(row) {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
@@ -529,20 +506,9 @@ export default {
     async changeFlag(row) {
       row.pick = !row.pick;
     },
-
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -620,15 +586,8 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -642,11 +601,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let educationalReformId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/educationalReform/delete", {
-              educationalReformId: educationalReformId
+              educationalReformId: vm.checkedList[i].id
             });
           }
           this.tableData = [];

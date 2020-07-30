@@ -70,52 +70,134 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column 
-        :show-overflow-tooltip="true"
-        prop="pick"
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+      <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="论文编号"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="userName" align="center" label="入藏号"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="论文标题"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="count" align="center" label="作者"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="论文编号"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="userName"
+        align="center"
+        label="入藏号"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="论文标题"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="count"
+        align="center"
+        label="作者"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="graduationCount"
         align="center"
         label="我院老师姓名"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentName" align="center" label="期刊"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentName"
+        align="center"
+        label="期刊"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="hours" align="center" label="实际课时数"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="ESI学科"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="地址"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="机构"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="发表年度"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="ESI学科"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="地址"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="机构"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="发表年度"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="editorName"
         align="center"
         label="首次记录时间"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="奖励类型"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="奖励类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="editorName"
         align="center"
         label="科研部奖励批次"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="被引级"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="年份"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="editorName" align="center" label="录入人"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="被引级"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="年份"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="editorName"
+        align="center"
+        label="录入人"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -124,10 +206,11 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -306,6 +389,7 @@ export default {
       examineForm: {
         auditFlag: "0"
       },
+      checkedList: [],
       loading: false,
       examineDialog: false,
       total: 0,
@@ -333,7 +417,8 @@ export default {
         auditFlag: "0",
         teacherArr: [{ name: "", year: "", dw: "", class: "", xk: "" }]
       },
-      teacherList: [],
+      teacherList: [],      
+      checkedList: [],
       rules: {
         // count: [
         //   { required: true, message: "请输入课时", trigger: "blur" },
@@ -418,6 +503,10 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
@@ -443,6 +532,10 @@ export default {
       if (index !== -1 && index != 0) {
         this.ruleForm.teacherArr.splice(index, 1);
       }
+    },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
     },
     addTeacher() {
       this.ruleForm.teacherArr.push({
@@ -509,7 +602,15 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
@@ -628,15 +729,8 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
@@ -650,11 +744,9 @@ export default {
         type: "warning"
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let postgraduateId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/postgraduate/delete", {
-              postgraduateId: postgraduateId
+              postgraduateId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
@@ -673,18 +765,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {

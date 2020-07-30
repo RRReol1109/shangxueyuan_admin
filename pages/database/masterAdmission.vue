@@ -134,7 +134,7 @@
           <el-button            @click="operate='edit';showDialog(scope.row)"
             type="text"
             size="normal"
-            v-if="scope.row.auditFlag!=1"
+
           >编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
@@ -228,49 +228,6 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <!-- <el-form-item label="学校类别" prop="name">
-          <el-select v-model="form.gender" size="normal">
-            <el-option label="211工程高校" value="1"></el-option>
-            <el-option label="双一流建设高校" value="2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="工作年限" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="工作单位/行业" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="职位" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="年薪" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>-->
-        <!-- <el-form-item label="出生年月" prop="name">
-          <el-col :span="6">
-            <el-date-picker v-model="form.date" type="date" placeholder="选择日期时间"></el-date-picker>
-          </el-col>
-        </el-form-item>-->
-        <!-- <el-form-item label="邮箱" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>
-      
-        -->
-        <!-- <el-form-item label="手机号" prop="tell">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.tell" autocomplete="off"></el-input>
-          </el-col>
-        </el-form-item>-->
         <el-row>
           <el-col :span="12">
             <el-form-item label="年级" prop="grade">
@@ -497,7 +454,15 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {

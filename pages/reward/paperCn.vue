@@ -234,12 +234,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button
-            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-            v-if="scope.row.auditFlag!=1"
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
           <el-button @click="goPaper(scope.row);" type="text">查看论文</el-button>
         </template>
@@ -896,7 +891,23 @@ export default {
         }).then(async () => {});
       }
     },
-    showDialog(row) {
+  showDialog(row) {
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
+      if (this.operate === "edit" && row.auditFlag == 1) {
+        this.$confirm("本条数据已审核无法修改", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(async () => {});
+        return;
+      }
       this.dialogFormVisible = true;
       this.formDisabled = false;
       if (this.operate === "add") {
