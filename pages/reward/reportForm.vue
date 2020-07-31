@@ -168,8 +168,8 @@
       :visible.sync="teacherVisible"
       id="teacherDrawer"
     >
-      <div id="main" :style="{width:'1100px', height: '500px'}" style="float: left;"></div>
       <Highcharts id="levelStatistic" :option="paperOption" />
+      <div id="main" :style="{width:'1100px', height: '500px'}" style="float: left;margin-top:2%;"></div>
     </el-drawer>
   </div>
 </template>
@@ -181,7 +181,7 @@ import axios from "~/plugins/axios2";
 export default {
   layout: "normal",
   components: {
-    Highcharts
+    Highcharts,
   },
   data() {
     return {
@@ -197,22 +197,20 @@ export default {
           left: "center",
           top: 20,
           textStyle: {
-            color: "#ccc"
-          }
+            color: "#ccc",
+          },
         },
 
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{a} <br/>{b} : {c} ({d}%)",
         },
-
-        visualMap: {
-          show: false,
-          min: 80,
-          max: 600,
-          inRange: {
-            colorLightness: [0, 1]
-          }
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          right: 10,
+          top: 20,
+          bottom: 20,
         },
         series: [
           {
@@ -225,166 +223,166 @@ export default {
               { value: 310, name: "邮件营销" },
               { value: 274, name: "联盟广告" },
               { value: 235, name: "视频广告" },
-              { value: 400, name: "搜索引擎" }
+              { value: 400, name: "搜索引擎" },
             ],
             roseType: "radius",
             label: {
-              color: "rgba(255, 255, 255, 0.3)"
+              color: "rgba(255, 255, 255, 0.3)",
             },
             labelLine: {
               lineStyle: {
-                color: "rgba(255, 255, 255, 0.3)"
+                color: "rgba(255, 255, 255, 0.3)",
               },
               smooth: 0.2,
               length: 10,
-              length2: 20
+              length2: 20,
             },
             itemStyle: {
-              color: "#c23531"
+ 
             },
 
             animationType: "scale",
             animationEasing: "elasticOut",
-            animationDelay: function(idx) {
+            animationDelay: function (idx) {
               return Math.random() * 200;
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       statisticOption: {
         credits: {
-          enabled: false
+          enabled: false,
         },
         chart: {
           panning: true,
-          type: "column"
+          type: "column",
         },
         title: {
-          text: "科研奖励统计系别对比"
+          text: "科研奖励统计系别对比",
         },
 
         subtitle: {
-          text: ""
+          text: "",
         },
         scrollbar: {
-          enabled: true
+          enabled: true,
         },
         xAxis: {
           categories: [],
           gridLineWidth: 2,
           min: 0,
-          max: 4
+          max: 4,
         },
         yAxis: {
           tickPixelInterval: 1,
           min: 0,
           title: {
             text: "计分",
-            align: "high"
+            align: "high",
           },
           labels: {
-            overflow: "justify"
-          }
+            overflow: "justify",
+          },
         },
         tooltip: {
-          valueSuffix: " 计分"
+          valueSuffix: " 计分",
         },
         plotOptions: {
           column: {
-            pointWidth: 10 //柱子宽bai度du
-          }
+            pointWidth: 10, //柱子宽bai度du
+          },
         },
-        series: []
+        series: [],
       },
       paperOption: {
         credits: {
-          enabled: false
+          enabled: false,
         },
         chart: {
           panning: true,
-          type: "column"
+          type: "column",
         },
         title: {
-          text: "论文级别统计"
+          text: "论文级别统计",
         },
 
         subtitle: {
-          text: ""
+          text: "",
         },
         scrollbar: {
-          enabled: true
+          enabled: true,
         },
         xAxis: {
           categories: [],
           gridLineWidth: 2,
           min: 0,
-          max: 4
+          max: 4,
         },
         yAxis: {
           tickPixelInterval: 1,
           min: 0,
           title: {
             text: "论文篇数",
-            align: "high"
+            align: "high",
           },
           labels: {
-            overflow: "justify"
-          }
+            overflow: "justify",
+          },
         },
         tooltip: {
-          valueSuffix: "论文篇数"
+          valueSuffix: "论文篇数",
         },
         plotOptions: {
           column: {
-            pointWidth: 10 //柱子宽bai度du
-          }
+            pointWidth: 10, //柱子宽bai度du
+          },
         },
-        series: []
+        series: [],
       },
       subjectOption: {
         credits: {
-          enabled: false
+          enabled: false,
         },
         chart: {
           panning: true,
-          type: "column"
+          type: "column",
         },
         title: {
-          text: "科研奖励统计学科对比"
+          text: "科研奖励统计学科对比",
         },
 
         subtitle: {
-          text: ""
+          text: "",
         },
         scrollbar: {
-          enabled: true
+          enabled: true,
         },
         xAxis: {
           categories: [],
           gridLineWidth: 2,
           min: 0,
-          max: 4
+          max: 4,
         },
         yAxis: {
           tickPixelInterval: 1,
           min: 0,
           title: {
             text: "计分",
-            align: "high"
+            align: "high",
           },
           labels: {
-            overflow: "justify"
-          }
+            overflow: "justify",
+          },
         },
         tooltip: {
-          valueSuffix: " 计分"
+          valueSuffix: " 计分",
         },
         plotOptions: {
           column: {
-            pointWidth: 10 //柱子宽bai度du
-          }
+            pointWidth: 10, //柱子宽bai度du
+          },
         },
-        series: []
+        series: [],
       },
       query: {
         limit: 10,
@@ -392,26 +390,26 @@ export default {
         type: "",
         userId: "",
         userName: "",
-        year: moment().format("YYYY")
+        year: moment().format("YYYY"),
       },
       teacherList: [],
-      tableData: []
+      tableData: [],
     };
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       if (value == undefined) {
         return 0;
       } else {
         return value;
       }
-    }
+    },
   },
   async mounted() {
     this.teacherList = await axios.$post("/mgr/list", {
       order: "desc",
       offset: 0,
-      limit: 999999
+      limit: 999999,
     });
     this.teacherList = this.teacherList.rows;
     this.list();
@@ -421,7 +419,7 @@ export default {
       if (!this.query.year) {
         this.$message({
           type: "info",
-          message: "请输入年份"
+          message: "请输入年份",
         });
         return;
       }
@@ -433,7 +431,7 @@ export default {
     async showDepartment() {
       let param = {
         year: this.query.year,
-        department: this.query.department
+        department: this.query.department,
       };
       let res = await axios.$get("award/charts/department", param);
       let items = [];
@@ -453,7 +451,7 @@ export default {
         excellentPapersScore: "优秀博硕论文",
         projectScore: "科研项目",
         reportResultScore: "要报",
-        textBookScore: "著作教材"
+        textBookScore: "著作教材",
       };
       for (const key in names) {
         if (names.hasOwnProperty(key)) {
@@ -466,7 +464,7 @@ export default {
           }
           this.statisticOption.series.push({
             name: element,
-            data: data
+            data: data,
           });
         }
       }
@@ -474,7 +472,7 @@ export default {
     async showSubject() {
       let param = {
         year: this.query.year,
-        subject: this.query.subject
+        subject: this.query.subject,
       };
       let res = await axios.$get("award/charts/subjectCategory", param);
       let items = [];
@@ -494,7 +492,7 @@ export default {
         excellentPapersScore: "优秀博硕论文",
         projectScore: "科研项目",
         reportResultScore: "要报",
-        textBookScore: "著作教材"
+        textBookScore: "著作教材",
       };
       for (const key in names) {
         if (names.hasOwnProperty(key)) {
@@ -507,7 +505,7 @@ export default {
           }
           this.subjectOption.series.push({
             name: element,
-            data: data
+            data: data,
           });
         }
       }
@@ -516,7 +514,7 @@ export default {
       if (!this.query.year) {
         this.$message({
           type: "info",
-          message: "请输入年份"
+          message: "请输入年份",
         });
         return;
       }
@@ -524,7 +522,7 @@ export default {
         year: this.query.year,
         department: this.query.department,
         offset: 0,
-        limit: 99999999
+        limit: 99999999,
       };
       this.option.xAxis.categories = [];
       this.option.series = [];
@@ -543,7 +541,7 @@ export default {
         "优秀博硕论文",
         "科研项目",
         "要报",
-        "著作教材"
+        "著作教材",
       ];
       let data = [];
       for (let i = 0; i < names.length; i++) {
@@ -559,7 +557,7 @@ export default {
         }
         this.option.series.push({
           name: name,
-          data: data
+          data: data,
         });
       }
     },
@@ -568,7 +566,7 @@ export default {
       let param = {
         year: this.query.year,
         userId: this.query.userId,
-        department: this.query.department
+        department: this.query.department,
       };
       data = await axios.$download("/award/export", param);
       if (data) {
@@ -603,7 +601,7 @@ export default {
       if (!this.query.year) {
         this.$message({
           type: "info",
-          message: "请输入年份"
+          message: "请输入年份",
         });
         return;
       }
@@ -616,16 +614,18 @@ export default {
       let res = await axios.$get("award/statistics", { userId: row.userId });
       let currentYear = row.year;
       let data = [];
+      let count = 310;
       for (const key in res) {
         if (res.hasOwnProperty(key)) {
           const element = res[key];
           let point = "";
+          count += 2;
           if (element[currentYear] != undefined) {
             point = element[currentYear];
           } else {
             point = 0.0;
           }
-          this.option.series[0].data.push({ value: point, name: key });
+          this.option.series[0].data.push({ value: count, name: key });
         }
       }
       // this.option.series.data = data;
@@ -657,8 +657,8 @@ export default {
       this.paperOption.series = [
         {
           data: data,
-          name: currentYear
-        }
+          name: currentYear,
+        },
       ];
       console.log(this.paperOption.series);
     },
@@ -686,8 +686,8 @@ export default {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
-    }
-  }
+    },
+  },
 };
 </script>
 

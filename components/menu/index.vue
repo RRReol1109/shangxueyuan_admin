@@ -21,7 +21,7 @@ import NavMenu from "~/components/menu/Menu.vue";
 import axios from "~/plugins/axios2";
 export default {
   components: {
-    NavMenu
+    NavMenu,
   },
   data() {
     return {
@@ -34,8 +34,8 @@ export default {
             name: "index",
             alias: "首页",
             state: "ENABLE",
-            value: "/"
-          }
+            value: "/",
+          },
         },
         {
           entity: {
@@ -43,7 +43,7 @@ export default {
             name: "systemManegement",
             alias: "系统管理",
             state: "ENABLE",
-            value: "/system"
+            value: "/system",
           },
           childs: [
             {
@@ -52,8 +52,8 @@ export default {
                 name: "role",
                 alias: "角色",
                 state: "ENABLE",
-                value: "/system/role"
-              }
+                value: "/system/role",
+              },
             },
             // {
             //   entity: {
@@ -70,8 +70,8 @@ export default {
                 name: "department",
                 alias: "部门",
                 state: "ENABLE",
-                value: "/system/department"
-              }
+                value: "/system/department",
+              },
             },
             // {
             //   entity: {
@@ -88,8 +88,8 @@ export default {
                 name: "teacherInfo",
                 alias: "教职工信息",
                 state: "ENABLE",
-                value: "/system/teacherInfo"
-              }
+                value: "/system/teacherInfo",
+              },
             },
             {
               entity: {
@@ -97,8 +97,8 @@ export default {
                 name: "classHourRule",
                 alias: "学时规则",
                 state: "ENABLE",
-                value: "/system/classHourRule"
-              }
+                value: "/system/classHourRule",
+              },
             },
             {
               entity: {
@@ -106,7 +106,7 @@ export default {
                 name: "scoreRule",
                 alias: "分数规则",
                 state: "ENABLE",
-                value: "/system/scoreRule"
+                value: "/system/scoreRule",
               },
               childs: [
                 {
@@ -115,8 +115,8 @@ export default {
                     name: "scientificEstablish",
                     alias: "科研立项",
                     state: "ENABLE",
-                    value: "/system/score/scientific/establish"
-                  }
+                    value: "/system/score/scientific/establish",
+                  },
                 },
                 {
                   entity: {
@@ -124,8 +124,8 @@ export default {
                     name: "teacherAchievement",
                     alias: "科研获奖",
                     state: "ENABLE",
-                    value: "/system/score/scientific/achievement"
-                  }
+                    value: "/system/score/scientific/achievement",
+                  },
                 },
                 {
                   entity: {
@@ -133,8 +133,8 @@ export default {
                     name: "paperGrade",
                     alias: "论文等级",
                     state: "ENABLE",
-                    value: "/system/paperGrade"
-                  }
+                    value: "/system/paperGrade",
+                  },
                 },
                 // {
                 //   entity: {
@@ -150,10 +150,10 @@ export default {
                     name: "book",
                     alias: "著作&教材",
                     state: "ENABLE",
-                    value: "/system/score/book"
-                  }
-                }
-              ]
+                    value: "/system/score/book",
+                  },
+                },
+              ],
             },
             {
               entity: {
@@ -161,10 +161,10 @@ export default {
                 name: "log",
                 alias: "日志",
                 state: "ENABLE",
-                value: "/system/log"
-              }
-            }
-          ]
+                value: "/system/log",
+              },
+            },
+          ],
         },
         {
           entity: {
@@ -172,7 +172,7 @@ export default {
             name: "workloadManegement",
             alias: "工作量管理",
             state: "ENABLE",
-            value: "/workload"
+            value: "/workload",
           },
           childs: [
             {
@@ -181,8 +181,8 @@ export default {
                 name: "paper",
                 alias: "论文指导",
                 state: "ENABLE",
-                value: "/workload/paper"
-              }
+                value: "/workload/paper",
+              },
             },
             {
               entity: {
@@ -190,8 +190,8 @@ export default {
                 name: "guidance",
                 alias: "研究生指导",
                 state: "ENABLE",
-                value: "/workload/guidance"
-              }
+                value: "/workload/guidance",
+              },
             },
             {
               entity: {
@@ -199,8 +199,8 @@ export default {
                 name: "classTeach",
                 alias: "课堂教学",
                 state: "ENABLE",
-                value: "/workload/classTeach"
-              }
+                value: "/workload/classTeach",
+              },
             },
             {
               entity: {
@@ -208,8 +208,8 @@ export default {
                 name: "internship",
                 alias: "实习",
                 state: "ENABLE",
-                value: "/workload/internship"
-              }
+                value: "/workload/internship",
+              },
             },
             {
               entity: {
@@ -217,8 +217,8 @@ export default {
                 name: "sandTable",
                 alias: "沙盘模拟",
                 state: "ENABLE",
-                value: "/workload/sandTable"
-              }
+                value: "/workload/sandTable",
+              },
             },
             {
               entity: {
@@ -226,8 +226,8 @@ export default {
                 name: "socialSurvey",
                 alias: "社会调查",
                 state: "ENABLE",
-                value: "/workload/socialSurvey"
-              }
+                value: "/workload/socialSurvey",
+              },
             },
             {
               entity: {
@@ -235,8 +235,8 @@ export default {
                 name: "workloadStatistics",
                 alias: "统计",
                 state: "ENABLE",
-                value: "/workload/statistics"
-              }
+                value: "/workload/statistics",
+              },
             },
             {
               entity: {
@@ -244,10 +244,10 @@ export default {
                 name: "reportForm",
                 alias: "数据报表",
                 state: "ENABLE",
-                value: "/workload/reportForm"
-              }
-            }
-          ]
+                value: "/workload/reportForm",
+              },
+            },
+          ],
         },
         {
           entity: {
@@ -255,7 +255,7 @@ export default {
             name: "rewardManegement",
             alias: "科研奖励管理",
             state: "ENABLE",
-            value: "/reward"
+            value: "/reward",
           },
           childs: [
             {
@@ -264,8 +264,8 @@ export default {
                 name: "research",
                 alias: "科研项目",
                 state: "ENABLE",
-                value: "/reward/research"
-              }
+                value: "/reward/research",
+              },
             },
             {
               entity: {
@@ -273,8 +273,8 @@ export default {
                 name: "opus",
                 alias: "著作&教材",
                 state: "ENABLE",
-                value: "/reward/opus"
-              }
+                value: "/reward/opus",
+              },
             },
             {
               entity: {
@@ -282,8 +282,8 @@ export default {
                 name: "paperCn",
                 alias: "中文论文",
                 state: "ENABLE",
-                value: "/reward/paperCn"
-              }
+                value: "/reward/paperCn",
+              },
             },
             {
               entity: {
@@ -291,8 +291,8 @@ export default {
                 name: "paperEu",
                 alias: "英文论文",
                 state: "ENABLE",
-                value: "/reward/paperEu"
-              }
+                value: "/reward/paperEu",
+              },
             },
             {
               entity: {
@@ -300,8 +300,8 @@ export default {
                 name: "presentation",
                 alias: "获奖",
                 state: "ENABLE",
-                value: "/reward/presentation"
-              }
+                value: "/reward/presentation",
+              },
             },
             {
               entity: {
@@ -309,8 +309,8 @@ export default {
                 name: "report",
                 alias: "要报",
                 state: "ENABLE",
-                value: "/reward/report"
-              }
+                value: "/reward/report",
+              },
             },
             {
               entity: {
@@ -318,28 +318,45 @@ export default {
                 name: "thesis",
                 alias: "优秀硕博论文",
                 state: "ENABLE",
-                value: "/reward/thesis"
-              }
-            },
-
-            {
-              entity: {
-                id: 61,
-                name: "transverse",
-                alias: "横向课题",
-                state: "ENABLE",
-                value: "/reward/transverse"
-              }
+                value: "/reward/thesis",
+              },
             },
             {
               entity: {
-                id: 62,
-                name: "participants",
-                alias: "教师参会情况",
+                id: 106,
+                name: "socialServices",
+                alias: "社会服务",
                 state: "ENABLE",
-                value: "/reward/participants"
-              }
+                value: "/reward/socialServices",
+              },
             },
+            {
+              entity: {
+                id: 107,
+                name: "subjectDesc",
+                alias: "学科简介",
+                state: "ENABLE",
+                value: "/reward/subjectDesc",
+              },
+            },
+            // {
+            //   entity: {
+            //     id: 61,
+            //     name: "transverse",
+            //     alias: "横向课题",
+            //     state: "ENABLE",
+            //     value: "/reward/transverse",
+            //   },
+            // },
+            // {
+            //   entity: {
+            //     id: 62,
+            //     name: "participants",
+            //     alias: "教师参会情况",
+            //     state: "ENABLE",
+            //     value: "/reward/participants",
+            //   },
+            // },
             // {
             //   entity: {
             //     id: 63,
@@ -355,8 +372,8 @@ export default {
                 name: "rewardStatistics",
                 alias: "统计",
                 state: "ENABLE",
-                value: "/reward/statistics"
-              }
+                value: "/reward/statistics",
+              },
             },
             {
               entity: {
@@ -364,10 +381,10 @@ export default {
                 name: "rewardReportForm",
                 alias: "数据报表",
                 state: "ENABLE",
-                value: "/reward/reportForm"
-              }
-            }
-          ]
+                value: "/reward/reportForm",
+              },
+            },
+          ],
         },
         {
           entity: {
@@ -375,7 +392,7 @@ export default {
             name: "database",
             alias: "数据库",
             state: "ENABLE",
-            value: "/database"
+            value: "/database",
           },
           childs: [
             {
@@ -384,7 +401,7 @@ export default {
                 name: "undergraduates",
                 alias: "本科生模块",
                 state: "ENABLE",
-                value: ""
+                value: "",
               },
               childs: [
                 // {
@@ -402,8 +419,8 @@ export default {
                     name: "undergraduatesRecruit",
                     alias: "本科生招生",
                     state: "ENABLE",
-                    value: "/database/undergraduates/recruit"
-                  }
+                    value: "/database/undergraduates/recruit",
+                  },
                 },
                 {
                   entity: {
@@ -411,8 +428,8 @@ export default {
                     name: "undergraduatesGraduation",
                     alias: "本科生毕业",
                     state: "ENABLE",
-                    value: "/database/undergraduates/graduation"
-                  }
+                    value: "/database/undergraduates/graduation",
+                  },
                 },
                 {
                   entity: {
@@ -420,8 +437,8 @@ export default {
                     name: "advantage",
                     alias: "优势专业情况",
                     state: "ENABLE",
-                    value: "/database/undergraduates/advantage"
-                  }
+                    value: "/database/undergraduates/advantage",
+                  },
                 },
                 {
                   entity: {
@@ -429,8 +446,8 @@ export default {
                     name: "construction",
                     alias: "本科教学工程情况",
                     state: "ENABLE",
-                    value: "/database/undergraduates/construction"
-                  }
+                    value: "/database/undergraduates/construction",
+                  },
                 },
                 {
                   entity: {
@@ -438,8 +455,8 @@ export default {
                     name: "information",
                     alias: "本科教学信息化",
                     state: "ENABLE",
-                    value: "/database/undergraduates/information"
-                  }
+                    value: "/database/undergraduates/information",
+                  },
                 },
                 {
                   entity: {
@@ -447,8 +464,8 @@ export default {
                     name: "undergraduatesPatent",
                     alias: "教师专利",
                     state: "ENABLE",
-                    value: "/database/undergraduates/patent"
-                  }
+                    value: "/database/undergraduates/patent",
+                  },
                 },
                 {
                   entity: {
@@ -456,10 +473,10 @@ export default {
                     name: "basic",
                     alias: "专业基本情况",
                     state: "ENABLE",
-                    value: "/database/undergraduates/basic"
-                  }
-                }
-              ]
+                    value: "/database/undergraduates/basic",
+                  },
+                },
+              ],
             },
             {
               entity: {
@@ -467,7 +484,7 @@ export default {
                 name: "postgraduate",
                 alias: "研究生模块",
                 state: "ENABLE",
-                value: "/database/postgraduate"
+                value: "/database/postgraduate",
               },
               childs: [
                 {
@@ -476,8 +493,8 @@ export default {
                     name: "postgraduateTeaching",
                     alias: "研究生教学",
                     state: "ENABLE",
-                    value: "/database/postgraduate/teaching"
-                  }
+                    value: "/database/postgraduate/teaching",
+                  },
                 },
                 {
                   entity: {
@@ -485,8 +502,8 @@ export default {
                     name: "postgraduateRecruit",
                     alias: "研究生招生",
                     state: "ENABLE",
-                    value: "/database/postgraduate/recruit"
-                  }
+                    value: "/database/postgraduate/recruit",
+                  },
                 },
                 {
                   entity: {
@@ -494,8 +511,8 @@ export default {
                     name: "postgraduateGraduation",
                     alias: "研究生毕业",
                     state: "ENABLE",
-                    value: "/database/postgraduate/graduation"
-                  }
+                    value: "/database/postgraduate/graduation",
+                  },
                 },
                 {
                   entity: {
@@ -503,8 +520,8 @@ export default {
                     name: "competition1",
                     alias: "学生竞赛奖励",
                     state: "ENABLE",
-                    value: "/database/postgraduate/competition"
-                  }
+                    value: "/database/postgraduate/competition",
+                  },
                 },
                 {
                   entity: {
@@ -512,8 +529,8 @@ export default {
                     name: "entrepreneurship1",
                     alias: "学生创新创业训练计划项目情况",
                     state: "ENABLE",
-                    value: "/database/postgraduate/entrepreneurship"
-                  }
+                    value: "/database/postgraduate/entrepreneurship",
+                  },
                 },
                 {
                   entity: {
@@ -521,8 +538,8 @@ export default {
                     name: "academicPaper1",
                     alias: "学生发表学术论文情况",
                     state: "ENABLE",
-                    value: "/database/postgraduate/academicPaper"
-                  }
+                    value: "/database/postgraduate/academicPaper",
+                  },
                 },
                 {
                   entity: {
@@ -530,8 +547,8 @@ export default {
                     name: "patent1",
                     alias: "学生获得专利（软件著作权）情况",
                     state: "ENABLE",
-                    value: "/database/postgraduate/patent"
-                  }
+                    value: "/database/postgraduate/patent",
+                  },
                 },
                 {
                   entity: {
@@ -539,8 +556,8 @@ export default {
                     name: "honor1",
                     alias: "学生个人荣誉称号",
                     state: "ENABLE",
-                    value: "/database/postgraduate/honor"
-                  }
+                    value: "/database/postgraduate/honor",
+                  },
                 },
                 {
                   entity: {
@@ -548,8 +565,8 @@ export default {
                     name: "course1",
                     alias: "学生学科信息",
                     state: "ENABLE",
-                    value: "/database/postgraduate/course"
-                  }
+                    value: "/database/postgraduate/course",
+                  },
                 },
                 {
                   entity: {
@@ -557,8 +574,8 @@ export default {
                     name: "member1",
                     alias: "学生党员情况",
                     state: "ENABLE",
-                    value: "/database/postgraduate/member"
-                  }
+                    value: "/database/postgraduate/member",
+                  },
                 },
                 {
                   entity: {
@@ -566,8 +583,8 @@ export default {
                     name: "graduate1",
                     alias: "毕业生",
                     state: "ENABLE",
-                    value: "/database/postgraduate/graduate"
-                  }
+                    value: "/database/postgraduate/graduate",
+                  },
                 },
                 {
                   entity: {
@@ -575,10 +592,10 @@ export default {
                     name: "overseas1",
                     alias: "国内外交流学生",
                     state: "ENABLE",
-                    value: "/database/postgraduate/overseas"
-                  }
-                }
-              ]
+                    value: "/database/postgraduate/overseas",
+                  },
+                },
+              ],
             },
             {
               entity: {
@@ -586,7 +603,7 @@ export default {
                 name: "doctors",
                 alias: "博士生模块",
                 state: "ENABLE",
-                value: "/database/doctors"
+                value: "/database/doctors",
               },
               childs: [
                 {
@@ -595,8 +612,8 @@ export default {
                     name: "doctorsTeaching",
                     alias: "博士生教学",
                     state: "ENABLE",
-                    value: "/database/doctors/teaching"
-                  }
+                    value: "/database/doctors/teaching",
+                  },
                 },
                 {
                   entity: {
@@ -604,8 +621,8 @@ export default {
                     name: "doctorsRecruit",
                     alias: "博士生招生",
                     state: "ENABLE",
-                    value: "/database/doctors/recruit"
-                  }
+                    value: "/database/doctors/recruit",
+                  },
                 },
                 {
                   entity: {
@@ -613,10 +630,10 @@ export default {
                     name: "doctorsGraduation",
                     alias: "博士生毕业",
                     state: "ENABLE",
-                    value: "/database/doctors/graduation"
-                  }
-                }
-              ]
+                    value: "/database/doctors/graduation",
+                  },
+                },
+              ],
             },
 
             {
@@ -625,8 +642,8 @@ export default {
                 name: "studentAbroad",
                 alias: "出国学生",
                 state: "ENABLE",
-                value: "/database/studentAbroad"
-              }
+                value: "/database/studentAbroad",
+              },
             },
             {
               entity: {
@@ -634,8 +651,8 @@ export default {
                 name: "academicExchange",
                 alias: "学术交流",
                 state: "ENABLE",
-                value: "/database/academicExchange"
-              }
+                value: "/database/academicExchange",
+              },
             },
             // {
             //   entity: {
@@ -652,8 +669,8 @@ export default {
                 name: "specialAssistant",
                 alias: "专硕名单",
                 state: "ENABLE",
-                value: "/database/specialAssistant"
-              }
+                value: "/database/specialAssistant",
+              },
             },
             {
               entity: {
@@ -661,8 +678,8 @@ export default {
                 name: "maillist",
                 alias: "通讯录",
                 state: "ENABLE",
-                value: "/database/maillist"
-              }
+                value: "/database/maillist",
+              },
             },
             {
               entity: {
@@ -670,8 +687,8 @@ export default {
                 name: "disciplineConstruction",
                 alias: "学科建设",
                 state: "ENABLE",
-                value: "/database/disciplineConstruction"
-              }
+                value: "/database/disciplineConstruction",
+              },
             },
             {
               entity: {
@@ -679,8 +696,8 @@ export default {
                 name: "doctor",
                 alias: "博士生招生情况",
                 state: "ENABLE",
-                value: "/database/doctor"
-              }
+                value: "/database/doctor",
+              },
             },
             {
               entity: {
@@ -688,8 +705,8 @@ export default {
                 name: "undergraduate",
                 alias: "本科招生情况",
                 state: "ENABLE",
-                value: "/database/undergraduate"
-              }
+                value: "/database/undergraduate",
+              },
             },
             // {
             //   entity: {
@@ -706,8 +723,8 @@ export default {
                 name: "abroad",
                 alias: "留学生信息",
                 state: "ENABLE",
-                value: "/database/abroad"
-              }
+                value: "/database/abroad",
+              },
             },
 
             // {
@@ -725,8 +742,8 @@ export default {
                 name: "masterAdmission",
                 alias: "学硕招生情况",
                 state: "ENABLE",
-                value: "/database/masterAdmission"
-              }
+                value: "/database/masterAdmission",
+              },
             },
             {
               entity: {
@@ -734,8 +751,8 @@ export default {
                 name: "masterGraduation",
                 alias: "学硕毕业情况",
                 state: "ENABLE",
-                value: "/database/masterGraduation"
-              }
+                value: "/database/masterGraduation",
+              },
             },
             // {
             //   entity: {
@@ -761,8 +778,8 @@ export default {
                 name: "innovate",
                 alias: "教师教改项目",
                 state: "ENABLE",
-                value: "/database/innovate"
-              }
+                value: "/database/innovate",
+              },
             },
             {
               entity: {
@@ -770,8 +787,8 @@ export default {
                 name: "excellentGraduation",
                 alias: "优秀毕业生简况",
                 state: "ENABLE",
-                value: "/database/excellentGraduation"
-              }
+                value: "/database/excellentGraduation",
+              },
             },
             {
               entity: {
@@ -779,8 +796,8 @@ export default {
                 name: "graduationRate",
                 alias: "毕业率",
                 state: "ENABLE",
-                value: "/database/graduationRate"
-              }
+                value: "/database/graduationRate",
+              },
             },
             // {
             //   entity: {
@@ -797,8 +814,8 @@ export default {
                 name: "subject",
                 alias: "三学科人员",
                 state: "ENABLE",
-                value: "/database/subject"
-              }
+                value: "/database/subject",
+              },
             },
             {
               entity: {
@@ -806,8 +823,8 @@ export default {
                 name: "active",
                 alias: "活动规划",
                 state: "ENABLE",
-                value: "/database/active"
-              }
+                value: "/database/active",
+              },
             },
             {
               entity: {
@@ -815,8 +832,8 @@ export default {
                 name: "competition",
                 alias: "学生竞赛奖励",
                 state: "ENABLE",
-                value: "/database/competition"
-              }
+                value: "/database/competition",
+              },
             },
             {
               entity: {
@@ -824,8 +841,8 @@ export default {
                 name: "entrepreneurship",
                 alias: "学生创新创业训练计划项目情况",
                 state: "ENABLE",
-                value: "/database/entrepreneurship"
-              }
+                value: "/database/entrepreneurship",
+              },
             },
             {
               entity: {
@@ -833,8 +850,8 @@ export default {
                 name: "academicPaper",
                 alias: "学生发表学术论文情况",
                 state: "ENABLE",
-                value: "/database/academicPaper"
-              }
+                value: "/database/academicPaper",
+              },
             },
             {
               entity: {
@@ -842,8 +859,8 @@ export default {
                 name: "patent",
                 alias: "学生获得专利（软件著作权）情况",
                 state: "ENABLE",
-                value: "/database/patent"
-              }
+                value: "/database/patent",
+              },
             },
             {
               entity: {
@@ -851,8 +868,8 @@ export default {
                 name: "honor",
                 alias: "学生个人荣誉称号",
                 state: "ENABLE",
-                value: "/database/honor"
-              }
+                value: "/database/honor",
+              },
             },
             {
               entity: {
@@ -860,8 +877,8 @@ export default {
                 name: "course",
                 alias: "学生学科信息",
                 state: "ENABLE",
-                value: "/database/course"
-              }
+                value: "/database/course",
+              },
             },
             {
               entity: {
@@ -869,8 +886,8 @@ export default {
                 name: "member",
                 alias: "学生党员情况",
                 state: "ENABLE",
-                value: "/database/member"
-              }
+                value: "/database/member",
+              },
             },
             {
               entity: {
@@ -878,8 +895,8 @@ export default {
                 name: "graduate",
                 alias: "毕业生",
                 state: "ENABLE",
-                value: "/database/graduate"
-              }
+                value: "/database/graduate",
+              },
             },
             {
               entity: {
@@ -887,10 +904,28 @@ export default {
                 name: "overseas",
                 alias: "国内外交流学生",
                 state: "ENABLE",
-                value: "/database/overseas"
-              }
-            }
-          ]
+                value: "/database/overseas",
+              },
+            },
+            {
+              entity: {
+                id: 109,
+                name: "social",
+                alias: "社会服务",
+                state: "ENABLE",
+                value: "/database/social",
+              },
+            },
+            {
+              entity: {
+                id: 108,
+                name: "studentAcademic",
+                alias: "学生参加学术活动",
+                state: "ENABLE",
+                value: "/database/studentAcademic",
+              },
+            },
+          ],
         },
         {
           entity: {
@@ -898,7 +933,7 @@ export default {
             name: "academicExchange",
             alias: "MBA系统建设",
             state: "",
-            value: "/database/academicExchange"
+            value: "/database/academicExchange",
           },
           childs: [
             {
@@ -907,8 +942,8 @@ export default {
                 name: "InputStudent",
                 alias: "招生信息 ",
                 state: "ENABLE",
-                value: "/MBA/InputStudent"
-              }
+                value: "/MBA/InputStudent",
+              },
             },
             {
               entity: {
@@ -916,8 +951,8 @@ export default {
                 name: "studentInfo",
                 alias: "学生具体信息 ",
                 state: "ENABLE",
-                value: "/MBA/studentInfo"
-              }
+                value: "/MBA/studentInfo",
+              },
             },
             {
               entity: {
@@ -925,8 +960,8 @@ export default {
                 name: "staffInfo",
                 alias: "教师职工信息 ",
                 state: "ENABLE",
-                value: "/MBA/staffInfo"
-              }
+                value: "/MBA/staffInfo",
+              },
             },
             {
               entity: {
@@ -934,8 +969,8 @@ export default {
                 name: "teacherPaper",
                 alias: "教师期刊论文管理 ",
                 state: "ENABLE",
-                value: "/MBA/teacherPaper"
-              }
+                value: "/MBA/teacherPaper",
+              },
             },
             {
               entity: {
@@ -943,8 +978,8 @@ export default {
                 name: "teacherSeminar",
                 alias: "教师学术议会管理 ",
                 state: "ENABLE",
-                value: "/MBA/teacherSeminar"
-              }
+                value: "/MBA/teacherSeminar",
+              },
             },
             {
               entity: {
@@ -952,8 +987,8 @@ export default {
                 name: "portraitScientificResearch",
                 alias: "教师纵向科研信息 ",
                 state: "ENABLE",
-                value: "/MBA/portraitScientificResearch"
-              }
+                value: "/MBA/portraitScientificResearch",
+              },
             },
             {
               entity: {
@@ -961,8 +996,8 @@ export default {
                 name: "transverseScientificResearch",
                 alias: "教师横向科研信息 ",
                 state: "ENABLE",
-                value: "/MBA/transverseScientificResearch"
-              }
+                value: "/MBA/transverseScientificResearch",
+              },
             },
             {
               entity: {
@@ -970,8 +1005,8 @@ export default {
                 name: "researchFunds",
                 alias: "进校科研经费 ",
                 state: "ENABLE",
-                value: "/MBA/researchFunds"
-              }
+                value: "/MBA/researchFunds",
+              },
             },
             {
               entity: {
@@ -979,8 +1014,8 @@ export default {
                 name: "academicWorks",
                 alias: "出版学术著作教材信息",
                 state: "ENABLE",
-                value: "/MBA/academicWorks"
-              }
+                value: "/MBA/academicWorks",
+              },
             },
             {
               entity: {
@@ -988,8 +1023,8 @@ export default {
                 name: "prizeWinning",
                 alias: "教师负责人成果获奖信息",
                 state: "ENABLE",
-                value: "/MBA/prizeWinning"
-              }
+                value: "/MBA/prizeWinning",
+              },
             },
             {
               entity: {
@@ -997,8 +1032,8 @@ export default {
                 name: "partTimeJobTeacher",
                 alias: "兼职教师信息",
                 state: "ENABLE",
-                value: "/MBA/partTimeJobTeacher"
-              }
+                value: "/MBA/partTimeJobTeacher",
+              },
             },
             {
               entity: {
@@ -1006,8 +1041,8 @@ export default {
                 name: "postgraduateClass",
                 alias: "研究生课堂教学",
                 state: "ENABLE",
-                value: "/MBA/postgraduateClass"
-              }
+                value: "/MBA/postgraduateClass",
+              },
             },
             {
               entity: {
@@ -1015,12 +1050,12 @@ export default {
                 name: "postgraduatePaper",
                 alias: "研究生论文指导",
                 state: "ENABLE",
-                value: "/MBA/postgraduatePaper"
-              }
-            }
-          ]
-        }
-      ]
+                value: "/MBA/postgraduatePaper",
+              },
+            },
+          ],
+        },
+      ],
     };
   },
   methods: {
@@ -1030,7 +1065,7 @@ export default {
       let roleId = window.localStorage.getItem("roleId");
       // 查询用户权限树
       let result = await axios.$get("/menu/checkedMenuListByRoleId", {
-        roleId
+        roleId,
       });
       let roleIds = result.data;
       function ergodic(tree) {
@@ -1053,7 +1088,7 @@ export default {
       }
       ergodic(this.leftMenus);
       this.loading = false;
-    }
+    },
   },
   mounted() {
     this.initTree();
@@ -1061,13 +1096,13 @@ export default {
   computed: {
     roles() {
       return this.$store.state.roles;
-    }
+    },
   },
   watch: {
     roles(newVal, oldVal) {
       this.initTree();
-    }
-  }
+    },
+  },
 };
 </script>
 

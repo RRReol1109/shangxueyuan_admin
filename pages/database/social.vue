@@ -2,39 +2,6 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <!-- <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名"></el-input>
-        </el-form-item>-->
-        <el-form-item label="项目类别:">
-          <el-select v-model="query.type" size="normal" placeholder="请选择类别">
-            <el-option label="全部" value></el-option>
-            <el-option label="国家自然科学基金项目" value="国家自然科学基金项目"></el-option>
-            <el-option label="国家社会科学基金项目" value="国家社会科学基金项目"></el-option>
-            <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
-            <el-option label="国家 973 项目" value="国家 973 项目"></el-option>
-            <el-option label="国家科技支撑计划项目" value="国家科技支撑计划项目"></el-option>
-            <el-option label="教育部立项的各类纵向项目" value="教育部立项的各类纵向项目"></el-option>
-            <el-option label="部委项目" value="部委项目"></el-option>
-            <el-option label="省级立项的纵向项目" value="省级立项的纵向项目"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="项目名称:">
-          <el-input v-model="query.projectName" placeholder="请输入项目名称" size="normal"></el-input>
-        </el-form-item>
-        <el-form-item label="项目级别:">
-          <el-select v-model="query.level" size="normal" placeholder="请选择级别">
-            <el-option label="全部" value></el-option>
-            <el-option label="重大项目" value="重大项目"></el-option>
-            <el-option label="重点项目" value="重点项目"></el-option>
-            <el-option label="面上项目" value="面上项目"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="开始时间">
-          <el-date-picker v-model="query.startDate" type="date" placeholder="选择日期时间" size="normal"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="结束时间">
-          <el-date-picker v-model="query.endDate" type="date" placeholder="选择日期时间" size="normal"></el-date-picker>
-        </el-form-item>
         <el-form-item label>
           <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
         </el-form-item>
@@ -64,7 +31,7 @@
                   :file-list="fileList"
                   :headers="header"
                   :on-success="uploadSuccess"
-                  action="http://bs.hk.darkal.cn/project/upload?token='AuthenticationToken'"
+                  action="http://bs.hk.darkal.cn/social/upload?token='AuthenticationToken'"
                 >
                   <el-button size="normal" class type="text">批量上传数据</el-button>
                 </el-upload>
@@ -84,55 +51,26 @@
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column> -->
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="type"
+        prop="title"
         align="center"
-        label="项目类型"
+        label="标题"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="level"
+        prop="content"
         align="center"
-        label="项目级别"
+        label="内容"
       ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="projectName"
+        prop="classicCase"
         align="center"
-        label="项目名称"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="projectFunds"
-        align="center"
-        label="直接经费"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="userName"
-        align="center"
-        label="项目主持人"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="startDate"
-        align="center"
-        label="开始时间"
-      ></el-table-column>
-      <el-table-column
-        sortable
-        :show-overflow-tooltip="true"
-        prop="endDate"
-        align="center"
-        label="结束时间"
+        label="典型案例"
       ></el-table-column>
       <el-table-column
         sortable
@@ -219,183 +157,20 @@
           ></el-date-picker>
         </el-form-item>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="科研编号" prop="projectId">
-              <el-input v-model="ruleForm.projectId" clearable style="width:99%"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="项目类型" prop="type">
-              <el-select
-                v-model="ruleForm.type"
-                placeholder="请选择类型"
-                @change="typeChage"
-                style="width:99%"
-              >
-                <el-option label="国家自然科学基金项目" value="国家自然科学基金项目"></el-option>
-                <el-option label="国家社会科学基金项目" value="国家社会科学基金项目"></el-option>
-                <el-option label="国家软科学研究计划项目" value="国家软科学研究计划项目"></el-option>
-                <el-option label="国家 973 项目" value="国家 973 项目"></el-option>
-                <el-option label="国家科技支撑计划项目" value="国家科技支撑计划项目"></el-option>
-                <el-option label="教育部立项的各类纵向项目" value="教育部立项的各类纵向项目"></el-option>
-                <el-option label="部委项目" value="部委项目"></el-option>
-                <el-option label="省级立项的纵向项目" value="省级立项的纵向项目"></el-option>
-                <el-option label="其他" value="其他"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="其他类型" v-if="elFlag">
-          <el-input v-model="ruleForm.typeF" clearable style="width:99%"></el-input>
-        </el-form-item>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="项目名称" prop="projectName">
-              <el-autocomplete
-                clearable
-                style="width:99%"
-                v-model="ruleForm.projectName"
-                :fetch-suggestions="queryProjects"
-                placeholder="请输入内容"
-              ></el-autocomplete>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="项目主持人" prop="teacher">
-              <el-select
-                v-model="ruleForm.teacher"
-                filterable　placeholder="请选择老师"
-                style="width:99%"
-              >
-                <el-option
-                  style="width:99%"
-                  v-for="item in teacherList"
-                  :key="item.id"
-                  :label="item.name"
-                  :value="item.name"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-form-item label="参与人" prop="projectPerson">
-            <el-input v-model="ruleForm.projectPerson" type="textarea" clearable style="width:99%"></el-input>
+          <el-form-item label="标题" prop="title">
+            <el-input size="normal" v-model="ruleForm.title" style="width:99%"></el-input>
           </el-form-item>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="项目级别" prop="level">
-              <el-select
-                v-model="ruleForm.level"
-                placeholder="请选择级别"
-                style="width:99%"
-                @change="levelChage"
-              >
-                <el-option label="重点项目" value="重点项目"></el-option>
-                <el-option label="重大项目" value="重大项目"></el-option>
-                <el-option label="面上项目" value="面上项目"></el-option>
-                <el-option label="一般项目" value="一般项目"></el-option>
-                <el-option label="其他" value="其他"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="直接经费" prop="projectFunds">
-              <el-input
-                style="width:99%"
-                clearable
-                v-model="ruleForm.projectFunds"
-                oninput="value=value.replace(/[^\d.]/g,'')"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="其他级别" v-if="lvFlag">
-          <el-input v-model="ruleForm.levelF" clearable style="width:99%"></el-input>
-        </el-form-item>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="开始时间" prop="startDate">
-              <el-date-picker
-                v-model="ruleForm.startDate"
-                type="date"
-                placeholder="选择日期时间"
-                style="width:99%"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="结束时间" prop="endDate">
-              <el-date-picker
-                v-model="ruleForm.endDate"
-                type="date"
-                placeholder="选择日期时间"
-                style="width:99%"
-              ></el-date-picker>
-            </el-form-item>
-          </el-col>
+          <el-form-item label="内容" prop="content">
+            <el-input size="normal" v-model="ruleForm.content" type="textarea" style="width:99%"></el-input>
+          </el-form-item>
         </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="结题时间" prop="finishedDate">
-              <el-date-picker
-                v-model="ruleForm.finishedDate"
-                type="date"
-                placeholder="选择日期时间"
-                style="width:99%"
-              ></el-date-picker>
-              <span style="color:#F56C6C">如已结题，请上传结项证书附件</span>
-            </el-form-item>
-          </el-col>
+          <el-form-item label="典型案例" prop="classicCase">
+            <el-input size="normal" v-model="ruleForm.classicCase" style="width:99%"></el-input>
+          </el-form-item>
         </el-row>
-        <div>
-          <el-divider content-position="left">附件</el-divider>
-          <el-table
-            :data="additionFiles"
-            border
-            style="width: 100%"
-            size="normal"
-            header-row-class-name="h30"
-            header-cell-class-name="tc-g2 bc-g"
-          >
-            <el-table-column
-              sortable
-              :show-overflow-tooltip="true"
-              type="index"
-              label="#"
-              align="center"
-              width="50"
-            ></el-table-column>
-            <el-table-column sortable :show-overflow-tooltip="true" prop label="文件名" align="center">
-              <template slot-scope="scope">
-                <span>{{ scope.row.name.split('/').pop() }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column sortable :show-overflow-tooltip="true" label="操作" align="center">
-              <template slot-scope="scope">
-                <el-button @click="downloadAdditionFile(scope.row)" type="primary" size="mini">下载</el-button>
-                <el-button @click="deleteAdditionFile(scope.row)" type="danger" size="mini">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-upload
-            class="dragger"
-            :show-file-list="false"
-            :on-success="uploadAdditionSuccess"
-            drag
-            :headers="header"
-            action="http://bs.hk.darkal.cn/mgr/upload"
-            multiple
-          >
-            <div class="el-upload__tip" slot="tip"></div>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">
-              将文件拖到此处，或
-              <em>点击上传</em>
-            </div>
-          </el-upload>
-        </div>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
@@ -437,7 +212,6 @@ export default {
       action: "",
       examineDialog: false,
       loading: false,
-      lvFlag: false,
       tableData: [],
       header: {},
       deptid: "",
@@ -459,39 +233,16 @@ export default {
       fileLists: [],
       additionFiles: [],
       ruleForm: {
-        id: "",
-        // name: "",
-        type: "1",
-        level: "1",
-        projectName: "",
-        projectFunds: 0,
-        typeF: "",
-        levelF: "",
-        startDate: moment().subtract(1, "days").format("YYYY-MM-DD"),
-        endDate: moment().format("YYYY-MM-DD"),
+        year: "",
+        classicCase: "",
+        content: "",
+        title: "",
       },
-      rules: {
-        teacher: [{ required: true, message: "请选择老师", trigger: "blur" }],
-        type: [{ required: true, message: "请选择项目类型", trigger: "blur" }],
-        level: [{ required: true, message: "请选择项目级别", trigger: "blur" }],
-        projectName: [
-          { required: true, message: "请输入项目名称", trigger: "blur" },
-        ],
-        year: [{ required: true, message: "请输入年份", trigger: "blur" }],
-        projectFunds: [
-          { required: true, message: "请输入直接经费", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" },
-        ],
-      },
+      rules: {},
       checkedList: [],
-      projects: [],
     };
   },
-  mounted() {
-    this.projects = localStorage.getItem("projects")
-      ? JSON.parse(localStorage.getItem("projects"))
-      : [];
-  },
+  mounted() {},
   filters: {
     statusFilter: function (value) {
       return {
@@ -510,7 +261,7 @@ export default {
         });
         if (this.operate == "edit") {
           this.ruleForm.files = JSON.stringify(this.additionFiles);
-          await axios.$post("/project/update", this.ruleForm);
+          await axios.$post("/social/update", this.ruleForm);
         }
       }
     },
@@ -527,47 +278,20 @@ export default {
       );
       if (this.operate == "edit") {
         this.ruleForm.files = JSON.stringify(this.additionFiles);
-        await axios.$post("/project/update", this.ruleForm);
+        await axios.$post("/social/update", this.ruleForm);
       }
     },
     typeChage() {
+      console.log(this.ruleForm.type, "type");
       if (this.ruleForm.type == "其他") {
         this.elFlag = true;
+        console.log(123456);
       } else {
         this.elFlag = false;
       }
     },
-    levelChage() {
-      if (this.ruleForm.level == "其他") {
-        this.lvFlag = true;
-      } else {
-        this.lvFlag = false;
-      }
-    },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    },
-    updataCache() {
-      this.projects.push({
-        value: this.ruleForm.projectName,
-      });
-      this.projects = _.uniqWith(this.projects, _.isEqual);
-      localStorage.setItem("projects", JSON.stringify(this.projects));
-    },
-    queryProjects(queryString, cb) {
-      var projects = this.projects;
-      var results = queryString
-        ? projects.filter(this.createProjectsFilter(queryString))
-        : projects;
-      // 调用 callback 返回建议列表的数据
-      cb(results);
-    },
-    createProjectsFilter(queryString) {
-      return (projects) => {
-        return (
-          projects.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-        );
-      };
     },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
@@ -596,7 +320,7 @@ export default {
       if (!user.includes(888)) {
         this.query.editor = localStorage.getItem("userId");
       }
-      let res = await axios.$post("/project/list", this.query);
+      let res = await axios.$post("/social/list", this.query);
       this.tableData = res.rows;
       this.total = parseInt(res.total);
       this.loading = false;
@@ -614,9 +338,9 @@ export default {
     async exportData(flag) {
       let data = "";
       if (flag == "temp") {
-        data = await axios.$download("/project/export?id=-1", {});
+        data = await axios.$download("/social/export?id=-1", {});
       } else {
-        data = await axios.$download("/project/export", {
+        data = await axios.$download("/social/export", {
           params: this.query,
         });
       }
@@ -655,20 +379,17 @@ export default {
       }
       if (this.additionFiles)
         this.ruleForm.files = JSON.stringify(this.additionFiles);
-      if (this.ruleForm.type == "其他") {
-        this.ruleForm.type = this.ruleForm.typeF;
-      }
-      if (this.ruleForm.level == "其他") {
-        this.ruleForm.level = this.ruleForm.levelF;
-      }
       switch (this.operate) {
         case "add":
           this.ruleForm.files = this.fileurl;
-          await axios.$post("/project/add", this.ruleForm);
+          if (this.ruleForm.type == "其他") {
+            this.ruleForm.type = this.ruleForm.typeF;
+          }
+          await axios.$post("/social/add", this.ruleForm);
           this.fileurl = "";
           break;
         case "edit":
-          await axios.$post("/project/update", this.ruleForm);
+          await axios.$post("/social/update", this.ruleForm);
           break;
       }
       this.dialogFormVisible = false;
@@ -694,15 +415,10 @@ export default {
       this.formDisabled = false;
       if (this.operate === "add") {
         this.ruleForm = {
-          id: "",
           year: "",
-          type: "",
-          level: "",
-          projectName: "",
-          projectFunds: 0,
-          teacher: "",
-          startDate: moment().subtract(1, "days").format("YYYY-MM-DD"),
-          endDate: moment().format("YYYY-MM-DD"),
+          classicCase: "",
+          content: "",
+          title: "",
           editor: JSON.parse(localStorage.getItem("userInfo")).id,
         };
         this.additionFiles = [];
@@ -730,9 +446,9 @@ export default {
       })
         .then(async () => {
           console.log(row);
-          let projectId = row.id;
-          await axios.$post("/project/delete", {
-            projectId: projectId,
+          let socialId = row.id;
+          await axios.$post("/social/delete", {
+            socialId: socialId,
           });
           this.list();
           this.$message({
@@ -794,8 +510,8 @@ export default {
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
-            await axios.$post("/project/delete", {
-              projectId: vm.checkedList[i].id,
+            await axios.$post("/social/delete", {
+              socialId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
@@ -828,7 +544,7 @@ export default {
             }
           )
             .then(async () => {
-              await axios.$post("/project/update", this.examineForm);
+              await axios.$post("/social/update", this.examineForm);
               this.list();
               this.$message({
                 type: "success",
@@ -843,7 +559,7 @@ export default {
             });
         } else {
           this.examineForm.auditFlag = 2;
-          await axios.$post("/project/update", this.examineForm);
+          await axios.$post("/social/update", this.examineForm);
           this.list();
         }
       }

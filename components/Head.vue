@@ -150,7 +150,7 @@ export default {
       userInfo: "",
       activeIndex: "",
       ids: [],
-      deptid: ""
+      deptid: "",
     };
   },
   mounted() {
@@ -240,7 +240,11 @@ export default {
         93,
         94,
         104,
-        105
+        105,
+        106,
+        107,
+        108,
+        109,
       ];
       this.saveRoles();
       this.activeIndex = 1;
@@ -312,7 +316,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "32":
@@ -345,7 +349,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "33":
@@ -378,7 +382,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "34":
@@ -419,7 +423,7 @@ export default {
             100,
             101,
             102,
-            103
+            103,
           ];
           break;
         case "35":
@@ -447,7 +451,7 @@ export default {
             91,
             92,
             93,
-            94
+            94,
           ];
           break;
         case "36":
@@ -477,7 +481,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "37":
@@ -513,7 +517,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "38":
@@ -542,7 +546,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "39":
@@ -579,7 +583,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "40":
@@ -616,7 +620,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
         case "1":
@@ -708,7 +712,7 @@ export default {
             102,
             103,
             104,
-            105
+            105,
           ];
           break;
         case "41":
@@ -775,7 +779,7 @@ export default {
             91,
             92,
             93,
-            94
+            94,
           ];
           break;
         case "2":
@@ -808,7 +812,7 @@ export default {
             42,
             43,
             44,
-            45
+            45,
           ];
           break;
       }
@@ -823,14 +827,14 @@ export default {
       // }
       await axios.$post("/role/setAuthority", {
         roleId: this.roleId,
-        ids: this.ids.join()
+        ids: this.ids.join(),
       });
       this.$store.commit("setRole", this.ids);
       // let refresh = Request.getSession().getAttribute("refresh");
       window.sessionStorage.setItem("flag", true);
       // location.reload();
       // window.localStorage.setItem("roles", "["+this.ids+"]");
-    }
-  }
+    },
+  },
 };
 </script>
