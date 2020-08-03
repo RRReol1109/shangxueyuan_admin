@@ -558,7 +558,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       deptid: "",
       teacherList: [],
@@ -574,65 +574,65 @@ export default {
         half: 0,
         score: "",
         finalScore: "",
-        cateNumber: ""
+        cateNumber: "",
       },
       teacherArr: [
         {
           name: "",
           stu: "",
           company: "false",
-          flag: "false"
-        }
+          flag: "false",
+        },
       ],
       loading: true,
       roleId: 0,
       pick: false,
       examineForm: {
-        auditFlag: "0"
+        auditFlag: "0",
       },
       examineDialog: false,
       tableData: [],
       rules: {
         title: [{ required: true, message: "请输入论文名称", trigger: "blur" }],
         journal: [
-          { required: true, message: "请输入期刊名称", trigger: "blur" }
+          { required: true, message: "请输入期刊名称", trigger: "blur" },
         ],
         authorName: [
-          { required: true, message: "请输入作者", trigger: "blur" }
+          { required: true, message: "请输入作者", trigger: "blur" },
         ],
         score: [
           { required: true, message: "请输入本人计分", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
+          { validator: validateNumber, trigger: "blur" },
         ],
 
         cateNumber: [
-          { required: true, message: "请输入期刊ISSN号", trigger: "blur" }
+          { required: true, message: "请输入期刊ISSN号", trigger: "blur" },
         ],
         authors: [{ required: true, message: "请输入作者", trigger: "blur" }],
         half: [{ required: true, message: "请选择是否半价", trigger: "blur" }],
         collegeLevel: [
-          { required: true, message: "请选择分级", trigger: "blur" }
+          { required: true, message: "请选择分级", trigger: "blur" },
         ],
         // year: [{ required: true, message: "请输入年份", trigger: "blur" }],
-        title: [{ required: true, message: "请输入论文名称", trigger: "blur" }]
+        title: [{ required: true, message: "请输入论文名称", trigger: "blur" }],
         // files: [{ required: true, message: "请上传附件", trigger: "blur" }]
-      }
+      },
     };
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
         "0": "未审核",
         "1": "通过",
-        "2": "未通过"
+        "2": "未通过",
       }[value.toString()];
     },
-    reformPaperFilter: function(value) {
+    reformPaperFilter: function (value) {
       return {
         true: "是",
-        false: "否"
+        false: "否",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     changeSize(val) {
@@ -646,7 +646,7 @@ export default {
     authorsChanged(value) {
       this.ruleForm.authorCnt = 0;
       const arrays = value.split(",");
-      arrays.forEach(row => {
+      arrays.forEach((row) => {
         if (row) {
           this.ruleForm.authorCnt++;
         }
@@ -656,7 +656,7 @@ export default {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
         this.additionFiles.push({
-          name: response
+          name: response,
         });
         if (this.operate == "edit") {
           this.ruleForm.files = JSON.stringify(this.additionFiles);
@@ -669,7 +669,7 @@ export default {
     },
     async deleteAdditionFile(row) {
       this.additionFiles = this.additionFiles.filter(
-        it => it.name !== row.name
+        (it) => it.name !== row.name
       );
       if (this.operate == "edit") {
         this.ruleForm.files = JSON.stringify(this.additionFiles);
@@ -681,13 +681,13 @@ export default {
     },
     updataCache() {
       this.names.push({
-        value: this.ruleForm.name
+        value: this.ruleForm.name,
       });
       this.names = _.uniqWith(this.names, _.isEqual);
       localStorage.setItem("names", JSON.stringify(this.names));
 
       this.stuNames.push({
-        value: this.ruleForm.stuName
+        value: this.ruleForm.stuName,
       });
       this.stuNames = _.uniqWith(this.stuNames, _.isEqual);
       localStorage.setItem("stuNames", JSON.stringify(this.stuNames));
@@ -704,7 +704,7 @@ export default {
         name: "",
         stu: "",
         company: "false",
-        flag: "false"
+        flag: "false",
       });
     },
     fileUploadSuccess(res, file, files) {
@@ -721,7 +721,7 @@ export default {
       this.teacherList = await axios.$post("/mgr/list", {
         order: "desc",
         offset: 0,
-        limit: 999999
+        limit: 999999,
       });
       this.teacherList = this.teacherList.rows;
     },
@@ -731,7 +731,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录无附件"
+          message: "该条记录无附件",
         });
       }
     },
@@ -772,7 +772,7 @@ export default {
     },
     async queryTeachers(queryString, cb) {
       let teacher = await axios.$get("/mgr/quicklist", {
-        name: queryString
+        name: queryString,
       });
       var teachers = [];
       for (let i = 0; i < teacher.length; i++) {
@@ -785,7 +785,7 @@ export default {
       cb(results);
     },
     createFilter(queryString) {
-      return teacher => {
+      return (teacher) => {
         return (
           teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -815,7 +815,7 @@ export default {
       if (this.additionFiles)
         this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -831,7 +831,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -844,23 +844,21 @@ export default {
         let author = "";
         if (element.stu != "") {
           if (element.flag == "true") {
-            author += element.stu + 1;
+            author += element.stu + "（" + 1 + "）";
           } else {
-            author += element.stu + (i + 1);
+            author += element.stu + "（" + (i + 1) + "）";
           }
           author += "（" + element.name + "）";
         } else {
           author += element.name;
         }
         if (element.flag == "true" && element.stu == "") {
-          author += 1;
+          author += "（" + 1 + "）";
         } else if (element.flag == "false" && element.stu == "") {
-          author += i + 1;
+          author += "（" + (i + 1) + "）";
         }
         if (element.company == "true") {
           author += "（外单位）";
-        } else {
-          author += "（中南大学）";
         }
         this.ruleForm.authors += author;
         if (i != this.teacherArr.length - 1) {
@@ -887,16 +885,16 @@ export default {
         this.$confirm("该条数据无论文url", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
       }
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -913,15 +911,15 @@ export default {
           authors: "",
           finalScore: "",
           cateNumber: "",
-          editor: JSON.parse(localStorage.getItem("userInfo")).id
+          editor: JSON.parse(localStorage.getItem("userInfo")).id,
         };
         this.teacherArr = [
           {
             name: "",
             stu: "",
             company: "false",
-            flag: "false"
-          }
+            flag: "false",
+          },
         ];
         this.additionFiles = [];
       } else {
@@ -969,7 +967,7 @@ export default {
             name: name,
             stu: stu,
             company: company,
-            flag: flag
+            flag: flag,
           };
           this.teacherArr.push(author);
         }
@@ -982,7 +980,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -991,24 +989,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let articleCnId = row.id;
           await axios.$post("/articleCn/delete", {
-            articleCnId: articleCnId
+            articleCnId: articleCnId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -1023,7 +1021,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -1047,32 +1045,32 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/articleCn/delete", {
-              articleCnId: vm.checkedList[i].id
+              articleCnId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -1088,7 +1086,7 @@ export default {
             {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }
           )
             .then(async () => {
@@ -1096,13 +1094,13 @@ export default {
               this.list();
               this.$message({
                 type: "success",
-                message: "审核成功!"
+                message: "审核成功!",
               });
             })
             .catch(() => {
               this.$message({
                 type: "info",
-                message: "已取消"
+                message: "已取消",
               });
             });
         } else {
@@ -1112,25 +1110,25 @@ export default {
         }
       }
       this.examineDialog = false;
-    }
+    },
   },
   async mounted() {
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     let self = this;
     let year = moment(new Date()).format("YYYY");
     for (let i = year; i > 1900; i--) {
       self.yearsOptions.push({
         value: i,
-        label: i
+        label: i,
       });
     }
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     await this.queryTeacher();
     await this.list();
     this.roleId = localStorage.getItem("roleId");
-  }
+  },
 };
 </script>
 

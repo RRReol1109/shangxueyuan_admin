@@ -300,6 +300,11 @@
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
+        <el-form-item label="其他级别" v-if="lvFlag">
+          <el-input v-model="ruleForm.levelF" clearable style="width:99%"></el-input>
+        </el-form-item>
+        <el-row>
           <el-col :span="12">
             <el-form-item label="直接经费" prop="projectFunds">
               <el-input
@@ -310,10 +315,17 @@
               ></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12">
+            <el-form-item label="间接经费" prop="descFunds">
+              <el-input
+                style="width:99%"
+                clearable
+                v-model="ruleForm.descFunds"
+                oninput="value=value.replace(/[^\d.]/g,'')"
+              ></el-input>
+            </el-form-item>
+          </el-col>
         </el-row>
-        <el-form-item label="其他级别" v-if="lvFlag">
-          <el-input v-model="ruleForm.levelF" clearable style="width:99%"></el-input>
-        </el-form-item>
         <el-row>
           <el-col :span="12">
             <el-form-item label="开始时间" prop="startDate">
