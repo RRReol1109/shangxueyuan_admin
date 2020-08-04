@@ -1206,29 +1206,34 @@ export default {
           let stu = "";
           let company = "";
           const element = teacherInfo[i];
-          if (element.indexOf("（") == -1) {
-            name = element.substr(0, element.length - 1);
-            if (element.substr(element.length - 1, 1) == "1" && i != 0) {
+          if (element.indexOf("）") == element.length - 1) {
+            name = element.substr(0, element.indexOf("（"));
+            if (element.substr(element.indexOf("（") + 1, 1) == "1" && i != 0) {
               flag = "true";
             } else {
               flag = "false";
             }
             company = "false";
-          } else {
-            if (info != "外单位" && info != "中南大学") {
-              name = info;
-              company = "false";
-              stu = element.substr(0, element.indexOf("（") - 1);
-            } else {
-              name = element.substr(0, element.indexOf("（") - 1);
-              if (info == "外单位") company = "true";
-              else company = "false";
-            }
-            if (element.substr(element.indexOf("（") - 1, 1) == 1 && i != 0) {
+          } else if (element.substr(element.length - 5, 5) != "（外单位）") {
+            stu = element.substr(0, element.indexOf("（"));
+            if (element.substr(element.indexOf("（") + 1, 1) == "1" && i != 0) {
               flag = "true";
             } else {
               flag = "false";
             }
+            name = element.substr(
+              element.indexOf("）") + 2,
+              element.length - element.indexOf("）") - 3
+            );
+            company = "false";
+          } else if (element.substr(element.length - 5, 5) == "（外单位）") {
+            name = element.substr(0, element.indexOf("（"));
+            if (element.substr(element.indexOf("（") + 1, 1) == "1" && i != 0) {
+              flag = "true";
+            } else {
+              flag = "false";
+            }
+            company = "true";
           }
           author = {
             name: name,
