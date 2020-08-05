@@ -97,7 +97,7 @@
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column> -->
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -161,12 +161,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button
-            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -238,9 +233,19 @@
               ></el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="姓名" prop="name">
               <el-input clearable v-model="ruleForm.name" placeholder="请输入内容" style="width:99%"></el-input>
+            </el-form-item>
+          </el-col>-->
+          <el-col :span="12">
+            <el-form-item label="第一获奖人" prop="firstPerson">
+              <el-input
+                clearable
+                v-model="ruleForm.firstPerson"
+                placeholder="请输入内容"
+                style="width:99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -320,21 +325,13 @@
         </el-form-item>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="第一获奖人" prop="firstPerson">
-              <el-input
-                clearable
-                v-model="ruleForm.firstPerson"
-                placeholder="请输入内容"
-                style="width:99%"
-              ></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
             <el-form-item label="获奖时间" prop="awardDate">
               <el-date-picker
                 v-model="ruleForm.awardDate"
                 type="date"
                 placeholder="选择日期时间"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 style="width:99%"
               ></el-date-picker>
             </el-form-item>
@@ -423,7 +420,7 @@ export default {
     return {
       pick: false,
       examineForm: {
-        auditFlag: "0"
+        auditFlag: "0",
       },
       fileLoading: false,
       fileData: "",
@@ -445,7 +442,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       additionFiles: [],
       teacherList: [],
@@ -460,14 +457,14 @@ export default {
         firstUnit: "",
         firstPerson: "",
         persons: "",
-        awardDate: moment().format("YYYY-MM-DD")
+        awardDate: moment().format("YYYY-MM-DD"),
       },
       teacherArr: [
         {
           name: "",
           company: "",
-          num: ""
-        }
+          num: "",
+        },
       ],
       rules: {
         year: [{ required: true, message: "请输入年份", trigger: "blur" }],
@@ -485,10 +482,10 @@ export default {
         // ],
         // persons: [{ required: true, message: "请输入获奖人", trigger: "blur" }],
         awardDate: [
-          { required: true, message: "请输入获奖时间", trigger: "blur" }
-        ]
+          { required: true, message: "请输入获奖时间", trigger: "blur" },
+        ],
       },
-      rewardNames: []
+      rewardNames: [],
     };
   },
   mounted() {
@@ -497,13 +494,13 @@ export default {
       : [];
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
         "0": "未审核",
         "1": "已审核",
-        "2": "未通过"
+        "2": "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     handleSelectionChange(val) {
@@ -517,7 +514,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录无附件"
+          message: "该条记录无附件",
         });
       }
     },
@@ -525,7 +522,7 @@ export default {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
         this.additionFiles.push({
-          name: response
+          name: response,
         });
         if (this.operate == "edit") {
           this.ruleForm.files = JSON.stringify(this.additionFiles);
@@ -535,7 +532,7 @@ export default {
     },
     async queryTeachers(queryString, cb) {
       let teacher = await axios.$get("/mgr/quicklist", {
-        name: queryString
+        name: queryString,
       });
       var teachers = [];
       for (let i = 0; i < teacher.length; i++) {
@@ -548,7 +545,7 @@ export default {
       cb(results);
     },
     createFilter(queryString) {
-      return teacher => {
+      return (teacher) => {
         return (
           teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -559,7 +556,7 @@ export default {
     },
     async deleteAdditionFile(row) {
       this.additionFiles = this.additionFiles.filter(
-        it => it.name !== row.name
+        (it) => it.name !== row.name
       );
       if (this.operate == "edit") {
         this.ruleForm.files = JSON.stringify(this.additionFiles);
@@ -571,7 +568,7 @@ export default {
     },
     updataCache() {
       this.rewardNames.push({
-        value: this.ruleForm.awardName
+        value: this.ruleForm.awardName,
       });
       this.rewardNames = _.uniqWith(this.rewardNames, _.isEqual);
       localStorage.setItem("rewardNames", JSON.stringify(this.rewardNames));
@@ -585,7 +582,7 @@ export default {
       cb(results);
     },
     createProjectsFilter(queryString) {
-      return rewardNames => {
+      return (rewardNames) => {
         return (
           rewardNames.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
           0
@@ -595,7 +592,7 @@ export default {
     addAwardees() {
       this.ruleForm.persons.push({
         value: "",
-        key: Date.now() + "persons"
+        key: Date.now() + "persons",
       });
     },
     removeAwardees(item) {
@@ -610,7 +607,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录无附件"
+          message: "该条记录无附件",
         });
       }
     },
@@ -621,7 +618,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -657,7 +654,7 @@ export default {
         data = await axios.$download("/awardResult/export?id=-1", {});
       } else {
         data = await axios.$download("/awardResult/export", {
-          params: this.query
+          params: this.query,
         });
       }
 
@@ -672,7 +669,6 @@ export default {
       }
     },
     removeTeacher(item) {
-      console.log(item);
       var index = this.teacherArr.indexOf(item);
       if (index !== -1 && index != 0) {
         this.teacherArr.splice(index, 1);
@@ -686,7 +682,7 @@ export default {
       this.teacherArr.push({
         name: "",
         company: "",
-        num: ""
+        num: "",
       });
     },
     async submitForm(formName) {
@@ -695,7 +691,9 @@ export default {
         let element = this.teacherArr[i];
         this.ruleForm.persons +=
           element.name +
+          "（" +
           (i + 1) +
+          "）" +
           "（" +
           element.company +
           "）" +
@@ -707,7 +705,7 @@ export default {
         }
       }
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -723,7 +721,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -742,12 +740,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -764,14 +762,14 @@ export default {
           firstPerson: "",
           persons: "",
           awardDate: moment().format("YYYY-MM-DD"),
-          editor: JSON.parse(localStorage.getItem("userInfo")).id
+          editor: JSON.parse(localStorage.getItem("userInfo")).id,
         };
         this.teacherArr = [
           {
             name: "",
             company: "",
-            num: ""
-          }
+            num: "",
+          },
         ];
         this.additionFiles = [];
       } else {
@@ -785,20 +783,22 @@ export default {
           let company = "";
           let num = "";
           if (element.indexOf("（") != -1) {
-            name = element.substr(0, element.indexOf("（") - 1);
-            company = element.substr(
-              element.indexOf("（") + 1,
-              element.indexOf("）") - element.indexOf("（") - 1
-            );
+            name = element.substr(0, element.indexOf("（"));
+            let count = element.substr(
+              element.indexOf("（"),
+              element.indexOf("）") - element.indexOf("（") + 1
+            ).length;
+            company = element.substr(element.indexOf("）") + 1);
+            company = company.substr(1, company.indexOf("）") - 1);
             num = element.substr(
-              element.indexOf("）") + 2,
-              element.length - element.indexOf("）") - 3
+              name.length + company.length + count + 3,
+              element.length - (name.length + company.length + count + 4)
             );
           }
           this.teacherArr.push({
             name: name,
             company: company,
-            num: num
+            num: num,
           });
         }
         this.ruleForm.auditFlag = row.auditFlag.toString();
@@ -808,24 +808,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let awardResultId = row.id;
           await axios.$post("/awardResult/delete", {
-            awardResultId: awardResultId
+            awardResultId: awardResultId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -847,7 +847,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -871,32 +871,32 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/awardResult/delete", {
-              awardResultId: vm.checkedList[i].id
+              awardResultId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -904,7 +904,7 @@ export default {
       this.teacherList = await axios.$post("/mgr/list", {
         order: "desc",
         offset: 0,
-        limit: 999999
+        limit: 999999,
       });
       this.teacherList = this.teacherList.rows;
     },
@@ -919,7 +919,7 @@ export default {
             {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }
           )
             .then(async () => {
@@ -927,13 +927,13 @@ export default {
               this.list();
               this.$message({
                 type: "success",
-                message: "审核成功!"
+                message: "审核成功!",
               });
             })
             .catch(() => {
               this.$message({
                 type: "info",
-                message: "已取消"
+                message: "已取消",
               });
             });
         } else {
@@ -943,12 +943,12 @@ export default {
         }
       }
       this.examineDialog = false;
-    }
+    },
   },
 
   async mounted() {
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.list();
     await this.queryTeacher();
@@ -957,12 +957,12 @@ export default {
     for (let i = year; i > 1900; i--) {
       self.yearsOptions.push({
         value: i,
-        label: i
+        label: i,
       });
     }
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.roleId = localStorage.getItem("roleId");
-  }
+  },
 };
 </script>
 

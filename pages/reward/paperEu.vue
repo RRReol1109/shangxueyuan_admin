@@ -1172,8 +1172,6 @@ export default {
           id: "",
           doi: "",
           level: "",
-          // coauthorName: "",
-          // coauthorName: "",
           score: "",
           journal: "",
           authors: "",
