@@ -144,12 +144,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button
-            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -374,7 +369,7 @@ export default {
     return {
       pick: false,
       examineForm: {
-        auditFlag: "0"
+        auditFlag: "0",
       },
       header: {},
       examineDialog: false,
@@ -388,7 +383,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       checkedList: [],
       showTeachInput: false,
@@ -401,29 +396,29 @@ export default {
         studentName: "",
         studentId: "",
         score: "",
-        date: moment().format("YYYY-MM-DD")
+        date: moment().format("YYYY-MM-DD"),
       },
       fileList: [],
       tableData: [],
       rules: {
         year: [{ required: true, message: "请输入年度", trigger: "blur" }],
         teacher: [
-          { required: true, message: "请输入教师姓名", trigger: "blur" }
+          { required: true, message: "请输入教师姓名", trigger: "blur" },
         ],
         studentName: [
-          { required: true, message: "请输入学生姓名", trigger: "blur" }
+          { required: true, message: "请输入学生姓名", trigger: "blur" },
         ],
         studentId: [
-          { required: true, message: "请输入学生学号", trigger: "blur" }
+          { required: true, message: "请输入学生学号", trigger: "blur" },
         ],
         score: [
           { required: true, message: "请输入本人计分", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
-        ]
+          { validator: validateNumber, trigger: "blur" },
+        ],
       },
       names: [],
       stuNames: [],
-      teacherList: []
+      teacherList: [],
     };
   },
 
@@ -436,13 +431,13 @@ export default {
       : [];
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
         "0": "未审核",
         "1": "已审核",
-        "2": "未通过"
+        "2": "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     resetForm(formName) {
@@ -450,20 +445,20 @@ export default {
     },
     updataCache() {
       this.names.push({
-        value: this.ruleForm.year
+        value: this.ruleForm.year,
       });
       this.names = _.uniqWith(this.names, _.isEqual);
       localStorage.setItem("names", JSON.stringify(this.names));
 
       this.stuNames.push({
-        value: this.ruleForm.studentName
+        value: this.ruleForm.studentName,
       });
       this.stuNames = _.uniqWith(this.stuNames, _.isEqual);
       localStorage.setItem("stuNames", JSON.stringify(this.stuNames));
     },
     async queryTeacher(queryString, cb) {
       let teacher = await axios.$get("/mgr/quicklist", {
-        name: queryString
+        name: queryString,
       });
       var teachers = [];
       for (let i = 0; i < teacher.length; i++) {
@@ -476,7 +471,7 @@ export default {
       cb(results);
     },
     createFilter(queryString) {
-      return teacher => {
+      return (teacher) => {
         return (
           teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -508,7 +503,7 @@ export default {
       }
     },
     createStudentFilter(queryString) {
-      return stuNames => {
+      return (stuNames) => {
         return (
           stuNames.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -552,7 +547,7 @@ export default {
       this.list();
     },
     async submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           console.log(this.ruleForm);
         } else {
@@ -563,7 +558,7 @@ export default {
       switch (this.operate) {
         case "add":
           let verification = false;
-          this.$refs[formName].validate(valid => {
+          this.$refs[formName].validate((valid) => {
             if (valid) {
               verification = true;
               console.log("success");
@@ -579,7 +574,7 @@ export default {
           } else {
             this.$message({
               type: "info",
-              message: "请填写正确数据"
+              message: "请填写正确数据",
             });
             return;
           }
@@ -593,12 +588,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -614,7 +609,7 @@ export default {
           studentId: "",
           score: "",
           date: moment().format("YYYY-MM-DD"),
-          editor: JSON.parse(localStorage.getItem("userInfo")).id
+          editor: JSON.parse(localStorage.getItem("userInfo")).id,
         };
       } else {
         this.ruleForm = row;
@@ -625,24 +620,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let excellentPapersId = row.id;
           await axios.$post("/excellentPapers/delete", {
-            excellentPapersId: excellentPapersId
+            excellentPapersId: excellentPapersId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -657,7 +652,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -678,7 +673,7 @@ export default {
         data = await axios.$download("/excellentPapers/export?id=-1", {});
       } else {
         data = await axios.$download("/excellentPapers/export", {
-          params: this.query
+          params: this.query,
         });
       }
       if (data) {
@@ -694,7 +689,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -707,32 +702,32 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/excellentPapers/delete", {
-              excellentPapersId: vm.checkedList[i].id
+              excellentPapersId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -745,53 +740,35 @@ export default {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
-          this.$confirm(
-            "审核通过之后该条数据将不可修改,请确认是否通过审核?",
-            "提示",
-            {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning"
-            }
-          )
-            .then(async () => {
-              await axios.$post("/excellentPapers/update", this.examineForm);
-              this.list();
-              this.$message({
-                type: "success",
-                message: "审核成功!"
-              });
-            })
-            .catch(() => {
-              this.$message({
-                type: "info",
-                message: "已取消"
-              });
-            });
+          await axios.$post("/excellentPapers/update", this.examineForm);
+          this.$message({
+            type: "success",
+            message: "审核成功!",
+          });
         } else {
           this.examineForm.auditFlag = 2;
           await axios.$post("/excellentPapers/update", this.examineForm);
-          this.list();
         }
       }
       this.examineDialog = false;
-    }
+      this.list();
+    },
   },
   async mounted() {
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.checkCanUse();
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = await axios.$post("/mgr/list", {
       order: "desc",
       offset: 0,
-      limit: 999999
+      limit: 999999,
     });
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.teacherList = this.teacherList.rows;
     this.list();
-  }
+  },
 };
 </script>
 
