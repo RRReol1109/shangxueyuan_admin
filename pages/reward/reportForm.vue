@@ -237,9 +237,7 @@ export default {
               length: 10,
               length2: 20,
             },
-            itemStyle: {
- 
-            },
+            itemStyle: {},
 
             animationType: "scale",
             animationEasing: "elasticOut",
