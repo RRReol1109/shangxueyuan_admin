@@ -741,15 +741,15 @@ export default {
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
           await axios.$post("/excellentPapers/update", this.examineForm);
-          this.$message({
-            type: "success",
-            message: "审核成功!",
-          });
         } else {
           this.examineForm.auditFlag = 2;
           await axios.$post("/excellentPapers/update", this.examineForm);
         }
       }
+      this.$message({
+        type: "success",
+        message: "审核成功!",
+      });
       this.examineDialog = false;
       this.list();
     },

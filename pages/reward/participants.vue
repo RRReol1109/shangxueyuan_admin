@@ -175,12 +175,7 @@
       >
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button
-            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -361,7 +356,7 @@ export default {
     return {
       pick: false,
       examineForm: {
-        auditFlag: "0"
+        auditFlag: "0",
       },
       loading: false,
       header: {},
@@ -374,7 +369,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       roleId: 0,
       ruleForm: {
@@ -385,22 +380,22 @@ export default {
         studentName: "",
         studentId: "",
         score: "",
-        date: moment().format("YYYY-MM-DD")
+        date: moment().format("YYYY-MM-DD"),
       },
       fileList: [],
       tableData: [],
       rules: {
         studentName: [
-          { required: true, message: "请输入学生姓名", trigger: "blur" }
+          { required: true, message: "请输入学生姓名", trigger: "blur" },
         ],
         score: [
           { required: true, message: "请输入本人计分", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" }
-        ]
+          { validator: validateNumber, trigger: "blur" },
+        ],
       },
       names: [],
       stuNames: [],
-      teacherList: {}
+      teacherList: {},
     };
   },
 
@@ -413,13 +408,13 @@ export default {
       : [];
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
         "0": "未审核",
         "1": "已审核",
-        "2": "未通过"
+        "2": "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     resetForm(formName) {
@@ -427,13 +422,13 @@ export default {
     },
     updataCache() {
       this.names.push({
-        value: this.ruleForm.year
+        value: this.ruleForm.year,
       });
       this.names = _.uniqWith(this.names, _.isEqual);
       localStorage.setItem("names", JSON.stringify(this.names));
 
       this.stuNames.push({
-        value: this.ruleForm.studentName
+        value: this.ruleForm.studentName,
       });
       this.stuNames = _.uniqWith(this.stuNames, _.isEqual);
       localStorage.setItem("stuNames", JSON.stringify(this.stuNames));
@@ -442,7 +437,7 @@ export default {
       console.log(123);
       console.log(queryString);
       let teacher = await axios.$get("/mgr/quicklist", {
-        name: queryString
+        name: queryString,
       });
       var teachers = [];
       for (let i = 0; i < teacher.length; i++) {
@@ -456,7 +451,7 @@ export default {
       cb(results);
     },
     createFilter(queryString) {
-      return teacher => {
+      return (teacher) => {
         return (
           teacher.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -475,7 +470,7 @@ export default {
       cb(results);
     },
     createStudentFilter(queryString) {
-      return stuNames => {
+      return (stuNames) => {
         return (
           stuNames.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -526,12 +521,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -547,7 +542,7 @@ export default {
           studentId: "",
           score: "",
           date: moment().format("YYYY-MM-DD"),
-          editor: JSON.parse(localStorage.getItem("userInfo")).id
+          editor: JSON.parse(localStorage.getItem("userInfo")).id,
         };
       } else {
         this.ruleForm = row;
@@ -558,24 +553,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let excellentPapersId = row.id;
           await axios.$post("/excellentPapers/delete", {
-            excellentPapersId: excellentPapersId
+            excellentPapersId: excellentPapersId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -598,7 +593,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -616,7 +611,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -636,64 +631,64 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
             let excellentPapersId = element.id;
             await axios.$post("/excellentPapers/delete", {
-              excellentPapersId: excellentPapersId
+              excellentPapersId: excellentPapersId,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
 
     async examineData(flag) {
-       for (let i = 0; i < this.checkedList.length; i++) {
+      for (let i = 0; i < this.checkedList.length; i++) {
         this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
           await axios.$post("/excellentPapers/update", this.examineForm);
-          this.$message({
-            type: "success",
-            message: "审核成功!",
-          });
         } else {
           this.examineForm.auditFlag = 2;
           await axios.$post("/excellentPapers/update", this.examineForm);
         }
       }
+      this.$message({
+        type: "success",
+        message: "审核成功!",
+      });
       this.examineDialog = false;
       this.list();
-    }
+    },
   },
   mounted() {
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.roleId = localStorage.getItem("roleId");
     // this.list();
-  }
+  },
 };
 </script>
 

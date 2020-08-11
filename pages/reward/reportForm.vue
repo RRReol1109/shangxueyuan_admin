@@ -614,18 +614,16 @@ export default {
       let res = await axios.$get("award/statistics", { userId: row.userId });
       let currentYear = row.year;
       let data = [];
-      let count = 310;
       for (const key in res) {
         if (res.hasOwnProperty(key)) {
           const element = res[key];
           let point = "";
-          count += 2;
           if (element[currentYear] != undefined) {
             point = element[currentYear];
           } else {
             point = 0.0;
           }
-          this.option.series[0].data.push({ value: count, name: key });
+          this.option.series[0].data.push({ value: point, name: key });
         }
       }
       // this.option.series.data = data;

@@ -1395,6 +1395,10 @@ export default {
           await axios.$post("/articleEn/update", this.examineForm);
         }
       }
+      this.$message({
+        type: "success",
+        message: "审核成功!",
+      });
       this.list();
       this.examineDialog = false;
     },
