@@ -193,7 +193,7 @@ export default {
       option: {
         backgroundColor: "#FFFFFF",
         title: {
-          text: "教师个人工作量统计",
+          text: "教师个人科研奖励统计",
           left: "center",
           top: 20,
           textStyle: {

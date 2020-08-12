@@ -8,8 +8,8 @@
         <el-form-item label="DOI号:">
           <el-input v-model="query.doi" placeholder size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="第一作者:">
-          <el-input v-model="query.firstAuthor" style="width:250px" placeholder size="normal"></el-input>
+        <el-form-item label="作者:">
+          <el-input v-model="query.authors" style="width:250px" placeholder size="normal"></el-input>
         </el-form-item>
         <!-- <el-form-item label="期刊分级:">
           <el-select v-model="query.level" size="normal" placeholder="请选择分级">
@@ -248,6 +248,14 @@
         prop="firstCorrespondentDept"
         align="center"
         label="第一通讯作者单位"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        width="150"
+        :show-overflow-tooltip="true"
+        prop="authors"
+        align="center"
+        label="全体作者"
       ></el-table-column>
       <el-table-column
         sortable

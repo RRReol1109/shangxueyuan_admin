@@ -136,7 +136,7 @@
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="userName"
+        prop="persons"
         align="center"
         label="全体获奖人"
       ></el-table-column>

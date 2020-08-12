@@ -160,7 +160,7 @@
         sortable
         width="150"
         :show-overflow-tooltip="true"
-        prop="userName"
+        prop="authors"
         align="center"
         label="作者"
       ></el-table-column>
@@ -275,6 +275,8 @@
                 type="date"
                 placeholder="选择日期时间"
                 style="width:98%"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -496,7 +498,7 @@ export default {
         wordCount: 0,
         publishDate: moment().format("YYYY-MM-DD"),
       },
-      teacherArr: [{ name: "", point: "", num: "" }],
+      teacherArr: [{ name: "", num: "" }],
       tableData: [],
       rules: {
         publishHouse: [
@@ -707,7 +709,6 @@ export default {
     addTeacher() {
       this.teacherArr.push({
         name: "",
-        point: "",
         num: "",
       });
     },
@@ -754,71 +755,37 @@ export default {
         });
         return;
       }
+      this.ruleForm.authors = "";
+      for (let i = 0; i < this.teacherArr.length; i++) {
+        let element = this.teacherArr[i];
+        for (const key in element) {
+          if (element.hasOwnProperty(key)) {
+            let info = element[key];
+            console.log(info);
+            if (key == "name") {
+              this.ruleForm.authors += info;
+            }
+            if (key == "num") {
+              this.ruleForm.authors += "（" + info + "）" + ",";
+            }
+          }
+        }
+        if (i == this.teacherArr.length - 1) {
+          this.ruleForm.authors = this.ruleForm.authors.substr(
+            0,
+            this.ruleForm.authors.length - 1
+          );
+        }
+      }
       switch (this.operate) {
         case "add":
           console.log(this.ruleForm);
           this.ruleForm.files = this.fileurl;
           console.log(this.teacherList);
-          for (let i = 0; i < this.teacherArr.length; i++) {
-            let element = this.teacherArr[i];
-            for (const key in element) {
-              if (element.hasOwnProperty(key)) {
-                let info = element[key];
-                console.log(info);
-                if (key == "name") {
-                  this.ruleForm.authors += info;
-                }
-                // if (key == "point") {
-                //   this.ruleForm.authors += "|" + info;
-                // }
-                if (key == "num") {
-                  this.ruleForm.authors += "|" + info + ",";
-                }
-              }
-            }
-            if (i == this.teacherArr.length - 1) {
-              this.ruleForm.authors = this.ruleForm.authors.substr(
-                0,
-                this.ruleForm.authors.length - 1
-              );
-            }
-          }
           await axios.$post("/textbook/add", this.ruleForm);
           this.fileurl = "";
           break;
         case "edit":
-          this.ruleForm.authors = "";
-          for (let i = 0; i < this.teacherArr.length; i++) {
-            let element = this.teacherArr[i];
-            for (const key in element) {
-              if (element.hasOwnProperty(key)) {
-                let info = element[key];
-                let tid = "";
-                if (key == "name") {
-                  for (let j = 0; j < this.teacherList.length; j++) {
-                    const item = this.teacherList[j];
-                    if (info == item.name) {
-                      tid = item.id;
-                    }
-                  }
-                  if (tid) this.ruleForm.authors += tid;
-                  else this.ruleForm.authors += info;
-                }
-                // if (key == "point") {
-                //   this.ruleForm.authors += "|" + info;
-                // }
-                if (key == "num") {
-                  this.ruleForm.authors += "|" + info + ",";
-                }
-              }
-            }
-            if (i == this.teacherArr.length - 1) {
-              this.ruleForm.authors = this.ruleForm.authors.substr(
-                0,
-                this.ruleForm.authors.length - 1
-              );
-            }
-          }
           await axios.$post("/textbook/update", this.ruleForm);
           break;
       }
@@ -852,7 +819,6 @@ export default {
         this.teacherArr = [
           {
             name: "",
-            point: "",
             num: "",
           },
         ];
@@ -864,21 +830,15 @@ export default {
         let teacherInfo = row.authors.split(",");
         for (let i = 0; i < teacherInfo.length; i++) {
           const element = teacherInfo[i];
+          let name = element.substr(0, element.indexOf("（"));
+          let num = element.substr(
+            element.indexOf("（") + 1,
+            element.indexOf("）") - element.indexOf("（") - 1
+          );
           this.teacherArr.push({
-            name: "",
-            point: "",
-            num: "",
+            name: name,
+            num: num,
           });
-          let teacher = element.split("|");
-          for (let j = 0; j < teacher.length; j++) {
-            const item = teacher[j];
-            console.log(item, "======item");
-            if (j % 2 == 0) {
-              this.teacherArr[i].name = this.ruleForm.userName.split(",")[i];
-            } else {
-              this.teacherArr[i].num = item;
-            }
-          }
         }
         this.ruleForm.auditFlag = row.auditFlag.toString();
         this.dwurl = row.files;

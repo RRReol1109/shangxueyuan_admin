@@ -5,7 +5,7 @@
         <el-form-item label="论文名称:">
           <el-input v-model="query.title" style="width:250px" placeholder size="normal"></el-input>
         </el-form-item>
-        <el-form-item label="第一作者:">
+        <el-form-item label="作者:">
           <el-input v-model="query.authors" style="width:250px" placeholder size="normal"></el-input>
         </el-form-item>
         <el-form-item label="期刊学院分级:">
