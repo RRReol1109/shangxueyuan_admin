@@ -55,12 +55,13 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable fixed prop="year" align="center" label="届别"></el-table-column>
       <el-table-column
@@ -119,12 +120,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button
-            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -269,11 +265,12 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       roleId: 0,
       examineDialog: false,
       examineForm: {},
+      checkedList: [],
       form: {
         // year: "2019",
         id: "",
@@ -281,7 +278,7 @@ export default {
         totalCnt: "",
         graduateCnt: "",
         finishedCnt: "",
-        degreeCnt: ""
+        degreeCnt: "",
       },
       fileList: [],
       header: {},
@@ -289,29 +286,29 @@ export default {
         year: [{ required: true, message: "请输入界别", trigger: "blur" }],
         major: [{ required: true, message: "请输入专业", trigger: "blur" }],
         totalCnt: [
-          { required: true, message: "请输入毕业生人数", trigger: "blur" }
+          { required: true, message: "请输入毕业生人数", trigger: "blur" },
         ],
         graduateCnt: [
-          { required: true, message: "请输入毕业人数", trigger: "blur" }
+          { required: true, message: "请输入毕业人数", trigger: "blur" },
         ],
         finishedCnt: [
-          { required: true, message: "请输入结业人数", trigger: "blur" }
+          { required: true, message: "请输入结业人数", trigger: "blur" },
         ],
         degreeCnt: [
-          { required: true, message: "请输入有学位", trigger: "blur" }
-        ]
+          { required: true, message: "请输入有学位", trigger: "blur" },
+        ],
       },
-      tableData: []
+      tableData: [],
     };
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
         "0": "未审核",
         "1": "已审核",
-        "2": "未通过"
+        "2": "未通过",
       }[value.toString()];
-    }
+    },
   },
 
   methods: {
@@ -325,6 +322,10 @@ export default {
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
+    },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
     },
     async list() {
       for (const key in this.query) {
@@ -346,7 +347,7 @@ export default {
     },
     async submitForm(formName) {
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -361,7 +362,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -385,18 +386,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -408,7 +399,7 @@ export default {
       this.examineDialog = false;
       this.$message({
         type: "success",
-        message: "审核成功!"
+        message: "审核成功!",
       });
     },
 
@@ -428,7 +419,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -448,7 +439,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -459,7 +450,7 @@ export default {
         data = await axios.$download("/graduateRate/export?id=-1", {});
       } else {
         data = await axios.$download("/graduateRate/export", {
-          params: this.query
+          params: this.query,
         });
       }
       if (data) {
@@ -473,55 +464,46 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let graduateRateId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/graduateRate/delete", {
-              graduateRateId: graduateRateId
+              graduateRateId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -534,7 +516,7 @@ export default {
           totalCnt: "",
           graduateCnt: "",
           finishedCnt: "",
-          degreeCnt: ""
+          degreeCnt: "",
         };
       } else {
         this.form = row;
@@ -548,35 +530,35 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let graduateRateId = row.id;
           await axios.$post("/graduateRate/delete", {
-            graduateRateId: graduateRateId
+            graduateRateId: graduateRateId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.list();
-  }
+  },
 };
 </script>
 

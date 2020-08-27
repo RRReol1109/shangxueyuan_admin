@@ -425,7 +425,7 @@ export default {
         } else {
           this.examineForm.auditFlag = 2;
         }
-        await axios.$post("/outstandingGraduate/update", this.examineForm);
+        await axios.$post("/undergraduateTrainingProgram/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
@@ -566,8 +566,8 @@ export default {
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
-            await axios.$post("/outstandingGraduate/delete", {
-              outstandingGraduateId: vm.checkedList[i].id
+            await axios.$post("/undergraduateTrainingProgram/delete", {
+              undergraduateTrainingProgramId: vm.checkedList[i].id
             });
           }
           this.tableData = [];

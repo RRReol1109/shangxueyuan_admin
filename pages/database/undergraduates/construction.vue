@@ -44,32 +44,70 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
-      <el-table-column 
-        :show-overflow-tooltip="true"
-        prop="pick"
-        align="center"
-        label="选择"
-        width="50"
-      >
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="projectName" align="center" label="项目名称"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="type" align="center" label="项目类别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="项目级别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="managerId" align="center" label="主持人工号"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="projectName"
+        align="center"
+        label="项目名称"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="type"
+        align="center"
+        label="项目类别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="level"
+        align="center"
+        label="项目级别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="managerId"
+        align="center"
+        label="主持人工号"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="managerName"
         align="center"
         label="主持人姓名"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="date" align="center" label="获批时间"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="fileId" align="center" label="获批文号"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="date"
+        align="center"
+        label="获批时间"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="fileId"
+        align="center"
+        label="获批文号"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -77,11 +115,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -267,7 +301,7 @@ export default {
     return {
       pick: false,
       examineForm: {
-        auditFlag: "0"
+        auditFlag: "0",
       },
       loading: true,
       yearsOptions: [],
@@ -284,36 +318,37 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
+      checkedList: [],
       teacherList: [],
       header: {},
       tableData: [],
       teacherArr: [
         {
           name: "",
-          num: ""
-        }
+          num: "",
+        },
       ],
       ruleForm: {},
       rules: {
         persons: [{ required: true, message: "请输入作者", trigger: "blur" }],
         type: [{ required: true, message: "请输入项目类别", trigger: "blur" }],
         score: [{ required: true, message: "请输入分数", trigger: "blur" }],
-        type: [{ required: true, message: "请输选择类型", trigger: "blur" }]
+        type: [{ required: true, message: "请输选择类型", trigger: "blur" }],
       },
-      rewardNames: []
+      rewardNames: [],
     };
   },
   mounted() {},
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
         "0": "未审核",
         "1": "已审核",
-        "2": "未通过"
+        "2": "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     resetForm(formName) {
@@ -321,7 +356,7 @@ export default {
     },
     updataCache() {
       this.rewardNames.push({
-        value: this.ruleForm.resultName
+        value: this.ruleForm.resultName,
       });
       this.rewardNames = _.uniqWith(this.rewardNames, _.isEqual);
       localStorage.setItem("rewardNames", JSON.stringify(this.rewardNames));
@@ -335,7 +370,7 @@ export default {
       cb(results);
     },
     createProjectsFilter(queryString) {
-      return rewardNames => {
+      return (rewardNames) => {
         return (
           rewardNames.value.toLowerCase().indexOf(queryString.toLowerCase()) ===
           0
@@ -351,7 +386,7 @@ export default {
     addAwardees() {
       this.ruleForm.persons.push({
         value: "",
-        key: Date.now() + "persons"
+        key: Date.now() + "persons",
       });
     },
     removeAwardees(item) {
@@ -360,6 +395,10 @@ export default {
         this.ruleForm.persons.splice(index, 1);
       }
     },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
@@ -367,7 +406,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -404,7 +443,7 @@ export default {
       let data = await axios.$download(
         "/undergraduateProjectInfomation/export",
         {
-          params: this.query
+          params: this.query,
         }
       );
       if (data) {
@@ -427,12 +466,12 @@ export default {
     addTeacher() {
       this.teacherArr.push({
         name: "",
-        num: ""
+        num: "",
       });
     },
     async submitForm(formName) {
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -447,7 +486,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -468,12 +507,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -488,13 +527,13 @@ export default {
           persons: "",
           score: "",
           awardDate: moment().format("YYYY-MM-DD"),
-          editor: JSON.parse(localStorage.getItem("userInfo")).id
+          editor: JSON.parse(localStorage.getItem("userInfo")).id,
         };
         this.teacherArr = [
           {
             name: "",
-            num: ""
-          }
+            num: "",
+          },
         ];
       } else {
         this.ruleForm = row;
@@ -506,24 +545,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let undergraduateProjectInfomationId = row.id;
           await axios.$post("/undergraduateProjectInfomation/delete", {
-            undergraduateProjectInfomationId: undergraduateProjectInfomationId
+            undergraduateProjectInfomationId: undergraduateProjectInfomationId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -546,7 +585,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -566,46 +605,37 @@ export default {
       row.pick = !row.pick;
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let undergraduateProjectInfomationId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/undergraduateProjectInfomation/delete", {
-              undergraduateProjectInfomationId: undergraduateProjectInfomationId
+              undergraduateProjectInfomationId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -613,7 +643,7 @@ export default {
       this.teacherList = await axios.$post("/mgr/list", {
         order: "desc",
         offset: 0,
-        limit: 999999
+        limit: 999999,
       });
       this.teacherList = this.teacherList.rows;
     },
@@ -624,35 +654,22 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
           this.examineForm.auditFlag = 2;
         }
-        await axios.$post(
-          "/undergraduateProjectInfomation/update",
-          this.examineForm
-        );
+        await axios.$post("/undergraduateProjectInfomation/update", this.examineForm);
       }
       this.list();
       this.examineDialog = false;
       this.$message({
         type: "success",
-        message: "审核成功!"
+        message: "审核成功!",
       });
-    }
+    },
   },
 
   async mounted() {
@@ -663,12 +680,12 @@ export default {
     for (let i = year; i > 1900; i--) {
       self.yearsOptions.push({
         value: i,
-        label: i
+        label: i,
       });
     }
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.roleId = localStorage.getItem("roleId");
-  }
+  },
 };
 </script>
 
