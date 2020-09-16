@@ -300,7 +300,7 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="所有学生" prop>
+        <!-- <el-form-item label="所有学生" prop>
           <el-input
             type="textarea"
             clearable
@@ -309,7 +309,7 @@
             style="width:99%"
           ></el-input>
           <span style="color:#F56C6C">例子：201301020225-张三-经管2班；201301020221-李四-经管1班；</span>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"

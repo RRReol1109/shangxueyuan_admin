@@ -419,28 +419,18 @@
       ></el-pagination>
     </nav>
     <!-- 学时查看窗口 -->
-    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog width="35%" style="min-height:500px" title="角色分配" :visible.sync="examineDialog">
       <el-row>
-        <el-col :span="8">
-          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
-        </el-col>
-        <el-col :span="8">
-          <el-button
-            type="primary"
-            @click="examineData('success')"
-            size="normal"
-            style="width:97%;"
-          >通过</el-button>
-        </el-col>
-        <el-col :span="8">
-          <el-button
-            type="danger"
-            @click="examineData('failed')"
-            size="normal"
-            style="width:97%;"
-          >不通过</el-button>
-        </el-col>
+        <el-select v-model="examineForm.roleIds" placeholder="请选择权限" style="width:99%">
+          <el-option v-for="item in roles" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        </el-select>
       </el-row>
+      <div slot="title" class="header-title">
+        <div style="margin-left: 20px;">
+          <el-button @click="examineDialog = false" size="normal">取消</el-button>
+          <el-button type="primary" @click="examineData()" size="normal">保存</el-button>
+        </div>
+      </div>
     </el-dialog>
 
     <el-drawer
@@ -845,73 +835,73 @@ export default {
         deptid: 0,
         name: "",
         beginTime: "",
-        endTime: ""
+        endTime: "",
       },
       examineDialog: false,
       form: {
         account: "",
         statusName: "1",
         id: "",
-        deptid: ""
+        deptid: "",
       },
       examineForm: {
-        roleIds: "7"
+        roleIds: "",
       },
       admin: false,
       names: [
         {
           value: "",
-          label: "全部"
+          label: "全部",
         },
         {
           value: "27",
-          label: "战略部"
+          label: "战略部",
         },
         {
           value: "32",
-          label: "会计学系"
+          label: "会计学系",
         },
         {
           value: "25",
-          label: "开发部"
-        }
+          label: "开发部",
+        },
       ],
       roles: [],
       statuses: [
         {
           value: "1",
-          label: "启用"
+          label: "启用",
         },
         {
           value: "2",
-          label: "禁用"
-        }
+          label: "禁用",
+        },
       ],
       departments: [],
-      tableData: []
+      tableData: [],
     };
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       if (value) {
         return {
           "0": "管理员",
           "1": "超级管理员",
           "19": "部门管理员",
           "7": "教师",
-          "21": "科研学科办公室管理员"
+          "21": "科研学科办公室管理员",
         }[value.toString()];
       }
     },
-    flagFilter: function(value) {
+    flagFilter: function (value) {
       if (value != undefined) {
         return {
           false: "否",
-          true: "是"
+          true: "是",
         }[value.toString()];
       }
     },
-    teacherFilter: async function(value) {
+    teacherFilter: async function (value) {
       let teacherList = await axios.$get("/mgr/quicklist", { params: "" });
       let temp = {};
       for (let i = 0; i < teacherList.length; i++) {
@@ -919,7 +909,7 @@ export default {
         temp[element.id + ""] = element.name;
       }
       return temp[value.toString()];
-    }
+    },
   },
 
   methods: {
@@ -934,7 +924,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -1023,14 +1013,14 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
           this.$confirm("此操作将冻结所有选中账号, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
-            type: "warning"
+            type: "warning",
           }).then(async () => {
             for (let i = 0; i < userList.length; i++) {
               const element = userList[i];
@@ -1053,14 +1043,14 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
           this.$confirm("此操作将解冻所有冻结账号, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
-            type: "warning"
+            type: "warning",
           }).then(async () => {
             for (let i = 0; i < userList.length; i++) {
               const element = userList[i];
@@ -1082,7 +1072,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -1100,14 +1090,14 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
           this.$confirm("此操作将重置选中账号秘密, 是否继续?", "提示", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",
-            type: "warning"
+            type: "warning",
           }).then(async () => {
             for (let i = 0; i < userList.length; i++) {
               const element = userList[i];
@@ -1115,7 +1105,7 @@ export default {
             }
             this.$message({
               type: "success",
-              message: "重置成功，新密码为111111"
+              message: "重置成功，新密码为111111",
             });
             this.tableData = [];
             await this.list();
@@ -1130,7 +1120,7 @@ export default {
     },
     async exportData() {
       let data = await axios.$download("/mgr/export", {
-        params: this.query
+        params: this.query,
       });
       if (data) {
         let url = window.URL.createObjectURL(new Blob([data]));
@@ -1156,34 +1146,34 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
             let userId = element.id;
             await axios.$post("/mgr/delete", {
-              userId: userId
+              userId: userId,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -1199,7 +1189,7 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -1207,23 +1197,23 @@ export default {
         const element = userList[i];
         await axios.$get("/mgr/setRole", {
           userId: element.id,
-          roleIds: this.examineForm.roleIds
+          roleIds: this.examineForm.roleIds,
         });
       }
       this.$message({
         type: "success",
-        message: "角色配置成功!"
+        message: "角色配置成功!",
       });
       this.tableData = [];
       this.list();
       this.examineDialog = false;
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -1237,7 +1227,7 @@ export default {
           birthday: "",
           avatar: "",
           password: "",
-          rePassword: ""
+          rePassword: "",
         };
       } else {
         // this.form = row;
@@ -1278,7 +1268,7 @@ export default {
           titleDate: row.title_date,
           tutor: row.tutor,
           tutorState: row.tutor_state,
-          workDate: row.work_date
+          workDate: row.work_date,
         };
         // industryBackground: row.industry_background.toString(),
         // engineeringBackground: row.engineering_background.toString(),
@@ -1303,24 +1293,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let userId = row.id;
           await axios.$post("/mgr/delete", {
-            userId: userId
+            userId: userId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -1333,14 +1323,14 @@ export default {
           limit: 1000,
           offset: 0,
           order: "desc",
-          condition: ""
-        }
+          condition: "",
+        },
       });
-      this.roles.filter(function(value) {
+      this.roles.filter(function (value) {
         value.id = value.id.toString();
         return value;
       });
-      this.departments.filter(function(value) {
+      this.departments.filter(function (value) {
         value.id = value.id.toString();
         return value;
       });
@@ -1353,15 +1343,15 @@ export default {
         return "success-row";
       }
       return "";
-    }
+    },
   },
   mounted() {
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.init();
     this.list();
-  }
+  },
 };
 </script>
 
