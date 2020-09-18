@@ -59,17 +59,37 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="学科"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gender"
+        align="center"
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="major"
+        align="center"
+        label="学科"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -77,11 +97,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -187,33 +203,34 @@ export default {
         limit: 10,
         offset: 0,
         order: "remark",
-        condition: ""
+        condition: "",
       },
       form: {
         name: "",
         gender: "",
-        major: ""
+        major: "",
       },
       deptid: "",
       rules: {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         major: [{ required: true, message: "请输入学科", trigger: "blur" }],
-        gender: [{ required: true, message: "请输入性别", trigger: "blur" }]
+        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
       },
       roleId: 0,
       examineDialog: false,
       examineForm: {},
-      tableData: []
+      tableData: [],
+      checkedList: [],
     };
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
-        "0": "未审核",
-        "1": "已审核",
-        "2": "未通过"
+        0: "未审核",
+        1: "已审核",
+        2: "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     handleCurrentChange(val) {
@@ -238,13 +255,18 @@ export default {
       this.total = parseInt(res.total);
       this.loading = false;
     },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
+    },
+
     resetForm(formName) {
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
     },
     async submitForm(formName) {
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -259,7 +281,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -274,12 +296,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -290,7 +312,7 @@ export default {
           id: "",
           name: "",
           gender: "",
-          major: ""
+          major: "",
         };
       } else {
         this.form = row;
@@ -300,24 +322,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let threeDisciplinaryStaffId = row.id;
           await axios.$post("/threeDisciplinaryStaff/delete", {
-            threeDisciplinaryStaffId: threeDisciplinaryStaffId
+            threeDisciplinaryStaffId: threeDisciplinaryStaffId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -326,18 +348,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -349,7 +361,7 @@ export default {
       this.examineDialog = false;
       this.$message({
         type: "success",
-        message: "审核成功!"
+        message: "审核成功!",
       });
     },
 
@@ -369,7 +381,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -389,7 +401,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -406,7 +418,7 @@ export default {
         );
       } else {
         data = await axios.$download("/threeDisciplinaryStaff/export", {
-          params: this.query
+          params: this.query,
         });
       }
       if (data) {
@@ -420,58 +432,49 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let threeDisciplinaryStaffId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/threeDisciplinaryStaff/delete", {
-              threeDisciplinaryStaffId: threeDisciplinaryStaffId
+              threeDisciplinaryStaffId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
   mounted() {
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.roleId = localStorage.getItem("roleId");
     this.list();
-  }
+  },
 };
 </script>
 

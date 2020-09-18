@@ -116,7 +116,7 @@
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
-        prop="userName"
+        prop="teacher"
         align="center"
         label="项目主持人"
       ></el-table-column>

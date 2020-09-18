@@ -77,17 +77,36 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="pick" align="center" label="选择" width="50">
-        <template slot-scope="scope">
-          <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
-        </template>
-      </el-table-column>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="studentNumber" align="center" label="学号"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="studentNumber"
+        align="center"
+        label="学号"
+      ></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gender" align="center" label="性别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="录取专业"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gender"
+        align="center"
+        label="性别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="major"
+        align="center"
+        label="录取专业"
+      ></el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="scholarshipName" align="center" label="学校类别"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="工作年限"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="major" align="center" label="工作单位/行业"></el-table-column>
@@ -96,34 +115,62 @@
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="出生年月"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="邮箱"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="年级"></el-table-column>-->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="tutor" align="center" label="导师"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="tutor"
+        align="center"
+        label="导师"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="scholarshipName"
         align="center"
         label="奖学金名称"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="financialAidName"
         align="center"
         label="助学金名称"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="grade" align="center" label="年级"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="grade"
+        align="center"
+        label="年级"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="graduatedSchool"
         align="center"
         label="毕业学校"
       ></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="graduationMajor"
         align="center"
         label="毕业专业"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="remarks" align="center" label="备注"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="auditFlag" align="center" label="审核状态">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="remarks"
+        align="center"
+        label="备注"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="auditFlag"
+        align="center"
+        label="审核状态"
+      >
         <template slot-scope="scope">
           <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
         </template>
@@ -131,11 +178,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -318,7 +361,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       roleId: 0,
       examineDialog: false,
@@ -327,6 +370,7 @@ export default {
       flag: true,
       total: 0,
       page: 1,
+      checkedList: [],
       form: {
         studentNumber: "",
         name: "",
@@ -343,7 +387,7 @@ export default {
         graduatedSchool: "",
         graduationMajor: "",
         admissionType: "",
-        remarks: ""
+        remarks: "",
       },
       deptid: "",
       fileList: [],
@@ -353,36 +397,36 @@ export default {
         name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
         gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
         education: [
-          { required: true, message: "请输入来访时间", trigger: "blur" }
+          { required: true, message: "请输入来访时间", trigger: "blur" },
         ],
         major: [{ required: true, message: "请输入专业", trigger: "blur" }],
         financialAidName: [
-          { required: true, message: "请输入助学金名称", trigger: "blur" }
+          { required: true, message: "请输入助学金名称", trigger: "blur" },
         ],
         graduatedSchool: [
-          { required: true, message: "请输入毕业学校", trigger: "blur" }
+          { required: true, message: "请输入毕业学校", trigger: "blur" },
         ],
         tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
         scholarshipName: [
-          { required: true, message: "请输入奖学金名称", trigger: "blur" }
+          { required: true, message: "请输入奖学金名称", trigger: "blur" },
         ],
         grade: [{ required: true, message: "请输入年级", trigger: "blur" }],
         graduationMajor: [
-          { required: true, message: "请输入毕业专业", trigger: "blur" }
-        ]
+          { required: true, message: "请输入毕业专业", trigger: "blur" },
+        ],
       },
-      tableData: []
+      tableData: [],
     };
   },
 
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
-        "0": "未审核",
-        "1": "已审核",
-        "2": "未通过"
+        0: "未审核",
+        1: "已审核",
+        2: "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     handleClick(row) {
@@ -399,6 +443,10 @@ export default {
     resetForm(formName) {
       console.log(this.$refs[formName]);
       this.$refs[formName].resetFields();
+    },
+    handleSelectionChange(val) {
+      this.checkedList = val;
+      console.log("handleSelectionChange:::", val);
     },
     async list() {
       for (const key in this.query) {
@@ -423,7 +471,7 @@ export default {
     },
     async submitForm(formName) {
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -438,7 +486,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -454,12 +502,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -467,7 +515,7 @@ export default {
       this.formDisabled = false;
       if (this.operate === "add") {
         this.form = {
-          id: ""
+          id: "",
         };
       } else {
         this.flag = false;
@@ -478,24 +526,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let masterEnrollId = row.id;
           await axios.$post("/masterEnroll/delete", {
-            masterEnrollId: masterEnrollId
+            masterEnrollId: masterEnrollId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -504,18 +552,8 @@ export default {
     },
 
     async examineData(flag) {
-      let examineList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          examineList.push(element);
-        }
-      }
-      for (let i = 0; i < examineList.length; i++) {
-        const element = examineList[i];
-        console.log(element.auditFlag, "=======" + flag);
-        this.examineForm.id = element.id;
+      for (let i = 0; i < this.checkedList.length; i++) {
+        this.examineForm.id = this.checkedList[i].id;
         if (flag == "success") {
           this.examineForm.auditFlag = 1;
         } else {
@@ -527,7 +565,7 @@ export default {
       this.examineDialog = false;
       this.$message({
         type: "success",
-        message: "审核成功!"
+        message: "审核成功!",
       });
     },
 
@@ -547,7 +585,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -569,7 +607,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -580,7 +618,7 @@ export default {
         data = await axios.$download("/masterEnroll/export?id=-1", {});
       } else {
         data = await axios.$download("/masterEnroll/export", {
-          params: this.query
+          params: this.query,
         });
       }
       if (data) {
@@ -594,65 +632,56 @@ export default {
       }
     },
     async delCount() {
-      let deleteList = [];
-      for (let i = 0; i < this.tableData.length; i++) {
-        const element = this.tableData[i];
-        console.log(element);
-        if (element.pick) {
-          deleteList.push(element);
-        }
-      }
-      if (deleteList.length <= 0) {
+      let vm = this;
+      if (this.checkedList.length == 0) {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
-          for (let i = 0; i < deleteList.length; i++) {
-            const element = deleteList[i];
-            let masterEnrollId = element.id;
+          for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/masterEnroll/delete", {
-              masterEnrollId: masterEnrollId
+              masterEnrollId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
 
   async mounted() {
     this.teacherList = await axios.$post("/mgr/list", {
       order: "desc",
       offset: 0,
-      limit: 999999
+      limit: 999999,
     });
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.roleId = localStorage.getItem("roleId");
     this.teacherList = this.teacherList.rows;
     this.list();
-  }
+  },
 };
 </script>
 
