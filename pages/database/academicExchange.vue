@@ -2,13 +2,13 @@
   <div>
     <div class="search-form">
       <el-form :inline="true" :model="query">
-        <el-form-item label="来访时间:">
+        <el-form-item label="来访起止时间:">
           <el-date-picker
             v-model="query.interviewTime"
             align="right"
             size="normal"
             type="date"
-            placeholder="来访时间"
+            placeholder="来访起止时间"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="专家姓名:">
@@ -76,7 +76,7 @@
         :show-overflow-tooltip="true"
         prop="interviewTime"
         align="center"
-        label="来访时间"
+        label="来访起止时间"
       ></el-table-column>
       <el-table-column
         sortable
@@ -176,12 +176,7 @@
       <el-table-column sortable fixed="right" align="center" label="操作" width="150">
         <template slot-scope="scope">
           <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button
-            @click="operate='edit';showDialog(scope.row)"
-            type="text"
-            size="normal"
-
-          >编辑</el-button>
+          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
           <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
         </template>
       </el-table-column>
@@ -308,7 +303,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="来访时间" prop="interviewTime">
+            <el-form-item label="来访起止时间" prop="interviewTime">
               <el-date-picker
                 size="normal"
                 type="date"
@@ -332,12 +327,16 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="所属学科" prop="discipline">
-              <el-input
-                size="normal"
+              <el-select
                 v-model="form.discipline"
-                autocomplete="off"
+                size="normal"
+                placeholder="请输入"
                 style="width:99%"
-              ></el-input>
+              >
+                <el-option label="管理科学与工程" value="管理科学与工程"></el-option>
+                <el-option label="工商管理" value="工商管理"></el-option>
+                <el-option label="应用经济学" value="应用经济学"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -382,7 +381,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       fileList: [],
       header: {},
@@ -401,52 +400,52 @@ export default {
         expertCategory: "",
         researchAreas: "",
         communicationContent: "",
-        remark: ""
+        remark: "",
       },
 
       rules: {
         interviewTime: [
-          { required: true, message: "请输入来访时间", trigger: "blur" }
+          { required: true, message: "请输入来访起止时间", trigger: "blur" },
         ],
         visitor: [
-          { required: true, message: "请输入专家姓名", trigger: "blur" }
+          { required: true, message: "请输入专家姓名", trigger: "blur" },
         ],
         jobTitle: [{ required: true, message: "请输入职称", trigger: "blur" }],
         accessType: [
-          { required: true, message: "请输入访问类型", trigger: "blur" }
+          { required: true, message: "请输入访问类型", trigger: "blur" },
         ],
         unit: [{ required: true, message: "请输入工作单位", trigger: "blur" }],
         expertCategory: [
-          { required: true, message: "请输入专家类别", trigger: "blur" }
+          { required: true, message: "请输入专家类别", trigger: "blur" },
         ],
         researchAreas: [
-          { required: true, message: "请输入研究领域", trigger: "blur" }
+          { required: true, message: "请输入研究领域", trigger: "blur" },
         ],
         inviter: [{ required: true, message: "请输入邀请人", trigger: "blur" }],
         discipline: [
-          { required: true, message: "请输入所属学科", trigger: "blur" }
+          { required: true, message: "请输入所属学科", trigger: "blur" },
         ],
         passport: [
-          { required: true, message: "请输入护照号", trigger: "blur" }
+          { required: true, message: "请输入护照号", trigger: "blur" },
         ],
         citizenshipCountry: [
-          { required: true, message: "请输入国籍", trigger: "blur" }
+          { required: true, message: "请输入国籍", trigger: "blur" },
         ],
         communicationContent: [
-          { required: true, message: "请输入交流类容", trigger: "blur" }
-        ]
+          { required: true, message: "请输入交流类容", trigger: "blur" },
+        ],
       },
-      tableData: []
+      tableData: [],
     };
   },
   filters: {
-    statusFilter: function(value) {
+    statusFilter: function (value) {
       return {
-        "0": "未审核",
-        "1": "已审核",
-        "2": "未通过"
+        0: "未审核",
+        1: "已审核",
+        2: "未通过",
       }[value.toString()];
-    }
+    },
   },
   methods: {
     handleClick(row) {
@@ -516,7 +515,7 @@ export default {
       this.examineDialog = false;
       this.$message({
         type: "success",
-        message: "审核成功!"
+        message: "审核成功!",
       });
     },
 
@@ -541,7 +540,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -552,7 +551,7 @@ export default {
         data = await axios.$download("/academicExchange/export?id=-1", {});
       } else {
         data = await axios.$download("/academicExchange/export", {
-          params: this.query
+          params: this.query,
         });
       }
 
@@ -572,32 +571,32 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/academicExchange/delete", {
-              academicExchangeId: vm.checkedList[i].id
+              academicExchangeId: vm.checkedList[i].id,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -607,7 +606,7 @@ export default {
     },
     async submitForm(formName) {
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -622,7 +621,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -637,12 +636,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -660,7 +659,7 @@ export default {
           expertCategory: "",
           researchAreas: "",
           communicationContent: "",
-          remark: ""
+          remark: "",
         };
       } else {
         this.form = row;
@@ -670,35 +669,35 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let academicExchangeId = row.id;
           await axios.$post("/academicExchange/delete", {
-            academicExchangeId: academicExchangeId
+            academicExchangeId: academicExchangeId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
   mounted() {
     this.roleId = localStorage.getItem("roleId");
     this.header = {
-      Authorization: localStorage.getItem("message")
+      Authorization: localStorage.getItem("message"),
     };
     this.list();
-  }
+  },
 };
 </script>
 

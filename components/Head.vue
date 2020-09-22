@@ -39,7 +39,7 @@
             <el-menu-item class="item" index="34" v-if="deptid!=41">研究生工作办公室</el-menu-item>
             <el-menu-item class="item" index="35" v-if="deptid!=41">本科生教学管理中心</el-menu-item>
             <el-menu-item class="item" index="37" v-if="deptid!=41">研究生教学管理中心</el-menu-item>
-            <el-menu-item class="item" index="32" v-if="deptid!=41">对外交流国际认证中心</el-menu-item>
+            <el-menu-item class="item" index="32" v-if="deptid!=41">对外交流与国际认证中心</el-menu-item>
             <el-menu-item class="item" index="25" v-if="deptid!=41">校友事务中心</el-menu-item>
             <el-menu-item class="item" index="36" v-if="deptid!=41">专业学位硕士办公室</el-menu-item>
             <el-menu-item class="item" index="38" v-if="deptid!=41">MBA中心</el-menu-item>
@@ -259,11 +259,11 @@ export default {
         localStorage.removeItem("nickName");
         sessionStorage.removeItem("flag");
         sessionStorage.removeItem("select");
-        location.href = "Login";
+        location.href = "/shangxueyuan_admin/Login";
       } else if (command === "main") {
         location.href = "/shangxueyuan_admin";
       } else if (command === "updata") {
-        location.href = "userCenter";
+        location.href = "/shangxueyuan_admin/userCenter";
       }
     },
     selectDep() {
