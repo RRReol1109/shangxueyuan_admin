@@ -592,9 +592,9 @@ export default {
   filters: {
     statusFilter: function (value) {
       return {
-        "0": "未审核",
-        "1": "已审核",
-        "2": "未通过",
+        0: "未审核",
+        1: "已审核",
+        2: "未通过",
       }[value.toString()];
     },
   },
@@ -686,7 +686,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "科研奖励-学科简介.xls");
+        link.setAttribute("download", "数据库-学生参加学术活动.xls");
         document.body.appendChild(link);
         link.click();
       }

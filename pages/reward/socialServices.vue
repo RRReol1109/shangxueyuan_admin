@@ -355,7 +355,7 @@ export default {
         let link = document.createElement("a");
         link.style.display = "none";
         link.href = url;
-        link.setAttribute("download", "科研奖励-学科简介.xls");
+        link.setAttribute("download", "科研奖励-社会服务.xls");
         document.body.appendChild(link);
         link.click();
       }

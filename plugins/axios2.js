@@ -27,7 +27,7 @@ axios.interceptors.request.use(
         return config;
     },
     error => {
-        if(error.response && error.response.data && error.response.data.message) {
+        if (error.response && error.response.data && error.response.data.message) {
             Message.error({
                 message: error.response.data.message
             });
@@ -44,12 +44,12 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         if (response.data.code == 401) {
-            location.href = 'Login'
+            location.href = '/shangxueyuan_admin/Login'
         }
         return response;
     },
     error => {
-        if(error.response && error.response.data && error.response.data.message) {
+        if (error.response && error.response.data && error.response.data.message) {
             Message.error({
                 message: error.response.data.message
             });
@@ -69,26 +69,26 @@ export default {
             axios.get(url, {
                 params: params
             })
-            .then(response => {
-                if(response) {
-                    resolve(response.data);
-                }
-            })
-            .catch(err => {
-                reject(err)
-            })
+                .then(response => {
+                    if (response) {
+                        resolve(response.data);
+                    }
+                })
+                .catch(err => {
+                    reject(err)
+                })
         })
     },
     $post: function (url, data = {}) {
         return new Promise((resolve, reject) => {
             axios.post(url, qs.stringify(data))
-            .then(response => {
-                if(response) {
-                    resolve(response.data);
-                }
-            }, err => {
-                reject(err)
-            })
+                .then(response => {
+                    if (response) {
+                        resolve(response.data);
+                    }
+                }, err => {
+                    reject(err)
+                })
         })
     },
     $download: function (url, params = {}) {
@@ -97,14 +97,14 @@ export default {
                 params: params,
                 responseType: 'blob'
             })
-            .then(response => {
-                if(response) {
-                    resolve(response.data);
-                }
-            })
-            .catch(err => {
-                reject(err)
-            })
+                .then(response => {
+                    if (response) {
+                        resolve(response.data);
+                    }
+                })
+                .catch(err => {
+                    reject(err)
+                })
         })
     }
 }
