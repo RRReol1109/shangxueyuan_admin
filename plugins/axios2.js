@@ -21,7 +21,7 @@ axios.interceptors.request.use(
     config => {
         console.log('localStorage.getItem("message")::', localStorage.getItem("message"));
         config.headers = {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Content-Type': 'application/x-www-form-urlencoded',
             'authorization': localStorage.getItem("message")
         }
         return config;

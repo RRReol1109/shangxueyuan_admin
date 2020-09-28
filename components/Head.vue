@@ -23,7 +23,7 @@
             <span>选择部门(鼠标移动到此位置可展开部门选择)</span>
           </div>
         </template>
-        <div style="width:100%;">
+        <div style="width: 100%">
           <el-menu
             mode="horizontal"
             background-color="#545c64"
@@ -32,19 +32,45 @@
             @select="menuSelect"
             :default-active="activeIndex"
           >
-            <el-menu-item class="item" index="1" v-if="roleId==1">全部</el-menu-item>
-            <el-menu-item class="item" index="2" v-if="deptid!=41">行政办公室</el-menu-item>
-            <el-menu-item class="item" index="31" v-if="deptid!=41">科研学科办公室</el-menu-item>
-            <el-menu-item class="item" index="33" v-if="deptid!=41">本科生工作办公室</el-menu-item>
-            <el-menu-item class="item" index="34" v-if="deptid!=41">研究生工作办公室</el-menu-item>
-            <el-menu-item class="item" index="35" v-if="deptid!=41">本科生教学管理中心</el-menu-item>
-            <el-menu-item class="item" index="37" v-if="deptid!=41">研究生教学管理中心</el-menu-item>
-            <el-menu-item class="item" index="32" v-if="deptid!=41">对外交流与国际认证中心</el-menu-item>
-            <el-menu-item class="item" index="25" v-if="deptid!=41">校友事务中心</el-menu-item>
-            <el-menu-item class="item" index="36" v-if="deptid!=41">专业学位硕士办公室</el-menu-item>
-            <el-menu-item class="item" index="38" v-if="deptid!=41">MBA中心</el-menu-item>
-            <el-menu-item class="item" index="39" v-if="deptid!=41">EMBA中心</el-menu-item>
-            <el-menu-item class="item" index="40" v-if="deptid!=41">EDP中心</el-menu-item>
+            <el-menu-item class="item" index="1" v-if="roleId == 1"
+              >全部</el-menu-item
+            >
+            <el-menu-item class="item" index="2" v-if="deptid != 41"
+              >行政办公室</el-menu-item
+            >
+            <el-menu-item class="item" index="31" v-if="deptid != 41"
+              >科研学科办公室</el-menu-item
+            >
+            <el-menu-item class="item" index="33" v-if="deptid != 41"
+              >本科生工作办公室</el-menu-item
+            >
+            <el-menu-item class="item" index="34" v-if="deptid != 41"
+              >研究生工作办公室</el-menu-item
+            >
+            <el-menu-item class="item" index="35" v-if="deptid != 41"
+              >本科生教学管理中心</el-menu-item
+            >
+            <el-menu-item class="item" index="37" v-if="deptid != 41"
+              >研究生教学管理中心</el-menu-item
+            >
+            <el-menu-item class="item" index="32" v-if="deptid != 41"
+              >对外交流与国际认证中心</el-menu-item
+            >
+            <el-menu-item class="item" index="25" v-if="deptid != 41"
+              >校友事务中心</el-menu-item
+            >
+            <el-menu-item class="item" index="36" v-if="deptid != 41"
+              >专业学位硕士办公室</el-menu-item
+            >
+            <el-menu-item class="item" index="38" v-if="deptid != 41"
+              >MBA中心</el-menu-item
+            >
+            <el-menu-item class="item" index="39" v-if="deptid != 41"
+              >EMBA中心</el-menu-item
+            >
+            <el-menu-item class="item" index="40" v-if="deptid != 41"
+              >EDP中心</el-menu-item
+            >
             <!-- <el-menu-item class="item" index="41">教师个人</el-menu-item> -->
           </el-menu>
         </div>
@@ -287,6 +313,7 @@ export default {
     },
     menuSelect(key) {
       // if (this.roleId != 1) {
+      console.log(key, "key");
       switch (key) {
         case "31":
           this.ids = [
@@ -824,20 +851,30 @@ export default {
       // }
     },
     async saveRoles() {
-      console.log("保存权限：", this.roleId, "----", this.ids);
+      console.log("保存权限123：", this.roleId, "----", this.ids);
       // if (this.roleId == 1) {
       //   this.ids = this.ids.concat([1, 2, 4, 5, 7, 8, 9, 10, 6, 11, 12]);
       // }
-      await axios.$post("/role/setAuthority", {
-        roleId: this.roleId,
-        ids: this.ids.join(),
-      });
+      // await axios.$post("/role/setAuthority", {
+      //   roleId: this.roleId,
+      //   ids: this.ids.join(),
+      // });
       this.$store.commit("setRole", this.ids);
-      // let refresh = Request.getSession().getAttribute("refresh");
+      let roleIds = this.ids;
       window.sessionStorage.setItem("flag", true);
-      // location.reload();
-      // window.localStorage.setItem("roles", "["+this.ids+"]");
+      localStorage.setItem("roles", JSON.stringify({ ids: this.ids }));
+      // window.localStorage.setItem("roles", { ids: this.ids });
     },
   },
+  // computed: {
+  //   roles() {
+  //     return this.$store.state.roles;
+  //   },
+  // },
+  // watch: {
+  //   roles(newVal, oldVal) {
+  //     this.saveRoles();
+  //   },
+  // },
 };
 </script>

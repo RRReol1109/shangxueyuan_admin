@@ -5,7 +5,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title:"中南大学商学院信息管理系统",
+    title: "中南大学商学院信息管理系统",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -29,7 +29,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src:'~/plugins/storeCache',ssr: false},
+    { src: '~/plugins/storeCache', ssr: false },
+    { src: '~/plugins/ployfill' },
     '~/plugins/element-ui',
     '~/plugins/lodash',
     '~/plugins/axios'
@@ -58,7 +59,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   },
   router: {

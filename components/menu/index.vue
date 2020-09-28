@@ -11,7 +11,11 @@
       text-color="#fff"
       active-text-color="#ffd04b"
     >
-      <NavMenu :navMenus="leftMenus" :class="[loading ? 'hidden': 'show']" style="font-size:19px;"></NavMenu>
+      <NavMenu
+        :navMenus="leftMenus"
+        :class="[loading ? 'hidden' : 'show']"
+        style="font-size: 19px"
+      ></NavMenu>
     </el-menu>
   </div>
 </template>
@@ -27,6 +31,7 @@ export default {
     return {
       sidebar: (this.$route.hash && this.$route.hash.split("#")[1]) || null,
       loading: true,
+      testIndex: 0,
       leftMenus: [
         {
           entity: {
@@ -1060,6 +1065,37 @@ export default {
   },
   methods: {
     // 生成用户权限树
+    async setMenu() {
+      this.loading = true;
+      let roleIdArr = localStorage.getItem("roles");
+      let roleIds = JSON.parse(roleIdArr).ids;
+      function ergodic(tree) {
+        let count = 0;
+        for (let i = 0; i < tree.length; i++) {
+          if (roleIds.includes(tree[i].entity.id)) {
+            tree[i].entity.state = "ENABLE";
+            console.log(
+              tree[i].entity.alias,
+              "name----",
+              tree[i].entity.id,
+              "id"
+            );
+            count++;
+          } else {
+            tree[i].entity.state = "";
+          }
+          if (tree[i].childs && tree[i].childs.length > 0) {
+            let childCount = ergodic(tree[i].childs);
+            if (childCount > 0) {
+              tree[i].entity.state = "ENABLE";
+            }
+          }
+        }
+        return count;
+      }
+      ergodic(this.leftMenus);
+      this.loading = false;
+    },
     async initTree() {
       this.loading = true;
       let roleId = window.localStorage.getItem("roleId");
@@ -1100,7 +1136,7 @@ export default {
   },
   watch: {
     roles(newVal, oldVal) {
-      this.initTree();
+      this.setMenu();
     },
   },
 };
