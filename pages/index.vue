@@ -224,9 +224,7 @@ export default {
       console.log(teachers);
     },
     checkCanUse() {
-      this.roles = window.localStorage.getItem("roles")
-        ? JSON.parse(window.localStorage.getItem("roles"))
-        : [];
+      this.roles = JSON.parse(localStorage.getItem("roles")).ids;
       console.log("检测权限：", this.roles);
       if (this.roles.indexOf(888) != -1) {
         this.showWaitProcess = true;

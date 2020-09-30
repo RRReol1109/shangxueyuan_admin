@@ -13,7 +13,12 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师:">
-          <el-select size="normal" v-model="query.teacher" 　filterable placeholder="请选择老师">
+          <el-select
+            size="normal"
+            v-model="query.teacher"
+            　filterable
+            placeholder="请选择老师"
+          >
             <el-option label="全部" value></el-option>
             <el-option
               v-for="item in teacherList"
@@ -24,7 +29,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态:">
-          <el-select v-model="query.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="query.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+          >
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
@@ -32,18 +41,32 @@
           </el-select>
         </el-form-item>
         <el-form-item label>
-          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button
+            size="normal"
+            type="primary"
+            icon="el-icon-search"
+            @click="list"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item label>
           <el-button
             size="normal"
             type="primary"
             icon="el-icon-plus"
-            @click="operate = 'add';showDialog();"
-          >新增</el-button>
+            @click="
+              operate = 'add';
+              showDialog();
+            "
+            >新增</el-button
+          >
         </el-form-item>
         <el-form-item label>
-          <el-dropdown v-if="showFunctionList" @command="handleCommand" style="float:right;">
+          <el-dropdown
+            v-if="showFunctionList"
+            @command="handleCommand"
+            style="float: right"
+          >
             <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -52,7 +75,11 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item
+                command="examine"
+                v-if="roleId == 1 || roleId == 19"
+                >批量审核</el-dropdown-item
+              >
               <el-dropdown-item>
                 <el-upload
                   class
@@ -88,9 +115,26 @@
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
         </template>
       </el-table-column>-->
-      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
-      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column
+        sortable
+        align="center"
+        type="selection"
+        width="50"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        type="index"
+        label="序号"
+        align="center"
+        width="50"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="年度"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -142,18 +186,44 @@
         label="审核状态"
       >
         <template slot-scope="scope">
-          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color: #409eff">{{
+            scope.row.auditFlag | statusFilter
+          }}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        sortable
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button
+            @click="
+              operate = 'show';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >查看</el-button
+          >
+          <el-button
+            @click="
+              operate = 'edit';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >编辑</el-button
+          >
+          <el-button @click="del(scope.row)" type="text" size="normal"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <nav style="text-align: center; margin-top: 10px;">
+    <nav style="text-align: center; margin-top: 10px">
       <!-- 分页居中放置-->
       <el-pagination
         background
@@ -166,35 +236,61 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog
+      width="35%"
+      style="min-height: 500px"
+      title="批量审核操作"
+      :visible.sync="examineDialog"
+    >
       <el-row>
         <el-col :span="8">
-          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+          <el-button
+            @click="examineDialog = false"
+            size="normal"
+            style="width: 97%"
+            >取 消</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="primary"
             @click="examineData('success')"
             size="normal"
-            style="width:97%;"
-          >通过</el-button>
+            style="width: 97%"
+            >通过</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="danger"
             @click="examineData('failed')"
             size="normal"
-            style="width:97%;"
-          >不通过</el-button>
+            style="width: 97%"
+            >不通过</el-button
+          >
         </el-col>
       </el-row>
     </el-dialog>
-    <el-drawer size="60%" style="min-height:500px" title :visible.sync="dialogFormVisible">
+    <el-drawer
+      size="60%"
+      style="min-height: 500px"
+      title
+      :visible.sync="dialogFormVisible"
+    >
       <div slot="title" class="header-title">
-        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
-          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px">
+          <el-button @click="dialogFormVisible = false" size="normal"
+            >取消</el-button
+          >
+          <el-button
+            type="primary"
+            @click="submitForm('ruleForm')"
+            size="normal"
+            >保存</el-button
+          >
+          <el-button size="normal" @click="resetForm('ruleForm')"
+            >重置</el-button
+          >
         </div>
       </div>
       <el-form
@@ -215,7 +311,7 @@
                 format="yyyy"
                 value-format="yyyy"
                 placeholder="选择年份"
-                style="width:99%"
+                style="width: 99%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -225,7 +321,7 @@
                 v-model="ruleForm.teacher"
                 　filterable
                 placeholder="请选择老师"
-                style="width:99%"
+                style="width: 99%"
               >
                 <el-option
                   v-for="item in teacherList"
@@ -250,7 +346,7 @@
               <el-input
                 v-model="ruleForm.count"
                 oninput="value=value.replace(/[^\d.]/g,'')"
-                style="width:99%"
+                style="width: 99%"
               ></el-input>
             </el-form-item>
             <!-- <el-form-item label="实际课时" prop="hours">
@@ -269,7 +365,7 @@
                 v-model="ruleForm.secretaryCount"
                 oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
-                style="width:99%"
+                style="width: 99%"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -280,7 +376,7 @@
               <el-select
                 v-model="ruleForm.studentType"
                 size="normal"
-                style="width:99%"
+                style="width: 99%"
                 placeholder="请选择状态"
               >
                 <el-option label="本科生" value="本科生"></el-option>
@@ -295,7 +391,7 @@
                 v-model="ruleForm.graduationCount"
                 oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
-                style="width:99%"
+                style="width: 99%"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -315,7 +411,7 @@
             v-model="ruleForm.auditFlag"
             size="normal"
             placeholder="请选择状态"
-            style="width:99%"
+            style="width: 99%"
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
@@ -400,7 +496,7 @@ export default {
   },
   filters: {
     statusFilter: function (value) {
-      let test = { 0: "未审核", "1": "已审核", "2": "未通过" };
+      let test = { 0: "未审核", 1: "已审核", 2: "未通过" };
       console.log(test);
       if (!isNaN(parseInt(value))) {
         return test[value.toString()];
@@ -719,9 +815,7 @@ export default {
       this.list();
     },
     checkCanUse() {
-      this.roles = window.localStorage.getItem("roles")
-        ? JSON.parse(window.localStorage.getItem("roles"))
-        : [];
+      this.roles = JSON.parse(localStorage.getItem("roles")).ids;
       let userId = window.localStorage.getItem("userId") || "";
       console.log("检测权限：", this.roles);
       if (this.roles.indexOf(777) != -1) {
@@ -738,6 +832,7 @@ export default {
   },
   async mounted() {
     this.checkCanUse();
+    this.list();
     this.header = {
       Authorization: localStorage.getItem("message"),
     };
@@ -747,7 +842,6 @@ export default {
       limit: 999999,
     });
     this.teacherList = this.teacherList.rows;
-    this.list();
     let self = this;
     let year = moment(new Date()).format("YYYY");
     for (let i = year; i > 1900; i--) {

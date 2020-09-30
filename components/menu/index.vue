@@ -1074,12 +1074,6 @@ export default {
         for (let i = 0; i < tree.length; i++) {
           if (roleIds.includes(tree[i].entity.id)) {
             tree[i].entity.state = "ENABLE";
-            console.log(
-              tree[i].entity.alias,
-              "name----",
-              tree[i].entity.id,
-              "id"
-            );
             count++;
           } else {
             tree[i].entity.state = "";

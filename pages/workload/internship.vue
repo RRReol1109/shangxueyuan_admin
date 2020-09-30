@@ -956,9 +956,7 @@ export default {
       };
     },
     checkCanUse() {
-      this.roles = window.localStorage.getItem("roles")
-        ? JSON.parse(window.localStorage.getItem("roles"))
-        : [];
+      this.roles = JSON.parse(localStorage.getItem("roles")).ids;
       let userId = window.localStorage.getItem("userId") || "";
       console.log("检测权限：", this.roles);
       if (this.roles.indexOf(777) != -1) {
