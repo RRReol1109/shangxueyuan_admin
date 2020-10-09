@@ -48,7 +48,11 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="实习地点" prop="type">
-          <el-select v-model="query.type" size="normal" placeholder="请选择地点">
+          <el-select
+            v-model="query.type"
+            size="normal"
+            placeholder="请选择地点"
+          >
             <el-option label="全部" value></el-option>
             <el-option label="校内" value="校内"></el-option>
             <el-option label="市内" value="市内"></el-option>
@@ -56,7 +60,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态:">
-          <el-select v-model="query.auditFlag" size="normal" placeholder="请选择状态">
+          <el-select
+            v-model="query.auditFlag"
+            size="normal"
+            placeholder="请选择状态"
+          >
             <el-option label="全部" value></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
@@ -64,7 +72,13 @@
           </el-select>
         </el-form-item>
         <el-form-item label>
-          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button
+            size="normal"
+            type="primary"
+            icon="el-icon-search"
+            @click="list"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item label-width="320px"></el-form-item>
         <el-form-item label>
@@ -72,11 +86,19 @@
             size="normal"
             type="primary"
             icon="el-icon-plus"
-            @click="operate = 'add';showDialog();"
-          >新增</el-button>
+            @click="
+              operate = 'add';
+              showDialog();
+            "
+            >新增</el-button
+          >
         </el-form-item>
         <el-form-item>
-          <el-dropdown v-if="showFunctionList" @command="handleCommand" style="float:right;">
+          <el-dropdown
+            v-if="showFunctionList"
+            @command="handleCommand"
+            style="float: right"
+          >
             <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -85,7 +107,11 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item
+                command="examine"
+                v-if="roleId == 1 || roleId == 19"
+                >批量审核</el-dropdown-item
+              >
               <el-dropdown-item>
                 <el-upload
                   class
@@ -110,9 +136,26 @@
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
-      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column
+        sortable
+        align="center"
+        type="selection"
+        width="50"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        type="index"
+        label="序号"
+        align="center"
+        width="50"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="年度"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -185,19 +228,45 @@
         label="审核状态"
       >
         <template slot-scope="scope">
-          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color: #409eff">{{
+            scope.row.auditFlag | statusFilter
+          }}</span>
         </template>
       </el-table-column>
       <!-- <el-table-column sortable :show-overflow-tooltip="true" prop="desc" align="center" label="备注"></el-table-column> -->
-      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        sortable
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button
+            @click="
+              operate = 'show';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >查看</el-button
+          >
+          <el-button
+            @click="
+              operate = 'edit';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >编辑</el-button
+          >
+          <el-button @click="del(scope.row)" type="text" size="normal"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <nav style="text-align: center; margin-top: 10px;">
+    <nav style="text-align: center; margin-top: 10px">
       <!-- 分页居中放置-->
       <el-pagination
         background
@@ -210,41 +279,62 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog
+      width="35%"
+      style="min-height: 500px"
+      title="批量审核操作"
+      :visible.sync="examineDialog"
+    >
       <el-row>
         <el-col :span="8">
-          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+          <el-button
+            @click="examineDialog = false"
+            size="normal"
+            style="width: 97%"
+            >取 消</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="primary"
             @click="examineData('success')"
             size="normal"
-            style="width:97%;"
-          >通过</el-button>
+            style="width: 97%"
+            >通过</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="danger"
             @click="examineData('failed')"
             size="normal"
-            style="width:97%;"
-          >不通过</el-button>
+            style="width: 97%"
+            >不通过</el-button
+          >
         </el-col>
       </el-row>
     </el-dialog>
     <el-drawer
       size="60%"
-      style="min-height:500px"
+      style="min-height: 500px"
       title
       :visible.sync="dialogFormVisible"
       :disabled="read"
     >
       <div slot="title" class="header-title">
-        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('ruleForm')" size="normal">保存</el-button>
-          <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px">
+          <el-button @click="dialogFormVisible = false" size="normal"
+            >取消</el-button
+          >
+          <el-button
+            type="primary"
+            @click="submitForm('ruleForm')"
+            size="normal"
+            >保存</el-button
+          >
+          <el-button size="normal" @click="resetForm('ruleForm')"
+            >重置</el-button
+          >
         </div>
       </div>
       <el-form
@@ -265,7 +355,7 @@
                 format="yyyy"
                 value-format="yyyy"
                 placeholder="选择年份"
-                style="width:98%"
+                style="width: 98%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -278,7 +368,7 @@
             :fetch-suggestions="queryAddress"
             placeholder="请输入内容"
             :disabled="read"
-            style="width:99%"
+            style="width: 99%"
           ></el-autocomplete>
         </el-form-item>
         <el-row>
@@ -288,7 +378,7 @@
                 v-model="ruleForm.type"
                 placeholder="请选择地点"
                 :disabled="read"
-                style="width:98%"
+                style="width: 98%"
               >
                 <el-option label="校内" value="校内"></el-option>
                 <el-option label="市内" value="市内"></el-option>
@@ -304,7 +394,7 @@
                 oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
                 :disabled="read"
-                style="width:98%"
+                style="width: 98%"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -327,7 +417,7 @@
                 oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
                 :disabled="read"
-                style="width:98%"
+                style="width: 98%"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -338,7 +428,7 @@
                 v-model="ruleForm.ratio"
                 placeholder="核定系数"
                 :disabled="read"
-                style="width:98%"
+                style="width: 98%"
               ></el-input>
             </el-form-item>
           </el-col>
@@ -387,7 +477,7 @@
             :fetch-suggestions="queryClasses"
             placeholder="请输入班级"
             :disabled="read"
-            style="width:99%"
+            style="width: 99%"
           ></el-autocomplete>
         </el-form-item>
         <el-form-item label="实习单位" prop="company">
@@ -396,16 +486,21 @@
             :fetch-suggestions="queryCompany"
             placeholder="请输入实习单位"
             :disabled="read"
-            style="width:99%"
+            style="width: 99%"
           ></el-autocomplete>
         </el-form-item>
         <el-form-item
           v-for="(teacherArr, index) in teacherArr"
-          :label="'指导老师' + (index+1)"
+          :label="'指导老师' + (index + 1)"
           :key="teacherArr.key"
           :prop="'teacherArr' + index"
         >
-          <el-select v-model="teacherArr.name" 　filterable placeholder="请选择老师" prop="name">
+          <el-select
+            v-model="teacherArr.name"
+            　filterable
+            placeholder="请选择老师"
+            prop="name"
+          >
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -413,23 +508,34 @@
               :value="item.name"
             ></el-option>
           </el-select>
-          <el-select v-model="teacherArr.title" placeholder="职称" style="width:120px">
+          <el-select
+            v-model="teacherArr.title"
+            placeholder="职称"
+            style="width: 120px"
+          >
             <el-option label="教授" value="教授"></el-option>
             <el-option label="副教授" value="副教授"></el-option>
             <el-option label="讲师" value="讲师"></el-option>
           </el-select>
           <el-checkbox v-model="teacherArr.flag">是否是队长</el-checkbox>
-          <el-button type="danger" style="width:100px;" @click="removeTeacher(teacherArr)">删除</el-button>
+          <el-button
+            type="danger"
+            style="width: 100px"
+            @click="removeTeacher(teacherArr)"
+            >删除</el-button
+          >
         </el-form-item>
         <el-form-item v-if="!['show'].includes(operate)">
-          <el-button type="primary" @click="addTeacher('ruleForm')">继续添加老师</el-button>
+          <el-button type="primary" @click="addTeacher('ruleForm')"
+            >继续添加老师</el-button
+          >
         </el-form-item>
         <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
           <el-select
             v-model="ruleForm.auditFlag"
             size="normal"
             placeholder="请选择状态"
-            style="width:99%"
+            style="width: 99%"
           >
             <el-option label="未审核" value="0"></el-option>
             <el-option label="审核通过" value="1"></el-option>
@@ -529,9 +635,9 @@ export default {
     self: this,
     statusFilter: function (value) {
       return {
-        "0": "未审核",
-        "1": "已审核",
-        "2": "未通过",
+        0: "未审核",
+        1: "已审核",
+        2: "未通过",
       }[value.toString()];
     },
   },
@@ -590,17 +696,23 @@ export default {
       console.log(this.query.editor);
       let query = this.query;
       let res = await axios.$post("/internship/list", this.query);
-      let teacherName = "";
+      let teacherName;
       for (let i = 0; i < res.rows.length; i++) {
         const element = res.rows[i];
+        teacherName = "";
         let teacherInfo = element.teachers.split(",");
         for (let y = 0; y < teacherInfo.length; y++) {
           const item = teacherInfo[y];
+          console.log(teacherInfo.length);
           let teacher = item.split("|");
           for (let j = 0; j < teacher.length; j++) {
             const info = teacher[j];
+            console.log(info, "15646");
             if (j == 0) {
-              teacherName += info + ",";
+              teacherName += info;
+              if (teacherInfo.length > 1 && y != teacherInfo.length - 1) {
+                teacherName += ",";
+              }
             }
           }
         }

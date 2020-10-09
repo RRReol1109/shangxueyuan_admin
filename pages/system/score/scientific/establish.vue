@@ -95,11 +95,11 @@
             <el-option label="国家精品课程" value="国家精品课程"></el-option>
           </el-select>
           <el-select v-if="form.level=='3级'"  v-model="form.type" size="normal" placeholder="选择项目类型">
-            <el-option label="教育部立项的各类纵向项目(以学 校职称评审认定为准) " value="教育部立项的各类纵向项目(以学 校职称评审认定为准) "></el-option>
+            <el-option label="教育部立项的各类纵向项目(以学 校职称评审认定为准) " value="教育部立项的各类纵向项目（以学 校职称评审认定为准）"></el-option>
           </el-select>
           <el-select v-if="form.level=='4级'"  v-model="form.type" size="normal" placeholder="选择项目类型">
-            <el-option label="部委(不含教育部)" value="部委(不含教育部)"></el-option>
-            <el-option label="省级立项的纵向项目(省教育厅立项的教改项目)" value="省级立项的纵向项目(省教育厅立项的教改项目)"></el-option>
+            <el-option label="部委(不含教育部)" value="部委（不含教育部）"></el-option>
+            <el-option label="省级立项的纵向项目（省教育厅立项的教改项目）" value="省级立项的纵向项目（省教育厅立项的教改项目）"></el-option>
             <el-option label="省科技厅立项科技项目" value="省科技厅立项科技项目"></el-option>
             <el-option label="省自科基金项目" value="省自科基金项目"></el-option>
             <el-option label="省社科基金项目" value="省社科基金项目"></el-option>
@@ -107,19 +107,19 @@
         </el-form-item>
         <el-form-item label="基础分数">
           <el-col :span="9">
-            <el-input size="normal" v-model="form.baseScore" autocomplete="off"></el-input>
+            <el-input size="normal" v-model="form.score" autocomplete="off"></el-input>
           </el-col>
         </el-form-item>
         <div v-if="form.level!=='3级'">
           <span style="color: #409EFF;">额外加分条件:</span>
-          <el-form-item label="重点项目">
+          <el-form-item label="重点项目加分">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.key" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.national" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
-          <el-form-item label="重大项目">
+          <el-form-item label="重大项目加分">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.major" autocomplete="off"></el-input>
+              <el-input size="normal" v-model="form.province" autocomplete="off"></el-input>
             </el-col>
           </el-form-item>
         </div>
@@ -216,7 +216,7 @@ export default {
         level: 1,
         year: "",
         type: "",
-        baseScore: 0,
+        score: 0,
         key: 0, // 重点
         major: 0, // 重大
         nationalKey: 0, // 国家重点

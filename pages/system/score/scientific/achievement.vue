@@ -13,42 +13,134 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button
+            size="normal"
+            type="primary"
+            icon="el-icon-search"
+            @click="list"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item label>
           <el-button
             size="normal"
             type="primary"
             icon="el-icon-plus"
-            @click="operate = 'add';showDialog();"
-          >新增</el-button>
+            @click="
+              operate = 'add';
+              showDialog();
+            "
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
-      <el-table-column sortable :show-overflow-tooltip="true" prop="id" label="id" align="center" width="50"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度" width="100"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="level" align="center" label="项目类型" ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="baseScore" align="center" label="基础分数"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="guangzhaoScore" align="center" label="光召科技奖"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="gongxianScore" align="center" label="杰出贡献奖"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="levelOne" align="center" label="一等奖"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="levelTwo" align="center" label="二等奖"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="levelThree" align="center" label="三等奖"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="remark" align="center" label="备注"></el-table-column>
-      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="id"
+        label="id"
+        align="center"
+        width="50"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="年度"
+        width="100"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="level"
+        align="center"
+        label="项目类型"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="baseScore"
+        align="center"
+        label="基础分数"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="guangzhaoScore"
+        align="center"
+        label="光召科技奖"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="gongxianScore"
+        align="center"
+        label="杰出贡献奖"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="levelOne"
+        align="center"
+        label="一等奖"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="levelTwo"
+        align="center"
+        label="二等奖"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="levelThree"
+        align="center"
+        label="三等奖"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="remark"
+        align="center"
+        label="备注"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="
+              operate = 'show';
+              showDialog(scope.row);
+            "
             type="text"
             size="normal"
-
-          >编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+            >查看</el-button
+          >
+          <el-button
+            @click="
+              operate = 'edit';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >编辑</el-button
+          >
+          <el-button @click="del(scope.row)" type="text" size="normal"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <nav style="text-align: center; margin-top: 10px;">
+    <nav style="text-align: center; margin-top: 10px">
       <!-- 分页居中放置-->
       <el-pagination
         background
@@ -62,8 +154,17 @@
       ></el-pagination>
     </nav>
 
-    <el-drawer size="60%" style="min-height:500px" title="分数规则（科研成果）" :visible.sync="dialogFormVisible">
-      <el-form :disabled="!['edit', 'add'].includes(operate)" :model="form" label-width="180px">
+    <el-drawer
+      size="60%"
+      style="min-height: 500px"
+      title="分数规则（科研成果）"
+      :visible.sync="dialogFormVisible"
+    >
+      <el-form
+        :disabled="!['edit', 'add'].includes(operate)"
+        :model="form"
+        label-width="180px"
+      >
         <el-form-item label="年度:">
           <el-date-picker
             size="normal"
@@ -75,54 +176,117 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="项目类型">
-          <el-select  v-model="form.level" size="normal" placeholder="选择类型">
-            <el-option label="国家级“三大奖”" value="国家级“三大奖”"></el-option>
-            <el-option label="教育部人文社科奖" value="教育部人文社科奖"></el-option>
+          <el-select v-model="form.level" size="normal" placeholder="选择类型">
+            <el-option
+              label="国家级“三大奖”"
+              value="国家级“三大奖”"
+            ></el-option>
+            <el-option
+              label="教育部人文社科奖"
+              value="教育部人文社科奖"
+            ></el-option>
             <el-option label="省部级" value="省部级"></el-option>
-            <el-option label="国家自科基金和国家社科基金结题评估" value="国家自科基金和国家社科基金结题评估"></el-option>
-            <el-option label="成果入选《高校智库专刊》" value="成果入选《高校智库专刊》"></el-option>
-            <el-option label="成果入选教育部社科委 《专家建议》" value="成果入选教育部社科委 《专家建议》"></el-option>
-            <el-option label="成果入选中宣部社科规划办《成果要报》" value="成果入选中宣部社科规划办《成果要报》"></el-option>
-            <el-option label="成果入选人民日报(理论版)" value="成果入选人民日报(理论版)"></el-option>
-            <el-option label="成果入选光明日报(理论版)" value="成果入选光明日报(理论版)"></el-option>
-            <el-option label="成果入选经济日报(理论版)" value="成果入选经济日报(理论版)"></el-option>
-            <el-option label="成果获得领导批示" value="成果获得领导批示"></el-option>
-            <el-option label="专利(含软件著作权)" value="专利(含软件著作权)"></el-option>
+            <el-option
+              label="国家自科基金和国家社科基金结题评估"
+              value="国家自科基金和国家社科基金结题评估"
+            ></el-option>
+            <el-option
+              label="成果入选《高校智库专刊》"
+              value="成果入选《高校智库专刊》"
+            ></el-option>
+            <el-option
+              label="成果入选教育部社科委 《专家建议》"
+              value="成果入选教育部社科委 《专家建议》"
+            ></el-option>
+            <el-option
+              label="成果入选中宣部社科规划办《成果要报》"
+              value="成果入选中宣部社科规划办《成果要报》"
+            ></el-option>
+            <el-option
+              label="成果入选人民日报(理论版)"
+              value="成果入选人民日报(理论版)"
+            ></el-option>
+            <el-option
+              label="成果入选光明日报(理论版)"
+              value="成果入选光明日报(理论版)"
+            ></el-option>
+            <el-option
+              label="成果入选经济日报(理论版)"
+              value="成果入选经济日报(理论版)"
+            ></el-option>
+            <el-option
+              label="成果获得领导批示"
+              value="成果获得领导批示"
+            ></el-option>
+            <el-option
+              label="专利(含软件著作权)"
+              value="专利(含软件著作权)"
+            ></el-option>
           </el-select>
         </el-form-item>
-        <div v-if="form.level === '国家级“三大奖”' || form.level === '教育部人文社科奖' || form.level === '省部级'">
+        <div
+          v-if="
+            form.level === '国家级“三大奖”' ||
+            form.level === '教育部人文社科奖' ||
+            form.level === '省部级'
+          "
+        >
           <el-form-item label="一等奖">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.levelOne" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.levelOne"
+                autocomplete="off"
+              ></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="二等奖">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.levelTwo" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.levelTwo"
+                autocomplete="off"
+              ></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="三等奖">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.levelThree" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.levelThree"
+                autocomplete="off"
+              ></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-else>
           <el-form-item label="基础分数">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.baseScore" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.baseScore"
+                autocomplete="off"
+              ></el-input>
             </el-col>
           </el-form-item>
         </div>
         <div v-if="form.level === '省部级'">
           <el-form-item label="光召科技奖">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.guangzhaoScore" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.guangzhaoScore"
+                autocomplete="off"
+              ></el-input>
             </el-col>
           </el-form-item>
           <el-form-item label="杰出贡献奖">
             <el-col :span="9">
-              <el-input size="normal" v-model="form.gongxianScore" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.gongxianScore"
+                autocomplete="off"
+              ></el-input>
             </el-col>
           </el-form-item>
         </div>
@@ -215,13 +379,22 @@
         </div> -->
         <el-form-item label="备注">
           <el-col :span="9">
-            <el-input type="textarea" autosize placeholder="请输入内容" v-model="form.remark"></el-input>
+            <el-input
+              type="textarea"
+              autosize
+              placeholder="请输入内容"
+              v-model="form.remark"
+            ></el-input>
           </el-col>
         </el-form-item>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
-        <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
-        <el-button type="primary" @click="submitForm('ruleForm')" size="normal">确定</el-button>
+      <div v-if="['edit', 'add'].includes(operate)" style="float: right">
+        <el-button @click="dialogFormVisible = false" size="normal"
+          >取 消</el-button
+        >
+        <el-button type="primary" @click="submitForm('ruleForm')" size="normal"
+          >确定</el-button
+        >
         <el-button size="normal" @click="resetForm('ruleForm')">重置</el-button>
       </div>
     </el-drawer>
@@ -244,7 +417,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "remark",
-        condition: ""
+        condition: "",
       },
       form: {
         level: "1",
@@ -255,12 +428,16 @@ export default {
         levelThree: 0, // 三等奖
         guangzhao: 0, // 光召科技奖
         gongxian: 0, // 杰出贡献奖
-        remark: "" // 备注
+        remark: "", // 备注
       },
-      tableData: []
+      tableData: [],
     };
   },
   methods: {
+    changeSize(val) {
+      this.query.limit = val;
+      this.list();
+    },
     handleCurrentChange(val) {
       this.query.offset = this.query.limit * (this.page - 1);
       this.list();
@@ -296,19 +473,19 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.dialogFormVisible = true;
       if (this.operate === "add") {
         this.form = {
-          id: ""
+          id: "",
         };
       } else {
         this.form = row;
@@ -318,31 +495,31 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let resultRuleId = row.id;
           await axios.$post("/resultRule/delete", {
-            resultRuleId: resultRuleId
+            resultRuleId: resultRuleId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
   mounted() {
     this.list();
-  }
+  },
 };
 </script>
 
@@ -354,12 +531,12 @@ export default {
   color: #606266;
 }
 .el-drawer__body {
-    overflow: auto;
-    /* overflow-x: auto; */
+  overflow: auto;
+  /* overflow-x: auto; */
 }
 
 /*2.隐藏滚动条，太丑了*/
-.el-drawer__container ::-webkit-scrollbar{
-    display: none;
+.el-drawer__container ::-webkit-scrollbar {
+  display: none;
 }
 </style>
