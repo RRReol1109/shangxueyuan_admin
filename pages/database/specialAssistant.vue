@@ -431,38 +431,38 @@ export default {
         remark: "",
       },
       rules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
-        gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
-        education: [
-          {
-            required: true,
-            message: "请输入第一学历毕业学校",
-            trigger: "blur",
-          },
-        ],
-        phone: [{ required: true, message: "请输入电话", trigger: "blur" }],
-        email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
-        tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
-        majorCode: [
-          { required: true, message: "请输入专业代码", trigger: "blur" },
-        ],
-        scholarshipName: [
-          { required: true, message: "请输入奖学金名称", trigger: "blur" },
-        ],
-        financialAidName: [
-          { required: true, message: "请输入助学金名称", trigger: "blur" },
-        ],
-        grade: [{ required: true, message: "请输入年份", trigger: "blur" }],
-        graduatedSchool: [
-          { required: true, message: "请输入毕业学校", trigger: "blur" },
-        ],
-        graduationMajor: [
-          { required: true, message: "请输入毕业专业", trigger: "blur" },
-        ],
-        major: [{ required: true, message: "请输入专业", trigger: "blur" }],
-        admissionMethod: [
-          { required: true, message: "请输入录取方式", trigger: "blur" },
-        ],
+        // name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        // gender: [{ required: true, message: "请输入性别", trigger: "blur" }],
+        // education: [
+        //   {
+        //     required: true,
+        //     message: "请输入第一学历毕业学校",
+        //     trigger: "blur",
+        //   },
+        // ],
+        // phone: [{ required: true, message: "请输入电话", trigger: "blur" }],
+        // email: [{ required: true, message: "请输入邮箱", trigger: "blur" }],
+        // tutor: [{ required: true, message: "请输入导师", trigger: "blur" }],
+        // majorCode: [
+        //   { required: true, message: "请输入专业代码", trigger: "blur" },
+        // ],
+        // scholarshipName: [
+        //   { required: true, message: "请输入奖学金名称", trigger: "blur" },
+        // ],
+        // financialAidName: [
+        //   { required: true, message: "请输入助学金名称", trigger: "blur" },
+        // ],
+        // grade: [{ required: true, message: "请输入年份", trigger: "blur" }],
+        // graduatedSchool: [
+        //   { required: true, message: "请输入毕业学校", trigger: "blur" },
+        // ],
+        // graduationMajor: [
+        //   { required: true, message: "请输入毕业专业", trigger: "blur" },
+        // ],
+        // major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        // admissionMethod: [
+        //   { required: true, message: "请输入录取方式", trigger: "blur" },
+        // ],
       },
       tableData: [],
     };

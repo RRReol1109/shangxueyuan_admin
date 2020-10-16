@@ -6,27 +6,49 @@
           <el-input v-model="query.id" placeholder="请输入学号" size="normal"></el-input>
         </el-form-item>-->
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
+          <el-input
+            v-model="query.name"
+            placeholder="请输入姓名"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="导师:">
-          <el-input v-model="query.teacher" placeholder="请输入姓名" size="normal"></el-input>
+          <el-input
+            v-model="query.teacher"
+            placeholder="请输入姓名"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="专业:">
-          <el-input v-model="query.category" placeholder="请输入专业" size="normal"></el-input>
+          <el-input
+            v-model="query.category"
+            placeholder="请输入专业"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button
+            size="normal"
+            type="primary"
+            icon="el-icon-search"
+            @click="list"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item>
           <el-button
             size="normal"
             type="primary"
             icon="el-icon-plus"
-            @click="operate = 'add';showDialog();"
-          >新增</el-button>
+            @click="
+              operate = 'add';
+              showDialog();
+            "
+            >新增</el-button
+          >
         </el-form-item>
-        <!-- <el-form-item>
-          <el-dropdown @command="handleCommand" style="float:right;">
+        <el-form-item>
+          <el-dropdown @command="handleCommand" style="float: right">
             <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -35,7 +57,11 @@
               <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-               <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item
+                command="examine"
+                v-if="roleId == 1 || roleId == 19"
+                >批量审核</el-dropdown-item
+              >
               <el-dropdown-item>
                 <el-upload
                   class
@@ -50,7 +76,7 @@
               </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-        </el-form-item>-->
+        </el-form-item>
       </el-form>
     </div>
     <el-table
@@ -59,8 +85,19 @@
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
-      <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
+      <el-table-column
+        sortable
+        align="center"
+        type="selection"
+        width="50"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        type="index"
+        label="序号"
+        align="center"
+        width="50"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -68,7 +105,13 @@
         align="center"
         label="学号"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="name"
+        align="center"
+        label="姓名"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -138,18 +181,44 @@
         label="审核状态"
       >
         <template slot-scope="scope">
-          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color: #409eff">{{
+            scope.row.auditFlag | statusFilter
+          }}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        sortable
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button
+            @click="
+              operate = 'show';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >查看</el-button
+          >
+          <el-button
+            @click="
+              operate = 'edit';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >编辑</el-button
+          >
+          <el-button @click="del(scope.row)" type="text" size="normal"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <nav style="text-align: center; margin-top: 10px;">
+    <nav style="text-align: center; margin-top: 10px">
       <!-- 分页居中放置-->
       <el-pagination
         background
@@ -162,40 +231,56 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog
+      width="35%"
+      style="min-height: 500px"
+      title="批量审核操作"
+      :visible.sync="examineDialog"
+    >
       <el-row>
         <el-col :span="8">
-          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+          <el-button
+            @click="examineDialog = false"
+            size="normal"
+            style="width: 97%"
+            >取 消</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="primary"
             @click="examineData('success')"
             size="normal"
-            style="width:97%;"
-          >通过</el-button>
+            style="width: 97%"
+            >通过</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="danger"
             @click="examineData('failed')"
             size="normal"
-            style="width:97%;"
-          >不通过</el-button>
+            style="width: 97%"
+            >不通过</el-button
+          >
         </el-col>
       </el-row>
     </el-dialog>
     <el-drawer
-      style="min-height:500px"
+      style="min-height: 500px"
       title="学硕毕业情况"
       :visible.sync="dialogFormVisible"
       size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
     >
       <div slot="title" class="header-title">
-        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px">
+          <el-button @click="dialogFormVisible = false" size="normal"
+            >取消</el-button
+          >
+          <el-button type="primary" @click="submitForm('form')" size="normal"
+            >保存</el-button
+          >
           <el-button size="normal" @click="resetForm('form')">重置</el-button>
         </div>
       </div>
@@ -209,14 +294,22 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="学号" prop="studentNumber">
-              <el-input size="normal" v-model="form.studentNumber" style="width:99%"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.studentNumber"
+                style="width: 99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="姓名" prop="name">
-              <el-input size="normal" v-model="form.name" style="width:99%"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.name"
+                style="width: 99%"
+              ></el-input>
             </el-form-item>
             <!-- <el-form-item label="学号" >
           <el-col :span="6">
@@ -230,7 +323,7 @@
                 v-model="form.birthday"
                 type="date"
                 placeholder="选择日期时间"
-                style="width:99%"
+                style="width: 99%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -238,7 +331,12 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="性别" prop="gender">
-              <el-select v-model="form.gender" size="normal" placeholder="请选择" style="width:99%">
+              <el-select
+                v-model="form.gender"
+                size="normal"
+                placeholder="请选择"
+                style="width: 99%"
+              >
                 <el-option label="男" value="男"></el-option>
                 <el-option label="女" value="女"></el-option>
               </el-select>
@@ -246,7 +344,12 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="授予硕士学位专业" prop="major">
-              <el-input size="normal" v-model="form.major" autocomplete="off" style="width:99%"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.major"
+                autocomplete="off"
+                style="width: 99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -258,19 +361,37 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="专业" prop="category">
-              <el-input size="normal" v-model="form.category" autocomplete="off" style="width:99%"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.category"
+                autocomplete="off"
+                style="width: 99%"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="课程学习情况（总学分/学位课学分/平均绩点）" prop="score">
-            <el-input size="normal" v-model="form.score" autocomplete="off" style="width:99%"></el-input>
+          <el-form-item
+            label="课程学习情况（总学分/学位课学分/平均绩点）"
+            prop="score"
+          >
+            <el-input
+              size="normal"
+              v-model="form.score"
+              autocomplete="off"
+              style="width: 99%"
+            ></el-input>
           </el-form-item>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="在读期间发表论文" prop="paper">
-              <el-input size="normal" v-model="form.paper" autocomplete="off" style="width:99%"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.paper"
+                autocomplete="off"
+                style="width: 99%"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -279,7 +400,7 @@
                 v-model="form.pleaDate"
                 type="date"
                 placeholder="选择日期时间"
-                style="width:99%"
+                style="width: 99%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
@@ -305,7 +426,11 @@
           </el-col>
         </el-form-item>-->
         <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" autocomplete="off" style="width:99%"></el-input>
+          <el-input
+            v-model="form.remark"
+            autocomplete="off"
+            style="width: 99%"
+          ></el-input>
         </el-form-item>
       </el-form>
     </el-drawer>
@@ -621,12 +746,12 @@ export default {
             message: "已取消删除",
           });
         })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
+        // .catch(() => {
+        //   this.$message({
+        //     type: "info",
+        //     message: "已取消删除",
+        //   });
+        // });
     },
   },
   mounted() {

@@ -14,46 +14,109 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label>
-          <el-button size="normal" type="primary" icon="el-icon-search">查询</el-button>
+          <el-button size="normal" type="primary" icon="el-icon-search"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item label>
           <el-button
             size="normal"
             type="primary"
             icon="el-icon-plus"
-            @click="dialogFormVisible = true"
-          >新增</el-button>
+            @click="
+              operate = 'add';
+              showDialog();
+            "
+            >新增</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column sortable fixed prop="year" align="center" label="年份"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="id" align="center" label="教师工号"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="教师姓名"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="entrance" align="center" label="指导研究生类别"></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="student" align="center" label="指导研究生姓名"></el-table-column>
-      <el-table-column sortable
+      <el-table-column
+        sortable
+        fixed
+        prop="year"
+        align="center"
+        label="年份"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="id"
+        align="center"
+        label="教师工号"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="name"
+        align="center"
+        label="教师姓名"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="entrance"
+        align="center"
+        label="指导研究生类别"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="student"
+        align="center"
+        label="指导研究生姓名"
+      ></el-table-column>
+      <el-table-column
+        sortable
         :show-overflow-tooltip="true"
         prop="graduationStudent"
         align="center"
         label="研究生人数"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="eliminate" align="center" label="工作量"></el-table-column>
-      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="eliminate"
+        align="center"
+        label="工作量"
+      ></el-table-column>
+      <el-table-column
+        sortable
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button            @click="operate='edit';showDialog(scope.row)"
+          <el-button
+            @click="
+              operate = 'show';
+              showDialog(scope.row);
+            "
             type="text"
             size="normal"
-
-          >编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+            >查看</el-button
+          >
+          <el-button
+            @click="
+              operate = 'edit';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >编辑</el-button
+          >
+          <el-button @click="del(scope.row)" type="text" size="normal"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <nav style="text-align: center; margin-top: 10px;">
+    <nav style="text-align: center; margin-top: 10px">
       <!-- 分页居中放置-->
-     <el-pagination
+      <el-pagination
         background
         layout="total, sizes, prev, pager, next, jumper"
         @size-change="changeSize"
@@ -64,41 +127,57 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog
+      width="35%"
+      style="min-height: 500px"
+      title="批量审核操作"
+      :visible.sync="examineDialog"
+    >
       <el-row>
         <el-col :span="8">
-          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+          <el-button
+            @click="examineDialog = false"
+            size="normal"
+            style="width: 97%"
+            >取 消</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="primary"
             @click="examineData('success')"
             size="normal"
-            style="width:97%;"
-          >通过</el-button>
+            style="width: 97%"
+            >通过</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="danger"
             @click="examineData('failed')"
             size="normal"
-            style="width:97%;"
-          >不通过</el-button>
+            style="width: 97%"
+            >不通过</el-button
+          >
         </el-col>
       </el-row>
     </el-dialog>
 
     <el-drawer
-      style="min-height:500px"
+      style="min-height: 500px"
       title
       size="60%"
       :visible.sync="dialogFormVisible"
       :disabled="!['edit', 'add'].includes(operate)"
     >
       <div slot="title" class="header-title">
-        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px">
+          <el-button @click="dialogFormVisible = false" size="normal"
+            >取消</el-button
+          >
+          <el-button type="primary" @click="submitForm('form')" size="normal"
+            >保存</el-button
+          >
           <el-button size="normal" @click="resetForm('form')">重置</el-button>
         </div>
       </div>
@@ -109,56 +188,70 @@
         ref="form"
         :disabled="!['edit', 'add'].includes(operate)"
       >
-        <el-form-item label="年份" prop="year">
-          <el-col :span="6">
-            <el-date-picker
-              v-model="form.year"
-              type="date"
-              format="yyyy"
-              value-format="yyyy"
-              placeholder="选择日期时间"
-              size="normal"
-            ></el-date-picker>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="年份" prop="year">
+              <el-date-picker
+                v-model="form.year"
+                type="date"
+                format="yyyy"
+                value-format="yyyy"
+                placeholder="选择日期时间"
+                size="normal"
+                style="width: 98%"
+              ></el-date-picker>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="教师工号" prop="teacherId">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.teacherId"></el-input>
+          <el-col :span="12">
+            <el-form-item label="教师工号" prop="teacherId">
+              <el-input size="normal" v-model="form.teacherId"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="教师姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="教师姓名" prop="name">
+              <el-input size="normal" v-model="form.name"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="指导研究生类别" prop="name">
-          <el-col :span="6">
-            <el-select v-model="form.awardType" size="normal" placeholder="请选择">
-              <el-option label="博士" value="博士"></el-option>
-              <el-option label="科学硕士" value="科学硕士"></el-option>
-              <el-option label="专业硕士" value="专业硕士"></el-option>
-              <el-option label="工程硕士" value="工程硕士"></el-option>
-              <el-option label="MBA" value="MBA"></el-option>
-              <el-option label="EMBA" value="EMBA"></el-option>
-              <el-option label="其他" value="其他"></el-option>
-            </el-select>
+          <el-col :span="12">
+            <el-form-item label="指导研究生类别" prop="name">
+              <el-select
+                v-model="form.awardType"
+                size="normal"
+                placeholder="请选择"
+                style="width: 98%"
+              >
+                <el-option label="博士" value="博士"></el-option>
+                <el-option label="科学硕士" value="科学硕士"></el-option>
+                <el-option label="专业硕士" value="专业硕士"></el-option>
+                <el-option label="工程硕士" value="工程硕士"></el-option>
+                <el-option label="MBA" value="MBA"></el-option>
+                <el-option label="EMBA" value="EMBA"></el-option>
+                <el-option label="其他" value="其他"></el-option>
+              </el-select>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="指导研究生姓名" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="指导研究生姓名" prop="name">
+              <el-input size="normal" v-model="form.name"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="研究生人数" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+          <el-col :span="12">
+            <el-form-item label="研究生人数" prop="name">
+              <el-input size="normal" v-model="form.name"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
-        <el-form-item label="工作量" prop="name">
-          <el-col :span="6">
-            <el-input size="normal" v-model="form.name"></el-input>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="工作量" prop="name">
+              <el-input size="normal" v-model="form.name"></el-input>
+            </el-form-item>
           </el-col>
-        </el-form-item>
+        </el-row>
       </el-form>
     </el-drawer>
   </div>
@@ -181,7 +274,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: ""
+        condition: "",
       },
       teacherList: [],
       roleId: 0,
@@ -203,9 +296,9 @@ export default {
         admission: "",
         grant: "",
         eliminate: "",
-        admissionRate: ""
+        admissionRate: "",
       },
-      tableData: []
+      tableData: [],
     };
   },
   methods: {
@@ -262,7 +355,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功"
+        message: "上传成功",
       });
       this.list();
     },
@@ -290,12 +383,12 @@ export default {
       this.examineDialog = false;
       this.$message({
         type: "success",
-        message: "审核成功!"
+        message: "审核成功!",
       });
     },
     async submitForm(formName) {
       let verification = false;
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -310,7 +403,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据"
+          message: "请填写正确数据",
         });
         return;
       }
@@ -325,12 +418,12 @@ export default {
       this.dialogFormVisible = false;
       await this.list();
     },
-  showDialog(row) {
+    showDialog(row) {
       if (this.operate === "edit" && row.auditFlag == 1) {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
@@ -351,7 +444,7 @@ export default {
           pdfUrl: "",
           ratio: "",
           point: "",
-          score: ""
+          score: "",
         };
       } else {
         this.form = row;
@@ -380,7 +473,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning"
+              type: "warning",
             }).then(async () => {});
             return;
           }
@@ -401,7 +494,7 @@ export default {
         data = await axios.$download("/teacherAward/export?id=-1", {});
       } else {
         data = await axios.$download("/teacherAward/export", {
-          params: this.query
+          params: this.query,
         });
       }
       if (data) {
@@ -427,34 +520,34 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning"
+          type: "warning",
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           for (let i = 0; i < deleteList.length; i++) {
             const element = deleteList[i];
             let internationalStudentId = element.id;
             await axios.$post("/teacherAward/delete", {
-              internationalStudentId: internationalStudentId
+              internationalStudentId: internationalStudentId,
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
     },
@@ -463,38 +556,38 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        type: "warning",
       })
         .then(async () => {
           console.log(row);
           let internationalStudentId = row.id;
           await axios.$post("/teacherAward/delete", {
-            internationalStudentId: internationalStudentId
+            internationalStudentId: internationalStudentId,
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!"
+            message: "删除成功!",
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除"
+            message: "已取消删除",
           });
         });
-    }
+    },
   },
   async mounted() {
     this.teacherList = await axios.$post("/mgr/list", {
       order: "desc",
       offset: 0,
-      limit: 999999
+      limit: 999999,
     });
     this.teacherList = this.teacherList.rows;
     this.roleId = localStorage.getItem("roleId");
     this.list();
-  }
+  },
 };
 </script>
 

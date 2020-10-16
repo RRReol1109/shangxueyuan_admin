@@ -14,33 +14,63 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="学号:">
-          <el-input v-model="query.id" placeholder="请输入学号" size="normal"></el-input>
+          <el-input
+            v-model="query.id"
+            placeholder="请输入学号"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="姓名:">
-          <el-input v-model="query.name" placeholder="请输入姓名" size="normal"></el-input>
+          <el-input
+            v-model="query.name"
+            placeholder="请输入姓名"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="学院:">
-          <el-input v-model="query.college" placeholder="请输入学院" size="normal"></el-input>
+          <el-input
+            v-model="query.college"
+            placeholder="请输入学院"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="一级学科:">
-          <el-input v-model="query.firstLevelCategory" placeholder="请输入学科" size="normal"></el-input>
+          <el-input
+            v-model="query.firstLevelCategory"
+            placeholder="请输入学科"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label="项目名称:">
-          <el-input v-model="query.projectName" placeholder="请输入项目名称" size="normal"></el-input>
+          <el-input
+            v-model="query.projectName"
+            placeholder="请输入项目名称"
+            size="normal"
+          ></el-input>
         </el-form-item>
         <el-form-item label>
-          <el-button size="normal" type="primary" icon="el-icon-search" @click="list">查询</el-button>
+          <el-button
+            size="normal"
+            type="primary"
+            icon="el-icon-search"
+            @click="list"
+            >查询</el-button
+          >
         </el-form-item>
         <el-form-item label>
           <el-button
             size="normal"
             type="primary"
             icon="el-icon-plus"
-            @click="operate = 'add';showDialog();"
-          >新增</el-button>
+            @click="
+              operate = 'add';
+              showDialog();
+            "
+            >新增</el-button
+          >
         </el-form-item>
         <el-form-item>
-          <el-dropdown @command="handleCommand" style="float:right;">
+          <el-dropdown @command="handleCommand" style="float: right">
             <el-button size="normal" type="primary">
               功能列表
               <i class="el-icon-arrow-down el-icon--right"></i>
@@ -49,7 +79,11 @@
               <!-- <el-dropdown-item command="temp">模板下载</el-dropdown-item>
               <el-dropdown-item command="download">导出数据</el-dropdown-item>-->
               <el-dropdown-item command="delCount">批量删除</el-dropdown-item>
-              <el-dropdown-item command="examine" v-if="roleId==1||roleId==19">批量审核</el-dropdown-item>
+              <el-dropdown-item
+                command="examine"
+                v-if="roleId == 1 || roleId == 19"
+                >批量审核</el-dropdown-item
+              >
               <!-- <el-dropdown-item>
                 <el-upload
                   class
@@ -73,9 +107,20 @@
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column sortable align="center" type="selection" width="50"></el-table-column>
+      <el-table-column
+        sortable
+        align="center"
+        type="selection"
+        width="50"
+      ></el-table-column>
       <!-- <el-table-column sortable fixed prop="id" align="center" label="ID"></el-table-column> -->
-      <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="name"
+        align="center"
+        label="姓名"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -83,7 +128,13 @@
         align="center"
         label="性别"
       ></el-table-column>
-      <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年度"></el-table-column>
+      <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="year"
+        align="center"
+        label="年度"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
@@ -134,18 +185,44 @@
         label="审核状态"
       >
         <template slot-scope="scope">
-          <span style="color:#409EFF">{{scope.row.auditFlag | statusFilter}}</span>
+          <span style="color: #409eff">{{
+            scope.row.auditFlag | statusFilter
+          }}</span>
         </template>
       </el-table-column>
-      <el-table-column sortable fixed="right" align="center" label="操作" width="150">
+      <el-table-column
+        sortable
+        fixed="right"
+        align="center"
+        label="操作"
+        width="150"
+      >
         <template slot-scope="scope">
-          <el-button @click="operate='show';showDialog(scope.row)" type="text" size="normal">查看</el-button>
-          <el-button @click="operate='edit';showDialog(scope.row)" type="text" size="normal">编辑</el-button>
-          <el-button @click="del(scope.row)" type="text" size="normal">删除</el-button>
+          <el-button
+            @click="
+              operate = 'show';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >查看</el-button
+          >
+          <el-button
+            @click="
+              operate = 'edit';
+              showDialog(scope.row);
+            "
+            type="text"
+            size="normal"
+            >编辑</el-button
+          >
+          <el-button @click="del(scope.row)" type="text" size="normal"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
-    <nav style="text-align: center; margin-top: 10px;">
+    <nav style="text-align: center; margin-top: 10px">
       <!-- 分页居中放置-->
       <el-pagination
         background
@@ -158,40 +235,56 @@
         :total="total"
       ></el-pagination>
     </nav>
-    <el-dialog width="35%" style="min-height:500px" title="批量审核操作" :visible.sync="examineDialog">
+    <el-dialog
+      width="35%"
+      style="min-height: 500px"
+      title="批量审核操作"
+      :visible.sync="examineDialog"
+    >
       <el-row>
         <el-col :span="8">
-          <el-button @click="examineDialog = false" size="normal" style="width:97%;">取 消</el-button>
+          <el-button
+            @click="examineDialog = false"
+            size="normal"
+            style="width: 97%"
+            >取 消</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="primary"
             @click="examineData('success')"
             size="normal"
-            style="width:97%;"
-          >通过</el-button>
+            style="width: 97%"
+            >通过</el-button
+          >
         </el-col>
         <el-col :span="8">
           <el-button
             type="danger"
             @click="examineData('failed')"
             size="normal"
-            style="width:97%;"
-          >不通过</el-button>
+            style="width: 97%"
+            >不通过</el-button
+          >
         </el-col>
       </el-row>
     </el-dialog>
 
     <el-drawer
-      style="min-height:500px"
+      style="min-height: 500px"
       :visible.sync="dialogFormVisible"
       size="60%"
       :disabled="!['edit', 'add'].includes(operate)"
     >
       <div slot="title" class="header-title">
-        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px;">
-          <el-button @click="dialogFormVisible = false" size="normal">取消</el-button>
-          <el-button type="primary" @click="submitForm('form')" size="normal">保存</el-button>
+        <div v-if="['edit', 'add'].includes(operate)" style="margin-left: 20px">
+          <el-button @click="dialogFormVisible = false" size="normal"
+            >取消</el-button
+          >
+          <el-button type="primary" @click="submitForm('form')" size="normal"
+            >保存</el-button
+          >
           <el-button size="normal" @click="resetForm('form')">重置</el-button>
         </div>
       </div>
@@ -212,6 +305,8 @@
             <el-input size="normal" v-model="form.id" autocomplete="off"></el-input>
           </el-col>
             </el-form-item>-->
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="性别" prop="gender">
               <el-select v-model="form.gender" size="normal" placeholder="性别">
                 <el-option label="男" value="男"></el-option>
@@ -231,30 +326,57 @@
                 format="yyyy"
                 value-format="yyyy"
                 placeholder="年度"
+                style="width: 98%"
               ></el-date-picker>
             </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="学院" prop="college">
-              <el-input size="normal" v-model="form.college" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.college"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="一级学科" prop="firstLevelCategory">
-              <el-input size="normal" v-model="form.firstLevelCategory" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.firstLevelCategory"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="培养层次" prop="trainingLevel">
-              <el-input size="normal" v-model="form.trainingLevel" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.trainingLevel"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="项目名称" prop="projectName">
-              <el-input size="normal" v-model="form.projectName" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.projectName"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="经费（万元）" prop="funding">
-              <el-input size="normal" v-model="form.funding" autocomplete="off"></el-input>
+              <el-input
+                size="normal"
+                v-model="form.funding"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -275,7 +397,12 @@
         </el-row>
         <el-row>
           <el-form-item label="审核状态:" v-if="['show'].includes(operate)">
-            <el-select v-model="form.auditFlag" size="normal" placeholder="请选择状态" style="width:99%">
+            <el-select
+              v-model="form.auditFlag"
+              size="normal"
+              placeholder="请选择状态"
+              style="width: 99%"
+            >
               <el-option label="未审核" value="0"></el-option>
               <el-option label="审核通过" value="1"></el-option>
               <el-option label="审核未通过" value="2"></el-option>
@@ -342,9 +469,9 @@ export default {
   filters: {
     statusFilter: function (value) {
       return {
-        "0": "未审核",
-        "1": "已审核",
-        "2": "未通过",
+        0: "未审核",
+        1: "已审核",
+        2: "未通过",
       }[value.toString()];
     },
   },

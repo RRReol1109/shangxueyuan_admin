@@ -1130,6 +1130,7 @@ export default {
   },
   watch: {
     roles(newVal, oldVal) {
+      console.log("setRole");
       this.setMenu();
     },
   },

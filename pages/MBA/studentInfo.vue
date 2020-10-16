@@ -412,11 +412,11 @@
           </el-form-item>
         </el-row>
       </el-form>
-      <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
+      <!-- <div v-if="['edit', 'add'].includes(operate)" style="float:right;">
         <el-button @click="dialogFormVisible = false" size="normal">取 消</el-button>
         <el-button type="primary" @click="submitForm('form')" size="normal">确定</el-button>
         <el-button size="normal" @click="resetForm('form')">重置</el-button>
-      </div>
+      </div> -->
     </el-drawer>
   </div>
 </template>

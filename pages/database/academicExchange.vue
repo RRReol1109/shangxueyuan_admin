@@ -404,36 +404,36 @@ export default {
       },
 
       rules: {
-        interviewTime: [
-          { required: true, message: "请输入来访起止时间", trigger: "blur" },
-        ],
-        visitor: [
-          { required: true, message: "请输入专家姓名", trigger: "blur" },
-        ],
-        jobTitle: [{ required: true, message: "请输入职称", trigger: "blur" }],
-        accessType: [
-          { required: true, message: "请输入访问类型", trigger: "blur" },
-        ],
-        unit: [{ required: true, message: "请输入工作单位", trigger: "blur" }],
-        expertCategory: [
-          { required: true, message: "请输入专家类别", trigger: "blur" },
-        ],
-        researchAreas: [
-          { required: true, message: "请输入研究领域", trigger: "blur" },
-        ],
-        inviter: [{ required: true, message: "请输入邀请人", trigger: "blur" }],
-        discipline: [
-          { required: true, message: "请输入所属学科", trigger: "blur" },
-        ],
-        passport: [
-          { required: true, message: "请输入护照号", trigger: "blur" },
-        ],
-        citizenshipCountry: [
-          { required: true, message: "请输入国籍", trigger: "blur" },
-        ],
-        communicationContent: [
-          { required: true, message: "请输入交流类容", trigger: "blur" },
-        ],
+        // interviewTime: [
+        //   { required: true, message: "请输入来访起止时间", trigger: "blur" },
+        // ],
+        // visitor: [
+        //   { required: true, message: "请输入专家姓名", trigger: "blur" },
+        // ],
+        // jobTitle: [{ required: true, message: "请输入职称", trigger: "blur" }],
+        // accessType: [
+        //   { required: true, message: "请输入访问类型", trigger: "blur" },
+        // ],
+        // unit: [{ required: true, message: "请输入工作单位", trigger: "blur" }],
+        // expertCategory: [
+        //   { required: true, message: "请输入专家类别", trigger: "blur" },
+        // ],
+        // researchAreas: [
+        //   { required: true, message: "请输入研究领域", trigger: "blur" },
+        // ],
+        // inviter: [{ required: true, message: "请输入邀请人", trigger: "blur" }],
+        // discipline: [
+        //   { required: true, message: "请输入所属学科", trigger: "blur" },
+        // ],
+        // passport: [
+        //   { required: true, message: "请输入护照号", trigger: "blur" },
+        // ],
+        // citizenshipCountry: [
+        //   { required: true, message: "请输入国籍", trigger: "blur" },
+        // ],
+        // communicationContent: [
+        //   { required: true, message: "请输入交流类容", trigger: "blur" },
+       // ],
       },
       tableData: [],
     };
