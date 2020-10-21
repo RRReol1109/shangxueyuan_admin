@@ -337,6 +337,7 @@ export default {
             60,
             26,
             27,
+            28,
             44,
             30,
             31,
@@ -356,6 +357,7 @@ export default {
             43,
             44,
             45,
+            105
           ];
           break;
         case "32":
@@ -496,6 +498,7 @@ export default {
           break;
         case "36":
           this.ids = [
+            777,
             13,
             14,
             15,
@@ -860,6 +863,7 @@ export default {
             43,
             44,
             45,
+            104
           ];
           break;
       }

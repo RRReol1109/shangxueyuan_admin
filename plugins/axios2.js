@@ -11,7 +11,7 @@ import { Message } from 'element-ui';
 import qs from 'qs';
 // import router from 'router'
 
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 50000;
 axios.defaults.baseURL = 'http://bs.hk.darkal.cn/';
 axios.defaults.baseURL = 'http://bs.hk.darkal.cn/';
 
