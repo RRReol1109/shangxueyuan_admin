@@ -1118,6 +1118,7 @@ export default {
         });
         return;
       }
+      this.ruleForm.authors = "";
       this.ruleForm.year = this.ruleForm.publishDate
         ? this.ruleForm.publishDate.substr(0, 4)
         : "";
