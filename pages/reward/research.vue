@@ -120,6 +120,13 @@
         align="center"
         label="项目主持人"
       ></el-table-column>
+        <el-table-column
+        sortable
+        :show-overflow-tooltip="true"
+        prop="projectPerson"
+        align="center"
+        label="参与人"
+      ></el-table-column>
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
