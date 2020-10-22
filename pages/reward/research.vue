@@ -21,6 +21,17 @@
         <el-form-item label="项目名称:">
           <el-input v-model="query.projectName" placeholder="请输入项目名称" size="normal"></el-input>
         </el-form-item>
+        <el-form-item label="项目主持人:">
+          <el-select size="normal" v-model="query.teacher" 　filterable placeholder="请选择老师">
+            <el-option label="全部" value></el-option>
+            <el-option
+              v-for="item in teacherList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="项目级别:">
           <el-select v-model="query.level" size="normal" placeholder="请选择级别">
             <el-option label="全部" value></el-option>
@@ -78,6 +89,7 @@
       :data="tableData"
       border
       style="width: 100%"
+      height="600"
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >
@@ -120,7 +132,7 @@
         align="center"
         label="项目主持人"
       ></el-table-column>
-        <el-table-column
+      <el-table-column
         sortable
         :show-overflow-tooltip="true"
         prop="projectPerson"
@@ -449,7 +461,7 @@ export default {
     return {
       pick: false,
       examineForm: {
-        auditFlag: "0",
+        auditFlag: "0"
       },
       fileLoading: false,
       fileData: "",
@@ -469,7 +481,7 @@ export default {
         limit: 10,
         offset: 0,
         order: "desc",
-        condition: "",
+        condition: ""
       },
       elFlag: false,
       roleId: 0,
@@ -486,24 +498,26 @@ export default {
         projectFunds: 0,
         typeF: "",
         levelF: "",
-        startDate: moment().subtract(1, "days").format("YYYY-MM-DD"),
-        endDate: moment().format("YYYY-MM-DD"),
+        startDate: moment()
+          .subtract(1, "days")
+          .format("YYYY-MM-DD"),
+        endDate: moment().format("YYYY-MM-DD")
       },
       rules: {
         teacher: [{ required: true, message: "请选择老师", trigger: "blur" }],
         type: [{ required: true, message: "请选择项目类型", trigger: "blur" }],
         level: [{ required: true, message: "请选择项目级别", trigger: "blur" }],
         projectName: [
-          { required: true, message: "请输入项目名称", trigger: "blur" },
+          { required: true, message: "请输入项目名称", trigger: "blur" }
         ],
         year: [{ required: true, message: "请输入年份", trigger: "blur" }],
         projectFunds: [
           { required: true, message: "请输入直接经费", trigger: "blur" },
-          { validator: validateNumber, trigger: "blur" },
-        ],
+          { validator: validateNumber, trigger: "blur" }
+        ]
       },
       checkedList: [],
-      projects: [],
+      projects: []
     };
   },
   mounted() {
@@ -512,20 +526,20 @@ export default {
       : [];
   },
   filters: {
-    statusFilter: function (value) {
+    statusFilter: function(value) {
       return {
         "0": "未审核",
         "1": "已审核",
-        "2": "未通过",
+        "2": "未通过"
       }[value.toString()];
-    },
+    }
   },
   methods: {
     async uploadAdditionSuccess(response) {
       console.log("this.ruleForm:::", this.ruleForm);
       if (response && response.indexOf("http") != -1) {
         this.additionFiles.push({
-          name: response,
+          name: response
         });
         if (this.operate == "edit") {
           this.ruleForm.files = JSON.stringify(this.additionFiles);
@@ -542,7 +556,7 @@ export default {
     },
     async deleteAdditionFile(row) {
       this.additionFiles = this.additionFiles.filter(
-        (it) => it.name !== row.name
+        it => it.name !== row.name
       );
       if (this.operate == "edit") {
         this.ruleForm.files = JSON.stringify(this.additionFiles);
@@ -568,7 +582,7 @@ export default {
     },
     updataCache() {
       this.projects.push({
-        value: this.ruleForm.projectName,
+        value: this.ruleForm.projectName
       });
       this.projects = _.uniqWith(this.projects, _.isEqual);
       localStorage.setItem("projects", JSON.stringify(this.projects));
@@ -582,7 +596,7 @@ export default {
       cb(results);
     },
     createProjectsFilter(queryString) {
-      return (projects) => {
+      return projects => {
         return (
           projects.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         );
@@ -626,7 +640,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "该条记录无附件",
+          message: "该条记录无附件"
         });
       }
     },
@@ -636,7 +650,7 @@ export default {
         data = await axios.$download("/project/export?id=-1", {});
       } else {
         data = await axios.$download("/project/export", {
-          params: this.query,
+          params: this.query
         });
       }
       if (data) {
@@ -652,7 +666,7 @@ export default {
     async submitForm(formName) {
       this.ruleForm.files = JSON.stringify(this.additionFiles);
       let verification = false;
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           verification = true;
           console.log("success");
@@ -668,7 +682,7 @@ export default {
       } else {
         this.$message({
           type: "info",
-          message: "请填写正确数据",
+          message: "请填写正确数据"
         });
         return;
       }
@@ -696,7 +710,7 @@ export default {
     uploadSuccess() {
       this.$message({
         type: "success",
-        message: "上传成功",
+        message: "上传成功"
       });
       this.list();
     },
@@ -705,7 +719,7 @@ export default {
         this.$confirm("本条数据已审核无法修改", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning",
+          type: "warning"
         }).then(async () => {});
         return;
       }
@@ -720,9 +734,11 @@ export default {
           projectName: "",
           projectFunds: 0,
           teacher: "",
-          startDate: moment().subtract(1, "days").format("YYYY-MM-DD"),
+          startDate: moment()
+            .subtract(1, "days")
+            .format("YYYY-MM-DD"),
           endDate: moment().format("YYYY-MM-DD"),
-          editor: JSON.parse(localStorage.getItem("userInfo")).id,
+          editor: JSON.parse(localStorage.getItem("userInfo")).id
         };
         this.additionFiles = [];
       } else {
@@ -745,24 +761,24 @@ export default {
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(async () => {
           console.log(row);
           let projectId = row.id;
           await axios.$post("/project/delete", {
-            projectId: projectId,
+            projectId: projectId
           });
           this.list();
           this.$message({
             type: "success",
-            message: "删除成功!",
+            message: "删除成功!"
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
     },
@@ -778,7 +794,7 @@ export default {
             await this.$confirm("未选中数据", "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
-              type: "warning",
+              type: "warning"
             }).then(async () => {});
             return;
           }
@@ -802,32 +818,32 @@ export default {
         await this.$confirm("未选中数据", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning",
+          type: "warning"
         }).then(async () => {});
         return;
       }
       this.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(async () => {
           for (let i = 0; i < vm.checkedList.length; i++) {
             await axios.$post("/project/delete", {
-              projectId: vm.checkedList[i].id,
+              projectId: vm.checkedList[i].id
             });
           }
           this.tableData = [];
           await this.list();
           this.$message({
             type: "success",
-            message: "删除成功!",
+            message: "删除成功!"
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
     },
@@ -845,26 +861,26 @@ export default {
       }
       this.$message({
         type: "success",
-        message: "审核成功!",
+        message: "审核成功!"
       });
       this.examineDialog = false;
       this.list();
-    },
+    }
   },
   async mounted() {
     this.teacherList = await axios.$get("/mgr/list", {
       order: "desc",
       offset: 0,
-      limit: 999999,
+      limit: 999999
     });
     this.teacherList = this.teacherList.rows;
     this.header = {
-      Authorization: localStorage.getItem("message"),
+      Authorization: localStorage.getItem("message")
     };
     this.deptid = JSON.parse(localStorage.getItem("userInfo")).deptid;
     this.list();
     this.roleId = localStorage.getItem("roleId");
-  },
+  }
 };
 </script>
 

@@ -69,6 +69,7 @@
       :data="tableData"
       border
       style="width: 100%"
+      height="600"
       v-loading="loading"
       id="table1"
       @selection-change="handleSelectionChange"

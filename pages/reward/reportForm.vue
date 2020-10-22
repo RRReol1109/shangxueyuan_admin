@@ -48,7 +48,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
+    <el-table :data="tableData" border style="width: 100%" height="600" v-loading="loading">
       <el-table-column
         sortable
         :show-overflow-tooltip="true"

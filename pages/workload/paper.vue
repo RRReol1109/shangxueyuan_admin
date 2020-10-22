@@ -101,6 +101,7 @@
       :data="tableData"
       border
       style="width: 100%"
+      height="600"
       v-loading="loading"
       @selection-change="handleSelectionChange"
     >

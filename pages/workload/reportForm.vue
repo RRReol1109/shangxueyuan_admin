@@ -13,7 +13,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="教师:">
-          <el-select v-model="query.userId" filterable placeholder="请选择老师" prop style="width:98%">
+          <el-select v-model="query.userName" filterable placeholder="请选择老师" prop style="width:98%">
             <el-option
               v-for="item in teacherList"
               :key="item.id"
@@ -45,7 +45,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
+    <el-table :data="tableData" border style="width: 100%" height="600" v-loading="loading">
       <el-table-column
         sortable
         :show-overflow-tooltip="true"
