@@ -32,7 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%"  height="600">
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable fixed prop="id" align="center" label="学号"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="name" align="center" label="姓名"></el-table-column>

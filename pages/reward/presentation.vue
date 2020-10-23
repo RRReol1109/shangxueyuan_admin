@@ -118,7 +118,7 @@
         :show-overflow-tooltip="true"
         prop="awardName"
         align="center"
-        label="成果名称"
+        label="获奖名称"
       ></el-table-column>
       <el-table-column
         sortable
@@ -283,7 +283,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="成果名称" prop="awardName">
+            <el-form-item label="获奖名称" prop="awardName">
               <el-autocomplete
                 clearable
                 v-model="ruleForm.awardName"

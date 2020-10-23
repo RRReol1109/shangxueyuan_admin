@@ -765,7 +765,6 @@
             <el-form-item label="实际课时" prop="hours" style="width: 99%">
               <el-input
                 v-model="ruleForm.hours"
-                oninput="value=value.replace(/[^\d.]/g,'')"
                 clearable
               ></el-input>
             </el-form-item>
@@ -988,7 +987,7 @@ export default {
       console.log(this.$refs[formName]);
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.ruleForm.hours = parseInt(this.ruleForm.hours);
+          this.ruleForm.hours = parseFloat(this.ruleForm.hours);
           this.ruleForm.auditFlag = parseInt(this.ruleForm.auditFlag);
           console.log(this.ruleForm);
           // el-autocomplete

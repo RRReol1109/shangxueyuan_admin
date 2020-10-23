@@ -46,6 +46,7 @@
       border
       style="width: 100%"
       v-loading="loading"
+       height="600"
       @selection-change="handleSelectionChange"
     >
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>

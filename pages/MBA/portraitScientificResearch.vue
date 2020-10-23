@@ -55,7 +55,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%" height="600">
       <el-table-column sortable type="index" label="序号" align="center" width="50"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="year" align="center" label="年份"></el-table-column>
       <el-table-column sortable :show-overflow-tooltip="true" prop="teacherId" align="center" label="教职工工号"></el-table-column>

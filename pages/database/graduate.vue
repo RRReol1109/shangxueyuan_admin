@@ -53,10 +53,11 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table
+   <el-table
       :data="tableData"
       border
       style="width: 100%"
+ height="600"
       @selection-change="handleSelectionChange"
     >
       <el-table-column sortable align="center" type="selection" width="50"></el-table-column>

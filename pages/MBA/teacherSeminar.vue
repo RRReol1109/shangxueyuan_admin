@@ -55,7 +55,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%" height="600">
       <el-table-column fixed prop="pick" align="center" label="选择" width="50">
         <template slot-scope="scope">
           <el-checkbox @change="changeFlag(scope.row)"></el-checkbox>
@@ -352,7 +352,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="上传全文PDF电子版" prop="pdfUrl">
+            <el-form-item label="PDFurl" prop="pdfUrl">
               <el-input size="normal" v-model="form.pdfUrl" style="width:99%"></el-input>
             </el-form-item>
           </el-col>

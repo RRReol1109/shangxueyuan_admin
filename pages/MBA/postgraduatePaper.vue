@@ -32,7 +32,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%" height="600">
       <el-table-column
         sortable
         fixed

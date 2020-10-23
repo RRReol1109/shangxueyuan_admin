@@ -70,7 +70,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
+    <el-table :data="tableData" border style="width: 100%" v-loading="loading"  height="600">
       <el-table-column 
         :show-overflow-tooltip="true"
         prop="pick"
