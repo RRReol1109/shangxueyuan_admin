@@ -357,11 +357,12 @@ export default {
             43,
             44,
             45,
-            105
+            68,
+            105,
           ];
           break;
         case "32":
-          this.ids = [777, 30, 31];
+          this.ids = [777, 30, 31, 68];
           break;
         case "25":
           this.ids = [
@@ -464,6 +465,7 @@ export default {
             99,
             100,
             101,
+            68,
             102,
             103,
           ];
@@ -753,6 +755,7 @@ export default {
             97,
             98,
             99,
+            68,
             100,
             101,
             102,
@@ -863,7 +866,7 @@ export default {
             43,
             44,
             45,
-            104
+            104,
           ];
           break;
       }

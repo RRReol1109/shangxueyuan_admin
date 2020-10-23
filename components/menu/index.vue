@@ -930,6 +930,15 @@ export default {
                 value: "/database/studentAcademic",
               },
             },
+              {
+              entity: {
+                id: 68,
+                name: "teacherSeminar",
+                alias: "教师学术议会管理 ",
+                state: "ENABLE",
+                value: "/MBA/teacherSeminar",
+              },
+            },
           ],
         },
         {
@@ -977,15 +986,7 @@ export default {
                 value: "/MBA/teacherPaper",
               },
             },
-            {
-              entity: {
-                id: 68,
-                name: "teacherSeminar",
-                alias: "教师学术议会管理 ",
-                state: "ENABLE",
-                value: "/MBA/teacherSeminar",
-              },
-            },
+          
             {
               entity: {
                 id: 69,
