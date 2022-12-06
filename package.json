@@ -24,7 +24,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "nuxt": "^2.0.0",
-    "qs": "^6.9.1"
+    "qs": "^6.9.7"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.27",
